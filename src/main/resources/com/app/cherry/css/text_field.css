@@ -1,0 +1,22 @@
+.text-field {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-field .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-field:focused .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-field:focused {
+    -fx-highlight-fill: #7ecfff;
+}
+
+.text-field .content {
+    -fx-padding: 10px;
+    -fx-text-fill: gray;
+    -fx-highlight-fill: #7ecfff;
+}
