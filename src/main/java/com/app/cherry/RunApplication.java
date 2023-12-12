@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class RunApplication extends Application {
-    public static Path path;
+    public static Path FolderPath;
     public static final String title = "Cherry";
     private static final double InitialHeight = 400;
     private static final double InitialWidth = 600;
@@ -19,21 +19,21 @@ public class RunApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        /*Session session = HibernateUtil.getSessionFactory().openSession();
-        session.close();
-        HibernateUtil.shutdown();*/
+        //PrepareHibernate();
+        HibernateUtil hibernateUtil = new HibernateUtil();
+        hibernateUtil.setUp();
+        FolderPath = hibernateUtil.getPath();
+        hibernateUtil.tearDown();
 
-        var t1 = RunApplication.class.getResource("fxmls/main-view.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
-        //var t = RunApplication.class.toString();
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         // ширина высота
         Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
         //stage.setMaximized(true);
-        path = Paths.get("D\\Iam");
+        FolderPath = Paths.get("D\\Iam");
         //stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("Image/cherry_icon.png"))));
         SetIcon(stage);
-        if (path == null){
+        if (FolderPath == null){
             fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
             Stage InitialStage = new Stage();

@@ -104,10 +104,10 @@ public class InitController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(InitialStage));
         selectedDirectory.ifPresent(file -> {
-            RunApplication.path = Paths.get(file.toURI());
+            RunApplication.FolderPath = Paths.get(file.toURI());
             if (OpenButton.getText().equals("Просмотр")){
                 DownLabel.setFont(new Font(12));
-                DownLabel.setText("Хранилище будет расположено по пути: " + RunApplication.path.toString());
+                DownLabel.setText("Хранилище будет расположено по пути: " + RunApplication.FolderPath.toString());
             }else {
                 ShowMainStage();
             }
@@ -134,7 +134,7 @@ public class InitController {
             CreateAndShowWarning("Укажите имя хранилища");
             return;
         }
-        if (RunApplication.path == null){
+        if (RunApplication.FolderPath == null){
             CreateAndShowWarning("Укажите путь до хранилища");
             return;
         }
