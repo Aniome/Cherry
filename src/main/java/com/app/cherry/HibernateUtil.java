@@ -6,12 +6,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import static java.lang.System.out;
 
 public class HibernateUtil {
     private SessionFactory sessionFactory;
@@ -27,7 +25,7 @@ public class HibernateUtil {
         catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
             // so destroy it manually.
-            out.println(e.getMessage());
+            System.out.println(e.getMessage());
             StandardServiceRegistryBuilder.destroy( registry );
         }
     }

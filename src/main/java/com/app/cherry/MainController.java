@@ -8,6 +8,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class MainController{
@@ -32,8 +35,10 @@ public class MainController{
         treeView.setShowRoot(false);
     }
 
+    //Creates a tab and gives focus to it
     @FXML
     private Tab AddTab() {
+        CreateFileMarkdown();
         Tab tab = new Tab(Unknown);
         tab.setContent(CreateTab(tab));
         int ind = Tab_Pane.getTabs().size() - 1;
@@ -71,6 +76,7 @@ public class MainController{
         treeView.getRoot().getChildren().add(treeItem);
     }
 
+    //Creates a form and fills it with content
     @NotNull
     private BorderPane CreateTab(Tab tab){
         BorderPane borderPane = new BorderPane();
@@ -101,5 +107,18 @@ public class MainController{
         borderPane.setCenter(textArea);
 
         return borderPane;
+    }
+
+    private boolean CreateFileMarkdown(){
+        File file = new File(RunApplication.FolderPath.toString());
+        try {
+            if (file.createNewFile()){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

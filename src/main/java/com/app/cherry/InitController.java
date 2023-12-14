@@ -131,21 +131,14 @@ public class InitController {
     @FXML
     private void CreateStorage(){
         if (textField.getText().isEmpty()){
-            CreateAndShowWarning("Укажите имя хранилища");
+            Alerts.CreateAndShowWarning("Укажите имя хранилища");
             return;
         }
         if (RunApplication.FolderPath == null){
-            CreateAndShowWarning("Укажите путь до хранилища");
+            Alerts.CreateAndShowWarning("Укажите путь до хранилища");
             return;
         }
         ShowMainStage();
-    }
-
-    private void CreateAndShowWarning(String message){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Предупреждение");
-        alert.setHeaderText(message);
-        alert.showAndWait();
     }
 
     private void ShowMainStage(){
@@ -155,10 +148,7 @@ public class InitController {
             Scene scene = new Scene(fxmlLoader.load(), RunApplication.MainWidth, RunApplication.MainHeight);
             RunApplication.PrepareStage(RunApplication.MainHeight, RunApplication.MainWidth, scene, RunApplication.title, MainStage);
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ошибка");
-            alert.setHeaderText(e.toString());
-            alert.showAndWait();
+            Alerts.CreateAndShowError(e.getMessage());
         }
     }
 }

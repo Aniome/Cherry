@@ -6,8 +6,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.JDOMException;
+import org.jdom2.Document;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.List;
 
 public class RunApplication extends Application {
     public static Path FolderPath;
@@ -16,10 +27,10 @@ public class RunApplication extends Application {
     private static final double InitialWidth = 600;
     public static final double MainHeight = 720;
     public static final double MainWidth = 1280;
-
+    private String AbsolutePath;
     @Override
     public void start(Stage stage) throws IOException {
-        //PrepareHibernate();
+        PrepareHibernate();
         HibernateUtil hibernateUtil = new HibernateUtil();
         hibernateUtil.setUp();
         FolderPath = hibernateUtil.getPath();
@@ -27,7 +38,7 @@ public class RunApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        // ширина высота
+        // width height
         Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
         //stage.setMaximized(true);
         FolderPath = Paths.get("D\\Iam");
@@ -49,6 +60,56 @@ public class RunApplication extends Application {
             MainController mainController = fxmlLoader.getController();
             mainController.init();
             PrepareStage(MainHeight, MainWidth, scene, title, stage);
+        }
+    }
+
+    private void PrepareHibernate(){
+        File path = new File("");
+        AbsolutePath = path.getAbsolutePath().replace("\\", "/");
+        ChangeXML(AbsolutePath + "/src/main/resources/hibernate.cfg.xml");
+        ChangeXML(AbsolutePath + "/target/classes/hibernate.cfg.xml");
+    }
+
+    private void ChangeXML(String filePath){
+        try {
+            // loading XML
+            SAXBuilder builder = new SAXBuilder();
+            Document document = builder.build(filePath);
+            Element rootElement = document.getRootElement();
+            Element sessionfactory = rootElement.getChild("session-factory");
+
+            List<Element> properties = sessionfactory.getChildren();
+            Element connection = null;
+            for (Element element: properties){
+                if (element.getAttributeValue("name").equals("connection.url")){
+                    connection = element;
+                    break;
+                }
+            }
+
+            // add a tag to the document
+            String value = connection.getValue();
+            if (value.isEmpty()){
+                connection.addContent("jdbc:sqlite:" + AbsolutePath + "/src/main/resources/com/app/cherry/Databases.db");
+            } else if (!value.contains(AbsolutePath)) {
+                connection.removeContent();
+                connection.addContent("jdbc:sqlite:" + AbsolutePath + "/src/main/resources/com/app/cherry/Databases.db");
+            } else {
+                return;
+            }
+
+            /*Element path = new Element("property");
+            path.setAttribute("name","connection.url");
+            sessionfactory.addContent(0, path);*/
+
+            // write changes in XML file
+            XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
+            FileWriter fileWriter = new FileWriter(filePath);
+            xmlOutput.output(document, fileWriter);
+            fileWriter.close();
+
+        } catch (JDOMException | IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
