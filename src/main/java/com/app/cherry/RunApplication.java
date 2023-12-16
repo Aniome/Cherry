@@ -41,7 +41,6 @@ public class RunApplication extends Application {
         // width height
         Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
         //stage.setMaximized(true);
-        FolderPath = Paths.get("D\\Iam");
         //stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("Image/cherry_icon.png"))));
         SetIcon(stage);
         if (FolderPath == null){

@@ -1,6 +1,8 @@
 package com.app.cherry;
 
 import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -23,6 +25,7 @@ public class MainController{
 
     private final String Unknown = "Без названия";
     private String OldTextFieldValue;
+    private TreeItem<String> root;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -31,14 +34,18 @@ public class MainController{
 
     public void init(){
         //listview.getStylesheets().add(Objects.requireNonNull(MainController.class.getResource("css/listview.css")).toExternalForm());
-        treeView.setRoot(new TreeItem<>(""));
+        root = new TreeItem<>("");
+        treeView.setRoot(root);
         treeView.setShowRoot(false);
+        String[] files = Markdown.getFiles();
+        for (String file :files){
+            root.getChildren().add(new TreeItem<>(file));
+        }
     }
 
     //Creates a tab and gives focus to it
     @FXML
     private Tab AddTab() {
-        CreateFileMarkdown();
         Tab tab = new Tab(Unknown);
         tab.setContent(CreateTab(tab));
         int ind = Tab_Pane.getTabs().size() - 1;
@@ -48,12 +55,22 @@ public class MainController{
         return tab;
     }
 
+    //Event on the note creation button
     @FXML
     private void CreateNote(){
+        if (Markdown.CreateFileMarkdown() == null){
+            return;
+        }
+        //Добавить событие на клик
+        //Сделать добавление новой вкладки при нажатии на +
         Tab tab = AddTab();
+        //Creates treeitem and does the binding
         TreeItem<String> root = treeView.getRoot();
         TreeItem<String> treeItem = new TreeItem<>(Unknown);
         treeItem.valueProperty().bind(tab.textProperty());
+/*        treeItem.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
+            Tab_Pane
+        });*/
         //treeItem.setValue();
         root.getChildren().add(treeItem);
 
@@ -107,18 +124,5 @@ public class MainController{
         borderPane.setCenter(textArea);
 
         return borderPane;
-    }
-
-    private boolean CreateFileMarkdown(){
-        File file = new File(RunApplication.FolderPath.toString());
-        try {
-            if (file.createNewFile()){
-                return true;
-            } else {
-                return false;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
