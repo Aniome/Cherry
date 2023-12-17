@@ -1,10 +1,15 @@
 package com.app.cherry;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -39,8 +44,26 @@ public class MainController{
         treeView.setShowRoot(false);
         String[] files = Markdown.getFiles();
         for (String file :files){
-            root.getChildren().add(new TreeItem<>(file));
+            root.getChildren().add(new TreeItem(file));
         }
+        //Load data on click
+        treeView.getSelectionModel().selectedItemProperty().addListener((observableValue, stringTreeItem, t1) -> {
+            Tab SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
+            SelectedTab.setContent(null);
+            BorderPane borderPane = CreateTab(SelectedTab);
+            String filename = t1.getValue();
+            SelectedTab.setText(filename);
+            ObservableList<Node> childrens = borderPane.getChildren();
+            for (Node children: childrens){
+                if (children instanceof TextField){
+                    ((TextField) children).setText(filename);
+                }
+                if (children instanceof TextArea){
+                    ((TextArea) children).setText(Markdown.ReadFile(filename));
+                }
+            }
+            SelectedTab.setContent(borderPane);
+        });
     }
 
     //Creates a tab and gives focus to it
@@ -61,19 +84,12 @@ public class MainController{
         if (Markdown.CreateFileMarkdown() == null){
             return;
         }
-        //Добавить событие на клик
-        //Сделать добавление новой вкладки при нажатии на +
         Tab tab = AddTab();
         //Creates treeitem and does the binding
-        TreeItem<String> root = treeView.getRoot();
         TreeItem<String> treeItem = new TreeItem<>(Unknown);
         treeItem.valueProperty().bind(tab.textProperty());
-/*        treeItem.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
-            Tab_Pane
-        });*/
         //treeItem.setValue();
         root.getChildren().add(treeItem);
-
     }
 
     private boolean CheckTree(String str){
@@ -90,7 +106,7 @@ public class MainController{
     private void CreateFolder(){
         TreeItem<String> treeItem = new TreeItem<>("Test");
         treeItem.getChildren().add(new TreeItem<>());
-        treeView.getRoot().getChildren().add(treeItem);
+        root.getChildren().add(treeItem);
     }
 
     //Creates a form and fills it with content

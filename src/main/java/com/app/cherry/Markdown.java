@@ -2,12 +2,24 @@ package com.app.cherry;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Markdown {
-    public static String ReadFile(){
-
-
-        return "";
+    public static String ReadFile(String FileName){
+        String result = "";
+        try {
+            File file = new File(RunApplication.FolderPath.toString() + "\\" + FileName);
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                result += line;
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public static String[] getFiles(){

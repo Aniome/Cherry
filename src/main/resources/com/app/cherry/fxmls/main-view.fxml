@@ -2,11 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.16353677621283255" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.MainController">
+<SplitPane dividerPositions="0.16353677621283255" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.MainController">
   <items>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <center>
@@ -153,22 +152,15 @@
       </BorderPane>
       <TabPane fx:id="Tab_Pane" tabClosingPolicy="ALL_TABS">
          <tabs>
-            <Tab text="Без названия">
+            <Tab text="Новая вкладка">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <top>
-                        <TextField alignment="CENTER" cache="true" prefHeight="25.0" prefWidth="1013.0" promptText="Без названия" stylesheets="@../css/text_field.css" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </TextField>
-                     </top>
                      <center>
-                        <TextArea pickOnBounds="false" prefHeight="657.0" prefWidth="403.0" stylesheets="@../css/text_area.css" BorderPane.alignment="CENTER">
+                        <Label text="Ни один файл не открыт" BorderPane.alignment="CENTER">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="29.0" />
                            </font>
-                        </TextArea>
+                        </Label>
                      </center>
                   </BorderPane>
                </content>
