@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
@@ -18,6 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class MainController{
@@ -42,10 +45,7 @@ public class MainController{
         root = new TreeItem<>("");
         treeView.setRoot(root);
         treeView.setShowRoot(false);
-        String[] files = Markdown.getFiles();
-        for (String file :files){
-            root.getChildren().add(new TreeItem(file));
-        }
+        Arrays.stream(Markdown.getFiles()).forEach(file -> root.getChildren().add(new TreeItem<>(file)));
         //Load data on click
         treeView.getSelectionModel().selectedItemProperty().addListener((observableValue, stringTreeItem, t1) -> {
             Tab SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
@@ -64,32 +64,48 @@ public class MainController{
             }
             SelectedTab.setContent(borderPane);
         });
+        treeView.onMouseClickedProperty().addListener((observableValue, eventHandler, t1) -> {
+            System.out.println(observableValue);
+            System.out.println(eventHandler);
+            System.out.println(t1);
+        });
     }
 
     //Creates a tab and gives focus to it
     @FXML
     private Tab AddTab() {
-        Tab tab = new Tab(Unknown);
-        tab.setContent(CreateTab(tab));
-        int ind = Tab_Pane.getTabs().size() - 1;
-        SingleSelectionModel<Tab> selectionModel = Tab_Pane.getSelectionModel();
-        Tab_Pane.getTabs().add(ind, tab);
-        selectionModel.select(tab);
+        Tab tab = new Tab("Новая вкладка");
+        tab.setContent(CreateEmptyTab(tab));
+        SelectTab(tab);
         return tab;
+    }
+
+    private Tab AddTab(String fileName){
+        Tab tab = new Tab(fileName);
+        tab.setContent(CreateTab(tab));
+        SelectTab(tab);
+        return tab;
+    }
+
+    private void SelectTab(Tab tab){
+        int count = Tab_Pane.getTabs().size() - 1;
+        SingleSelectionModel<Tab> selectionModel = Tab_Pane.getSelectionModel();
+        Tab_Pane.getTabs().add(count, tab);
+        selectionModel.select(tab);
     }
 
     //Event on the note creation button
     @FXML
     private void CreateNote(){
-        if (Markdown.CreateFileMarkdown() == null){
+        File NewNote = Markdown.CreateFileMarkdown();
+        if (NewNote == null){
             return;
         }
-        Tab tab = AddTab();
-        //Creates treeitem and does the binding
-        TreeItem<String> treeItem = new TreeItem<>(Unknown);
-        treeItem.valueProperty().bind(tab.textProperty());
-        //treeItem.setValue();
+        AddTab(NewNote.getName());
+        TreeItem<String> treeItem = new TreeItem<>(NewNote.getName());
         root.getChildren().add(treeItem);
+        SortedList<TreeItem<String>> content = root.getChildren().sorted(Comparator.comparing(TreeItem::getValue));
+        root.getChildren().setAll(content);
     }
 
     private boolean CheckTree(String str){
@@ -113,7 +129,7 @@ public class MainController{
     @NotNull
     private BorderPane CreateTab(Tab tab){
         BorderPane borderPane = new BorderPane();
-        TextField textField = new TextField(Unknown){{
+        TextField textField = new TextField(tab.getText()){{
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
@@ -139,6 +155,15 @@ public class MainController{
         textArea.getStylesheets().add(Objects.requireNonNull(MainController.class.getResource("css/text_area.css")).toExternalForm());
         borderPane.setCenter(textArea);
 
+        return borderPane;
+    }
+
+    private BorderPane CreateEmptyTab(Tab tab){
+        BorderPane borderPane = new BorderPane();
+        Label label = new Label("Ни один файл не открыт");
+        label.setFont(new Font(29));
+
+        borderPane.setCenter(label);
         return borderPane;
     }
 }
