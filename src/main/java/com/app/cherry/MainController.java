@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
@@ -31,7 +32,6 @@ public class MainController{
     @FXML
     private TabPane Tab_Pane;
 
-    private final String Unknown = "Без названия";
     private String OldTextFieldValue;
     private TreeItem<String> root;
 
@@ -45,30 +45,51 @@ public class MainController{
         root = new TreeItem<>("");
         treeView.setRoot(root);
         treeView.setShowRoot(false);
+        //Loading list files in treeview
         Arrays.stream(Markdown.getFiles()).forEach(file -> root.getChildren().add(new TreeItem<>(file)));
-        //Load data on click
-        treeView.getSelectionModel().selectedItemProperty().addListener((observableValue, stringTreeItem, t1) -> {
-            Tab SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
-            SelectedTab.setContent(null);
-            BorderPane borderPane = CreateTab(SelectedTab);
-            String filename = t1.getValue();
-            SelectedTab.setText(filename);
-            ObservableList<Node> childrens = borderPane.getChildren();
-            for (Node children: childrens){
-                if (children instanceof TextField){
-                    ((TextField) children).setText(filename);
-                }
-                if (children instanceof TextArea){
-                    ((TextArea) children).setText(Markdown.ReadFile(filename));
-                }
+        //treeView.selectionModelProperty().
+        //Load data in form on click
+        treeView.setOnMouseClicked(mouseEvent -> {
+            TreeItem<String> t1 = treeView.selectionModelProperty().get().getSelectedItem();
+            if (t1 == null) {
+                return;
             }
-            SelectedTab.setContent(borderPane);
+            if (mouseEvent.getButton() == MouseButton.PRIMARY){
+                Tab SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
+                SelectedTab.setContent(null);
+                BorderPane borderPane = CreateTab(SelectedTab);
+                String filename = t1.getValue();
+                SelectedTab.setText(filename);
+                ObservableList<Node> childrens = borderPane.getChildren();
+                for (Node children: childrens){
+                    if (children instanceof TextField){
+                        ((TextField) children).setText(filename);
+                    }
+                    if (children instanceof TextArea){
+                        ((TextArea) children).setText(Markdown.ReadFile(filename));
+                    }
+                }
+                SelectedTab.setContent(borderPane);
+            } else if (mouseEvent.getButton() == MouseButton.SECONDARY){
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem menuItem1 = new MenuItem("Переименовать");
+                MenuItem menuItem2 = new MenuItem("Переместить файл в");
+                MenuItem menuItem3 = new MenuItem("Добавить в закладки");
+                MenuItem menuItem4 = new MenuItem("Удалить");
+                contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
+                treeView.setContextMenu(contextMenu);
+            }
+
         });
-        treeView.onMouseClickedProperty().addListener((observableValue, eventHandler, t1) -> {
-            System.out.println(observableValue);
-            System.out.println(eventHandler);
-            System.out.println(t1);
-        });
+/*        treeView.setOnMouseClicked(mouseEvent -> {
+            System.out.println("Hello123");
+        });*/
+    }
+
+
+    @FXML
+    private void ShowMenu(MouseEvent mouseEvent){
+        System.out.println(mouseEvent);
     }
 
     //Creates a tab and gives focus to it
