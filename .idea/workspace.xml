@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="cleaning code">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add context menu">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/rename-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,9 +19,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="AnnotationType" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -54,6 +57,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Programming/Java/Projects/Cherry",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -112,7 +116,9 @@
       <workItem from="1702575532940" duration="32180000" />
       <workItem from="1702789892697" duration="23367000" />
       <workItem from="1702932420511" duration="2059000" />
-      <workItem from="1702939979109" duration="6943000" />
+      <workItem from="1702939979109" duration="8230000" />
+      <workItem from="1703090836721" duration="120000" />
+      <workItem from="1703103969989" duration="4701000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -154,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702844866275</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add context menu">
+      <option name="closed" value="true" />
+      <created>1703016631188</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1703016631188</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,7 +193,8 @@
     <MESSAGE value="add load files" />
     <MESSAGE value="add loading files" />
     <MESSAGE value="cleaning code" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaning code" />
+    <MESSAGE value="add context menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="add context menu" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

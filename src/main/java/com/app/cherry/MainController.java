@@ -16,6 +16,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -31,6 +32,8 @@ public class MainController{
 
     @FXML
     private TabPane Tab_Pane;
+    @FXML
+    private SplitPane splitpane;
 
     private String OldTextFieldValue;
     private TreeItem<String> root;
@@ -40,7 +43,7 @@ public class MainController{
         Platform.exit();
     }
 
-    public void init(){
+    public void init(Stage stage){
         //listview.getStylesheets().add(Objects.requireNonNull(MainController.class.getResource("css/listview.css")).toExternalForm());
         root = new TreeItem<>("");
         treeView.setRoot(root);
@@ -79,13 +82,16 @@ public class MainController{
                 contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
                 treeView.setContextMenu(contextMenu);
             }
-
         });
-/*        treeView.setOnMouseClicked(mouseEvent -> {
-            System.out.println("Hello123");
-        });*/
+        splitpane.widthProperty().addListener((observableValue, number, t1) -> {
+            splitpane.setDividerPositions(0.16353677621283255);
+        });
     }
 
+    @FXML
+    private void Click(){
+        System.out.println(splitpane.getDividerPositions()[0]);
+    }
 
     @FXML
     private void ShowMenu(MouseEvent mouseEvent){

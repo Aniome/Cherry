@@ -1,6 +1,8 @@
 package com.app.cherry;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -57,7 +59,7 @@ public class RunApplication extends Application {
         }
         else {
             MainController mainController = fxmlLoader.getController();
-            mainController.init();
+            mainController.init(stage);
             PrepareStage(MainHeight, MainWidth, scene, title, stage);
         }
     }
