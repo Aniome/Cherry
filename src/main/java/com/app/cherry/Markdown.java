@@ -9,7 +9,7 @@ public class Markdown {
     public static String ReadFile(String FileName){
         String result = "";
         try {
-            File file = new File(RunApplication.FolderPath.toString() + "\\" + FileName);
+            File file = new File(RunApplication.FolderPath.toString() + "\\" + FileName + ".md");
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -22,10 +22,10 @@ public class Markdown {
         return result;
     }
 
-    public static String[] getFiles(){
+    public static File[] getFiles(){
         String path = RunApplication.FolderPath.toString() + "\\";
         File file = new File(path);
-        return file.list();
+        return file.listFiles();
     }
 
     public static File CreateFileMarkdown(){

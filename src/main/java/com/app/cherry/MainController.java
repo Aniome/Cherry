@@ -5,22 +5,21 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventTarget;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
@@ -43,59 +42,79 @@ public class MainController{
         Platform.exit();
     }
 
-    public void init(Stage stage){
+    public void init(){
         //listview.getStylesheets().add(Objects.requireNonNull(MainController.class.getResource("css/listview.css")).toExternalForm());
         root = new TreeItem<>("");
         treeView.setRoot(root);
         treeView.setShowRoot(false);
         //Loading list files in treeview
-        Arrays.stream(Markdown.getFiles()).forEach(file -> root.getChildren().add(new TreeItem<>(file)));
-        //treeView.selectionModelProperty().
-        //Load data in form on click
-        treeView.setOnMouseClicked(mouseEvent -> {
-            TreeItem<String> t1 = treeView.selectionModelProperty().get().getSelectedItem();
-            if (t1 == null) {
-                return;
-            }
-            if (mouseEvent.getButton() == MouseButton.PRIMARY){
-                Tab SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
-                SelectedTab.setContent(null);
-                BorderPane borderPane = CreateTab(SelectedTab);
-                String filename = t1.getValue();
-                SelectedTab.setText(filename);
-                ObservableList<Node> childrens = borderPane.getChildren();
-                for (Node children: childrens){
-                    if (children instanceof TextField){
-                        ((TextField) children).setText(filename);
-                    }
-                    if (children instanceof TextArea){
-                        ((TextArea) children).setText(Markdown.ReadFile(filename));
+        Arrays.stream(Markdown.getFiles()).forEach(file -> {
+            TreeItem treeItem = new TreeItem<>(file.getName().replace(".md",""));
+            root.getChildren().add(treeItem);
+        });
+        treeView.setCellFactory(tree -> {
+            TreeCell<String> cell = new TreeCell<>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(item);
                     }
                 }
-                SelectedTab.setContent(borderPane);
-            } else if (mouseEvent.getButton() == MouseButton.SECONDARY){
-                ContextMenu contextMenu = new ContextMenu();
-                MenuItem menuItem1 = new MenuItem("Переименовать");
-                MenuItem menuItem2 = new MenuItem("Переместить файл в");
-                MenuItem menuItem3 = new MenuItem("Добавить в закладки");
-                MenuItem menuItem4 = new MenuItem("Удалить");
-                contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
-                treeView.setContextMenu(contextMenu);
-            }
+            };
+            cell.setOnMouseEntered( mouseEvent -> {
+                TreeItem<String> treeItem = cell.getTreeItem();
+                if (treeItem == null)
+                    return;
+                treeView.getSelectionModel().select(treeItem);
+            });
+            cell.setOnMouseExited(mouseEvent -> {
+                treeView.getSelectionModel().clearSelection();
+            });
+            cell.setOnMouseClicked(event -> {
+                if (cell.isEmpty()) {
+                    return;
+                }
+                TreeItem<String> selectedItem = cell.getTreeItem();
+                MouseButton mouseButton = event.getButton();
+                //Load data in form on click
+                if (mouseButton.equals(MouseButton.PRIMARY)){
+                    Tab SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
+                    SelectedTab.setContent(null);
+                    BorderPane borderPane = CreateTab(SelectedTab);
+                    String filename = selectedItem.getValue();
+                    SelectedTab.setText(filename);
+                    ObservableList<Node> childrens = borderPane.getChildren();
+                    for (Node children: childrens){
+                        if (children instanceof TextField){
+                            ((TextField) children).setText(filename);
+                        }
+                        if (children instanceof TextArea){
+                            ((TextArea) children).setText(Markdown.ReadFile(filename));
+                        }
+                    }
+                    SelectedTab.setContent(borderPane);
+                }
+                if (mouseButton.equals(MouseButton.SECONDARY) && cell.getTreeItem() != null){
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem menuItem1 = new MenuItem("Переименовать");
+                    //menuItem1.setOnAction(actionEvent -> new EditableTreeCell().Edit());
+                    MenuItem menuItem2 = new MenuItem("Переместить файл в");
+                    MenuItem menuItem3 = new MenuItem("Добавить в закладки");
+                    MenuItem menuItem4 = new MenuItem("Удалить");
+                    contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
+                    treeView.setContextMenu(contextMenu);
+                }
+
+            });
+            return cell ;
         });
+
         splitpane.widthProperty().addListener((observableValue, number, t1) -> {
             splitpane.setDividerPositions(0.16353677621283255);
         });
-    }
-
-    @FXML
-    private void Click(){
-        System.out.println(splitpane.getDividerPositions()[0]);
-    }
-
-    @FXML
-    private void ShowMenu(MouseEvent mouseEvent){
-        System.out.println(mouseEvent);
     }
 
     //Creates a tab and gives focus to it

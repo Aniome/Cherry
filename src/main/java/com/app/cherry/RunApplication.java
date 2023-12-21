@@ -59,7 +59,7 @@ public class RunApplication extends Application {
         }
         else {
             MainController mainController = fxmlLoader.getController();
-            mainController.init(stage);
+            mainController.init();
             PrepareStage(MainHeight, MainWidth, scene, title, stage);
         }
     }

@@ -13,6 +13,6 @@ module com.app.cherry {
     requires org.jdom2;
 
     opens com.app.cherry.entity;
-    opens com.app.cherry to javafx.fxml;
     exports com.app.cherry;
+    opens com.app.cherry;
 }
