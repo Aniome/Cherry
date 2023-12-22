@@ -68,15 +68,18 @@ public class MainController{
                 TreeItem<String> treeItem = cell.getTreeItem();
                 if (treeItem == null)
                     return;
+                if (ShowingContextMenu())
+                    return;
                 treeView.getSelectionModel().select(treeItem);
             });
             cell.setOnMouseExited(mouseEvent -> {
+                if (ShowingContextMenu())
+                    return;
                 treeView.getSelectionModel().clearSelection();
             });
             cell.setOnMouseClicked(event -> {
-                if (cell.isEmpty()) {
+                if (cell.isEmpty())
                     return;
-                }
                 TreeItem<String> selectedItem = cell.getTreeItem();
                 MouseButton mouseButton = event.getButton();
                 //Load data in form on click
@@ -96,18 +99,20 @@ public class MainController{
                         }
                     }
                     SelectedTab.setContent(borderPane);
-                }
-                if (mouseButton.equals(MouseButton.SECONDARY) && cell.getTreeItem() != null){
+                } else if (mouseButton.equals(MouseButton.SECONDARY) && selectedItem != null){
                     ContextMenu contextMenu = new ContextMenu();
                     MenuItem menuItem1 = new MenuItem("Переименовать");
-                    //menuItem1.setOnAction(actionEvent -> new EditableTreeCell().Edit());
+/*                    menuItem1.setOnAction(actionEvent -> {
+                        new EditableTreeCell().Edit();
+                    });*/
                     MenuItem menuItem2 = new MenuItem("Переместить файл в");
                     MenuItem menuItem3 = new MenuItem("Добавить в закладки");
                     MenuItem menuItem4 = new MenuItem("Удалить");
                     contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
                     treeView.setContextMenu(contextMenu);
-                }
 
+                }
+                //TreeItem<String> selitem = treeView.getSelectionModel().getSelectedItem();
             });
             return cell ;
         });
@@ -115,6 +120,17 @@ public class MainController{
         splitpane.widthProperty().addListener((observableValue, number, t1) -> {
             splitpane.setDividerPositions(0.16353677621283255);
         });
+    }
+
+    private boolean ShowingContextMenu(){
+        ContextMenu contMenu = treeView.getContextMenu();
+        if (contMenu != null){
+            if (contMenu.isShowing()){
+                return true;
+            }
+            treeView.setContextMenu(null);
+        }
+        return false;
     }
 
     //Creates a tab and gives focus to it

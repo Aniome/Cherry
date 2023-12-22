@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add divider listener">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/EditableTreeCell.java" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add selected items on mouse enter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/rename-view.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +54,7 @@
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Java/JavaFX/demo&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Java/Projects/Cherry&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -128,7 +122,10 @@
       <workItem from="1703124989523" duration="1861000" />
       <workItem from="1703153023467" duration="31000" />
       <workItem from="1703153372136" duration="1909000" />
-      <workItem from="1703157695431" duration="7271000" />
+      <workItem from="1703157695431" duration="7745000" />
+      <workItem from="1703186232477" duration="7000" />
+      <workItem from="1703248398326" duration="1346000" />
+      <workItem from="1703265144399" duration="4745000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -186,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703114686631</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add selected items on mouse enter">
+      <option name="closed" value="true" />
+      <created>1703173451090</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1703173451090</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,7 +218,8 @@
     <MESSAGE value="cleaning code" />
     <MESSAGE value="add context menu" />
     <MESSAGE value="add divider listener" />
-    <option name="LAST_COMMIT_MESSAGE" value="add divider listener" />
+    <MESSAGE value="add selected items on mouse enter" />
+    <option name="LAST_COMMIT_MESSAGE" value="add selected items on mouse enter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
