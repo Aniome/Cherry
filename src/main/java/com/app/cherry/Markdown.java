@@ -49,4 +49,17 @@ public class Markdown {
             return null;
         }
     }
+
+    public static boolean RenameFile(String NewName, String OldName, String path){
+        File oldFile = new File(path + "/" + OldName + ".md");
+        File newFile = new File(path + "/" + NewName + ".md");
+
+        boolean renamed = oldFile.renameTo(newFile);
+
+        if(renamed) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

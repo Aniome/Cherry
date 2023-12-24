@@ -42,6 +42,7 @@ public class MainController{
     final double RenameWidth = 600;
     final double RenameHeight = 250;
     Stage MainStage;
+    Stage RenameStage;
     public static String NewFileName;
     ContextMenu contextMenu;
     TreeItem<String> SelectedItem;
@@ -120,7 +121,10 @@ public class MainController{
         MenuItem menuItem1 = new MenuItem("Переименовать");
         menuItem1.setOnAction(actionEvent -> {
             SelectedItem = treeView.getSelectionModel().getSelectedItem();
-            OpenModalWindow();
+            if (RenameStage == null)
+                OpenModalWindow();
+            else
+                RenameStage.show();
         });
         MenuItem menuItem2 = new MenuItem("Переместить файл в");
         MenuItem menuItem3 = new MenuItem("Добавить в закладки");
@@ -140,11 +144,14 @@ public class MainController{
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(MainStage);
             stage.setOnHiding((event) -> {
-                SelectedItem.setValue(NewFileName);
+                boolean b = Markdown.RenameFile(NewFileName, SelectedItem.getValue(), RunApplication.FolderPath.toString());
+                if (b)
+                    SelectedItem.setValue(NewFileName);
             });
+            RenameStage = stage;
             RenameViewController renameViewController = fxmlLoader.getController();
             renameViewController.init(stage);
-            RunApplication.PrepareStage(RenameHeight, RenameWidth, scene, "", stage);
+            RunApplication.PrepareStage(RenameHeight, RenameWidth, scene, "Переименование элемента", stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
