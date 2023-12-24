@@ -1,16 +1,14 @@
 package com.app.cherry;
 
+import com.app.cherry.controllers.InitController;
+import com.app.cherry.controllers.MainController;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -59,7 +57,7 @@ public class RunApplication extends Application {
         }
         else {
             MainController mainController = fxmlLoader.getController();
-            mainController.init();
+            mainController.init(stage);
             PrepareStage(MainHeight, MainWidth, scene, title, stage);
         }
     }
@@ -114,11 +112,11 @@ public class RunApplication extends Application {
         }
     }
 
-    static void SetIcon(Stage stage){
+    public static void SetIcon(Stage stage){
         stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("Image/cherry_icon.png"))));
     }
 
-    static void PrepareStage(double height, double width, Scene scene, String title, Stage stage){
+    public static void PrepareStage(double height, double width, Scene scene, String title, Stage stage){
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setMinWidth(width);

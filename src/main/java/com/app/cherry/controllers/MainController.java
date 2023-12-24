@@ -1,25 +1,27 @@
-package com.app.cherry;
+package com.app.cherry.controllers;
 
+import com.app.cherry.EditableTreeCell;
+import com.app.cherry.Markdown;
+import com.app.cherry.RunApplication;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
-import javafx.util.Callback;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
@@ -36,14 +38,21 @@ public class MainController{
 
     private String OldTextFieldValue;
     private TreeItem<String> root;
+    TreeCell<String> cell;
+    final double RenameWidth = 600;
+    final double RenameHeight = 250;
+    Stage MainStage;
+    public static String NewFileName;
+    ContextMenu contextMenu;
+    TreeItem<String> SelectedItem;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
         Platform.exit();
     }
 
-    public void init(){
-        //listview.getStylesheets().add(Objects.requireNonNull(MainController.class.getResource("css/listview.css")).toExternalForm());
+    public void init(Stage mainStage){
+        this.MainStage = mainStage;
         root = new TreeItem<>("");
         treeView.setRoot(root);
         treeView.setShowRoot(false);
@@ -52,35 +61,28 @@ public class MainController{
             TreeItem treeItem = new TreeItem<>(file.getName().replace(".md",""));
             root.getChildren().add(treeItem);
         });
+        CreateContextMenu();
         treeView.setCellFactory(tree -> {
-            TreeCell<String> cell = new TreeCell<>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        setText(item);
-                    }
-                }
-            };
-            cell.setOnMouseEntered( mouseEvent -> {
-                TreeItem<String> treeItem = cell.getTreeItem();
+            TreeCell<String> _cell = new EditableTreeCell();
+
+            _cell.setOnMouseEntered( mouseEvent -> {
+                TreeItem<String> treeItem = _cell.getTreeItem();
                 if (treeItem == null)
                     return;
                 if (ShowingContextMenu())
                     return;
                 treeView.getSelectionModel().select(treeItem);
             });
-            cell.setOnMouseExited(mouseEvent -> {
+            _cell.setOnMouseExited(mouseEvent -> {
                 if (ShowingContextMenu())
                     return;
+                treeView.setContextMenu(null);
                 treeView.getSelectionModel().clearSelection();
             });
-            cell.setOnMouseClicked(event -> {
-                if (cell.isEmpty())
+            _cell.setOnMouseClicked(event -> {
+                TreeItem<String> selectedItem = _cell.getTreeItem();
+                if (selectedItem == null)
                     return;
-                TreeItem<String> selectedItem = cell.getTreeItem();
                 MouseButton mouseButton = event.getButton();
                 //Load data in form on click
                 if (mouseButton.equals(MouseButton.PRIMARY)){
@@ -99,27 +101,53 @@ public class MainController{
                         }
                     }
                     SelectedTab.setContent(borderPane);
-                } else if (mouseButton.equals(MouseButton.SECONDARY) && selectedItem != null){
-                    ContextMenu contextMenu = new ContextMenu();
-                    MenuItem menuItem1 = new MenuItem("Переименовать");
-/*                    menuItem1.setOnAction(actionEvent -> {
-                        new EditableTreeCell().Edit();
-                    });*/
-                    MenuItem menuItem2 = new MenuItem("Переместить файл в");
-                    MenuItem menuItem3 = new MenuItem("Добавить в закладки");
-                    MenuItem menuItem4 = new MenuItem("Удалить");
-                    contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
-                    treeView.setContextMenu(contextMenu);
-
                 }
-                //TreeItem<String> selitem = treeView.getSelectionModel().getSelectedItem();
+                if (mouseButton.equals(MouseButton.SECONDARY)){
+                    treeView.setContextMenu(contextMenu);
+                }
             });
-            return cell ;
+            cell = _cell;
+            return _cell;
         });
 
         splitpane.widthProperty().addListener((observableValue, number, t1) -> {
             splitpane.setDividerPositions(0.16353677621283255);
         });
+    }
+
+    private void CreateContextMenu(){
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Переименовать");
+        menuItem1.setOnAction(actionEvent -> {
+            SelectedItem = treeView.getSelectionModel().getSelectedItem();
+            OpenModalWindow();
+        });
+        MenuItem menuItem2 = new MenuItem("Переместить файл в");
+        MenuItem menuItem3 = new MenuItem("Добавить в закладки");
+        MenuItem menuItem4 = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
+        treeView.setContextMenu(contextMenu);
+        this.contextMenu = contextMenu;
+    }
+
+    private void OpenModalWindow(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), RenameWidth, RenameHeight);
+            Stage stage = new Stage();
+            RunApplication.SetIcon(stage);
+            stage.setResizable(false);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(MainStage);
+            stage.setOnHiding((event) -> {
+                SelectedItem.setValue(NewFileName);
+            });
+            RenameViewController renameViewController = fxmlLoader.getController();
+            renameViewController.init(stage);
+            RunApplication.PrepareStage(RenameHeight, RenameWidth, scene, "", stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private boolean ShowingContextMenu(){
@@ -128,7 +156,6 @@ public class MainController{
             if (contMenu.isShowing()){
                 return true;
             }
-            treeView.setContextMenu(null);
         }
         return false;
     }
@@ -195,7 +222,7 @@ public class MainController{
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
-        textField.getStylesheets().add(Objects.requireNonNull(MainController.class.getResource("css/text_field.css")).toExternalForm());
+        textField.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/text_field.css")).toExternalForm());
         borderPane.setTop(textField);
 
         textField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
@@ -214,7 +241,7 @@ public class MainController{
         TextArea textArea = new TextArea(){{
             setFont(new Font(16));
         }};
-        textArea.getStylesheets().add(Objects.requireNonNull(MainController.class.getResource("css/text_area.css")).toExternalForm());
+        textArea.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/text_area.css")).toExternalForm());
         borderPane.setCenter(textArea);
 
         return borderPane;

@@ -1,5 +1,7 @@
-package com.app.cherry;
+package com.app.cherry.controllers;
 
+import com.app.cherry.Alerts;
+import com.app.cherry.RunApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -142,9 +144,9 @@ public class InitController {
     }
 
     private void ShowMainStage(){
+        InitialStage.close();
         try {
-            InitialStage.close();
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("main-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), RunApplication.MainWidth, RunApplication.MainHeight);
             RunApplication.PrepareStage(RunApplication.MainHeight, RunApplication.MainWidth, scene, RunApplication.title, MainStage);
         } catch (IOException e) {

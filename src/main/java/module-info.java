@@ -15,4 +15,6 @@ module com.app.cherry {
     opens com.app.cherry.entity;
     exports com.app.cherry;
     opens com.app.cherry;
+    exports com.app.cherry.controllers;
+    opens com.app.cherry.controllers;
 }
