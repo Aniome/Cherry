@@ -102,6 +102,7 @@ public class MainController{
                         }
                     }
                     SelectedTab.setContent(borderPane);
+                    //SelectedTab.setStyle();
                 }
                 if (mouseButton.equals(MouseButton.SECONDARY)){
                     treeView.setContextMenu(contextMenu);
@@ -144,9 +145,17 @@ public class MainController{
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(MainStage);
             stage.setOnHiding((event) -> {
+                if (NewFileName == null) {
+                    return;
+                }
                 boolean b = Markdown.RenameFile(NewFileName, SelectedItem.getValue(), RunApplication.FolderPath.toString());
-                if (b)
+                if (b){
                     SelectedItem.setValue(NewFileName);
+                    var tabs = Tab_Pane.getTabs();
+                    for(Tab tab :tabs){
+
+                    }
+                }
             });
             RenameStage = stage;
             RenameViewController renameViewController = fxmlLoader.getController();
@@ -159,10 +168,8 @@ public class MainController{
 
     private boolean ShowingContextMenu(){
         ContextMenu contMenu = treeView.getContextMenu();
-        if (contMenu != null){
-            if (contMenu.isShowing()){
-                return true;
-            }
+        if (contMenu != null && contMenu.isShowing()){
+            return true;
         }
         return false;
     }
@@ -200,8 +207,7 @@ public class MainController{
         AddTab(NewNote.getName());
         TreeItem<String> treeItem = new TreeItem<>(NewNote.getName());
         root.getChildren().add(treeItem);
-        SortedList<TreeItem<String>> content = root.getChildren().sorted(Comparator.comparing(TreeItem::getValue));
-        root.getChildren().setAll(content);
+        SortTreeView();
     }
 
     private boolean CheckTree(String str){
@@ -216,9 +222,19 @@ public class MainController{
 
     @FXML
     private void CreateFolder(){
-        TreeItem<String> treeItem = new TreeItem<>("Test");
+        File Folder = Markdown.CreateFolderMarkdown();
+        if (Folder == null) {
+            return;
+        }
+        TreeItem<String> treeItem = new TreeItem<>(Folder.getName());
         treeItem.getChildren().add(new TreeItem<>());
         root.getChildren().add(treeItem);
+        SortTreeView();
+    }
+
+    private void SortTreeView(){
+        SortedList<TreeItem<String>> content = root.getChildren().sorted(Comparator.comparing(TreeItem::getValue));
+        root.getChildren().setAll(content);
     }
 
     //Creates a form and fills it with content

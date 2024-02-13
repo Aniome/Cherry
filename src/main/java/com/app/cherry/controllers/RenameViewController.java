@@ -21,7 +21,15 @@ public class RenameViewController {
 
     @FXML
     private void Confirm(){
-        MainController.NewFileName = txtField.getText();
+        String txtFieldText = txtField.getText();
+        if (txtFieldText.isEmpty())
+            return;
+        MainController.NewFileName = txtFieldText;
+        stage.close();
+    }
+
+    @FXML
+    private void Cancel(){
         stage.close();
     }
 }

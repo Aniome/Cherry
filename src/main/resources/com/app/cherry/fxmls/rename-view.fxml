@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.RenameViewController">
    <center>
       <TextField fx:id="txtField" BorderPane.alignment="CENTER">
@@ -25,7 +24,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Отмена">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#Cancel" text="Отмена">
                <font>
                   <Font size="18.0" />
                </font>
@@ -36,7 +35,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Введите новое значение">
+            <Label text="Введите новое имя">
                <font>
                   <Font size="18.0" />
                </font>

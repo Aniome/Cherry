@@ -152,7 +152,7 @@
       </BorderPane>
       <TabPane fx:id="Tab_Pane" tabClosingPolicy="ALL_TABS">
          <tabs>
-            <Tab text="Новая вкладка">
+            <Tab closable="false" text="Новая вкладка">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>

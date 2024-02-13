@@ -33,6 +33,7 @@ public class Markdown {
         File file = new File(path + ".md");
         try {
             if (file.exists()) {
+                //trying out a new name for the file
                 int i = 1;
                 while (file.exists()){
                     file = new File(path + i + ".md");
@@ -48,6 +49,27 @@ public class Markdown {
             Alerts.CreateAndShowError(e.getMessage());
             return null;
         }
+    }
+
+    public static File CreateFolderMarkdown(){
+        File folder = new File(RunApplication.FolderPath.toString() + "\\Без названия");
+        folder = CheckExists(folder);
+        if (folder.mkdir()){
+            return folder;
+        } else {
+            return null;
+        }
+    }
+
+    public static File CheckExists(File f) {
+        if (f.exists()) {
+            int i = 1;
+            while (f.exists()){
+                f = new File(RunApplication.FolderPath.toString() + "\\Без названия" + i + ".md");
+                i++;
+            }
+        }
+        return f;
     }
 
     public static boolean RenameFile(String NewName, String OldName, String path){
