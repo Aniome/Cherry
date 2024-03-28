@@ -17,4 +17,8 @@ module com.app.cherry {
     opens com.app.cherry;
     exports com.app.cherry.controllers;
     opens com.app.cherry.controllers;
+    exports com.app.cherry.util;
+    opens com.app.cherry.util;
+    exports com.app.cherry.controls;
+    opens com.app.cherry.controls;
 }

@@ -1,6 +1,6 @@
 package com.app.cherry.controllers;
 
-import com.app.cherry.EditableTreeCell;
+import com.app.cherry.controls.EditableTreeCell;
 import com.app.cherry.Markdown;
 import com.app.cherry.RunApplication;
 import javafx.application.Platform;
@@ -46,6 +46,7 @@ public class MainController{
     public static String NewFileName;
     ContextMenu contextMenu;
     TreeItem<String> SelectedItem;
+    Tab SelectedTab;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -85,24 +86,8 @@ public class MainController{
                 if (selectedItem == null)
                     return;
                 MouseButton mouseButton = event.getButton();
-                //Load data in form on click
                 if (mouseButton.equals(MouseButton.PRIMARY)){
-                    Tab SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
-                    SelectedTab.setContent(null);
-                    BorderPane borderPane = CreateTab(SelectedTab);
-                    String filename = selectedItem.getValue();
-                    SelectedTab.setText(filename);
-                    ObservableList<Node> childrens = borderPane.getChildren();
-                    for (Node children: childrens){
-                        if (children instanceof TextField){
-                            ((TextField) children).setText(filename);
-                        }
-                        if (children instanceof TextArea){
-                            ((TextArea) children).setText(Markdown.ReadFile(filename));
-                        }
-                    }
-                    SelectedTab.setContent(borderPane);
-                    //SelectedTab.setStyle();
+                    LoadDataOnFormOnClick(selectedItem);
                 }
                 if (mouseButton.equals(MouseButton.SECONDARY)){
                     treeView.setContextMenu(contextMenu);
@@ -122,6 +107,7 @@ public class MainController{
         MenuItem menuItem1 = new MenuItem("Переименовать");
         menuItem1.setOnAction(actionEvent -> {
             SelectedItem = treeView.getSelectionModel().getSelectedItem();
+            SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
             if (RenameStage == null)
                 OpenModalWindow();
             else
@@ -133,6 +119,24 @@ public class MainController{
         contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
         treeView.setContextMenu(contextMenu);
         this.contextMenu = contextMenu;
+    }
+
+    private void LoadDataOnFormOnClick(TreeItem<String> selectedItem){
+        Tab tab = Tab_Pane.getSelectionModel().getSelectedItem();
+        tab.setContent(null);
+        BorderPane borderPane = CreateTab(tab);
+        String filename = selectedItem.getValue();
+        tab.setText(filename);
+        ObservableList<Node> childrens = borderPane.getChildren();
+        for (Node children: childrens){
+            if (children instanceof TextField){
+                ((TextField) children).setText(filename);
+            }
+            if (children instanceof TextArea){
+                ((TextArea) children).setText(Markdown.ReadFile(filename));
+            }
+        }
+        tab.setContent(borderPane);
     }
 
     private void OpenModalWindow(){
@@ -151,10 +155,7 @@ public class MainController{
                 boolean b = Markdown.RenameFile(NewFileName, SelectedItem.getValue(), RunApplication.FolderPath.toString());
                 if (b){
                     SelectedItem.setValue(NewFileName);
-                    var tabs = Tab_Pane.getTabs();
-                    for(Tab tab :tabs){
-
-                    }
+                    SelectedTab.setText(NewFileName);
                 }
             });
             RenameStage = stage;
@@ -178,7 +179,7 @@ public class MainController{
     @FXML
     private Tab AddTab() {
         Tab tab = new Tab("Новая вкладка");
-        tab.setContent(CreateEmptyTab(tab));
+        tab.setContent(CreateEmptyTab());
         SelectTab(tab);
         return tab;
     }
@@ -270,7 +271,7 @@ public class MainController{
         return borderPane;
     }
 
-    private BorderPane CreateEmptyTab(Tab tab){
+    private BorderPane CreateEmptyTab(){
         BorderPane borderPane = new BorderPane();
         Label label = new Label("Ни один файл не открыт");
         label.setFont(new Font(29));

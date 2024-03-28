@@ -1,4 +1,4 @@
-package com.app.cherry;
+package com.app.cherry.util;
 
 import javafx.scene.control.Alert;
 

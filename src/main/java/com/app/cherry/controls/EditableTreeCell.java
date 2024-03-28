@@ -1,4 +1,4 @@
-package com.app.cherry;
+package com.app.cherry.controls;
 
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TextField;
