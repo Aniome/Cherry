@@ -169,10 +169,7 @@ public class MainController{
 
     private boolean ShowingContextMenu(){
         ContextMenu contMenu = treeView.getContextMenu();
-        if (contMenu != null && contMenu.isShowing()){
-            return true;
-        }
-        return false;
+        return contMenu != null && contMenu.isShowing();
     }
 
     //Creates a tab and gives focus to it
@@ -205,8 +202,9 @@ public class MainController{
         if (NewNote == null){
             return;
         }
-        AddTab(NewNote.getName());
-        TreeItem<String> treeItem = new TreeItem<>(NewNote.getName());
+        String name = NewNote.getName().replace(".md", "");
+        AddTab(name);
+        TreeItem<String> treeItem = new TreeItem<>(name);
         root.getChildren().add(treeItem);
         SortTreeView();
     }

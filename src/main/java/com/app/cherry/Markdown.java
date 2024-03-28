@@ -32,16 +32,8 @@ public class Markdown {
 
     public static File CreateFileMarkdown(){
         String path = RunApplication.FolderPath.toString() + "\\Без названия";
-        File file = new File(path + ".md");
         try {
-            if (file.exists()) {
-                //trying out a new name for the file
-                int i = 1;
-                while (file.exists()){
-                    file = new File(path + i + ".md");
-                    i++;
-                }
-            }
+            File file = CheckExists(new File(path), ".md");
             if (file.createNewFile()){
                 return file;
             } else {
@@ -55,7 +47,7 @@ public class Markdown {
 
     public static File CreateFolderMarkdown(){
         File folder = new File(RunApplication.FolderPath.toString() + "\\Без названия");
-        folder = CheckExists(folder);
+        folder = CheckExists(folder, "");
         if (folder.mkdir()){
             return folder;
         } else {
@@ -63,11 +55,11 @@ public class Markdown {
         }
     }
 
-    public static File CheckExists(File f) {
+    public static File CheckExists(File f, String extension) {
         if (f.exists()) {
             int i = 1;
             while (f.exists()){
-                f = new File(RunApplication.FolderPath.toString() + "\\Без названия" + i + ".md");
+                f = new File(RunApplication.FolderPath.toString() + "\\Без названия" + i + extension);
                 i++;
             }
         }
