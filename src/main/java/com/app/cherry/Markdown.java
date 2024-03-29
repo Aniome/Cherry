@@ -1,10 +1,15 @@
 package com.app.cherry;
 
 import com.app.cherry.util.Alerts;
+import com.app.cherry.util.mdFileVisitor;
+import javafx.scene.control.TreeItem;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Markdown {
@@ -28,6 +33,16 @@ public class Markdown {
         String path = RunApplication.FolderPath.toString() + "\\";
         File file = new File(path);
         return file.listFiles();
+    }
+
+    public static void FillTreeView(TreeItem<String> treeItem){
+        mdFileVisitor fileVisitor = new mdFileVisitor(treeItem);
+        Path path = Paths.get("");
+        try {
+            Files.walkFileTree(path, fileVisitor);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static File CreateFileMarkdown(){

@@ -60,7 +60,10 @@ public class MainController{
         treeView.setShowRoot(false);
         //Loading list files in treeview
         Arrays.stream(Markdown.getFiles()).forEach(file -> {
-            TreeItem treeItem = new TreeItem<>(file.getName().replace(".md",""));
+            TreeItem<String> treeItem = new TreeItem<>(file.getName().replace(".md",""));
+            if (file.isDirectory()){
+                treeItem.getChildren().add(null);
+            }
             root.getChildren().add(treeItem);
         });
         CreateContextMenu();
@@ -225,9 +228,9 @@ public class MainController{
         if (Folder == null) {
             return;
         }
-        TreeItem<String> treeItem = new TreeItem<>(Folder.getName());
-        treeItem.getChildren().add(new TreeItem<>());
-        root.getChildren().add(treeItem);
+        TreeItem<String> folder = new TreeItem<>(Folder.getName());
+        folder.getChildren().add(null);
+        root.getChildren().add(folder);
         SortTreeView();
     }
 
