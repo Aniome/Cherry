@@ -22,9 +22,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
+import java.nio.file.Path;
+import java.util.*;
 
 public class MainController{
 
@@ -59,12 +58,19 @@ public class MainController{
         treeView.setRoot(root);
         treeView.setShowRoot(false);
         //Loading list files in treeview
-        Arrays.stream(Markdown.getFiles()).forEach(file -> {
-            TreeItem<String> treeItem = new TreeItem<>(file.getName().replace(".md",""));
-            if (file.isDirectory()){
-                treeItem.getChildren().add(null);
+        List<Path> pathList = Markdown.getListFiles();
+        pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
+        pathList.forEach(path -> {
+            String[] paths = path.toString().split("\\\\");
+            TreeItem<String> treeItem = root;
+            TreeItem<String> newTreeItem;
+            for (String str: paths){
+                if (str.contains(".md"))
+                    str = str.replace(".md", "");
+                newTreeItem = new TreeItem<>(str);
+                treeItem.getChildren().add(newTreeItem);
+                treeItem = newTreeItem;
             }
-            root.getChildren().add(treeItem);
         });
         CreateContextMenu();
         treeView.setCellFactory(tree -> {
@@ -86,7 +92,7 @@ public class MainController{
             });
             _cell.setOnMouseClicked(event -> {
                 TreeItem<String> selectedItem = _cell.getTreeItem();
-                if (selectedItem == null)
+                if (selectedItem == null || !selectedItem.isLeaf())
                     return;
                 MouseButton mouseButton = event.getButton();
                 if (mouseButton.equals(MouseButton.PRIMARY)){
@@ -136,7 +142,7 @@ public class MainController{
                 ((TextField) children).setText(filename);
             }
             if (children instanceof TextArea){
-                ((TextArea) children).setText(Markdown.ReadFile(filename));
+                ((TextArea) children).setText(Markdown.ReadFile(selectedItem));
             }
         }
         tab.setContent(borderPane);

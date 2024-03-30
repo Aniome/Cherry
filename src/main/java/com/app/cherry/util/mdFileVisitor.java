@@ -1,5 +1,8 @@
 package com.app.cherry.util;
 
+import com.app.cherry.Markdown;
+import com.app.cherry.RunApplication;
+import com.app.cherry.controllers.MainController;
 import javafx.scene.control.TreeItem;
 
 import java.io.File;
@@ -10,20 +13,26 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class mdFileVisitor extends SimpleFileVisitor<Path>{
-    TreeItem<String> treeItem;
+public class mdFileVisitor implements FileVisitor<Path>{
 
-    public mdFileVisitor(TreeItem<String> treeItem) {
-        this.treeItem = treeItem;
+    @Override
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        return FileVisitResult.CONTINUE;
     }
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        Markdown.list.add(file);
         return FileVisitResult.CONTINUE;
     }
 
     @Override
     public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-        return null;
+        return FileVisitResult.CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+        return FileVisitResult.CONTINUE;
     }
 }

@@ -10,23 +10,26 @@ import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Markdown {
-    public static String ReadFile(String FileName){
-        String result = "";
+    public static List<Path> list;
+    public static String ReadFile(TreeItem<String> treeItem){
+        StringBuilder result = new StringBuilder();
         try {
-            File file = new File(RunApplication.FolderPath.toString() + "\\" + FileName + ".md");
+            File file = new File(RunApplication.FolderPath.toString() + "\\" + treeItem + ".md");
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                result += line;
+                result.append(line);
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Alerts.CreateAndShowError(e.getMessage());
         }
-        return result;
+        return result.toString();
     }
 
     public static File[] getFiles(){
@@ -35,8 +38,19 @@ public class Markdown {
         return file.listFiles();
     }
 
+    public static List<Path> getListFiles(){
+        list = new LinkedList<>();
+        Path path = RunApplication.FolderPath;
+        try {
+            Files.walkFileTree(path, new mdFileVisitor());
+        } catch (IOException e) {
+            Alerts.CreateAndShowError(e.getMessage());
+        }
+        return list;
+    }
+
     public static void FillTreeView(TreeItem<String> treeItem){
-        mdFileVisitor fileVisitor = new mdFileVisitor(treeItem);
+        mdFileVisitor fileVisitor = new mdFileVisitor();
         Path path = Paths.get("");
         try {
             Files.walkFileTree(path, fileVisitor);
