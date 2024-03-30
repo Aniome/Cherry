@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="some fixes">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add load files in tree">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/mdFileVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/mdFileVisitor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +50,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -144,7 +143,7 @@
       <workItem from="1711671013293" duration="5746000" />
       <workItem from="1711683435773" duration="786000" />
       <workItem from="1711732528750" duration="809000" />
-      <workItem from="1711756925599" duration="5510000" />
+      <workItem from="1711756925599" duration="6999000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -266,7 +265,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711720014997</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="add load files in tree">
+      <option name="closed" value="true" />
+      <created>1711766821625</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1711766821625</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,18 +308,10 @@
     <MESSAGE value="fix rename window" />
     <MESSAGE value="add create folder and fix bags" />
     <MESSAGE value="some fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="some fixes" />
+    <MESSAGE value="add load files in tree" />
+    <option name="LAST_COMMIT_MESSAGE" value="add load files in tree" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="root.children.get(8)" />
