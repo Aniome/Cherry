@@ -2,11 +2,15 @@ package com.app.cherry;
 
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.mdFileVisitor;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedList;
@@ -14,6 +18,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Markdown {
+    //Lis for FileVisitor
     public static List<Path> pathList;
     public static String ReadFile(TreeItem<String> treeItem){
         StringBuilder result = new StringBuilder();
@@ -38,6 +43,21 @@ public class Markdown {
             Alerts.CreateAndShowError(e.getMessage());
         }
         return result.toString();
+    }
+
+    public static int WriteFile(String filename, TextArea textArea){
+        int result;
+        String path = RunApplication.FolderPath.toString() + "\\" + filename;
+        try (RandomAccessFile file = new RandomAccessFile(path, "rw");
+            FileChannel channel = file.getChannel()) {
+            String text = textArea.getText();
+            ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
+            result = channel.write(buffer);
+        } catch (IOException e) {
+            Alerts.CreateAndShowWarning(e.getMessage());
+            return 0;
+        }
+        return result;
     }
 
     public static List<Path> getListFiles(){
