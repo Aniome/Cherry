@@ -4,7 +4,9 @@ import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
@@ -34,7 +36,9 @@ public class RunApplication extends Application {
         HibernateUtil hibernateUtil = new HibernateUtil();
         hibernateUtil.setUp();
         FolderPath = hibernateUtil.getPath();
-        hibernateUtil.tearDown();
+        Integer height = hibernateUtil.getHeight();
+        Integer width = hibernateUtil.getWidth();
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -58,7 +62,22 @@ public class RunApplication extends Application {
         else {
             MainController mainController = fxmlLoader.getController();
             mainController.init(stage);
+            stage.setHeight(height);
+            stage.setWidth(width);
             PrepareStage(MainHeight, MainWidth, scene, title, stage);
+            stage.heightProperty().addListener((observableValue, number, t1) -> {
+
+            });
+            stage.widthProperty().addListener((observableValue, number, t1) -> {
+                System.out.println("observableValue = " + observableValue);
+                System.out.println("number = " + number);
+                System.out.println("t1 = " + t1);
+            });
+            stage.setOnHiding((event) -> {
+                Integer i = (int) stage.getHeight();
+                hibernateUtil.setHeight(i);
+                hibernateUtil.tearDown();
+            });
         }
     }
 

@@ -14,6 +14,12 @@ public class Settings {
     @Column(name = "LastPath", nullable = true, length = -1)
     private String lastPath;
 
+    @Column(name = "height")
+    private Integer height;
+
+    @Column(name = "width")
+    private Integer width;
+
     public Settings(String path) {
         this.lastPath = path;
     }
@@ -36,6 +42,22 @@ public class Settings {
 
     public void setLastPath(String lastPath) {
         this.lastPath = lastPath;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
     }
 
     @Override

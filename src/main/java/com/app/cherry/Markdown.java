@@ -45,19 +45,17 @@ public class Markdown {
         return result.toString();
     }
 
-    public static int WriteFile(String filename, TextArea textArea){
+    public static void WriteFile(String filename, TextArea textArea){
         int result;
         String path = RunApplication.FolderPath.toString() + "\\" + filename;
         try (RandomAccessFile file = new RandomAccessFile(path, "rw");
             FileChannel channel = file.getChannel()) {
             String text = textArea.getText();
             ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
-            result = channel.write(buffer);
+            channel.write(buffer);
         } catch (IOException e) {
             Alerts.CreateAndShowWarning(e.getMessage());
-            return 0;
         }
-        return result;
     }
 
     public static List<Path> getListFiles(){
