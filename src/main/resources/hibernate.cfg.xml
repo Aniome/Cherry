@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:sqlite:C:/Users/user-pc/IdeaProjects/Cherry/src/main/resources/com/app/cherry/Databases.db</property>
+    <property name="connection.url">jdbc:sqlite:D:/Programming/Java/Projects/Cherry/src/main/resources/com/app/cherry/Databases.db</property>
     <property name="connection.driver_class">org.sqlite.JDBC</property>
     <property name="hibernate.jdbc.use_get_generated_keys">false</property>
     <mapping class="com.app.cherry.entity.Settings" />

@@ -3,6 +3,8 @@ package com.app.cherry;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
 import javafx.application.Application;
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -36,8 +38,8 @@ public class RunApplication extends Application {
         HibernateUtil hibernateUtil = new HibernateUtil();
         hibernateUtil.setUp();
         FolderPath = hibernateUtil.getPath();
-        Integer height = hibernateUtil.getHeight();
-        Integer width = hibernateUtil.getWidth();
+        Double height = hibernateUtil.getHeight();
+        Double width = hibernateUtil.getWidth();
 
 
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
@@ -45,13 +47,11 @@ public class RunApplication extends Application {
         // width height
         Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
         //stage.setMaximized(true);
-        //stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("Image/cherry_icon.png"))));
         SetIcon(stage);
         if (FolderPath == null){
             fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
             Stage InitialStage = new Stage();
-            //InitialStage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("Image/cherry_icon.png"))));
             SetIcon(InitialStage);
             InitController initController = fxmlLoader.getController();
             initController.setInitialStage(InitialStage);
@@ -65,17 +65,9 @@ public class RunApplication extends Application {
             stage.setHeight(height);
             stage.setWidth(width);
             PrepareStage(MainHeight, MainWidth, scene, title, stage);
-            stage.heightProperty().addListener((observableValue, number, t1) -> {
-
-            });
-            stage.widthProperty().addListener((observableValue, number, t1) -> {
-                System.out.println("observableValue = " + observableValue);
-                System.out.println("number = " + number);
-                System.out.println("t1 = " + t1);
-            });
             stage.setOnHiding((event) -> {
-                Integer i = (int) stage.getHeight();
-                hibernateUtil.setHeight(i);
+                hibernateUtil.setHeight(stage.getHeight());
+                hibernateUtil.setWidth(stage.getWidth());
                 hibernateUtil.tearDown();
             });
         }
@@ -105,6 +97,8 @@ public class RunApplication extends Application {
                 }
             }
 
+            if (connection == null)
+                return;
             // add a tag to the document
             String value = connection.getValue();
             if (value.isEmpty()){
@@ -115,10 +109,6 @@ public class RunApplication extends Application {
             } else {
                 return;
             }
-
-            /*Element path = new Element("property");
-            path.setAttribute("name","connection.url");
-            sessionfactory.addContent(0, path);*/
 
             // write changes in XML file
             XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());

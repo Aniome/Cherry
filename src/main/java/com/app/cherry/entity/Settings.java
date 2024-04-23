@@ -15,10 +15,10 @@ public class Settings {
     private String lastPath;
 
     @Column(name = "height")
-    private Integer height;
+    private Double height;
 
     @Column(name = "width")
-    private Integer width;
+    private Double width;
 
     public Settings(String path) {
         this.lastPath = path;
@@ -44,19 +44,19 @@ public class Settings {
         this.lastPath = lastPath;
     }
 
-    public Integer getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public Integer getWidth() {
+    public Double getWidth() {
         return width;
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(Double width) {
         this.width = width;
     }
 

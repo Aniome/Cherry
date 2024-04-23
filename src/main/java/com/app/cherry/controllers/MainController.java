@@ -4,7 +4,6 @@ import com.app.cherry.controls.EditableTreeCell;
 import com.app.cherry.Markdown;
 import com.app.cherry.RunApplication;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
@@ -142,11 +141,8 @@ public class MainController{
             if (children instanceof TextField){
                 ((TextField) children).setText(filename);
             }
-            if (children instanceof TextArea textArea){
-                textArea.setText(Markdown.ReadFile(selectedItem));
-                textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-                    Markdown.WriteFile(filename + ".md", textArea);
-                });
+            if (children instanceof TextArea){
+                ((TextArea) children).setText(Markdown.ReadFile(selectedItem));
             }
         }
         tab.setContent(borderPane);

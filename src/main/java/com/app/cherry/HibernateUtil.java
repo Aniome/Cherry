@@ -35,14 +35,15 @@ public class HibernateUtil {
         }
     }
 
-    public Integer getHeight(){
+    public Double getHeight(){
         Session session = sessionFactory.openSession();
         Settings settings = session.get(Settings.class, 1);
+        Double height = settings.getHeight();
         session.close();
-        return settings.getHeight();
+        return height;
     }
 
-    public void setHeight(Integer height){
+    public void setHeight(Double height){
         sessionFactory.inTransaction(session -> {
             Settings settings = session.get(Settings.class, 1);
             settings.setHeight(height);
@@ -50,11 +51,20 @@ public class HibernateUtil {
         });
     }
 
-    public Integer getWidth(){
+    public Double getWidth(){
         Session session = sessionFactory.openSession();
         Settings settings = session.get(Settings.class, 1);
+        Double width = settings.getWidth();
         session.close();
-        return settings.getWidth();
+        return width;
+    }
+
+    public void setWidth(Double width){
+        sessionFactory.inTransaction(session -> {
+            Settings settings = session.get(Settings.class, 1);
+            settings.setWidth(width);
+            session.persist(settings);
+        });
     }
 
     public Path getPath(){
