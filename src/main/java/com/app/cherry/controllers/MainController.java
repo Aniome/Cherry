@@ -106,6 +106,7 @@ public class MainController{
             return _cell;
         });
 
+        splitpane.setDividerPositions(0.15);
         splitpane.widthProperty().addListener((observableValue, number, t1) -> {
             splitpane.setDividerPositions(0.16353677621283255);
         });

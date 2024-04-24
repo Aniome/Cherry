@@ -67,6 +67,22 @@ public class HibernateUtil {
         });
     }
 
+    public Boolean isMaximized(){
+        Session session = sessionFactory.openSession();
+        Settings settings = session.get(Settings.class, 1);
+        Integer isMaximized = settings.getIsMaximized();
+        session.close();
+        return isMaximized != null && isMaximized == 1;
+    }
+
+    public void setIsMaximized(Boolean isMaximized){
+        sessionFactory.inTransaction(session -> {
+            Settings settings = session.get(Settings.class, 1);
+            settings.setIsMaximized(isMaximized ? 1 : 0);
+            session.persist(settings);
+        });
+    }
+
     public Path getPath(){
         Session session = sessionFactory.openSession();
         Settings settings = session.get(Settings.class, 1);

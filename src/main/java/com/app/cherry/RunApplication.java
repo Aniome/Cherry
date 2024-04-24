@@ -65,9 +65,11 @@ public class RunApplication extends Application {
             stage.setHeight(height);
             stage.setWidth(width);
             PrepareStage(MainHeight, MainWidth, scene, title, stage);
+            stage.setMaximized(hibernateUtil.isMaximized());
             stage.setOnHiding((event) -> {
                 hibernateUtil.setHeight(stage.getHeight());
                 hibernateUtil.setWidth(stage.getWidth());
+                hibernateUtil.setIsMaximized(stage.isMaximized());
                 hibernateUtil.tearDown();
             });
         }

@@ -20,6 +20,9 @@ public class Settings {
     @Column(name = "width")
     private Double width;
 
+    @Column(name = "isMaximized")
+    private Integer isMaximized;
+
     public Settings(String path) {
         this.lastPath = path;
     }
@@ -58,6 +61,14 @@ public class Settings {
 
     public void setWidth(Double width) {
         this.width = width;
+    }
+
+    public Integer getIsMaximized() {
+        return isMaximized;
+    }
+
+    public void setIsMaximized(Integer isMaximized) {
+        this.isMaximized = isMaximized;
     }
 
     @Override
