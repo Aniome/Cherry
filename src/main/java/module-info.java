@@ -10,7 +10,6 @@ module com.app.cherry {
     requires java.naming;
     requires jakarta.persistence;
     requires java.sql;
-    requires org.jdom2;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

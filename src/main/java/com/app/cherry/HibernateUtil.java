@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,8 +17,12 @@ public class HibernateUtil {
 
     protected void setUp() {
         // A SessionFactory is set up once for an application!
+        File path = new File("");
+        String absolutePath = path.getAbsolutePath().replace("\\", "/");
+        String dbPath = String.format("jdbc:sqlite:%s/Databases.db", absolutePath);
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
+                //.applySetting("hibernate.connection.url", dbPath)
                 .build();
         try {
             sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
