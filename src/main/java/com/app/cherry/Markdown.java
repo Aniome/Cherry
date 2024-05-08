@@ -45,9 +45,8 @@ public class Markdown {
         return result.toString();
     }
 
-    public static void WriteFile(String filename, TextArea textArea){
-        int result;
-        String path = RunApplication.FolderPath.toString() + "\\" + filename;
+    public static void WriteFile(String filepath, TextArea textArea){
+        String path = RunApplication.FolderPath.toString() + "\\" + filepath;
         try (RandomAccessFile file = new RandomAccessFile(path, "rw");
             FileChannel channel = file.getChannel()) {
             String text = textArea.getText();

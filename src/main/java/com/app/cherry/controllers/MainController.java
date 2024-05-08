@@ -123,10 +123,9 @@ public class MainController{
             else
                 RenameStage.show();
         });
-        MenuItem menuItem2 = new MenuItem("Переместить файл в");
-        MenuItem menuItem3 = new MenuItem("Добавить в закладки");
-        MenuItem menuItem4 = new MenuItem("Удалить");
-        contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4);
+        MenuItem menuItem2 = new MenuItem("Добавить в закладки");
+        MenuItem menuItem3 = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
         treeView.setContextMenu(contextMenu);
         this.contextMenu = contextMenu;
     }
@@ -142,8 +141,24 @@ public class MainController{
             if (children instanceof TextField){
                 ((TextField) children).setText(filename);
             }
-            if (children instanceof TextArea){
-                ((TextArea) children).setText(Markdown.ReadFile(selectedItem));
+            if (children instanceof TextArea textArea){
+                textArea.setText(Markdown.ReadFile(selectedItem));
+                textArea.textProperty().addListener((observableValue, s, t1) -> {
+                    TreeItem<String> treeItem = selectedItem;
+                    List<String> list = new ArrayList<>();
+                    while (treeItem.getParent() != null){
+                        if (treeItem.isLeaf()){
+                            list.add(treeItem.getValue() + ".md");
+                        } else {
+                            list.add(treeItem.getValue() + "\\");
+                        }
+                        treeItem = treeItem.getParent();
+                    }
+                    list = list.reversed();
+                    StringBuilder filepath = new StringBuilder();
+                    list.forEach(filepath::append);
+                    Markdown.WriteFile(filepath.toString(), textArea);
+                });
             }
         }
         tab.setContent(borderPane);
