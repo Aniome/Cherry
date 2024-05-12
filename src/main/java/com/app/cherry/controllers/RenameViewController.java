@@ -24,7 +24,7 @@ public class RenameViewController {
         String txtFieldText = txtField.getText();
         if (txtFieldText.isEmpty())
             return;
-        MainController.NewFileName = txtFieldText;
+        MainController.newFileName = txtFieldText;
         stage.close();
     }
 

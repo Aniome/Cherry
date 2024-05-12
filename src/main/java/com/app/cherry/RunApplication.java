@@ -21,8 +21,8 @@ public class RunApplication extends Application {
     public static final String title = "Cherry";
     private static final double InitialHeight = 400;
     private static final double InitialWidth = 600;
-    public static final double MainHeight = 720;
-    public static final double MainWidth = 1280;
+    public static final double MainHeight = 480;
+    public static final double MainWidth = 640;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -57,9 +57,12 @@ public class RunApplication extends Application {
             PrepareStage(MainHeight, MainWidth, scene, title, stage);
             stage.setMaximized(hibernateUtil.isMaximized());
             stage.setOnHiding((event) -> {
-                hibernateUtil.setHeight(stage.getHeight());
-                hibernateUtil.setWidth(stage.getWidth());
-                hibernateUtil.setIsMaximized(stage.isMaximized());
+                boolean isMaximized = stage.isMaximized();
+                if (!isMaximized) {
+                    hibernateUtil.setHeight(stage.getHeight());
+                    hibernateUtil.setWidth(stage.getWidth());
+                }
+                hibernateUtil.setIsMaximized(isMaximized);
                 hibernateUtil.tearDown();
             });
         }

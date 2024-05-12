@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,23 +30,24 @@ public class MainController{
 
     @FXML
     private TreeView<String> treeView;
-
     @FXML
-    private TabPane Tab_Pane;
+    private TabPane tabPane;
     @FXML
-    private SplitPane splitpane;
+    private SplitPane splitPane;
+    @FXML
+    private HBox HBoxNotes;
 
-    private String OldTextFieldValue;
+    private String oldTextFieldValue;
     private TreeItem<String> root;
     TreeCell<String> cell;
-    final double RenameWidth = 600;
-    final double RenameHeight = 250;
-    Stage MainStage;
-    Stage RenameStage;
-    public static String NewFileName;
+    final double renameWidth = 600;
+    final double renameHeight = 250;
+    Stage mainStage;
+    Stage renameStage;
+    public static String newFileName;
     ContextMenu contextMenu;
-    TreeItem<String> SelectedItem;
-    Tab SelectedTab;
+    TreeItem<String> selectedItem;
+    Tab selectedTab;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -53,7 +55,7 @@ public class MainController{
     }
 
     public void init(Stage mainStage){
-        this.MainStage = mainStage;
+        this.mainStage = mainStage;
         root = new TreeItem<>("");
         treeView.setRoot(root);
         treeView.setShowRoot(false);
@@ -106,9 +108,25 @@ public class MainController{
             return _cell;
         });
 
-        splitpane.setDividerPositions(0.15);
-        splitpane.widthProperty().addListener((observableValue, number, t1) -> {
-            splitpane.setDividerPositions(0.16353677621283255);
+        splitPane.setDividerPositions(0.15);
+        splitPane.widthProperty().addListener((observableValue, number, t1) -> {
+            splitPane.setDividerPositions(0.16353677621283255);
+        });
+
+        createScalable();
+    }
+
+    private void createScalable(){
+        var HBoxNotesChildren = HBoxNotes.getChildren();
+        HBoxNotes.heightProperty().addListener((observableValue, number, t1) -> {
+            double newHeight = (t1.doubleValue() / 10) * 8;
+            for (Node button: HBoxNotesChildren)
+                ((Button)button).setPrefHeight(newHeight);
+        });
+        HBoxNotes.widthProperty().addListener((observableValue, number, t1) -> {
+            double newWidth = (t1.doubleValue() / 10) * 2;
+            for (Node button: HBoxNotesChildren)
+                ((Button)button).setPrefWidth(newWidth);
         });
     }
 
@@ -116,12 +134,12 @@ public class MainController{
         ContextMenu contextMenu = new ContextMenu();
         MenuItem menuItem1 = new MenuItem("Переименовать");
         menuItem1.setOnAction(actionEvent -> {
-            SelectedItem = treeView.getSelectionModel().getSelectedItem();
-            SelectedTab = Tab_Pane.getSelectionModel().getSelectedItem();
-            if (RenameStage == null)
+            selectedItem = treeView.getSelectionModel().getSelectedItem();
+            selectedTab = tabPane.getSelectionModel().getSelectedItem();
+            if (renameStage == null)
                 OpenModalWindow();
             else
-                RenameStage.show();
+                renameStage.show();
         });
         MenuItem menuItem2 = new MenuItem("Добавить в закладки");
         MenuItem menuItem3 = new MenuItem("Удалить");
@@ -131,7 +149,7 @@ public class MainController{
     }
 
     private void LoadDataOnFormOnClick(TreeItem<String> selectedItem){
-        Tab tab = Tab_Pane.getSelectionModel().getSelectedItem();
+        Tab tab = tabPane.getSelectionModel().getSelectedItem();
         tab.setContent(null);
         BorderPane borderPane = CreateTab(tab);
         String filename = selectedItem.getValue();
@@ -167,26 +185,26 @@ public class MainController{
     private void OpenModalWindow(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), RenameWidth, RenameHeight);
+            Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
             Stage stage = new Stage();
             RunApplication.SetIcon(stage);
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(MainStage);
+            stage.initOwner(mainStage);
             stage.setOnHiding((event) -> {
-                if (NewFileName == null) {
+                if (newFileName == null) {
                     return;
                 }
-                boolean b = Markdown.RenameFile(NewFileName, SelectedItem.getValue(), RunApplication.FolderPath.toString());
+                boolean b = Markdown.RenameFile(newFileName, selectedItem.getValue(), RunApplication.FolderPath.toString());
                 if (b){
-                    SelectedItem.setValue(NewFileName);
-                    SelectedTab.setText(NewFileName);
+                    selectedItem.setValue(newFileName);
+                    selectedTab.setText(newFileName);
                 }
             });
-            RenameStage = stage;
+            renameStage = stage;
             RenameViewController renameViewController = fxmlLoader.getController();
             renameViewController.init(stage);
-            RunApplication.PrepareStage(RenameHeight, RenameWidth, scene, "Переименование элемента", stage);
+            RunApplication.PrepareStage(renameHeight, renameWidth, scene, "Переименование элемента", stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -214,9 +232,9 @@ public class MainController{
     }
 
     private void SelectTab(Tab tab){
-        int count = Tab_Pane.getTabs().size() - 1;
-        SingleSelectionModel<Tab> selectionModel = Tab_Pane.getSelectionModel();
-        Tab_Pane.getTabs().add(count, tab);
+        int count = tabPane.getTabs().size() - 1;
+        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+        tabPane.getTabs().add(count, tab);
         selectionModel.select(tab);
     }
 
@@ -232,16 +250,6 @@ public class MainController{
         TreeItem<String> treeItem = new TreeItem<>(name);
         root.getChildren().add(treeItem);
         SortTreeView();
-    }
-
-    private boolean CheckTree(String str){
-        var tree = treeView.getRoot().getChildren();
-        for (TreeItem<String> s: tree){
-            if (s.getValue().equals(str)){
-                return true;
-            }
-        }
-        return false;
     }
 
     @FXML
@@ -276,10 +284,10 @@ public class MainController{
             //newPropertyValue - on focus
             //oldPropertyValue - out focus
             if (newPropertyValue) {
-                OldTextFieldValue = textField.getText();
+                oldTextFieldValue = textField.getText();
             }
             if (oldPropertyValue && textField.getText().isEmpty()) {
-                textField.setText(OldTextFieldValue);
+                textField.setText(oldTextFieldValue);
             } else {
                 tab.setText(textField.getText());
             }

@@ -12,145 +12,122 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="splitpane" dividerPositions="0.16353677621283255" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
+<SplitPane fx:id="splitPane" dividerPositions="0.12910798122065728" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
   <items>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
-         <center>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-               <tabs>
-                  <Tab>
-                     <graphic>
-                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/folder_icon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
-                           <top>
-                              <HBox alignment="CENTER" prefHeight="42.0" prefWidth="206.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
-                                 <children>
-                                    <Button mnemonicParsing="false" onMouseClicked="#CreateNote">
-                                       <graphic>
-                                          <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../Image/notes.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <tooltip>
-                                          <Tooltip text="Новая заметка" />
-                                       </tooltip>
-                                    </Button>
-                                    <Button mnemonicParsing="false" onMouseClicked="#CreateFolder">
-                                       <graphic>
-                                          <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../Image/basic_folder.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <tooltip>
-                                          <Tooltip text="Новая папка" />
-                                       </tooltip>
-                                    </Button>
-                                 </children>
-                                 <BorderPane.margin>
-                                    <Insets />
-                                 </BorderPane.margin></HBox>
-                           </top>
-                           <center>
-                              <TreeView fx:id="treeView" editable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                           </center></BorderPane>
-                     </content>
-                     <tooltip>
-                        <Tooltip text="Файловый менеджер" />
-                     </tooltip>
-                  </Tab>
-                  <Tab>
-                     <graphic>
-                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/search_icon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                     <tooltip>
-                        <Tooltip text="Поиск" />
-                     </tooltip>
-                  </Tab>
-                  <Tab>
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/bookmark_icon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                     <tooltip>
-                        <Tooltip text="Избранное" />
-                     </tooltip>
-                  </Tab>
-               </tabs>
-            </TabPane>
-         </center>
          <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="100.0" prefWidth="162.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="23.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/settings_outline_icon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Настройки" />
-                     </tooltip>
-                  </Button>
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/help_icon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Справка" />
-                     </tooltip>
-                  </Button>
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/locker_safe_icon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Открыть другое хранилище" />
-                     </tooltip>
-                  </Button>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/folder_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Файловый менеджер" />
+                           </tooltip>
+                        </Button>
+                        <Button alignment="CENTER" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/search_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Файловый менеджер" />
+                           </tooltip>
+                        </Button>
+                        <Button alignment="CENTER" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/bookmark_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Избранное" />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/locker_safe_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Открыть другое хранилище" />
+                           </tooltip>
+                        </Button>
+                        <Button mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="23.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/settings_outline_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Настройки" />
+                           </tooltip>
+                        </Button>
+                        <Button mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/help_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Справка" />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </HBox>
+            </VBox>
          </top>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" text="Button" />
+               </children>
+            </GridPane>
+         </center>
       </BorderPane>
-      <TabPane fx:id="Tab_Pane" tabClosingPolicy="ALL_TABS">
+      <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
          <tabs>
             <Tab closable="false" text="Новая вкладка">
                <content>
@@ -169,6 +146,58 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
+            </Tab>
+            <Tab>
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/folder_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <HBox fx:id="HBoxNotes" alignment="CENTER" prefHeight="42.0" prefWidth="206.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
+                           <children>
+                              <Button mnemonicParsing="false" onMouseClicked="#CreateNote">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/notes.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Новая заметка" />
+                                 </tooltip>
+                              </Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#CreateFolder">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/basic_folder.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Новая папка" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                        </HBox>
+                     </top>
+                     <center>
+                        <TreeView fx:id="treeView" editable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </content>
+               <tooltip>
+                  <Tooltip text="Файловый менеджер" />
+               </tooltip>
             </Tab>
          </tabs>
       </TabPane>
