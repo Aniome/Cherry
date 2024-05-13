@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
@@ -35,7 +36,7 @@ public class MainController{
     @FXML
     private SplitPane splitPane;
     @FXML
-    private HBox HBoxNotes;
+    private GridPane gridPane;
 
     private String oldTextFieldValue;
     private TreeItem<String> root;
@@ -108,24 +109,24 @@ public class MainController{
             return _cell;
         });
 
-        splitPane.setDividerPositions(0.15);
+        splitPane.setDividerPositions(0.12);
         splitPane.widthProperty().addListener((observableValue, number, t1) -> {
-            splitPane.setDividerPositions(0.16353677621283255);
+            splitPane.setDividerPositions(0.12);
         });
 
         createScalable();
     }
 
     private void createScalable(){
-        var HBoxNotesChildren = HBoxNotes.getChildren();
-        HBoxNotes.heightProperty().addListener((observableValue, number, t1) -> {
+        var children = gridPane.getChildren();
+        gridPane.heightProperty().addListener((observableValue, number, t1) -> {
             double newHeight = (t1.doubleValue() / 10) * 8;
-            for (Node button: HBoxNotesChildren)
+            for (Node button: children)
                 ((Button)button).setPrefHeight(newHeight);
         });
-        HBoxNotes.widthProperty().addListener((observableValue, number, t1) -> {
+        gridPane.widthProperty().addListener((observableValue, number, t1) -> {
             double newWidth = (t1.doubleValue() / 10) * 2;
-            for (Node button: HBoxNotesChildren)
+            for (Node button: children)
                 ((Button)button).setPrefWidth(newWidth);
         });
     }
