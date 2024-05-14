@@ -16,7 +16,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -225,11 +224,10 @@ public class MainController{
         return tab;
     }
 
-    private Tab AddTab(String fileName){
+    private void AddTab(String fileName){
         Tab tab = new Tab(fileName);
         tab.setContent(CreateTab(tab));
         SelectTab(tab);
-        return tab;
     }
 
     private void SelectTab(Tab tab){

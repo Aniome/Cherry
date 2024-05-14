@@ -13,6 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,18 +32,28 @@ public class Markdown {
         list = list.reversed();
         list.forEach(item -> pathname.append(item).append("\\"));
         pathname.deleteCharAt(pathname.length() - 1);
+        pathname.append(".md");
+//        try {
+//            File file = new File(pathname + ".md");
+//            Scanner scanner = new Scanner(file);
+//            while (scanner.hasNext()) {
+//                String line = scanner.nextLine();
+//                result.append(line);
+//            }
+//            scanner.close();
+//        } catch (FileNotFoundException e) {
+//
+//        }
         try {
-            File file = new File(pathname + ".md");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                result.append(line);
+            var res = Files.readAllLines(Paths.get(pathname.toString()));
+            for (String line : res){
+                result.append(line).append("\n");
             }
-            scanner.close();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             Alerts.CreateAndShowError(e.getMessage());
         }
         return result.toString();
+
     }
 
     public static void WriteFile(String filepath, TextArea textArea){

@@ -9,11 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="some changes">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="change interface">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +68,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Maven.Cherry [clean,javafx:run].executor": "Run",
     "Maven.Cherry [deploy].executor": "Run",
     "Maven.Cherry [jar:jar].executor": "Run",
@@ -228,7 +228,9 @@
       <workItem from="1715363847042" duration="4542000" />
       <workItem from="1715513684870" duration="22902000" />
       <workItem from="1715575705179" duration="146000" />
-      <workItem from="1715614498029" duration="5245000" />
+      <workItem from="1715614498029" duration="6638000" />
+      <workItem from="1715708830825" duration="13000" />
+      <workItem from="1715708909004" duration="1779000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -398,7 +400,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715538591866</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="change interface">
+      <option name="closed" value="true" />
+      <created>1715621877313</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1715621877313</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,9 +449,19 @@
     <MESSAGE value="configure .jar file and fix bugs" />
     <MESSAGE value="add write to file" />
     <MESSAGE value="some changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="some changes" />
+    <MESSAGE value="change interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="change interface" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="root.children.get(8)" />
