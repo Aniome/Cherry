@@ -31,29 +31,13 @@ public class Markdown {
         }
         list = list.reversed();
         list.forEach(item -> pathname.append(item).append("\\"));
-        pathname.deleteCharAt(pathname.length() - 1);
-        pathname.append(".md");
-//        try {
-//            File file = new File(pathname + ".md");
-//            Scanner scanner = new Scanner(file);
-//            while (scanner.hasNext()) {
-//                String line = scanner.nextLine();
-//                result.append(line);
-//            }
-//            scanner.close();
-//        } catch (FileNotFoundException e) {
-//
-//        }
+        pathname.deleteCharAt(pathname.length() - 1).append(".md");
         try {
-            var res = Files.readAllLines(Paths.get(pathname.toString()));
-            for (String line : res){
-                result.append(line).append("\n");
-            }
+            Files.readAllLines(Paths.get(pathname.toString())).forEach(str -> result.append(str).append("\n"));
         } catch (IOException e) {
             Alerts.CreateAndShowError(e.getMessage());
         }
         return result.toString();
-
     }
 
     public static void WriteFile(String filepath, TextArea textArea){
