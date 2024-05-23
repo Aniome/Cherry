@@ -7,7 +7,6 @@ import javafx.scene.control.TreeItem;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -16,33 +15,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Markdown {
     //Lis for FileVisitor
     public static List<Path> pathList;
-    public static String ReadFile(TreeItem<String> treeItem){
+    public static String readFile(TreeItem<String> treeItem){
         StringBuilder result = new StringBuilder();
-        StringBuilder pathname = new StringBuilder(RunApplication.FolderPath.toString() + "\\");
-        List<String> list = new LinkedList<>();
-        while (treeItem.getParent() != null){
-            list.add(treeItem.getValue());
-            treeItem = treeItem.getParent();
-        }
-        list = list.reversed();
-        list.forEach(item -> pathname.append(item).append("\\"));
-        pathname.deleteCharAt(pathname.length() - 1).append(".md");
         try {
-            Files.readAllLines(Paths.get(pathname.toString())).forEach(str -> result.append(str).append("\n"));
+            Files.readAllLines(Paths.get(getPath(treeItem))).forEach(str -> result.append(str).append("\n"));
         } catch (IOException e) {
             Alerts.CreateAndShowError(e.getMessage());
         }
         return result.toString();
     }
 
-    public static void WriteFile(String filepath, TextArea textArea){
-        String path = RunApplication.FolderPath.toString() + "\\" + filepath;
-        try (RandomAccessFile file = new RandomAccessFile(path, "rw");
+    public static void writeFile(TreeItem<String> treeItem, TextArea textArea){
+        try (RandomAccessFile file = new RandomAccessFile(getPath(treeItem), "rw");
             FileChannel channel = file.getChannel()) {
             String text = textArea.getText();
             ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
@@ -50,6 +38,19 @@ public class Markdown {
         } catch (IOException e) {
             Alerts.CreateAndShowWarning(e.getMessage());
         }
+    }
+
+    public static boolean deleteFile(TreeItem<String> treeItem){
+        String filepath = getPath(treeItem);
+        File file = new File(filepath);
+        if (file.exists()){
+            if (!file.delete()){
+                Alerts.CreateAndShowWarning("Не удалось удалить");
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public static List<Path> getListFiles(){
@@ -63,10 +64,10 @@ public class Markdown {
         return pathList;
     }
 
-    public static File CreateFileMarkdown(){
+    public static File createFileMarkdown(){
         String path = RunApplication.FolderPath.toString() + "\\Без названия";
         try {
-            File file = CheckExists(new File(path), ".md");
+            File file = checkExists(new File(path), ".md");
             if (file.createNewFile()){
                 return file;
             } else {
@@ -78,9 +79,9 @@ public class Markdown {
         }
     }
 
-    public static File CreateFolderMarkdown(){
+    public static File createFolderMarkdown(){
         File folder = new File(RunApplication.FolderPath.toString() + "\\Без названия");
-        folder = CheckExists(folder, "");
+        folder = checkExists(folder, "");
         if (folder.mkdir()){
             return folder;
         } else {
@@ -88,7 +89,7 @@ public class Markdown {
         }
     }
 
-    public static File CheckExists(File f, String extension) {
+    public static File checkExists(File f, String extension) {
         if (f.exists()) {
             int i = 1;
             while (f.exists()){
@@ -99,10 +100,23 @@ public class Markdown {
         return f;
     }
 
-    public static boolean RenameFile(String NewName, String OldName, String path){
+    public static boolean renameFile(String NewName, String OldName, String path){
         File oldFile = new File(path + "/" + OldName + ".md");
         File newFile = new File(path + "/" + NewName + ".md");
 
         return oldFile.renameTo(newFile);
+    }
+
+    private static String getPath(TreeItem<String> treeItem){
+        StringBuilder pathname = new StringBuilder(RunApplication.FolderPath.toString() + "\\");
+        List<String> list = new LinkedList<>();
+        while (treeItem.getParent() != null){
+            list.add(treeItem.getValue());
+            treeItem = treeItem.getParent();
+        }
+        list = list.reversed();
+        list.forEach(item -> pathname.append(item).append("\\"));
+        pathname.deleteCharAt(pathname.length() - 1).append(".md");
+        return pathname.toString();
     }
 }

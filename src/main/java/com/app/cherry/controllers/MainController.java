@@ -143,6 +143,15 @@ public class MainController{
         });
         MenuItem menuItem2 = new MenuItem("Добавить в закладки");
         MenuItem menuItem3 = new MenuItem("Удалить");
+        menuItem3.setOnAction(actionEvent -> {
+            selectedItem = treeView.getSelectionModel().getSelectedItem();
+            boolean isDelete = Markdown.deleteFile(selectedItem);
+            if (isDelete){
+                root.getChildren().remove(selectedItem);
+                selectedTab = tabPane.getSelectionModel().getSelectedItem();
+                selectedTab.setContent(CreateEmptyTab());
+            }
+        });
         contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
         treeView.setContextMenu(contextMenu);
         this.contextMenu = contextMenu;
@@ -160,22 +169,9 @@ public class MainController{
                 ((TextField) children).setText(filename);
             }
             if (children instanceof TextArea textArea){
-                textArea.setText(Markdown.ReadFile(selectedItem));
+                textArea.setText(Markdown.readFile(selectedItem));
                 textArea.textProperty().addListener((observableValue, s, t1) -> {
-                    TreeItem<String> treeItem = selectedItem;
-                    List<String> list = new ArrayList<>();
-                    while (treeItem.getParent() != null){
-                        if (treeItem.isLeaf()){
-                            list.add(treeItem.getValue() + ".md");
-                        } else {
-                            list.add(treeItem.getValue() + "\\");
-                        }
-                        treeItem = treeItem.getParent();
-                    }
-                    list = list.reversed();
-                    StringBuilder filepath = new StringBuilder();
-                    list.forEach(filepath::append);
-                    Markdown.WriteFile(filepath.toString(), textArea);
+                    Markdown.writeFile(selectedItem, textArea);
                 });
             }
         }
@@ -195,7 +191,7 @@ public class MainController{
                 if (newFileName == null) {
                     return;
                 }
-                boolean b = Markdown.RenameFile(newFileName, selectedItem.getValue(), RunApplication.FolderPath.toString());
+                boolean b = Markdown.renameFile(newFileName, selectedItem.getValue(), RunApplication.FolderPath.toString());
                 if (b){
                     selectedItem.setValue(newFileName);
                     selectedTab.setText(newFileName);
@@ -240,7 +236,7 @@ public class MainController{
     //Event on the note creation button
     @FXML
     private void CreateNote(){
-        File NewNote = Markdown.CreateFileMarkdown();
+        File NewNote = Markdown.createFileMarkdown();
         if (NewNote == null){
             return;
         }
@@ -253,7 +249,7 @@ public class MainController{
 
     @FXML
     private void CreateFolder(){
-        File Folder = Markdown.CreateFolderMarkdown();
+        File Folder = Markdown.createFolderMarkdown();
         if (Folder == null) {
             return;
         }
