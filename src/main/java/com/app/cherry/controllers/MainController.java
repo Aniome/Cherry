@@ -62,19 +62,48 @@ public class MainController{
         //Loading list files in treeview
         List<Path> pathList = Markdown.getListFiles();
         pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
-        pathList.forEach(path -> {
-            String[] paths = path.toString().split("\\\\");
-            TreeItem<String> treeItem = root;
-            TreeItem<String> newTreeItem;
-            for (String str: paths){
-                if (str.contains(".md"))
-                    str = str.replace(".md", "");
-                newTreeItem = new TreeItem<>(str);
-                treeItem.getChildren().add(newTreeItem);
-                treeItem = newTreeItem;
+        pathList.forEach(item -> {
+            String[] path = item.toString().split("\\\\");
+            for (int i = 0; i < path.length; i++) {
+                path[i] = path[i].replace(".md", "");
+            }
+            ObservableList<TreeItem<String>> rootList = root.getChildren();
+            TreeItem<String> containedItem = null;
+            for (TreeItem<String> i: rootList){
+                if (path[0].equals(i.getValue()))
+                    containedItem = i;
+            }
+            if (containedItem != null){
+                TreeItem<String> treeItem = containedItem;
+                boolean isContained = false;
+                for (int i = 1; i < path.length; i++){
+                    ObservableList<TreeItem<String>> treeList = treeItem.getChildren();
+                    for (TreeItem<String> treeListItem: treeList){
+                        if (path[i].equals(treeListItem.getValue())){
+                            treeItem = treeListItem;
+                            isContained = true;
+                            break;
+                        }
+                    }
+                    if (isContained){
+                        continue;
+                    }
+                    treeList.add(treeItem);
+                }
+            } else if (path.length > 1) {
+                //creating tree hierarchy
+                TreeItem<String> treeItem = root;
+                TreeItem<String> newTreeItem;
+                for (String str: path){
+                    newTreeItem = new TreeItem<>(str);
+                    treeItem.getChildren().add(newTreeItem);
+                    treeItem = newTreeItem;
+                }
+            } else {
+                rootList.add(new TreeItem<>(path[0]));
             }
         });
-        CreateContextMenu();
+        createContextMenu();
         treeView.setCellFactory(tree -> {
             TreeCell<String> _cell = new EditableTreeCell();
 
@@ -109,9 +138,7 @@ public class MainController{
         });
 
         splitPane.setDividerPositions(0.12);
-        splitPane.widthProperty().addListener((observableValue, number, t1) -> {
-            splitPane.setDividerPositions(0.12);
-        });
+        splitPane.widthProperty().addListener((observableValue, number, t1) -> splitPane.setDividerPositions(0.12));
 
         createScalable();
     }
@@ -130,7 +157,7 @@ public class MainController{
         });
     }
 
-    private void CreateContextMenu(){
+    private void createContextMenu(){
         ContextMenu contextMenu = new ContextMenu();
         MenuItem menuItem1 = new MenuItem("Переименовать");
         menuItem1.setOnAction(actionEvent -> {
@@ -150,6 +177,7 @@ public class MainController{
                 root.getChildren().remove(selectedItem);
                 selectedTab = tabPane.getSelectionModel().getSelectedItem();
                 selectedTab.setContent(CreateEmptyTab());
+                selectedTab.setText("Новая вкладка");
             }
         });
         contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
@@ -170,9 +198,7 @@ public class MainController{
             }
             if (children instanceof TextArea textArea){
                 textArea.setText(Markdown.readFile(selectedItem));
-                textArea.textProperty().addListener((observableValue, s, t1) -> {
-                    Markdown.writeFile(selectedItem, textArea);
-                });
+                textArea.textProperty().addListener((observableValue, s, t1) -> Markdown.writeFile(selectedItem, textArea));
             }
         }
         tab.setContent(borderPane);
