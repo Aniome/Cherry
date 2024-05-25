@@ -64,9 +64,7 @@ public class MainController{
         pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
         pathList.forEach(item -> {
             String[] path = item.toString().split("\\\\");
-            for (int i = 0; i < path.length; i++) {
-                path[i] = path[i].replace(".md", "");
-            }
+            path[path.length-1] = path[path.length-1].replace(".md", "");
             ObservableList<TreeItem<String>> rootList = root.getChildren();
             TreeItem<String> containedItem = null;
             for (TreeItem<String> i: rootList){
@@ -88,7 +86,8 @@ public class MainController{
                     if (isContained){
                         continue;
                     }
-                    treeList.add(treeItem);
+                    treeList.add(new TreeItem<>(path[i]));
+                    break;
                 }
             } else if (path.length > 1) {
                 //creating tree hierarchy
