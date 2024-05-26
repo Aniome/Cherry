@@ -2,13 +2,10 @@ package com.app.cherry;
 
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
-import javafx.application.ConditionalFeature;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
@@ -37,16 +34,16 @@ public class RunApplication extends Application {
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
         Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
-        SetIcon(stage);
+        setIcon(stage);
         if (FolderPath == null){
             fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
             Stage InitialStage = new Stage();
-            SetIcon(InitialStage);
+            setIcon(InitialStage);
             InitController initController = fxmlLoader.getController();
             initController.setInitialStage(InitialStage);
             initController.setMainStage(stage);
-            PrepareStage(InitialHeight,InitialWidth,secondScene,"", InitialStage);
+            prepareStage(InitialHeight,InitialWidth,secondScene,"", InitialStage);
             InitialStage.setResizable(false);
         }
         else {
@@ -54,7 +51,7 @@ public class RunApplication extends Application {
             mainController.init(stage);
             stage.setHeight(height);
             stage.setWidth(width);
-            PrepareStage(MainHeight, MainWidth, scene, title, stage);
+            prepareStage(MainHeight, MainWidth, scene, title, stage);
             stage.setMaximized(hibernateUtil.isMaximized());
             stage.setOnHiding((event) -> {
                 boolean isMaximized = stage.isMaximized();
@@ -68,11 +65,11 @@ public class RunApplication extends Application {
         }
     }
 
-    public static void SetIcon(Stage stage){
+    public static void setIcon(Stage stage){
         stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("Image/cherry_icon.png"))));
     }
 
-    public static void PrepareStage(double height, double width, Scene scene, String title, Stage stage){
+    public static void prepareStage(double height, double width, Scene scene, String title, Stage stage){
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setMinWidth(width);

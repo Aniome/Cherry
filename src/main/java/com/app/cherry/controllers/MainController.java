@@ -12,8 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -28,6 +27,7 @@ import java.util.*;
 
 public class MainController{
 
+    private static final DataFormat JAVA_FORMAT = DataFormat.PLAIN_TEXT;
     @FXML
     private TreeView<String> treeView;
     @FXML
@@ -39,7 +39,6 @@ public class MainController{
 
     private String oldTextFieldValue;
     private TreeItem<String> root;
-    TreeCell<String> cell;
     final double renameWidth = 600;
     final double renameHeight = 250;
     Stage mainStage;
@@ -48,6 +47,8 @@ public class MainController{
     ContextMenu contextMenu;
     TreeItem<String> selectedItem;
     Tab selectedTab;
+    /////////////
+    TreeItem<String> draggedItem;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -59,12 +60,117 @@ public class MainController{
         root = new TreeItem<>("");
         treeView.setRoot(root);
         treeView.setShowRoot(false);
-        //Loading list files in treeview
+        loadFilesInTreeview();
+        createContextMenu();
+        treeView.setCellFactory(tree -> {
+            TreeCell<String> treeCell = new EditableTreeCell();
+
+            treeCell.setOnMouseEntered( mouseEvent -> {
+                TreeItem<String> treeItem = treeCell.getTreeItem();
+                if (treeItem == null)
+                    return;
+                if (showingContextMenu())
+                    return;
+                treeView.getSelectionModel().select(treeItem);
+            });
+            treeCell.setOnMouseExited(mouseEvent -> {
+                if (showingContextMenu())
+                    return;
+                if (mouseEvent.isPrimaryButtonDown())
+                    return;
+                treeView.setContextMenu(null);
+                treeView.getSelectionModel().clearSelection();
+            });
+            treeCell.setOnMouseClicked(event -> {
+                TreeItem<String> selectedItem = treeCell.getTreeItem();
+                if (selectedItem == null || !selectedItem.isLeaf())
+                    return;
+                MouseButton mouseButton = event.getButton();
+                if (mouseButton.equals(MouseButton.PRIMARY)){
+                    loadDataOnFormOnClick(selectedItem);
+                }
+                if (mouseButton.equals(MouseButton.SECONDARY)){
+                    treeView.setContextMenu(contextMenu);
+                }
+            });
+            //cell.setOnMousePressed(mouseEvent -> {});
+            //cell.setOnMouseReleased(mouseEvent -> {});
+
+            treeCell.setOnDragDetected((MouseEvent event) -> dragDetected(event, treeCell));
+            treeCell.setOnDragOver((DragEvent event) -> dragOver(event, treeCell));
+            treeCell.setOnDragDropped((DragEvent event) -> drop(event, treeCell, treeView));
+            //treeCell.setOnDragDone((DragEvent event) -> clearDropLocation());
+
+            return treeCell;
+        });
+
+        splitPane.setDividerPositions(0.12);
+        splitPane.widthProperty().addListener((observableValue, number, t1) -> splitPane.setDividerPositions(0.12));
+
+        createScalable();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void dragDetected(MouseEvent event, TreeCell<String> treeCell) {
+        draggedItem = treeCell.getTreeItem();
+
+        Dragboard db = treeCell.startDragAndDrop(TransferMode.MOVE);
+
+        ClipboardContent content = new ClipboardContent();
+        content.put(JAVA_FORMAT, draggedItem.getValue());
+        db.setContent(content);
+        db.setDragView(treeCell.snapshot(null, null));
+        event.consume();
+    }
+
+    private void dragOver(DragEvent event, TreeCell<String> treeCell) {
+        if (!event.getDragboard().hasContent(JAVA_FORMAT))
+            return;
+        TreeItem<String> thisItem = treeCell.getTreeItem();
+
+        // can't drop on itself
+        if (draggedItem == null || thisItem == null || thisItem == draggedItem)
+            return;
+
+        event.acceptTransferModes(TransferMode.MOVE);
+    }
+
+    private void drop(DragEvent event, TreeCell<String> treeCell, TreeView<String> treeView) {
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        if (!db.hasContent(JAVA_FORMAT))
+            return;
+
+        TreeItem<String> thisItem = treeCell.getTreeItem();
+        TreeItem<String> droppedItemParent = draggedItem.getParent();
+
+        // remove from previous location
+        droppedItemParent.getChildren().remove(draggedItem);
+
+        // dropping on parent node makes it the first child
+        if (Objects.equals(droppedItemParent, thisItem)) {
+            thisItem.getChildren().add(0, draggedItem);
+        }
+        else {
+            // add to new location
+            int indexInParent = thisItem.getParent().getChildren().indexOf(thisItem);
+            thisItem.getParent().getChildren().add(indexInParent + 1, draggedItem);
+        }
+        thisItem.getParent().getChildren().add(draggedItem);
+        treeView.getSelectionModel().select(draggedItem);
+        event.setDropCompleted(success);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void loadFilesInTreeview(){
         List<Path> pathList = Markdown.getListFiles();
         pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
         pathList.forEach(item -> {
             String[] path = item.toString().split("\\\\");
-            path[path.length-1] = path[path.length-1].replace(".md", "");
+            int lastIndex = path.length - 1;
+            path[lastIndex] = path[lastIndex].replace(".md", "");
             ObservableList<TreeItem<String>> rootList = root.getChildren();
             TreeItem<String> containedItem = null;
             for (TreeItem<String> i: rootList){
@@ -102,44 +208,6 @@ public class MainController{
                 rootList.add(new TreeItem<>(path[0]));
             }
         });
-        createContextMenu();
-        treeView.setCellFactory(tree -> {
-            TreeCell<String> _cell = new EditableTreeCell();
-
-            _cell.setOnMouseEntered( mouseEvent -> {
-                TreeItem<String> treeItem = _cell.getTreeItem();
-                if (treeItem == null)
-                    return;
-                if (ShowingContextMenu())
-                    return;
-                treeView.getSelectionModel().select(treeItem);
-            });
-            _cell.setOnMouseExited(mouseEvent -> {
-                if (ShowingContextMenu())
-                    return;
-                treeView.setContextMenu(null);
-                treeView.getSelectionModel().clearSelection();
-            });
-            _cell.setOnMouseClicked(event -> {
-                TreeItem<String> selectedItem = _cell.getTreeItem();
-                if (selectedItem == null || !selectedItem.isLeaf())
-                    return;
-                MouseButton mouseButton = event.getButton();
-                if (mouseButton.equals(MouseButton.PRIMARY)){
-                    LoadDataOnFormOnClick(selectedItem);
-                }
-                if (mouseButton.equals(MouseButton.SECONDARY)){
-                    treeView.setContextMenu(contextMenu);
-                }
-            });
-            cell = _cell;
-            return _cell;
-        });
-
-        splitPane.setDividerPositions(0.12);
-        splitPane.widthProperty().addListener((observableValue, number, t1) -> splitPane.setDividerPositions(0.12));
-
-        createScalable();
     }
 
     private void createScalable(){
@@ -163,7 +231,7 @@ public class MainController{
             selectedItem = treeView.getSelectionModel().getSelectedItem();
             selectedTab = tabPane.getSelectionModel().getSelectedItem();
             if (renameStage == null)
-                OpenModalWindow();
+                openModalWindow();
             else
                 renameStage.show();
         });
@@ -175,7 +243,7 @@ public class MainController{
             if (isDelete){
                 root.getChildren().remove(selectedItem);
                 selectedTab = tabPane.getSelectionModel().getSelectedItem();
-                selectedTab.setContent(CreateEmptyTab());
+                selectedTab.setContent(createEmptyTab());
                 selectedTab.setText("Новая вкладка");
             }
         });
@@ -184,10 +252,10 @@ public class MainController{
         this.contextMenu = contextMenu;
     }
 
-    private void LoadDataOnFormOnClick(TreeItem<String> selectedItem){
+    private void loadDataOnFormOnClick(TreeItem<String> selectedItem){
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         tab.setContent(null);
-        BorderPane borderPane = CreateTab(tab);
+        BorderPane borderPane = createTab(tab);
         String filename = selectedItem.getValue();
         tab.setText(filename);
         ObservableList<Node> childrens = borderPane.getChildren();
@@ -203,12 +271,12 @@ public class MainController{
         tab.setContent(borderPane);
     }
 
-    private void OpenModalWindow(){
+    private void openModalWindow(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
             Stage stage = new Stage();
-            RunApplication.SetIcon(stage);
+            RunApplication.setIcon(stage);
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(mainStage);
@@ -225,33 +293,33 @@ public class MainController{
             renameStage = stage;
             RenameViewController renameViewController = fxmlLoader.getController();
             renameViewController.init(stage);
-            RunApplication.PrepareStage(renameHeight, renameWidth, scene, "Переименование элемента", stage);
+            RunApplication.prepareStage(renameHeight, renameWidth, scene, "Переименование элемента", stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private boolean ShowingContextMenu(){
+    private boolean showingContextMenu(){
         ContextMenu contMenu = treeView.getContextMenu();
         return contMenu != null && contMenu.isShowing();
     }
 
     //Creates a tab and gives focus to it
     @FXML
-    private Tab AddTab() {
+    private Tab addTab() {
         Tab tab = new Tab("Новая вкладка");
-        tab.setContent(CreateEmptyTab());
-        SelectTab(tab);
+        tab.setContent(createEmptyTab());
+        selectTab(tab);
         return tab;
     }
 
-    private void AddTab(String fileName){
+    private void addTab(String fileName){
         Tab tab = new Tab(fileName);
-        tab.setContent(CreateTab(tab));
-        SelectTab(tab);
+        tab.setContent(createTab(tab));
+        selectTab(tab);
     }
 
-    private void SelectTab(Tab tab){
+    private void selectTab(Tab tab){
         int count = tabPane.getTabs().size() - 1;
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         tabPane.getTabs().add(count, tab);
@@ -260,20 +328,20 @@ public class MainController{
 
     //Event on the note creation button
     @FXML
-    private void CreateNote(){
+    private void createNote(){
         File NewNote = Markdown.createFileMarkdown();
         if (NewNote == null){
             return;
         }
         String name = NewNote.getName().replace(".md", "");
-        AddTab(name);
+        addTab(name);
         TreeItem<String> treeItem = new TreeItem<>(name);
         root.getChildren().add(treeItem);
-        SortTreeView();
+        sortTreeView();
     }
 
     @FXML
-    private void CreateFolder(){
+    private void createFolder(){
         File Folder = Markdown.createFolderMarkdown();
         if (Folder == null) {
             return;
@@ -281,17 +349,17 @@ public class MainController{
         TreeItem<String> folder = new TreeItem<>(Folder.getName());
         folder.getChildren().add(null);
         root.getChildren().add(folder);
-        SortTreeView();
+        sortTreeView();
     }
 
-    private void SortTreeView(){
+    private void sortTreeView(){
         SortedList<TreeItem<String>> content = root.getChildren().sorted(Comparator.comparing(TreeItem::getValue));
         root.getChildren().setAll(content);
     }
 
     //Creates a form and fills it with content
     @NotNull
-    private BorderPane CreateTab(Tab tab){
+    private BorderPane createTab(Tab tab){
         BorderPane borderPane = new BorderPane();
         TextField textField = new TextField(tab.getText()){{
             setFont(new Font(16));
@@ -322,7 +390,7 @@ public class MainController{
         return borderPane;
     }
 
-    private BorderPane CreateEmptyTab(){
+    private BorderPane createEmptyTab(){
         BorderPane borderPane = new BorderPane();
         Label label = new Label("Ни один файл не открыт");
         label.setFont(new Font(29));

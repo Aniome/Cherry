@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Markdown {
-    //Lis for FileVisitor
+    //List for FileVisitor
     public static List<Path> pathList;
     public static String readFile(TreeItem<String> treeItem){
         StringBuilder result = new StringBuilder();

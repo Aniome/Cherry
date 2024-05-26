@@ -147,7 +147,7 @@ public class InitController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), RunApplication.MainWidth, RunApplication.MainHeight);
-            RunApplication.PrepareStage(RunApplication.MainHeight, RunApplication.MainWidth, scene, RunApplication.title, MainStage);
+            RunApplication.prepareStage(RunApplication.MainHeight, RunApplication.MainWidth, scene, RunApplication.title, MainStage);
         } catch (IOException e) {
             Alerts.CreateAndShowError(e.getMessage());
         }

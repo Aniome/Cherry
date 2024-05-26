@@ -1,4 +1,4 @@
-package com.app.cherry;
+package com.app.cherry.util;
 
 import com.app.cherry.entity.Settings;
 import org.hibernate.Session;
@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class HibernateUtil {
     private SessionFactory sessionFactory;
 
-    protected void setUp() {
+    public void setUp() {
         // A SessionFactory is set up once for an application!
         File path = new File("");
         String absolutePath = path.getAbsolutePath().replace("\\", "/");
@@ -35,7 +35,7 @@ public class HibernateUtil {
         }
     }
 
-    protected void tearDown()  {
+    public void tearDown()  {
         if ( sessionFactory != null ) {
             sessionFactory.close();
         }

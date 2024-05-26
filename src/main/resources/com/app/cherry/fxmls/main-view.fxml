@@ -20,7 +20,7 @@
 
 <SplitPane fx:id="splitPane" dividerPositions="0.12" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
   <items>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane fx:id="vBox" prefHeight="200.0" prefWidth="200.0">
          <top>
             <GridPane fx:id="gridPane" alignment="CENTER" vgap="5.0" BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -126,7 +126,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#CreateNote" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button mnemonicParsing="false" onMouseClicked="#createNote" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -138,7 +138,7 @@
                               <Tooltip text="Новая заметка" />
                            </tooltip>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#CreateFolder" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button mnemonicParsing="false" onMouseClicked="#createFolder" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -175,7 +175,7 @@
                   </BorderPane>
                </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#AddTab" text="+">
+            <Tab closable="false" onSelectionChanged="#addTab" text="+">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
