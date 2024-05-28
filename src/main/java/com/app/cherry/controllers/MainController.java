@@ -3,6 +3,7 @@ package com.app.cherry.controllers;
 import com.app.cherry.controls.EditableTreeCell;
 import com.app.cherry.Markdown;
 import com.app.cherry.RunApplication;
+import com.app.cherry.controls.TreeCellFactory;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -27,8 +28,6 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class MainController{
-
-    private static final DataFormat JAVA_FORMAT = DataFormat.PLAIN_TEXT;
     @FXML
     private TreeView<String> treeView;
     @FXML
@@ -45,14 +44,9 @@ public class MainController{
     Stage mainStage;
     Stage renameStage;
     public static String newFileName;
-    ContextMenu contextMenu;
     TreeItem<String> selectedItem;
     Tab selectedTab;
-    /////////////
-    boolean isBackground;
-    TreeItem<String> draggedItem;
-    Background whiteBackground;
-    TreeCell<String> treeCellTreeView;
+    TreeCellFactory treeCellFactory;
 
 
     @FXML
@@ -67,114 +61,14 @@ public class MainController{
         treeView.setShowRoot(false);
         loadFilesInTreeview();
         createContextMenu();
-        treeView.setCellFactory(tree -> {
-            TreeCell<String> treeCell = new EditableTreeCell();
 
-            whiteBackground = treeCell.getBackground();
-            treeCellTreeView = treeCell;
-            treeCell.setOnMouseEntered( mouseEvent -> {
-                TreeItem<String> treeItem = treeCell.getTreeItem();
-                if (treeItem == null)
-                    return;
-                if (showingContextMenu())
-                    return;
-                treeView.getSelectionModel().select(treeItem);
-            });
-            treeCell.setOnMouseExited(mouseEvent -> {
-                if (showingContextMenu())
-                    return;
-                treeView.setContextMenu(null);
-                treeView.getSelectionModel().clearSelection();
-            });
-            treeCell.setOnMouseClicked(event -> {
-                TreeItem<String> selectedItem = treeCell.getTreeItem();
-                if (selectedItem == null || !selectedItem.isLeaf())
-                    return;
-                MouseButton mouseButton = event.getButton();
-                if (mouseButton.equals(MouseButton.PRIMARY)){
-                    loadDataOnFormOnClick(selectedItem);
-                }
-                if (mouseButton.equals(MouseButton.SECONDARY)){
-                    treeView.setContextMenu(contextMenu);
-                }
-            });
-            treeCell.setOnDragDetected((MouseEvent event) -> dragDetected(event, treeCell));
-            treeCell.setOnDragOver((DragEvent event) -> dragOver(event, treeCell));
-            treeCell.setOnDragDropped((DragEvent event) -> drop(event, treeCell, treeView));
-            treeCell.setOnDragDone((DragEvent event) -> clearDropLocation());
-            treeCell.setOnDragEntered(dragEvent -> {
-                TreeItem<String> treeItem = treeCell.getTreeItem();
-                if (treeItem == null || treeItem.isLeaf()){
-                    return;
-                }
-                BackgroundFill background_fill = new BackgroundFill(Color.BLUEVIOLET,
-                        CornerRadii.EMPTY, Insets.EMPTY);
-                treeCell.setBackground(new Background(background_fill));
-                dragEvent.consume();
-            });
-            treeCell.setOnDragExited(dragEvent -> {
-                treeCell.setBackground(whiteBackground);
-                dragEvent.consume();
-            });
-
-            return treeCell;
-        });
+        treeCellFactory = new TreeCellFactory(treeView, this);
 
         splitPane.setDividerPositions(0.12);
         splitPane.widthProperty().addListener((observableValue, number, t1) -> splitPane.setDividerPositions(0.12));
 
         createScalable();
     }
-
-    private void clearDropLocation() {
-        treeView.getSelectionModel().clearSelection();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    private void dragDetected(MouseEvent event, TreeCell<String> treeCell) {
-        draggedItem = treeCell.getTreeItem();
-        if (draggedItem == null)
-            return;
-        Dragboard db = treeCell.startDragAndDrop(TransferMode.MOVE);
-        ClipboardContent content = new ClipboardContent();
-        content.put(JAVA_FORMAT, draggedItem.getValue());
-        db.setContent(content);
-        db.setDragView(treeCell.snapshot(null, null));
-        event.consume();
-    }
-
-    private void dragOver(DragEvent event, TreeCell<String> treeCell) {
-        if (!event.getDragboard().hasContent(JAVA_FORMAT))
-            return;
-        TreeItem<String> thisItem = treeCell.getTreeItem();
-        // can't drop on itself
-        if (draggedItem == null || thisItem == null || thisItem == draggedItem)
-            return;
-        event.acceptTransferModes(TransferMode.MOVE);
-    }
-
-    private void drop(DragEvent event, TreeCell<String> treeCell, TreeView<String> treeView) {
-        Dragboard db = event.getDragboard();
-        if (!db.hasContent(JAVA_FORMAT))
-            return;
-
-        TreeItem<String> thisItem = treeCell.getTreeItem();
-        TreeItem<String> droppedItemParent = draggedItem.getParent();
-
-        // remove from previous location
-        droppedItemParent.getChildren().remove(draggedItem);
-        thisItem.getParent().getChildren().add(draggedItem);
-        event.setDropCompleted(true);
-        event.consume();
-    }
-
-    @FXML
-    private void test(){
-        treeCellTreeView.setBackground(whiteBackground);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     private void loadFilesInTreeview(){
         List<Path> pathList = Markdown.getListFiles();
@@ -261,26 +155,6 @@ public class MainController{
         });
         contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
         treeView.setContextMenu(contextMenu);
-        this.contextMenu = contextMenu;
-    }
-
-    private void loadDataOnFormOnClick(TreeItem<String> selectedItem){
-        Tab tab = tabPane.getSelectionModel().getSelectedItem();
-        tab.setContent(null);
-        BorderPane borderPane = createTab(tab);
-        String filename = selectedItem.getValue();
-        tab.setText(filename);
-        ObservableList<Node> childrens = borderPane.getChildren();
-        for (Node children: childrens){
-            if (children instanceof TextField){
-                ((TextField) children).setText(filename);
-            }
-            if (children instanceof TextArea textArea){
-                textArea.setText(Markdown.readFile(selectedItem));
-                textArea.textProperty().addListener((observableValue, s, t1) -> Markdown.writeFile(selectedItem, textArea));
-            }
-        }
-        tab.setContent(borderPane);
     }
 
     private void openModalWindow(){
@@ -311,9 +185,23 @@ public class MainController{
         }
     }
 
-    private boolean showingContextMenu(){
-        ContextMenu contMenu = treeView.getContextMenu();
-        return contMenu != null && contMenu.isShowing();
+    public void loadDataOnFormOnClick(TreeItem<String> selectedItem){
+        Tab tab = tabPane.getSelectionModel().getSelectedItem();
+        tab.setContent(null);
+        BorderPane borderPane = createTab(tab);
+        String filename = selectedItem.getValue();
+        tab.setText(filename);
+        ObservableList<Node> childrens = borderPane.getChildren();
+        for (Node children: childrens){
+            if (children instanceof TextField){
+                ((TextField) children).setText(filename);
+            }
+            if (children instanceof TextArea textArea){
+                textArea.setText(Markdown.readFile(selectedItem));
+                textArea.textProperty().addListener((observableValue, s, t1) -> Markdown.writeFile(selectedItem, textArea));
+            }
+        }
+        tab.setContent(borderPane);
     }
 
     //Creates a tab and gives focus to it
