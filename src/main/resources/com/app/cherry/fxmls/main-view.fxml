@@ -84,7 +84,7 @@
                         <Tooltip text="Файловый менеджер" />
                      </tooltip>
                   </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#test" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
