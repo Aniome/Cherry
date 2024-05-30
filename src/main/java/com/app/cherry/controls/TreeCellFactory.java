@@ -1,26 +1,25 @@
 package com.app.cherry.controls;
 
-import com.app.cherry.Markdown;
 import com.app.cherry.controllers.MainController;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import java.util.Set;
 
 public class TreeCellFactory {
     private final DataFormat JAVA_FORMAT = DataFormat.PLAIN_TEXT;
     TreeView<String> treeView;
-    Background whiteBackground;
-    TreeCell<String> treeCellTreeView;
-    ContextMenu contextMenu;
     TreeItem<String> draggedItem;
     MainController mainController;
+    Background whiteBackground;
+    Background selectBackground;
+    Border whiteBorder;
+    Border selectBorder;
+    TreeItem<String> parent;
 
     public TreeCellFactory(TreeView<String> treeView, MainController mainController) {
         this.treeView = treeView;
@@ -29,17 +28,24 @@ public class TreeCellFactory {
     }
 
     private void init(){
+        setBackground(Color.WHITE);
+        setBackground(Color.AQUA);
+
+        whiteBorder = new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+        selectBorder = new Border(new BorderStroke(Color.AQUA, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+
         treeView.setCellFactory(tree -> {
             TreeCell<String> treeCell = new EditableTreeCell();
 
-            whiteBackground = treeCell.getBackground();
-            treeCellTreeView = treeCell;
             treeCell.setOnMouseEntered( mouseEvent -> {
                 TreeItem<String> treeItem = treeCell.getTreeItem();
                 if (treeItem == null)
                     return;
                 if (showingContextMenu())
                     return;
+                if (!mouseEvent.isDragDetect())
+                    return;
+
                 treeView.getSelectionModel().select(treeItem);
             });
             treeCell.setOnMouseExited(mouseEvent -> {
@@ -50,37 +56,75 @@ public class TreeCellFactory {
             });
             treeCell.setOnMouseClicked(event -> {
                 TreeItem<String> selectedItem = treeCell.getTreeItem();
-                if (selectedItem == null || !selectedItem.isLeaf())
+                if (selectedItem == null)
                     return;
                 MouseButton mouseButton = event.getButton();
-                if (mouseButton.equals(MouseButton.PRIMARY)){
+                if (mouseButton.equals(MouseButton.PRIMARY) && selectedItem.isLeaf()){
                     mainController.loadDataOnFormOnClick(selectedItem);
                 }
                 if (mouseButton.equals(MouseButton.SECONDARY)){
-                    treeView.setContextMenu(contextMenu);
+                    treeView.setContextMenu(mainController.contextMenu);
                 }
             });
             treeCell.setOnDragDetected((MouseEvent event) -> dragDetected(event, treeCell));
             treeCell.setOnDragOver((DragEvent event) -> dragOver(event, treeCell));
-            treeCell.setOnDragDropped((DragEvent event) -> drop(event, treeCell, treeView));
+            treeCell.setOnDragDropped((DragEvent event) -> dragDrop(event, treeCell));
             treeCell.setOnDragDone((DragEvent event) -> clearDropLocation());
             treeCell.setOnDragEntered(dragEvent -> {
+                System.out.println("drag entered");
                 TreeItem<String> treeItem = treeCell.getTreeItem();
-                if (treeItem == null || treeItem.isLeaf()){
+                if (treeItem == null || draggedItem == treeItem){
                     return;
                 }
-                BackgroundFill background_fill = new BackgroundFill(Color.BLUEVIOLET,
-                        CornerRadii.EMPTY, Insets.EMPTY);
-                treeCell.setBackground(new Background(background_fill));
+
+                MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
+                selectionModel.setSelectionMode(SelectionMode.MULTIPLE);
+
+                if (treeItem.isLeaf()){
+                    ObservableList<TreeItem<String>> parentChildrens = treeItem.getParent().getChildren();
+                    parent = treeItem.getParent();
+                    for (TreeItem<String> child : parentChildrens){
+                        selectionModel.select(child);
+                    }
+                    selectionModel.select(parent);
+                } else {
+                    ObservableList<TreeItem<String>> childrens = treeItem.getChildren();
+                    for (TreeItem<String> child : childrens){
+                        selectionModel.select(child);
+                    }
+                }
+
                 dragEvent.consume();
             });
             treeCell.setOnDragExited(dragEvent -> {
-                treeCell.setBackground(whiteBackground);
+                System.out.println("dragExited");
+                TreeItem<String> treeItem = treeCell.getTreeItem();
+                if (treeItem == null || draggedItem == treeItem){
+                    return;
+                }
+                if (parent != null){
+                    treeView.getSelectionModel().clearSelection();
+//                    ObservableList<TreeItem<String>> childrens = parent.getChildren();
+//                    MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
+//                    for (int i = 0; i < childrens.size(); i++) {
+//                        selectionModel.clearSelection(i);
+//                    }
+                }
+
                 dragEvent.consume();
             });
 
             return treeCell;
         });
+    }
+
+    private void setBackground(Color color){
+        BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+        if (Color.WHITE == color){
+            whiteBackground = new Background(backgroundFill);
+        } else {
+            selectBackground = new Background(backgroundFill);
+        }
     }
 
     private boolean showingContextMenu(){
@@ -110,7 +154,7 @@ public class TreeCellFactory {
         event.acceptTransferModes(TransferMode.MOVE);
     }
 
-    private void drop(DragEvent event, TreeCell<String> treeCell, TreeView<String> treeView) {
+    private void dragDrop(DragEvent event, TreeCell<String> treeCell) {
         Dragboard db = event.getDragboard();
         if (!db.hasContent(JAVA_FORMAT))
             return;
@@ -120,12 +164,18 @@ public class TreeCellFactory {
 
         // remove from previous location
         droppedItemParent.getChildren().remove(draggedItem);
-        thisItem.getParent().getChildren().add(draggedItem);
+        if (thisItem.isLeaf()){
+            thisItem.getParent().getChildren().add(draggedItem);
+        } else {
+            thisItem.getChildren().add(draggedItem);
+        }
         event.setDropCompleted(true);
         event.consume();
     }
 
     private void clearDropLocation() {
-        treeView.getSelectionModel().clearSelection();
+        MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
+        selectionModel.setSelectionMode(SelectionMode.SINGLE);
+        selectionModel.clearSelection();
     }
 }

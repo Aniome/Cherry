@@ -1,6 +1,5 @@
 package com.app.cherry.controllers;
 
-import com.app.cherry.controls.EditableTreeCell;
 import com.app.cherry.Markdown;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.TreeCellFactory;
@@ -9,19 +8,16 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -47,7 +43,7 @@ public class MainController{
     TreeItem<String> selectedItem;
     Tab selectedTab;
     TreeCellFactory treeCellFactory;
-
+    public ContextMenu contextMenu;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -56,6 +52,7 @@ public class MainController{
 
     public void init(Stage mainStage){
         this.mainStage = mainStage;
+        treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         root = new TreeItem<>("");
         treeView.setRoot(root);
         treeView.setShowRoot(false);
@@ -69,6 +66,8 @@ public class MainController{
 
         createScalable();
     }
+
+
 
     private void loadFilesInTreeview(){
         List<Path> pathList = Markdown.getListFiles();
@@ -131,7 +130,7 @@ public class MainController{
     }
 
     private void createContextMenu(){
-        ContextMenu contextMenu = new ContextMenu();
+        contextMenu = new ContextMenu();
         MenuItem menuItem1 = new MenuItem("Переименовать");
         menuItem1.setOnAction(actionEvent -> {
             selectedItem = treeView.getSelectionModel().getSelectedItem();
