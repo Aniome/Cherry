@@ -2,6 +2,7 @@ package com.app.cherry.controllers;
 
 import com.app.cherry.Markdown;
 import com.app.cherry.RunApplication;
+import com.app.cherry.controls.EmptyExpandedTreeItem;
 import com.app.cherry.controls.TreeCellFactory;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -74,20 +75,22 @@ public class MainController{
         pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
         pathList.forEach(item -> {
             String[] path = item.toString().split("\\\\");
-            int lastIndex = path.length - 1;
-            path[lastIndex] = path[lastIndex].replace(".md", "");
             ObservableList<TreeItem<String>> rootList = root.getChildren();
+            //check tree contains file
             TreeItem<String> containedItem = null;
+            EmptyExpandedTreeItem addedItem = null;
             for (TreeItem<String> i: rootList){
                 if (path[0].equals(i.getValue()))
                     containedItem = i;
             }
+            //if tree contains file
             if (containedItem != null){
                 TreeItem<String> treeItem = containedItem;
                 boolean isContained = false;
                 for (int i = 1; i < path.length; i++){
                     ObservableList<TreeItem<String>> treeList = treeItem.getChildren();
                     for (TreeItem<String> treeListItem: treeList){
+                        //check subtree for file existence
                         if (path[i].equals(treeListItem.getValue())){
                             treeItem = treeListItem;
                             isContained = true;
@@ -95,24 +98,36 @@ public class MainController{
                         }
                     }
                     if (isContained){
+                        isContained = false;
                         continue;
                     }
-                    treeList.add(new TreeItem<>(path[i]));
-                    break;
+                    //add item in tree
+                    addedItem = creatingTreeItem(path[i]);
+                    treeList.add(addedItem);
                 }
             } else if (path.length > 1) {
                 //creating tree hierarchy
                 TreeItem<String> treeItem = root;
                 TreeItem<String> newTreeItem;
                 for (String str: path){
-                    newTreeItem = new TreeItem<>(str);
+                    newTreeItem = creatingTreeItem(str);
                     treeItem.getChildren().add(newTreeItem);
                     treeItem = newTreeItem;
                 }
             } else {
-                rootList.add(new TreeItem<>(path[0]));
+                addedItem = creatingTreeItem(path[0]);
+                rootList.add(addedItem);
             }
         });
+    }
+
+    private EmptyExpandedTreeItem creatingTreeItem(String str){
+        if (str.contains(".md")) {
+            str = str.replace(".md", "");
+            return new EmptyExpandedTreeItem(str, true);
+        } else {
+            return new EmptyExpandedTreeItem(str, false);
+        }
     }
 
     private void createScalable(){

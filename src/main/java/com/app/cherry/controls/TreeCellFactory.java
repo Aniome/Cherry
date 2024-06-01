@@ -82,11 +82,22 @@ public class TreeCellFactory {
 
                 if (treeItem.isLeaf()){
                     ObservableList<TreeItem<String>> parentChildrens = treeItem.getParent().getChildren();
-                    parent = treeItem.getParent();
-                    for (TreeItem<String> child : parentChildrens){
-                        selectionModel.select(child);
+                    if (parent == null){
+                        parent = treeItem.getParent();
+                        for (TreeItem<String> child : parentChildrens){
+                            selectionModel.select(child);
+                        }
+                        selectionModel.select(parent);
+                    } else if (treeItem.getParent() != parent){
+                        selectionModel.clearSelection();
+                        parent = treeItem.getParent();
+                        for (TreeItem<String> child : parentChildrens){
+                            selectionModel.select(child);
+                        }
+                        selectionModel.select(parent);
+                    } else {
+                        return;
                     }
-                    selectionModel.select(parent);
                 } else {
                     ObservableList<TreeItem<String>> childrens = treeItem.getChildren();
                     for (TreeItem<String> child : childrens){
@@ -102,13 +113,13 @@ public class TreeCellFactory {
                 if (treeItem == null || draggedItem == treeItem){
                     return;
                 }
-                if (parent != null){
-                    treeView.getSelectionModel().clearSelection();
-//                    ObservableList<TreeItem<String>> childrens = parent.getChildren();
-//                    MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
-//                    for (int i = 0; i < childrens.size(); i++) {
-//                        selectionModel.clearSelection(i);
-//                    }
+                boolean contains = parent.getChildren().contains(treeItem);
+                if (parent != null && !contains){
+                    ObservableList<TreeItem<String>> childrens = parent.getChildren();
+                    MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
+                    for (int i = 0; i < childrens.size(); i++) {
+                        selectionModel.clearSelection(i);
+                    }
                 }
 
                 dragEvent.consume();

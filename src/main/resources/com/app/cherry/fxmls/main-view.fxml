@@ -155,7 +155,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </GridPane>
-                  <TreeView fx:id="treeView" editable="true" prefHeight="565.0" prefWidth="150.0" />
+                  <TreeView fx:id="treeView" editable="true" prefHeight="565.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
          </center>
