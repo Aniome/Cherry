@@ -2,11 +2,8 @@ package com.app.cherry.controls;
 
 import com.app.cherry.controllers.MainController;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import java.util.Optional;
 
 public class TreeCellFactory {
