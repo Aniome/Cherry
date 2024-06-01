@@ -4,6 +4,7 @@ import com.app.cherry.Markdown;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.EmptyExpandedTreeItem;
 import com.app.cherry.controls.TreeCellFactory;
+import com.app.cherry.util.Alerts;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -58,6 +59,7 @@ public class MainController{
         treeView.setRoot(root);
         treeView.setShowRoot(false);
         loadFilesInTreeview();
+        sortTreeView();
         createContextMenu();
 
         treeCellFactory = new TreeCellFactory(treeView, this);
@@ -68,8 +70,6 @@ public class MainController{
         createScalable();
     }
 
-
-
     private void loadFilesInTreeview(){
         List<Path> pathList = Markdown.getListFiles();
         pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
@@ -78,7 +78,7 @@ public class MainController{
             ObservableList<TreeItem<String>> rootList = root.getChildren();
             //check tree contains file
             TreeItem<String> containedItem = null;
-            EmptyExpandedTreeItem addedItem = null;
+            EmptyExpandedTreeItem addedItem;
             for (TreeItem<String> i: rootList){
                 if (path[0].equals(i.getValue()))
                     containedItem = i;
@@ -165,6 +165,8 @@ public class MainController{
                 selectedTab = tabPane.getSelectionModel().getSelectedItem();
                 selectedTab.setContent(createEmptyTab());
                 selectedTab.setText("Новая вкладка");
+            } else {
+                Alerts.CreateAndShowWarning("Не удалось удалить");
             }
         });
         contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);

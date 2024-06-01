@@ -3,22 +3,17 @@ package com.app.cherry.controls;
 import com.app.cherry.controllers.MainController;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import java.util.Set;
+import java.util.Optional;
 
 public class TreeCellFactory {
     private final DataFormat JAVA_FORMAT = DataFormat.PLAIN_TEXT;
     TreeView<String> treeView;
     TreeItem<String> draggedItem;
     MainController mainController;
-    Background whiteBackground;
-    Background selectBackground;
-    Border whiteBorder;
-    Border selectBorder;
     TreeItem<String> parent;
 
     public TreeCellFactory(TreeView<String> treeView, MainController mainController) {
@@ -28,12 +23,6 @@ public class TreeCellFactory {
     }
 
     private void init(){
-        setBackground(Color.WHITE);
-        setBackground(Color.AQUA);
-
-        whiteBorder = new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-        selectBorder = new Border(new BorderStroke(Color.AQUA, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-
         treeView.setCellFactory(tree -> {
             TreeCell<String> treeCell = new EditableTreeCell();
 
@@ -71,7 +60,6 @@ public class TreeCellFactory {
             treeCell.setOnDragDropped((DragEvent event) -> dragDrop(event, treeCell));
             treeCell.setOnDragDone((DragEvent event) -> clearDropLocation());
             treeCell.setOnDragEntered(dragEvent -> {
-                System.out.println("drag entered");
                 TreeItem<String> treeItem = treeCell.getTreeItem();
                 if (treeItem == null || draggedItem == treeItem){
                     return;
@@ -108,34 +96,26 @@ public class TreeCellFactory {
                 dragEvent.consume();
             });
             treeCell.setOnDragExited(dragEvent -> {
-                System.out.println("dragExited");
                 TreeItem<String> treeItem = treeCell.getTreeItem();
                 if (treeItem == null || draggedItem == treeItem){
                     return;
                 }
-                boolean contains = parent.getChildren().contains(treeItem);
-                if (parent != null && !contains){
-                    ObservableList<TreeItem<String>> childrens = parent.getChildren();
-                    MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
-                    for (int i = 0; i < childrens.size(); i++) {
-                        selectionModel.clearSelection(i);
+                Optional<TreeItem<String>> optionalParent = Optional.ofNullable(parent);
+                optionalParent.ifPresent(p ->{
+                    if (!parent.getChildren().contains(treeItem)){
+                        ObservableList<TreeItem<String>> childrens = parent.getChildren();
+                        MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
+                        for (int i = 0; i < childrens.size(); i++) {
+                            selectionModel.clearSelection(i);
+                        }
                     }
-                }
+                });
 
                 dragEvent.consume();
             });
 
             return treeCell;
         });
-    }
-
-    private void setBackground(Color color){
-        BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
-        if (Color.WHITE == color){
-            whiteBackground = new Background(backgroundFill);
-        } else {
-            selectBackground = new Background(backgroundFill);
-        }
     }
 
     private boolean showingContextMenu(){
@@ -170,11 +150,12 @@ public class TreeCellFactory {
         if (!db.hasContent(JAVA_FORMAT))
             return;
 
-        TreeItem<String> thisItem = treeCell.getTreeItem();
+        EmptyExpandedTreeItem thisItem = (EmptyExpandedTreeItem)treeCell.getTreeItem();
         TreeItem<String> droppedItemParent = draggedItem.getParent();
 
         // remove from previous location
         droppedItemParent.getChildren().remove(draggedItem);
+
         if (thisItem.isLeaf()){
             thisItem.getParent().getChildren().add(draggedItem);
         } else {

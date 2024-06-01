@@ -1,6 +1,7 @@
 package com.app.cherry;
 
 import com.app.cherry.util.Alerts;
+import com.app.cherry.util.DeletingFileVisitor;
 import com.app.cherry.util.mdFileVisitor;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
@@ -43,14 +44,16 @@ public class Markdown {
     public static boolean deleteFile(TreeItem<String> treeItem){
         String filepath = getPath(treeItem);
         File file = new File(filepath);
-        if (file.exists()){
-            if (!file.delete()){
-                Alerts.CreateAndShowWarning("Не удалось удалить");
-                return false;
+        Path path = Paths.get(filepath);
+        try {
+            if (file.exists()){
+                Files.walkFileTree(path, new DeletingFileVisitor());
+                return true;
             }
-            return true;
+            return false;
+        } catch (IOException e) {
+            return false;
         }
-        return false;
     }
 
     public static List<Path> getListFiles(){
@@ -116,7 +119,10 @@ public class Markdown {
         }
         list = list.reversed();
         list.forEach(item -> pathname.append(item).append("\\"));
-        pathname.deleteCharAt(pathname.length() - 1).append(".md");
+        pathname.deleteCharAt(pathname.length() - 1);
+        if (treeItem.isLeaf()){
+            pathname.append(".md");
+        }
         return pathname.toString();
     }
 }
