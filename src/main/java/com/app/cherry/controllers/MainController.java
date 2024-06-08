@@ -115,8 +115,12 @@ public class MainController{
                     treeItem = newTreeItem;
                 }
             } else {
+                //adding file in tree
                 addedItem = creatingTreeItem(path[0]);
-                rootList.add(addedItem);
+                TreeItem<String> treeItem = new TreeItem<>(path[0]);
+                treeItem.getChildren().add(null);
+                //rootList.add(addedItem);
+                rootList.add(treeItem);
             }
         });
     }
@@ -146,8 +150,16 @@ public class MainController{
 
     private void createContextMenu(){
         contextMenu = new ContextMenu();
-        MenuItem menuItem1 = new MenuItem("Переименовать");
+        MenuItem menuItem1 = new MenuItem("Новая заметка");
         menuItem1.setOnAction(actionEvent -> {
+            createNote();
+        });
+        MenuItem menuItem2 = new MenuItem("Новая папка");
+        menuItem2.setOnAction(actionEvent -> {
+            createFolder();
+        });
+        MenuItem menuItem3 = new MenuItem("Переименовать");
+        menuItem3.setOnAction(actionEvent -> {
             selectedItem = treeView.getSelectionModel().getSelectedItem();
             selectedTab = tabPane.getSelectionModel().getSelectedItem();
             if (renameStage == null)
@@ -155,13 +167,15 @@ public class MainController{
             else
                 renameStage.show();
         });
-        MenuItem menuItem2 = new MenuItem("Добавить в закладки");
-        MenuItem menuItem3 = new MenuItem("Удалить");
-        menuItem3.setOnAction(actionEvent -> {
+        MenuItem menuItem4 = new MenuItem("Добавить в закладки");
+        MenuItem menuItem5 = new MenuItem("Удалить");
+        menuItem5.setOnAction(actionEvent -> {
             selectedItem = treeView.getSelectionModel().getSelectedItem();
-            boolean isDelete = Markdown.deleteFile(selectedItem);
+            //boolean isDelete = Markdown.deleteFile(selectedItem);
+            boolean isDelete = true;
             if (isDelete){
-                root.getChildren().remove(selectedItem);
+                TreeItem<String> parentSelectedItem = selectedItem.getParent();
+                parentSelectedItem.getChildren().remove(selectedItem);
                 selectedTab = tabPane.getSelectionModel().getSelectedItem();
                 selectedTab.setContent(createEmptyTab());
                 selectedTab.setText("Новая вкладка");
@@ -169,7 +183,7 @@ public class MainController{
                 Alerts.CreateAndShowWarning("Не удалось удалить");
             }
         });
-        contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
+        contextMenu.getItems().addAll(menuItem3, menuItem4, menuItem5);
         treeView.setContextMenu(contextMenu);
     }
 
