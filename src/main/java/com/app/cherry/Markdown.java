@@ -22,8 +22,9 @@ public class Markdown {
     public static List<Path> pathList;
     public static String readFile(TreeItem<String> treeItem){
         StringBuilder result = new StringBuilder();
+        Path path = Paths.get(getPath(treeItem));
         try {
-            Files.readAllLines(Paths.get(getPath(treeItem))).forEach(str -> result.append(str).append("\n"));
+            Files.readAllLines(path).forEach(str -> result.append(str).append("\n"));
         } catch (IOException e) {
             Alerts.CreateAndShowError(e.getMessage());
         }
@@ -67,8 +68,8 @@ public class Markdown {
         return pathList;
     }
 
-    public static File createFileMarkdown(){
-        String path = RunApplication.FolderPath.toString() + "\\Без названия";
+    public static File createFileMarkdown(TreeItem<String> parent){
+        String path = getPath(parent) + "\\Без названия";
         try {
             File file = checkExists(new File(path), ".md");
             if (file.createNewFile()){
@@ -113,6 +114,7 @@ public class Markdown {
     private static String getPath(TreeItem<String> treeItem){
         StringBuilder pathname = new StringBuilder(RunApplication.FolderPath.toString() + "\\");
         List<String> list = new LinkedList<>();
+        TreeItem<String> loadingItem = treeItem;
         while (treeItem.getParent() != null){
             list.add(treeItem.getValue());
             treeItem = treeItem.getParent();
@@ -120,7 +122,7 @@ public class Markdown {
         list = list.reversed();
         list.forEach(item -> pathname.append(item).append("\\"));
         pathname.deleteCharAt(pathname.length() - 1);
-        if (treeItem.isLeaf()){
+        if (loadingItem.isLeaf()){
             pathname.append(".md");
         }
         return pathname.toString();

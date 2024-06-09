@@ -117,10 +117,7 @@ public class MainController{
             } else {
                 //adding file in tree
                 addedItem = creatingTreeItem(path[0]);
-                TreeItem<String> treeItem = new TreeItem<>(path[0]);
-                treeItem.getChildren().add(null);
-                //rootList.add(addedItem);
-                rootList.add(treeItem);
+                rootList.add(addedItem);
             }
         });
     }
@@ -135,7 +132,7 @@ public class MainController{
     }
 
     private void createScalable(){
-        var children = gridPane.getChildren();
+        ObservableList<Node> children = gridPane.getChildren();
         gridPane.heightProperty().addListener((observableValue, number, t1) -> {
             double newHeight = (t1.doubleValue() / 10) * 8;
             for (Node button: children)
@@ -152,11 +149,13 @@ public class MainController{
         contextMenu = new ContextMenu();
         MenuItem menuItem1 = new MenuItem("Новая заметка");
         menuItem1.setOnAction(actionEvent -> {
-            createNote();
+            selectedItem = treeView.getSelectionModel().getSelectedItem();
+            TreeItem<String> parent = selectedItem.getParent();
+            createFile(parent);
         });
         MenuItem menuItem2 = new MenuItem("Новая папка");
         menuItem2.setOnAction(actionEvent -> {
-            createFolder();
+            //createFolder();
         });
         MenuItem menuItem3 = new MenuItem("Переименовать");
         menuItem3.setOnAction(actionEvent -> {
@@ -171,8 +170,7 @@ public class MainController{
         MenuItem menuItem5 = new MenuItem("Удалить");
         menuItem5.setOnAction(actionEvent -> {
             selectedItem = treeView.getSelectionModel().getSelectedItem();
-            //boolean isDelete = Markdown.deleteFile(selectedItem);
-            boolean isDelete = true;
+            boolean isDelete = Markdown.deleteFile(selectedItem);
             if (isDelete){
                 TreeItem<String> parentSelectedItem = selectedItem.getParent();
                 parentSelectedItem.getChildren().remove(selectedItem);
@@ -183,7 +181,7 @@ public class MainController{
                 Alerts.CreateAndShowWarning("Не удалось удалить");
             }
         });
-        contextMenu.getItems().addAll(menuItem3, menuItem4, menuItem5);
+        contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5);
         treeView.setContextMenu(contextMenu);
     }
 
@@ -259,14 +257,18 @@ public class MainController{
     //Event on the note creation button
     @FXML
     private void createNote(){
-        File NewNote = Markdown.createFileMarkdown();
-        if (NewNote == null){
+        createFile(root);
+    }
+
+    private void createFile(TreeItem<String> parent) {
+        File newNote = Markdown.createFileMarkdown(parent);
+        if (newNote == null){
             return;
         }
-        String name = NewNote.getName().replace(".md", "");
+        String name = newNote.getName().replace(".md", "");
         addTab(name);
         TreeItem<String> treeItem = new TreeItem<>(name);
-        root.getChildren().add(treeItem);
+        parent.getChildren().add(treeItem);
         sortTreeView();
     }
 
@@ -276,8 +278,7 @@ public class MainController{
         if (Folder == null) {
             return;
         }
-        TreeItem<String> folder = new TreeItem<>(Folder.getName());
-        folder.getChildren().add(null);
+        EmptyExpandedTreeItem folder = new EmptyExpandedTreeItem(Folder.getName(), false);
         root.getChildren().add(folder);
         sortTreeView();
     }

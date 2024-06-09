@@ -7,6 +7,8 @@ public class EmptyExpandedTreeItem extends TreeItem<String> {
 
     public EmptyExpandedTreeItem(String s, boolean childrenLoaded) {
         super(s);
+        //true is leaf, false is expanded
+        //the flag does not need to be changed
         this.childrenLoaded = childrenLoaded;
     }
 
