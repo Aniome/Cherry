@@ -45,7 +45,8 @@ public class MainController{
     TreeItem<String> selectedItem;
     Tab selectedTab;
     TreeCellFactory treeCellFactory;
-    public ContextMenu contextMenu;
+    public ContextMenu folderContextMenu;
+    public ContextMenu noteContextMenu;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -146,19 +147,26 @@ public class MainController{
     }
 
     private void createContextMenu(){
-        contextMenu = new ContextMenu();
-        MenuItem menuItem1 = new MenuItem("Новая заметка");
-        menuItem1.setOnAction(actionEvent -> {
+        MenuItem newNoteMenuItem = new MenuItem("Новая заметка");
+        newNoteMenuItem.setOnAction(actionEvent -> {
             selectedItem = treeView.getSelectionModel().getSelectedItem();
             TreeItem<String> parent = selectedItem.getParent();
             createFile(parent);
         });
-        MenuItem menuItem2 = new MenuItem("Новая папка");
-        menuItem2.setOnAction(actionEvent -> {
+        MenuItem newFolderMenuItem = new MenuItem("Новая папка");
+        newFolderMenuItem.setOnAction(actionEvent -> {
             //createFolder();
         });
-        MenuItem menuItem3 = new MenuItem("Переименовать");
-        menuItem3.setOnAction(actionEvent -> {
+
+
+        folderContextMenu = new ContextMenu(newNoteMenuItem, newFolderMenuItem,
+                getRenameMenuItem(), getFavoriteMenuItem(), getDeleteMenuItem());
+        noteContextMenu = new ContextMenu(getRenameMenuItem(), getFavoriteMenuItem(), getDeleteMenuItem());
+    }
+
+    private MenuItem getRenameMenuItem() {
+        MenuItem renameMenuItem = new MenuItem("Переименовать");
+        renameMenuItem.setOnAction(actionEvent -> {
             selectedItem = treeView.getSelectionModel().getSelectedItem();
             selectedTab = tabPane.getSelectionModel().getSelectedItem();
             if (renameStage == null)
@@ -166,9 +174,16 @@ public class MainController{
             else
                 renameStage.show();
         });
-        MenuItem menuItem4 = new MenuItem("Добавить в закладки");
-        MenuItem menuItem5 = new MenuItem("Удалить");
-        menuItem5.setOnAction(actionEvent -> {
+        return renameMenuItem;
+    }
+
+    private MenuItem getFavoriteMenuItem() {
+        return new MenuItem("Добавить в закладки");
+    }
+
+    private MenuItem getDeleteMenuItem() {
+        MenuItem deleteMenuItem = new MenuItem("Удалить");
+        deleteMenuItem.setOnAction(actionEvent -> {
             selectedItem = treeView.getSelectionModel().getSelectedItem();
             boolean isDelete = Markdown.deleteFile(selectedItem);
             if (isDelete){
@@ -181,8 +196,7 @@ public class MainController{
                 Alerts.CreateAndShowWarning("Не удалось удалить");
             }
         });
-        contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5);
-        treeView.setContextMenu(contextMenu);
+        return deleteMenuItem;
     }
 
     private void openModalWindow(){

@@ -27,7 +27,7 @@ public class TreeCellFactory {
                 TreeItem<String> treeItem = treeCell.getTreeItem();
                 if (treeItem == null)
                     return;
-                if (showingContextMenu())
+                if (contextMenuIsShowing())
                     return;
                 if (!mouseEvent.isDragDetect())
                     return;
@@ -35,7 +35,7 @@ public class TreeCellFactory {
                 treeView.getSelectionModel().select(treeItem);
             });
             treeCell.setOnMouseExited(mouseEvent -> {
-                if (showingContextMenu())
+                if (contextMenuIsShowing())
                     return;
                 treeView.setContextMenu(null);
                 treeView.getSelectionModel().clearSelection();
@@ -49,7 +49,11 @@ public class TreeCellFactory {
                     mainController.loadDataOnFormOnClick(selectedItem);
                 }
                 if (mouseButton.equals(MouseButton.SECONDARY)){
-                    treeView.setContextMenu(mainController.contextMenu);
+                    if (selectedItem.isLeaf()){
+                        treeView.setContextMenu(mainController.noteContextMenu);
+                    } else {
+                        treeView.setContextMenu(mainController.folderContextMenu);
+                    }
                 }
             });
             treeCell.setOnDragDetected((MouseEvent event) -> dragDetected(event, treeCell));
@@ -115,7 +119,7 @@ public class TreeCellFactory {
         });
     }
 
-    private boolean showingContextMenu(){
+    private boolean contextMenuIsShowing(){
         ContextMenu contMenu = treeView.getContextMenu();
         return contMenu != null && contMenu.isShowing();
     }
