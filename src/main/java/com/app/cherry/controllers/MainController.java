@@ -42,11 +42,7 @@ public class MainController{
     Stage mainStage;
     Stage renameStage;
     public static String newFileName;
-    TreeItem<String> selectedItem;
-    Tab selectedTab;
     TreeCellFactory treeCellFactory;
-    public ContextMenu folderContextMenu;
-    public ContextMenu noteContextMenu;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -61,7 +57,7 @@ public class MainController{
         treeView.setShowRoot(false);
         loadFilesInTreeview();
         sortTreeView();
-        createContextMenu();
+        CreateContextMenu.createContextMenu(treeView, this, renameStage, tabPane);
 
         treeCellFactory = new TreeCellFactory(treeView, this);
 
@@ -146,60 +142,7 @@ public class MainController{
         });
     }
 
-    private void createContextMenu(){
-        MenuItem newNoteMenuItem = new MenuItem("Новая заметка");
-        newNoteMenuItem.setOnAction(actionEvent -> {
-            selectedItem = treeView.getSelectionModel().getSelectedItem();
-            TreeItem<String> parent = selectedItem.getParent();
-            createFile(parent);
-        });
-        MenuItem newFolderMenuItem = new MenuItem("Новая папка");
-        newFolderMenuItem.setOnAction(actionEvent -> {
-            //createFolder();
-        });
-
-
-        folderContextMenu = new ContextMenu(newNoteMenuItem, newFolderMenuItem,
-                getRenameMenuItem(), getFavoriteMenuItem(), getDeleteMenuItem());
-        noteContextMenu = new ContextMenu(getRenameMenuItem(), getFavoriteMenuItem(), getDeleteMenuItem());
-    }
-
-    private MenuItem getRenameMenuItem() {
-        MenuItem renameMenuItem = new MenuItem("Переименовать");
-        renameMenuItem.setOnAction(actionEvent -> {
-            selectedItem = treeView.getSelectionModel().getSelectedItem();
-            selectedTab = tabPane.getSelectionModel().getSelectedItem();
-            if (renameStage == null)
-                openModalWindow();
-            else
-                renameStage.show();
-        });
-        return renameMenuItem;
-    }
-
-    private MenuItem getFavoriteMenuItem() {
-        return new MenuItem("Добавить в закладки");
-    }
-
-    private MenuItem getDeleteMenuItem() {
-        MenuItem deleteMenuItem = new MenuItem("Удалить");
-        deleteMenuItem.setOnAction(actionEvent -> {
-            selectedItem = treeView.getSelectionModel().getSelectedItem();
-            boolean isDelete = Markdown.deleteFile(selectedItem);
-            if (isDelete){
-                TreeItem<String> parentSelectedItem = selectedItem.getParent();
-                parentSelectedItem.getChildren().remove(selectedItem);
-                selectedTab = tabPane.getSelectionModel().getSelectedItem();
-                selectedTab.setContent(createEmptyTab());
-                selectedTab.setText("Новая вкладка");
-            } else {
-                Alerts.CreateAndShowWarning("Не удалось удалить");
-            }
-        });
-        return deleteMenuItem;
-    }
-
-    private void openModalWindow(){
+    public void openModalWindow(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
@@ -212,9 +155,11 @@ public class MainController{
                 if (newFileName == null) {
                     return;
                 }
+                TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
                 boolean b = Markdown.renameFile(newFileName, selectedItem.getValue(), RunApplication.FolderPath.toString());
                 if (b){
                     selectedItem.setValue(newFileName);
+                    Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
                     selectedTab.setText(newFileName);
                 }
             });
@@ -274,7 +219,7 @@ public class MainController{
         createFile(root);
     }
 
-    private void createFile(TreeItem<String> parent) {
+    public void createFile(TreeItem<String> parent) {
         File newNote = Markdown.createFileMarkdown(parent);
         if (newNote == null){
             return;
@@ -335,7 +280,7 @@ public class MainController{
         return borderPane;
     }
 
-    private BorderPane createEmptyTab(){
+    public BorderPane createEmptyTab(){
         BorderPane borderPane = new BorderPane();
         Label label = new Label("Ни один файл не открыт");
         label.setFont(new Font(29));

@@ -1,5 +1,6 @@
 package com.app.cherry.controls;
 
+import com.app.cherry.controllers.CreateContextMenu;
 import com.app.cherry.controllers.MainController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -50,9 +51,9 @@ public class TreeCellFactory {
                 }
                 if (mouseButton.equals(MouseButton.SECONDARY)){
                     if (selectedItem.isLeaf()){
-                        treeView.setContextMenu(mainController.noteContextMenu);
+                        treeView.setContextMenu(CreateContextMenu.noteContextMenu);
                     } else {
-                        treeView.setContextMenu(mainController.folderContextMenu);
+                        treeView.setContextMenu(CreateContextMenu.folderContextMenu);
                     }
                 }
             });

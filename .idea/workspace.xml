@@ -12,8 +12,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fix deleting">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="creating another context menu for folder and note">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeCellFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeCellFactory.java" afterDir="false" />
@@ -250,7 +250,7 @@
       <workItem from="1717698056572" duration="1311000" />
       <workItem from="1717869987368" duration="4992000" />
       <workItem from="1717888150046" duration="12841000" />
-      <workItem from="1717915083490" duration="19611000" />
+      <workItem from="1717915083490" duration="32562000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -540,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717907518217</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="creating another context menu for folder and note">
+      <option name="closed" value="true" />
+      <created>1718011261802</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1718011261802</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -559,7 +567,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fixing context menu" />
     <MESSAGE value="add edit cell" />
     <MESSAGE value="add rename" />
     <MESSAGE value="add folder and fix bugs" />
@@ -584,7 +591,8 @@
     <MESSAGE value="recursion deleting folder and files" />
     <MESSAGE value="fix some bugs" />
     <MESSAGE value="fix deleting" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix deleting" />
+    <MESSAGE value="creating another context menu for folder and note" />
+    <option name="LAST_COMMIT_MESSAGE" value="creating another context menu for folder and note" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
