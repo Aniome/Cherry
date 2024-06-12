@@ -4,7 +4,6 @@ import com.app.cherry.Markdown;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.EmptyExpandedTreeItem;
 import com.app.cherry.controls.TreeCellFactory;
-import com.app.cherry.util.Alerts;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -219,7 +218,7 @@ public class MainController{
         createFile(root);
     }
 
-    public void createFile(TreeItem<String> parent) {
+    public void createFile(TreeItem<String> parent){
         File newNote = Markdown.createFileMarkdown(parent);
         if (newNote == null){
             return;
@@ -232,13 +231,17 @@ public class MainController{
     }
 
     @FXML
-    private void createFolder(){
-        File Folder = Markdown.createFolderMarkdown();
+    private void createFolderInTree(){
+        createFolder(root);
+    }
+
+    public void createFolder(TreeItem<String> treeItem){
+        File Folder = Markdown.createFolderMarkdown(treeItem);
         if (Folder == null) {
             return;
         }
         EmptyExpandedTreeItem folder = new EmptyExpandedTreeItem(Folder.getName(), false);
-        root.getChildren().add(folder);
+        treeItem.getChildren().add(folder);
         sortTreeView();
     }
 

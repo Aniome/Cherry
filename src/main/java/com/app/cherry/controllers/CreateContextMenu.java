@@ -14,12 +14,12 @@ public class CreateContextMenu {
         MenuItem newNoteMenuItem = new MenuItem("Новая заметка");
         newNoteMenuItem.setOnAction(actionEvent -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-            TreeItem<String> parent = selectedItem.getParent();
-            mainController.createFile(parent);
+            mainController.createFile(selectedItem);
         });
         MenuItem newFolderMenuItem = new MenuItem("Новая папка");
         newFolderMenuItem.setOnAction(actionEvent -> {
-            //createFolder();
+            TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+            mainController.createFolder(selectedItem);
         });
 
 

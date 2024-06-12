@@ -138,7 +138,7 @@
                               <Tooltip text="Новая заметка" />
                            </tooltip>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#createFolder" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button mnemonicParsing="false" onMouseClicked="#createFolderInTree" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

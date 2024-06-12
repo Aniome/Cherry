@@ -69,9 +69,9 @@ public class Markdown {
     }
 
     public static File createFileMarkdown(TreeItem<String> parent){
-        String path = getPath(parent) + "\\Без названия";
+        String path = getPath(parent);
         try {
-            File file = checkExists(new File(path), ".md");
+            File file = checkExists(path, ".md");
             if (file.createNewFile()){
                 return file;
             } else {
@@ -83,9 +83,9 @@ public class Markdown {
         }
     }
 
-    public static File createFolderMarkdown(){
-        File folder = new File(RunApplication.FolderPath.toString() + "\\Без названия");
-        folder = checkExists(folder, "");
+    public static File createFolderMarkdown(TreeItem<String> treeItem){
+        String path = getPath(treeItem);
+        File folder = checkExists(path, "");
         if (folder.mkdir()){
             return folder;
         } else {
@@ -93,15 +93,16 @@ public class Markdown {
         }
     }
 
-    public static File checkExists(File f, String extension) {
-        if (f.exists()) {
+    public static File checkExists(String path, String extension) {
+        File file = new File(path + "\\Без названия" + extension);
+        if (file.exists()) {
             int i = 1;
-            while (f.exists()){
-                f = new File(RunApplication.FolderPath.toString() + "\\Без названия" + i + extension);
+            while (file.exists()){
+                file = new File(path + "\\Без названия" + i + extension);
                 i++;
             }
         }
-        return f;
+        return file;
     }
 
     public static boolean renameFile(String NewName, String OldName, String path){
