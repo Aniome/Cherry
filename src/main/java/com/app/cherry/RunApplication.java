@@ -23,12 +23,10 @@ public class RunApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        HibernateUtil hibernateUtil = new HibernateUtil();
-        hibernateUtil.setUp();
-        FolderPath = hibernateUtil.getPath();
-        Double height = hibernateUtil.getHeight();
-        Double width = hibernateUtil.getWidth();
-
+        HibernateUtil.setUp();
+        FolderPath = HibernateUtil.getPath();
+        Double height = HibernateUtil.getHeight();
+        Double width = HibernateUtil.getWidth();
 
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -52,15 +50,15 @@ public class RunApplication extends Application {
             stage.setHeight(height);
             stage.setWidth(width);
             prepareStage(MainHeight, MainWidth, scene, title, stage);
-            stage.setMaximized(hibernateUtil.isMaximized());
+            stage.setMaximized(HibernateUtil.isMaximized());
             stage.setOnHiding((event) -> {
                 boolean isMaximized = stage.isMaximized();
                 if (!isMaximized) {
-                    hibernateUtil.setHeight(stage.getHeight());
-                    hibernateUtil.setWidth(stage.getWidth());
+                    HibernateUtil.setHeight(stage.getHeight());
+                    HibernateUtil.setWidth(stage.getWidth());
                 }
-                hibernateUtil.setIsMaximized(isMaximized);
-                hibernateUtil.tearDown();
+                HibernateUtil.setIsMaximized(isMaximized);
+                HibernateUtil.tearDown();
             });
         }
     }

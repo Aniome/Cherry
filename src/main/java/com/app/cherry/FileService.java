@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Markdown {
+public class FileService {
     //List for FileVisitor
     public static List<Path> pathList;
     public static String readFile(TreeItem<String> treeItem){

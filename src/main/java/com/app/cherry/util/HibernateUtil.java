@@ -1,5 +1,6 @@
 package com.app.cherry.util;
 
+import com.app.cherry.entity.FavoriteNotes;
 import com.app.cherry.entity.Settings;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,9 +14,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class HibernateUtil {
-    private SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
 
-    public void setUp() {
+    public static void setUp() {
         // A SessionFactory is set up once for an application!
         File path = new File("");
         String absolutePath = path.getAbsolutePath().replace("\\", "/");
@@ -30,18 +31,26 @@ public class HibernateUtil {
         catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
             // so destroy it manually.
-            System.out.println(e.getMessage());
+            Alerts.CreateAndShowWarning(e.getMessage());
             StandardServiceRegistryBuilder.destroy( registry );
         }
     }
 
-    public void tearDown()  {
-        if ( sessionFactory != null ) {
+    public static void tearDown()  {
+        if (sessionFactory != null) {
             sessionFactory.close();
         }
     }
 
-    public Double getHeight(){
+    public static void setPathNote(String pathNote){
+        sessionFactory.inTransaction(session -> {
+            FavoriteNotes favoriteNotes = new FavoriteNotes();
+            favoriteNotes.setPathNote(pathNote);
+            session.persist(favoriteNotes);
+        });
+    }
+
+    public static Double getHeight(){
         Session session = sessionFactory.openSession();
         Settings settings = session.get(Settings.class, 1);
         Double height = settings.getHeight();
@@ -49,7 +58,7 @@ public class HibernateUtil {
         return height;
     }
 
-    public void setHeight(Double height){
+    public static void setHeight(Double height){
         sessionFactory.inTransaction(session -> {
             Settings settings = session.get(Settings.class, 1);
             settings.setHeight(height);
@@ -57,7 +66,7 @@ public class HibernateUtil {
         });
     }
 
-    public Double getWidth(){
+    public static Double getWidth(){
         Session session = sessionFactory.openSession();
         Settings settings = session.get(Settings.class, 1);
         Double width = settings.getWidth();
@@ -65,7 +74,7 @@ public class HibernateUtil {
         return width;
     }
 
-    public void setWidth(Double width){
+    public static void setWidth(Double width){
         sessionFactory.inTransaction(session -> {
             Settings settings = session.get(Settings.class, 1);
             settings.setWidth(width);
@@ -73,7 +82,7 @@ public class HibernateUtil {
         });
     }
 
-    public Boolean isMaximized(){
+    public static Boolean isMaximized(){
         Session session = sessionFactory.openSession();
         Settings settings = session.get(Settings.class, 1);
         Integer isMaximized = settings.getIsMaximized();
@@ -81,7 +90,7 @@ public class HibernateUtil {
         return isMaximized != null && isMaximized == 1;
     }
 
-    public void setIsMaximized(Boolean isMaximized){
+    public static void setIsMaximized(Boolean isMaximized){
         sessionFactory.inTransaction(session -> {
             Settings settings = session.get(Settings.class, 1);
             settings.setIsMaximized(isMaximized ? 1 : 0);
@@ -89,12 +98,12 @@ public class HibernateUtil {
         });
     }
 
-    public Path getPath(){
+    public static Path getPath(){
         Session session = sessionFactory.openSession();
         Settings settings = session.get(Settings.class, 1);
         session.close();
         Path FolderPath = Paths.get(settings.getLastPath());
-        Boolean condition = Files.exists(FolderPath) && Files.isExecutable(FolderPath) && Files.isDirectory(FolderPath);
+        boolean condition = Files.exists(FolderPath) && Files.isExecutable(FolderPath) && Files.isDirectory(FolderPath);
         if (condition){
             return FolderPath;
         } else {
@@ -102,10 +111,8 @@ public class HibernateUtil {
         }
     }
 
-    public void setPath(String path){
-        sessionFactory.inTransaction(session -> {
-            session.persist(new Settings(path));
-        });
+    public static void setPath(String path){
+        sessionFactory.inTransaction(session -> session.persist(new Settings(path)));
     }
 
 	/*

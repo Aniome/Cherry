@@ -1,6 +1,6 @@
 package com.app.cherry.controllers;
 
-import com.app.cherry.Markdown;
+import com.app.cherry.FileService;
 import com.app.cherry.util.Alerts;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -42,14 +42,18 @@ public class CreateContextMenu {
     }
 
     private static MenuItem getFavoriteMenuItem() {
-        return new MenuItem("Добавить в закладки");
+        MenuItem favoriteMenuItem = new MenuItem("Добавить в закладки");
+        favoriteMenuItem.setOnAction(actionEvent -> {
+
+        });
+        return favoriteMenuItem;
     }
 
     private static MenuItem getDeleteMenuItem(TreeView<String> treeView, TabPane tabPane, MainController mainController) {
         MenuItem deleteMenuItem = new MenuItem("Удалить");
         deleteMenuItem.setOnAction(actionEvent -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-            boolean isDelete = Markdown.deleteFile(selectedItem);
+            boolean isDelete = FileService.deleteFile(selectedItem);
             if (isDelete){
                 TreeItem<String> parentSelectedItem = selectedItem.getParent();
                 parentSelectedItem.getChildren().remove(selectedItem);

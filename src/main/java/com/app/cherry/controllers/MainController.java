@@ -1,6 +1,6 @@
 package com.app.cherry.controllers;
 
-import com.app.cherry.Markdown;
+import com.app.cherry.FileService;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.EmptyExpandedTreeItem;
 import com.app.cherry.controls.TreeCellFactory;
@@ -67,7 +67,7 @@ public class MainController{
     }
 
     private void loadFilesInTreeview(){
-        List<Path> pathList = Markdown.getListFiles();
+        List<Path> pathList = FileService.getListFiles();
         pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
         pathList.forEach(item -> {
             String[] path = item.toString().split("\\\\");
@@ -155,7 +155,7 @@ public class MainController{
                     return;
                 }
                 TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-                boolean b = Markdown.renameFile(newFileName, selectedItem.getValue(), RunApplication.FolderPath.toString());
+                boolean b = FileService.renameFile(newFileName, selectedItem.getValue(), RunApplication.FolderPath.toString());
                 if (b){
                     selectedItem.setValue(newFileName);
                     Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
@@ -183,8 +183,8 @@ public class MainController{
                 ((TextField) children).setText(filename);
             }
             if (children instanceof TextArea textArea){
-                textArea.setText(Markdown.readFile(selectedItem));
-                textArea.textProperty().addListener((observableValue, s, t1) -> Markdown.writeFile(selectedItem, textArea));
+                textArea.setText(FileService.readFile(selectedItem));
+                textArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, textArea));
             }
         }
         tab.setContent(borderPane);
@@ -219,7 +219,7 @@ public class MainController{
     }
 
     public void createFile(TreeItem<String> parent){
-        File newNote = Markdown.createFileMarkdown(parent);
+        File newNote = FileService.createFileMarkdown(parent);
         if (newNote == null){
             return;
         }
@@ -236,7 +236,7 @@ public class MainController{
     }
 
     public void createFolder(TreeItem<String> treeItem){
-        File Folder = Markdown.createFolderMarkdown(treeItem);
+        File Folder = FileService.createFolderMarkdown(treeItem);
         if (Folder == null) {
             return;
         }
