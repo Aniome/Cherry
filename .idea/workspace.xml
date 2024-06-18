@@ -12,16 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="added creation of notes and folders via the context menu">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/FavoriteNotes.java" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="added changes for favorite menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/Markdown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/HibernateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/mdFileVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/mdFileVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,7 +255,9 @@
       <workItem from="1718289046459" duration="2907000" />
       <workItem from="1718299648976" duration="57000" />
       <workItem from="1718301365587" duration="17000" />
-      <workItem from="1718647902323" duration="2395000" />
+      <workItem from="1718647902323" duration="2449000" />
+      <workItem from="1718650456265" duration="5000" />
+      <workItem from="1718735387275" duration="1340000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -574,7 +571,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718158098668</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="added changes for favorite menu">
+      <option name="closed" value="true" />
+      <created>1718650438236</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1718650438236</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -593,7 +598,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add folder and fix bugs" />
     <MESSAGE value="fix rename window" />
     <MESSAGE value="add create folder and fix bags" />
     <MESSAGE value="add load files in tree" />
@@ -618,7 +622,8 @@
     <MESSAGE value="creating another context menu for folder and note" />
     <MESSAGE value="refactoring MainController" />
     <MESSAGE value="added creation of notes and folders via the context menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="added creation of notes and folders via the context menu" />
+    <MESSAGE value="added changes for favorite menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="added changes for favorite menu" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
