@@ -6,12 +6,12 @@ import java.util.Objects;
 
 @Entity
 public class Settings {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
-    @Column(name = "LastPath", nullable = true, length = -1)
+    @Column(name = "LastPath", length = -1)
     private String lastPath;
 
     @Column(name = "height")

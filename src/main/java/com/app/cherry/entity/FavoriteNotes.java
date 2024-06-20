@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 @Entity
 public class FavoriteNotes {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;

@@ -1,6 +1,5 @@
 package com.app.cherry.util;
 
-import com.app.cherry.FileService;
 import com.app.cherry.RunApplication;
 
 import java.io.IOException;
@@ -11,12 +10,12 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class mdFileVisitor extends SimpleFileVisitor<Path> {
     @Override
-    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs){
         FileService.pathList.add(file);
         return FileVisitResult.CONTINUE;
     }
     @Override
-    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs){
         if (RunApplication.FolderPath.equals(dir)){
             return FileVisitResult.CONTINUE;
         }

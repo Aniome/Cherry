@@ -1,8 +1,8 @@
 package com.app.cherry.controllers;
 
-import com.app.cherry.FileService;
+import com.app.cherry.dao.FavoriteNotesDAO;
+import com.app.cherry.util.FileService;
 import com.app.cherry.util.Alerts;
-import com.app.cherry.util.HibernateUtil;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -25,9 +25,10 @@ public class CreateContextMenu {
 
 
         folderContextMenu = new ContextMenu(newNoteMenuItem, newFolderMenuItem,
-                getRenameMenuItem(renameStage, mainController), getFavoriteMenuItem(), getDeleteMenuItem(treeView, tabPane, mainController));
-        noteContextMenu = new ContextMenu(getRenameMenuItem(renameStage, mainController), getFavoriteMenuItem(),
+                getRenameMenuItem(renameStage, mainController), getFavoriteMenuItem(treeView),
                 getDeleteMenuItem(treeView, tabPane, mainController));
+        noteContextMenu = new ContextMenu(getRenameMenuItem(renameStage, mainController),
+                getFavoriteMenuItem(treeView), getDeleteMenuItem(treeView, tabPane, mainController));
     }
 
 
@@ -42,10 +43,11 @@ public class CreateContextMenu {
         return renameMenuItem;
     }
 
-    private static MenuItem getFavoriteMenuItem() {
+    private static MenuItem getFavoriteMenuItem(TreeView<String> treeView) {
         MenuItem favoriteMenuItem = new MenuItem("Добавить в закладки");
         favoriteMenuItem.setOnAction(actionEvent -> {
-            HibernateUtil.setPathNote("Test");
+            TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+            FavoriteNotesDAO.setPathNote(FileService.getPath(selectedItem));
         });
         return favoriteMenuItem;
     }

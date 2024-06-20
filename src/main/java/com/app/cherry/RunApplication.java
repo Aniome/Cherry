@@ -2,6 +2,7 @@ package com.app.cherry;
 
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +25,9 @@ public class RunApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         HibernateUtil.setUp();
-        FolderPath = HibernateUtil.getPath();
-        Double height = HibernateUtil.getHeight();
-        Double width = HibernateUtil.getWidth();
+        FolderPath = SettingsDAO.getPath();
+        Double height = SettingsDAO.getHeight();
+        Double width = SettingsDAO.getWidth();
 
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -54,8 +55,8 @@ public class RunApplication extends Application {
             stage.setOnHiding((event) -> {
                 boolean isMaximized = stage.isMaximized();
                 if (!isMaximized) {
-                    HibernateUtil.setHeight(stage.getHeight());
-                    HibernateUtil.setWidth(stage.getWidth());
+                    SettingsDAO.setHeight(stage.getHeight());
+                    SettingsDAO.setWidth(stage.getWidth());
                 }
                 HibernateUtil.setIsMaximized(isMaximized);
                 HibernateUtil.tearDown();

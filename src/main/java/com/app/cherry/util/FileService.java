@@ -1,8 +1,6 @@
-package com.app.cherry;
+package com.app.cherry.util;
 
-import com.app.cherry.util.Alerts;
-import com.app.cherry.util.DeletingFileVisitor;
-import com.app.cherry.util.mdFileVisitor;
+import com.app.cherry.RunApplication;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 
@@ -112,7 +110,7 @@ public class FileService {
         return oldFile.renameTo(newFile);
     }
 
-    private static String getPath(TreeItem<String> treeItem){
+    public static String getPath(TreeItem<String> treeItem){
         StringBuilder pathname = new StringBuilder(RunApplication.FolderPath.toString() + "\\");
         List<String> list = new LinkedList<>();
         TreeItem<String> loadingItem = treeItem;
