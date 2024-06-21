@@ -1,5 +1,7 @@
 package com.app.cherry.controllers;
 
+import com.app.cherry.dao.FavoriteNotesDAO;
+import com.app.cherry.entity.FavoriteNotes;
 import com.app.cherry.util.FileService;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.EmptyExpandedTreeItem;
@@ -243,6 +245,16 @@ public class MainController{
         EmptyExpandedTreeItem folder = new EmptyExpandedTreeItem(Folder.getName(), false);
         treeItem.getChildren().add(folder);
         sortTreeView();
+    }
+
+    @FXML
+    private void showFavorites(){
+        TreeItem<String> newRoot = new TreeItem<>("");
+        List<FavoriteNotes> listFavoriteNotes = FavoriteNotesDAO.getFavoriteNotes();
+        for (FavoriteNotes favoriteNote: listFavoriteNotes){
+            newRoot.getChildren().add(new TreeItem<>(favoriteNote.getPathNote()));
+        }
+        treeView.setRoot(newRoot);
     }
 
     private void sortTreeView(){

@@ -13,18 +13,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="load data in db and refactoring">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/SettingsDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/FavoriteNotes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/FavoriteNotes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/HibernateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/mdFileVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/mdFileVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/SettingsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/SettingsDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +89,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Programming/Java/Hibernates/ExampleOffHibernates/hibernate-tutorials",
+    "last_opened_file_path": "C:/Users/user-pc/AppData/Local/SceneBuilder/SceneBuilder.exe",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -266,7 +260,8 @@
       <workItem from="1718647902323" duration="2449000" />
       <workItem from="1718650456265" duration="5000" />
       <workItem from="1718735387275" duration="2721000" />
-      <workItem from="1718817028928" duration="11032000" />
+      <workItem from="1718817028928" duration="12885000" />
+      <workItem from="1718994699857" duration="1261000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -596,7 +591,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718736848674</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="load data in db and refactoring">
+      <option name="closed" value="true" />
+      <created>1718869203507</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1718869203507</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

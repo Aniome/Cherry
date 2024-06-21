@@ -55,6 +55,10 @@ public class SettingsDAO {
     }
 
     public static void setPath(String path){
-        HibernateUtil.sessionFactory.inTransaction(session -> session.persist(new Settings(path)));
+        HibernateUtil.sessionFactory.inTransaction(session -> {
+            Settings settings = session.get(Settings.class, 1);
+            settings.setLastPath(path);
+            session.persist(settings);
+        });
     }
 }

@@ -44,4 +44,9 @@ public class FavoriteNotesDAO {
         session.close();
         return i;
     }
+
+    public static List<FavoriteNotes> getFavoriteNotes(){
+        Session session = HibernateUtil.sessionFactory.openSession();
+        return session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
+    }
 }
