@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class MainController{
@@ -37,13 +38,15 @@ public class MainController{
     private GridPane gridPane;
 
     private String oldTextFieldValue;
-    private TreeItem<String> root;
     final double renameWidth = 600;
     final double renameHeight = 250;
     Stage mainStage;
     Stage renameStage;
     public static String newFileName;
     TreeCellFactory treeCellFactory;
+    TreeItem<String> oldRoot;
+    @FXML
+    Button filesManager;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -53,8 +56,7 @@ public class MainController{
     public void init(Stage mainStage){
         this.mainStage = mainStage;
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        root = new TreeItem<>("");
-        treeView.setRoot(root);
+        treeView.setRoot(new TreeItem<>(""));
         treeView.setShowRoot(false);
         loadFilesInTreeview();
         sortTreeView();
@@ -70,54 +72,7 @@ public class MainController{
 
     private void loadFilesInTreeview(){
         List<Path> pathList = FileService.getListFiles();
-        pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
-        pathList.forEach(item -> {
-            String[] path = item.toString().split("\\\\");
-            ObservableList<TreeItem<String>> rootList = root.getChildren();
-            //check tree contains file
-            TreeItem<String> containedItem = null;
-            EmptyExpandedTreeItem addedItem;
-            for (TreeItem<String> i: rootList){
-                if (path[0].equals(i.getValue()))
-                    containedItem = i;
-            }
-            //if tree contains file
-            if (containedItem != null){
-                TreeItem<String> treeItem = containedItem;
-                boolean isContained = false;
-                for (int i = 1; i < path.length; i++){
-                    ObservableList<TreeItem<String>> treeList = treeItem.getChildren();
-                    for (TreeItem<String> treeListItem: treeList){
-                        //check subtree for file existence
-                        if (path[i].equals(treeListItem.getValue())){
-                            treeItem = treeListItem;
-                            isContained = true;
-                            break;
-                        }
-                    }
-                    if (isContained){
-                        isContained = false;
-                        continue;
-                    }
-                    //add item in tree
-                    addedItem = creatingTreeItem(path[i]);
-                    treeList.add(addedItem);
-                }
-            } else if (path.length > 1) {
-                //creating tree hierarchy
-                TreeItem<String> treeItem = root;
-                TreeItem<String> newTreeItem;
-                for (String str: path){
-                    newTreeItem = creatingTreeItem(str);
-                    treeItem.getChildren().add(newTreeItem);
-                    treeItem = newTreeItem;
-                }
-            } else {
-                //adding file in tree
-                addedItem = creatingTreeItem(path[0]);
-                rootList.add(addedItem);
-            }
-        });
+        loadItemsInTree(pathList);
     }
 
     private EmptyExpandedTreeItem creatingTreeItem(String str){
@@ -217,7 +172,7 @@ public class MainController{
     //Event on the note creation button
     @FXML
     private void createNote(){
-        createFile(root);
+        createFile(treeView.getRoot());
     }
 
     public void createFile(TreeItem<String> parent){
@@ -234,7 +189,7 @@ public class MainController{
 
     @FXML
     private void createFolderInTree(){
-        createFolder(root);
+        createFolder(treeView.getRoot());
     }
 
     public void createFolder(TreeItem<String> treeItem){
@@ -248,18 +203,77 @@ public class MainController{
     }
 
     @FXML
+    private void showFiles(){
+        TreeItem<String> tempRoot = treeView.getRoot();
+        treeView.setRoot(oldRoot);
+        oldRoot = tempRoot;
+    }
+
+    @FXML
     private void showFavorites(){
-        TreeItem<String> newRoot = new TreeItem<>("");
-        List<FavoriteNotes> listFavoriteNotes = FavoriteNotesDAO.getFavoriteNotes();
-        for (FavoriteNotes favoriteNote: listFavoriteNotes){
-            newRoot.getChildren().add(new TreeItem<>(favoriteNote.getPathNote()));
-        }
-        treeView.setRoot(newRoot);
+        oldRoot = treeView.getRoot();
+        treeView.setRoot(new TreeItem<>(""));
+        List<Path> pathList = new LinkedList<>();
+        FavoriteNotesDAO.getFavoriteNotes().forEach(item -> {
+            pathList.add(Paths.get(item.getPathNote()));
+        });
+        loadItemsInTree(pathList);
+    }
+
+    private void loadItemsInTree(List<Path> pathList){
+        pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
+        pathList.forEach(item -> {
+            String[] path = item.toString().split("\\\\");
+            ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
+            //check tree contains file
+            TreeItem<String> containedItem = null;
+            EmptyExpandedTreeItem addedItem;
+            for (TreeItem<String> i: rootList){
+                if (path[0].equals(i.getValue()))
+                    containedItem = i;
+            }
+            //if tree contains file
+            if (containedItem != null){
+                TreeItem<String> treeItem = containedItem;
+                boolean isContained = false;
+                for (int i = 1; i < path.length; i++){
+                    ObservableList<TreeItem<String>> treeList = treeItem.getChildren();
+                    for (TreeItem<String> treeListItem: treeList){
+                        //check subtree for file existence
+                        if (path[i].equals(treeListItem.getValue())){
+                            treeItem = treeListItem;
+                            isContained = true;
+                            break;
+                        }
+                    }
+                    if (isContained){
+                        isContained = false;
+                        continue;
+                    }
+                    //add item in tree
+                    addedItem = creatingTreeItem(path[i]);
+                    treeList.add(addedItem);
+                }
+            } else if (path.length > 1) {
+                //creating tree hierarchy
+                TreeItem<String> treeItem = treeView.getRoot();
+                TreeItem<String> newTreeItem;
+                for (String str: path){
+                    newTreeItem = creatingTreeItem(str);
+                    treeItem.getChildren().add(newTreeItem);
+                    treeItem = newTreeItem;
+                }
+            } else {
+                //adding file in tree
+                addedItem = creatingTreeItem(path[0]);
+                rootList.add(addedItem);
+            }
+        });
     }
 
     private void sortTreeView(){
-        SortedList<TreeItem<String>> content = root.getChildren().sorted(Comparator.comparing(TreeItem::getValue));
-        root.getChildren().setAll(content);
+        SortedList<TreeItem<String>> content = treeView.getRoot().getChildren().sorted(Comparator.comparing(TreeItem::getValue));
+        treeView.getRoot().getChildren().setAll(content);
     }
 
     //Creates a form and fills it with content
