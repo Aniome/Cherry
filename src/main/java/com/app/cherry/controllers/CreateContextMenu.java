@@ -1,5 +1,6 @@
 package com.app.cherry.controllers;
 
+import com.app.cherry.controls.TabManager;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.FileService;
 import com.app.cherry.util.Alerts;
@@ -26,9 +27,9 @@ public class CreateContextMenu {
 
         folderContextMenu = new ContextMenu(newNoteMenuItem, newFolderMenuItem,
                 getRenameMenuItem(renameStage, mainController), getFavoriteMenuItem(treeView),
-                getDeleteMenuItem(treeView, tabPane, mainController));
+                getDeleteMenuItem(treeView, tabPane));
         noteContextMenu = new ContextMenu(getRenameMenuItem(renameStage, mainController),
-                getFavoriteMenuItem(treeView), getDeleteMenuItem(treeView, tabPane, mainController));
+                getFavoriteMenuItem(treeView), getDeleteMenuItem(treeView, tabPane));
     }
 
 
@@ -52,7 +53,7 @@ public class CreateContextMenu {
         return favoriteMenuItem;
     }
 
-    private static MenuItem getDeleteMenuItem(TreeView<String> treeView, TabPane tabPane, MainController mainController) {
+    private static MenuItem getDeleteMenuItem(TreeView<String> treeView, TabPane tabPane) {
         MenuItem deleteMenuItem = new MenuItem("Удалить");
         deleteMenuItem.setOnAction(actionEvent -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
@@ -61,7 +62,7 @@ public class CreateContextMenu {
                 TreeItem<String> parentSelectedItem = selectedItem.getParent();
                 parentSelectedItem.getChildren().remove(selectedItem);
                 Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-                selectedTab.setContent(mainController.createEmptyTab());
+                selectedTab.setContent(TabManager.createEmptyTab());
                 selectedTab.setText("Новая вкладка");
             } else {
                 Alerts.CreateAndShowWarning("Не удалось удалить");

@@ -1,7 +1,7 @@
 package com.app.cherry.controllers;
 
+import com.app.cherry.controls.TabManager;
 import com.app.cherry.dao.FavoriteNotesDAO;
-import com.app.cherry.entity.FavoriteNotes;
 import com.app.cherry.util.FileService;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.EmptyExpandedTreeItem;
@@ -11,16 +11,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -36,8 +33,15 @@ public class MainController{
     private SplitPane splitPane;
     @FXML
     private GridPane gridPane;
+    @FXML
+    Button filesManagerButton;
+    @FXML
+    Button searchButton;
+    @FXML
+    Button favoriteNotesButton;
+    @FXML
+    VBox vbox;
 
-    private String oldTextFieldValue;
     final double renameWidth = 600;
     final double renameHeight = 250;
     Stage mainStage;
@@ -45,8 +49,6 @@ public class MainController{
     public static String newFileName;
     TreeCellFactory treeCellFactory;
     TreeItem<String> oldRoot;
-    @FXML
-    Button filesManager;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -66,6 +68,9 @@ public class MainController{
 
         splitPane.setDividerPositions(0.12);
         splitPane.widthProperty().addListener((observableValue, number, t1) -> splitPane.setDividerPositions(0.12));
+        filesManagerButton.setDisable(true);
+
+        vbox.getChildren().add(1, new Button("Hey"));
 
         createScalable();
     }
@@ -131,7 +136,8 @@ public class MainController{
     public void loadDataOnFormOnClick(TreeItem<String> selectedItem){
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         tab.setContent(null);
-        BorderPane borderPane = createTab(tab);
+        TabManager tabManager = new TabManager();
+        BorderPane borderPane = tabManager.createTab(tab);
         String filename = selectedItem.getValue();
         tab.setText(filename);
         ObservableList<Node> childrens = borderPane.getChildren();
@@ -151,22 +157,9 @@ public class MainController{
     @FXML
     private Tab addTab() {
         Tab tab = new Tab("Новая вкладка");
-        tab.setContent(createEmptyTab());
-        selectTab(tab);
+        tab.setContent(TabManager.createEmptyTab());
+        TabManager.selectTab(tab, tabPane);
         return tab;
-    }
-
-    private void addTab(String fileName){
-        Tab tab = new Tab(fileName);
-        tab.setContent(createTab(tab));
-        selectTab(tab);
-    }
-
-    private void selectTab(Tab tab){
-        int count = tabPane.getTabs().size() - 1;
-        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-        tabPane.getTabs().add(count, tab);
-        selectionModel.select(tab);
     }
 
     //Event on the note creation button
@@ -181,7 +174,7 @@ public class MainController{
             return;
         }
         String name = newNote.getName().replace(".md", "");
-        addTab(name);
+        TabManager.addTab(name, tabPane);
         TreeItem<String> treeItem = new TreeItem<>(name);
         parent.getChildren().add(treeItem);
         sortTreeView();
@@ -207,6 +200,8 @@ public class MainController{
         TreeItem<String> tempRoot = treeView.getRoot();
         treeView.setRoot(oldRoot);
         oldRoot = tempRoot;
+        favoriteNotesButton.setDisable(false);
+        filesManagerButton.setDisable(true);
     }
 
     @FXML
@@ -218,6 +213,8 @@ public class MainController{
             pathList.add(Paths.get(item.getPathNote()));
         });
         loadItemsInTree(pathList);
+        filesManagerButton.setDisable(false);
+        favoriteNotesButton.setDisable(true);
     }
 
     private void loadItemsInTree(List<Path> pathList){
@@ -274,47 +271,5 @@ public class MainController{
     private void sortTreeView(){
         SortedList<TreeItem<String>> content = treeView.getRoot().getChildren().sorted(Comparator.comparing(TreeItem::getValue));
         treeView.getRoot().getChildren().setAll(content);
-    }
-
-    //Creates a form and fills it with content
-    @NotNull
-    private BorderPane createTab(Tab tab){
-        BorderPane borderPane = new BorderPane();
-        TextField textField = new TextField(tab.getText()){{
-            setFont(new Font(16));
-            setAlignment(Pos.CENTER);
-        }};
-        textField.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/text_field.css")).toExternalForm());
-        borderPane.setTop(textField);
-
-        textField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
-            //newPropertyValue - on focus
-            //oldPropertyValue - out focus
-            if (newPropertyValue) {
-                oldTextFieldValue = textField.getText();
-            }
-            if (oldPropertyValue && textField.getText().isEmpty()) {
-                textField.setText(oldTextFieldValue);
-            } else {
-                tab.setText(textField.getText());
-            }
-        });
-
-        TextArea textArea = new TextArea(){{
-            setFont(new Font(16));
-        }};
-        textArea.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/text_area.css")).toExternalForm());
-        borderPane.setCenter(textArea);
-
-        return borderPane;
-    }
-
-    public BorderPane createEmptyTab(){
-        BorderPane borderPane = new BorderPane();
-        Label label = new Label("Ни один файл не открыт");
-        label.setFont(new Font(29));
-
-        borderPane.setCenter(label);
-        return borderPane;
     }
 }

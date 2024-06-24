@@ -12,8 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add loading in FavoriteNotes in tree">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add changing content in tree on buttons">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
@@ -259,7 +261,8 @@
       <workItem from="1718735387275" duration="2721000" />
       <workItem from="1718817028928" duration="12885000" />
       <workItem from="1718994699857" duration="1378000" />
-      <workItem from="1719075702978" duration="6042000" />
+      <workItem from="1719075702978" duration="11090000" />
+      <workItem from="1719252023483" duration="1474000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -605,7 +608,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718996074146</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="add changing content in tree on buttons">
+      <option name="closed" value="true" />
+      <created>1719082103653</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1719082103653</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -624,7 +635,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add save resolution screen" />
     <MESSAGE value="add maximized" />
     <MESSAGE value="configure .jar file and fix bugs" />
     <MESSAGE value="add write to file" />
@@ -649,9 +659,19 @@
     <MESSAGE value="added work db" />
     <MESSAGE value="load data in db and refactoring" />
     <MESSAGE value="add loading in FavoriteNotes in tree" />
-    <option name="LAST_COMMIT_MESSAGE" value="add loading in FavoriteNotes in tree" />
+    <MESSAGE value="add changing content in tree on buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="add changing content in tree on buttons" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java</url>
+          <line>275</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="root.children.get(8)" />
