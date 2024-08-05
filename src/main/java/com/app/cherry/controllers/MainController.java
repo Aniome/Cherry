@@ -6,11 +6,13 @@ import com.app.cherry.util.FileService;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.EmptyExpandedTreeItem;
 import com.app.cherry.controls.TreeCellFactory;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,6 +20,12 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.StyleClassedTextArea;
+import org.fxmisc.richtext.model.StyleSpan;
+import org.fxmisc.richtext.model.StyleSpans;
+import org.fxmisc.richtext.model.StyleSpansBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -41,6 +49,8 @@ public class MainController{
     Button favoriteNotesButton;
     @FXML
     VBox vbox;
+    @FXML
+    CodeArea richTextArea;
 
     final double renameWidth = 600;
     final double renameHeight = 250;
@@ -55,7 +65,7 @@ public class MainController{
         Platform.exit();
     }
 
-    public void init(Stage mainStage){
+    public void init(Stage mainStage, RunApplication runApplication){
         this.mainStage = mainStage;
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         treeView.setRoot(new TreeItem<>(""));
@@ -70,9 +80,8 @@ public class MainController{
         splitPane.widthProperty().addListener((observableValue, number, t1) -> splitPane.setDividerPositions(0.12));
         filesManagerButton.setDisable(true);
 
-        vbox.getChildren().add(1, new Button("Hey"));
-
         createScalable();
+        testHyperLink(runApplication);
     }
 
     private void loadFilesInTreeview(){
@@ -215,6 +224,50 @@ public class MainController{
         loadItemsInTree(pathList);
         filesManagerButton.setDisable(false);
         favoriteNotesButton.setDisable(true);
+    }
+
+    private void testHyperLink(RunApplication runApplication){
+        //Hyperlink link = new Hyperlink("Google", "https://www.google.com/");
+        Hyperlink link = new Hyperlink("https://www.google.com/");
+        link.setCursor(Cursor.CLOSED_HAND);
+        link.setOnAction(event -> {
+            // Откройте URL в браузере
+            System.out.println("Hello");
+            HostServices hostServices = runApplication.getHostServices();
+            hostServices.showDocument(link.getText());
+        });
+
+        // Подсветка синтаксиса для Java
+        //richTextArea.setParagraphGraphicFactory(paragraph -> {
+//            StyleSpans<Collection<String>> styleSpans = computeHighlighting(paragraph);
+//            return new ParagraphStyle(styleSpans, null);
+        //});
+
+        richTextArea.setOnMouseClicked(mouseEvent -> {
+            System.out.println("Hello");
+        });
+
+        // Добавьте ссылку в CodeArea
+        richTextArea.replaceText(richTextArea.getLength(), richTextArea.getLength(), link.getText());
+
+        // Создайте стиль для ссылки
+        StyleSpans<Collection<String>> linkStyle =
+                new StyleSpansBuilder<Collection<String>>()
+                        .add(new StyleSpan<>(Collections.singleton("hyperlink"), link.getText().length()))
+                        //style length
+                        //.add(new StyleClassedSegment(link.getText(), Collections.singleton("hyperlink")))
+                        .create();
+        // Установите стиль для текста ссылки
+        richTextArea.setStyleSpans(0, linkStyle);
+
+        // add line numbers to the left of area
+        richTextArea.setParagraphGraphicFactory(LineNumberFactory.get(richTextArea));
+    }
+
+    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
+        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        // ... (Логика для подсветки синтаксиса)
+        return spansBuilder.create();
     }
 
     private void loadItemsInTree(List<Path> pathList){

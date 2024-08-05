@@ -5,6 +5,7 @@ import com.app.cherry.controllers.MainController;
 import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -44,10 +45,9 @@ public class RunApplication extends Application {
             initController.setMainStage(stage);
             prepareStage(InitialHeight,InitialWidth,secondScene,"", InitialStage);
             InitialStage.setResizable(false);
-        }
-        else {
+        } else {
             MainController mainController = fxmlLoader.getController();
-            mainController.init(stage);
+            mainController.init(stage, this);
             stage.setHeight(height);
             stage.setWidth(width);
             prepareStage(MainHeight, MainWidth, scene, title, stage);

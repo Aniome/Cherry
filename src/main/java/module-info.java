@@ -10,6 +10,7 @@ module com.app.cherry {
     requires java.naming;
     requires jakarta.persistence;
     requires java.sql;
+    requires org.fxmisc.richtext;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

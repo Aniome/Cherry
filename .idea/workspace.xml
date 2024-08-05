@@ -12,11 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add changing content in tree on buttons">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="added TabManager">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CreateContextMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -262,7 +263,18 @@
       <workItem from="1718817028928" duration="12885000" />
       <workItem from="1718994699857" duration="1378000" />
       <workItem from="1719075702978" duration="11090000" />
-      <workItem from="1719252023483" duration="1474000" />
+      <workItem from="1719252023483" duration="2744000" />
+      <workItem from="1719268976841" duration="11000" />
+      <workItem from="1719762292966" duration="337000" />
+      <workItem from="1722306639867" duration="1052000" />
+      <workItem from="1722312243754" duration="2996000" />
+      <workItem from="1722342612682" duration="1400000" />
+      <workItem from="1722436345366" duration="2937000" />
+      <workItem from="1722469152685" duration="519000" />
+      <workItem from="1722469693541" duration="194000" />
+      <workItem from="1722473187647" duration="527000" />
+      <workItem from="1722577029234" duration="5703000" />
+      <workItem from="1722639295579" duration="1482000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -616,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719082103653</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="added TabManager">
+      <option name="closed" value="true" />
+      <created>1719253601880</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1719253601880</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,7 +655,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add maximized" />
     <MESSAGE value="configure .jar file and fix bugs" />
     <MESSAGE value="add write to file" />
     <MESSAGE value="change interface" />
@@ -660,18 +679,10 @@
     <MESSAGE value="load data in db and refactoring" />
     <MESSAGE value="add loading in FavoriteNotes in tree" />
     <MESSAGE value="add changing content in tree on buttons" />
-    <option name="LAST_COMMIT_MESSAGE" value="add changing content in tree on buttons" />
+    <MESSAGE value="added TabManager" />
+    <option name="LAST_COMMIT_MESSAGE" value="added TabManager" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java</url>
-          <line>275</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="root.children.get(8)" />
