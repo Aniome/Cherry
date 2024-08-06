@@ -17,197 +17,170 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import org.fxmisc.richtext.CodeArea?>
 
-<SplitPane fx:id="splitPane" dividerPositions="0.12" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
-  <items>
-      <BorderPane fx:id="vBox" prefHeight="200.0" prefWidth="200.0">
-         <center>
+<SplitPane fx:id="splitPane" dividerPositions="0.12" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
+    <BorderPane fx:id="vBox" prefHeight="200.0" prefWidth="200.0">
+        <center>
             <VBox fx:id="vbox" prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
-               <children>
-                  <GridPane>
+                <GridPane>
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
-                     <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#createNote" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Image/notes.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Новая заметка" />
-                           </tooltip>
-                        </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#createFolderInTree" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Image/basic_folder.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Новая папка" />
-                           </tooltip>
-                        </Button>
-                     </children>
-                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                     </padding>
-                  </GridPane>
-                  <TreeView fx:id="treeView" editable="true" prefHeight="565.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
-               </children>
+                    <padding>
+                        <Insets bottom="5.0" top="5.0"/>
+                    </padding>
+                    <Button mnemonicParsing="false" onMouseClicked="#createNote" GridPane.halignment="CENTER"
+                            GridPane.valignment="CENTER">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true"
+                                       preserveRatio="true">
+                                <Image url="@../Image/notes.png"/>
+                            </ImageView>
+                        </graphic>
+                        <tooltip>
+                            <Tooltip text="Новая заметка"/>
+                        </tooltip>
+                    </Button>
+                    <Button mnemonicParsing="false" onMouseClicked="#createFolderInTree"
+                            GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true"
+                                       preserveRatio="true">
+                                <Image url="@../Image/basic_folder.png"/>
+                            </ImageView>
+                        </graphic>
+                        <tooltip>
+                            <Tooltip text="Новая папка"/>
+                        </tooltip>
+                    </Button>
+                </GridPane>
+                <TreeView fx:id="treeView" editable="true" prefHeight="565.0" prefWidth="150.0"
+                          VBox.vgrow="ALWAYS"/>
             </VBox>
-         </center>
-         <bottom>
+        </center>
+        <bottom>
             <GridPane BorderPane.alignment="CENTER">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-               <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <graphic>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                </columnConstraints>
+                <padding>
+                    <Insets bottom="5.0" top="5.0"/>
+                </padding>
+                <rowConstraints>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                </rowConstraints>
+                <Button alignment="CENTER" mnemonicParsing="false" GridPane.halignment="CENTER"
+                        GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <graphic>
                         <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/locker_safe_icon.png" />
-                           </image>
+                            <Image url="@../Image/locker_safe_icon.png"/>
                         </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Открыть другое хранилище" />
-                     </tooltip>
-                  </Button>
-                  <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="23.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/settings_outline_icon.png" />
-                           </image>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Открыть другое хранилище"/>
+                    </tooltip>
+                </Button>
+                <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                        GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="23.0" mouseTransparent="true" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <Image url="@../Image/settings_outline_icon.png"/>
                         </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Настройки" />
-                     </tooltip>
-                  </Button>
-                  <Button mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <graphic>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Настройки"/>
+                    </tooltip>
+                </Button>
+                <Button mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                        GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <graphic>
                         <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/help_icon.png" />
-                           </image>
+                            <Image url="@../Image/help_icon.png"/>
                         </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Справка" />
-                     </tooltip>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets bottom="5.0" top="5.0" />
-               </padding>
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Справка"/>
+                    </tooltip>
+                </Button>
             </GridPane>
-         </bottom>
-         <top>
+        </bottom>
+        <top>
             <GridPane fx:id="gridPane" alignment="CENTER" vgap="5.0" BorderPane.alignment="CENTER">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <padding>
-                  <Insets bottom="5.0" top="5.0" />
-               </padding>
-               <children>
-                  <Button fx:id="filesManagerButton" mnemonicParsing="false" onAction="#showFiles" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <graphic>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <padding>
+                    <Insets bottom="5.0" top="5.0"/>
+                </padding>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+                <Button fx:id="filesManagerButton" mnemonicParsing="false" onAction="#showFiles"
+                        GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <graphic>
                         <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/folder_icon.png" />
-                           </image>
+                            <Image url="@../Image/folder_icon.png"/>
                         </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Файловый менеджер" />
-                     </tooltip>
-                  </Button>
-                  <Button fx:id="favoriteNotesButton" alignment="CENTER" mnemonicParsing="false" onAction="#showFavorites" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <graphic>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Файловый менеджер"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="favoriteNotesButton" alignment="CENTER" mnemonicParsing="false"
+                        onAction="#showFavorites" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                        GridPane.valignment="CENTER">
+                    <graphic>
                         <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/bookmark_icon.png" />
-                           </image>
+                            <Image url="@../Image/bookmark_icon.png"/>
                         </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Избранное" />
-                     </tooltip>
-                  </Button>
-                  <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <graphic>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Избранное"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="1"
+                        GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <graphic>
                         <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Image/search_icon.png" />
-                           </image>
+                            <Image url="@../Image/search_icon.png"/>
                         </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Файловый менеджер" />
-                     </tooltip>
-                  </Button>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Файловый менеджер"/>
+                    </tooltip>
+                </Button>
             </GridPane>
-         </top>
-      </BorderPane>
-      <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
-         <tabs>
-            <Tab closable="false" text="Новая вкладка">
-               <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <center>
-                        <Label text="Ни один файл не открыт" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font size="29.0" />
-                           </font>
-                        </Label>
-                     </center>
-                  </BorderPane>
-               </content>
-            </Tab>
-            <Tab text="Code">
-               <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <center>
-                        <CodeArea fx:id="richTextArea" autoHeight="true" BorderPane.alignment="CENTER" />
-                     </center>
-                  </BorderPane>
-               </content>
-            </Tab>
-            <Tab closable="false" onSelectionChanged="#addTab" text="+">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
-         </tabs>
-      </TabPane>
-  </items>
+        </top>
+    </BorderPane>
+    <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
+        <Tab closable="false" text="Новая вкладка">
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+                <center>
+                    <Label text="Ни один файл не открыт" BorderPane.alignment="CENTER">
+                        <font>
+                            <Font size="29.0"/>
+                        </font>
+                    </Label>
+                </center>
+            </BorderPane>
+        </Tab>
+        <Tab closable="false" onSelectionChanged="#addTab" text="+">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+        </Tab>
+    </TabPane>
 </SplitPane>

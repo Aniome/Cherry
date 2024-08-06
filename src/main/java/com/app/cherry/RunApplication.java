@@ -5,14 +5,13 @@ import com.app.cherry.controllers.MainController;
 import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
-import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
 import java.nio.file.Path;
-
+import java.util.Objects;
 
 
 public class RunApplication extends Application {
@@ -38,12 +37,13 @@ public class RunApplication extends Application {
         if (FolderPath == null){
             fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
+            scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("java-keywords.css")).toExternalForm());
             Stage InitialStage = new Stage();
             setIcon(InitialStage);
             InitController initController = fxmlLoader.getController();
             initController.setInitialStage(InitialStage);
             initController.setMainStage(stage);
-            prepareStage(InitialHeight,InitialWidth,secondScene,"", InitialStage);
+            prepareStage(InitialHeight, InitialWidth, secondScene,"", InitialStage);
             InitialStage.setResizable(false);
         } else {
             MainController mainController = fxmlLoader.getController();

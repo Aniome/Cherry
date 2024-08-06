@@ -12,9 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="added TabManager">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="create code area">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/CopyNumberFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MarkdownArea.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
@@ -275,6 +276,8 @@
       <workItem from="1722473187647" duration="527000" />
       <workItem from="1722577029234" duration="5703000" />
       <workItem from="1722639295579" duration="1482000" />
+      <workItem from="1722879365375" duration="188000" />
+      <workItem from="1722906073705" duration="5291000" />
     </task>
     <task id="LOCAL-00001" summary="add hibernate">
       <option name="closed" value="true" />
@@ -636,7 +639,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719253601880</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="test codearea">
+      <option name="closed" value="true" />
+      <created>1722879458469</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1722879458469</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,8 +666,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="configure .jar file and fix bugs" />
-    <MESSAGE value="add write to file" />
     <MESSAGE value="change interface" />
     <MESSAGE value="fix bugs" />
     <MESSAGE value="fix bug with reading files" />
@@ -680,7 +689,9 @@
     <MESSAGE value="add loading in FavoriteNotes in tree" />
     <MESSAGE value="add changing content in tree on buttons" />
     <MESSAGE value="added TabManager" />
-    <option name="LAST_COMMIT_MESSAGE" value="added TabManager" />
+    <MESSAGE value="test codearea" />
+    <MESSAGE value="create code area" />
+    <option name="LAST_COMMIT_MESSAGE" value="create code area" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

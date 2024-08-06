@@ -11,6 +11,8 @@ module com.app.cherry {
     requires jakarta.persistence;
     requires java.sql;
     requires org.fxmisc.richtext;
+    requires reactfx;
+    requires org.fxmisc.flowless;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;
