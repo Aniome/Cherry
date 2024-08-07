@@ -33,7 +33,7 @@ public class MarkdownArea {
 
     private static final Pattern PATTERN = Pattern.compile("(?<LINK>" + LINK_PATTERN + ")");
 
-    public static StackPane createMarkdownArea() {
+    public StackPane createMarkdownArea() {
         CodeArea codeArea = new CodeArea();
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         CopyNumberFactory copyNumberFactory = new CopyNumberFactory();
@@ -56,14 +56,15 @@ public class MarkdownArea {
             return new StackPane(hbox);
         };
 
-        codeArea.setOnMouseClicked(event -> {        codeArea.setParagraphGraphicFactory(graphicFactory);
+        codeArea.setParagraphGraphicFactory(graphicFactory);
+
+        codeArea.setOnMouseClicked(event -> {
             int offset = codeArea.getCurrentParagraph();
             Paragraph<Collection<String>, String, Collection<String>> paragraph = codeArea.getParagraph(offset);
-            StyleSpans<Collection<String>> t = paragraph.getStyleSpans();
-            int ind = t.getSpanCount();
-            StyleSpan<Collection<String>> styleSpan = t.getStyleSpan(ind-1);
+            StyleSpans<Collection<String>> styleSpans = paragraph.getStyleSpans();
+            int ind = styleSpans.getSpanCount();
+            StyleSpan<Collection<String>> styleSpan = styleSpans.getStyleSpan(ind - 1);
             String clickedText = paragraph.getText();
-
 
             if (styleSpan.getStyle().contains("link")) {
                 System.out.println(clickedText);
@@ -73,7 +74,7 @@ public class MarkdownArea {
         codeArea.setParagraphGraphicFactory(graphicFactory);
 
         codeArea.getVisibleParagraphs().addModificationObserver
-                (new VisibleParagraphStyler<>(codeArea, MarkdownArea::computeHighlighting));
+                (new VisibleParagraphStyler<>(codeArea, this::computeHighlighting));
 
         // auto-indent: insert previous line's indents on enter
         final Pattern whiteSpace = Pattern.compile( "^\\s+" );
@@ -91,21 +92,14 @@ public class MarkdownArea {
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
     }
 
-    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
+    private StyleSpans<Collection<String>> computeHighlighting(String text) {
+        System.out.println(text);
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while(matcher.find()) {
-            String styleClass =
-                    matcher.group("KEYWORD") != null ? "keyword" :
-                            matcher.group("PAREN") != null ? "paren" :
-                                    matcher.group("BRACE") != null ? "brace" :
-                                            matcher.group("BRACKET") != null ? "bracket" :
-                                                    matcher.group("SEMICOLON") != null ? "semicolon" :
-                                                            matcher.group("STRING") != null ? "string" :
-                                                                    matcher.group("COMMENT") != null ? "comment" :
-                                                                            matcher.group("LINK") != null ? "link" :
-                                                                                    null; /* never happens */ assert styleClass != null;
+            String styleClass = matcher.group("LINK") != null ? "link" :
+                    null; /* never happens */ assert styleClass != null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
@@ -114,7 +108,7 @@ public class MarkdownArea {
         return spansBuilder.create();
     }
 
-    private static class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
+    private class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
         private final GenericStyledArea<PS, SEG, S> area;
         private final Function<String,StyleSpans<S>> computeStyles;
         private int prevParagraph, prevTextLength;
@@ -126,7 +120,7 @@ public class MarkdownArea {
 
         @Override
         public void accept( ListModification<? extends Paragraph<PS, SEG, S>> lm ) {
-            if ( lm.getAddedSize() > 0 )
+            if ( lm.getAddedSize() > 0 ){
                 Platform.runLater( () -> {
                     int paragraph = Math.min( area.firstVisibleParToAllParIndex() + lm.getFrom(),
                             area.getParagraphs().size() - 1);
@@ -141,6 +135,7 @@ public class MarkdownArea {
                         prevParagraph = paragraph;
                     }
                 });
+            }
         }
     }
 }

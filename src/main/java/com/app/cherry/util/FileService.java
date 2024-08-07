@@ -3,6 +3,7 @@ package com.app.cherry.util;
 import com.app.cherry.RunApplication;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
+import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,10 +30,10 @@ public class FileService {
         return result.toString();
     }
 
-    public static void writeFile(TreeItem<String> treeItem, TextArea textArea){
+    public static void writeFile(TreeItem<String> treeItem, CodeArea codeArea){
         try (RandomAccessFile file = new RandomAccessFile(getPath(treeItem), "rw");
             FileChannel channel = file.getChannel()) {
-            String text = textArea.getText();
+            String text = codeArea.getText();
             ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
             channel.write(buffer);
         } catch (IOException e) {

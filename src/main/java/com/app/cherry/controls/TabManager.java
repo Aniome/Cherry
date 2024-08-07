@@ -1,6 +1,7 @@
 package com.app.cherry.controls;
 
 import com.app.cherry.RunApplication;
+import com.app.cherry.controllers.MarkdownArea;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -58,11 +59,8 @@ public class TabManager {
             }
         });
 
-        TextArea textArea = new TextArea(){{
-            setFont(new Font(16));
-        }};
-        textArea.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/text_area.css")).toExternalForm());
-        borderPane.setCenter(textArea);
+        MarkdownArea markdownArea = new MarkdownArea();
+        borderPane.setCenter(markdownArea.createMarkdownArea());
 
         return borderPane;
     }

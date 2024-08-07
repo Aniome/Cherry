@@ -18,6 +18,9 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -143,9 +146,12 @@ public class MainController{
             if (children instanceof TextField){
                 ((TextField) children).setText(filename);
             }
-            if (children instanceof TextArea textArea){
-                textArea.setText(FileService.readFile(selectedItem));
-                textArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, textArea));
+            if (children instanceof StackPane stackPane){
+                VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
+                CodeArea codeArea = virtualizedScrollPane.getContent();
+                final String text = FileService.readFile(selectedItem);
+                codeArea.replaceText(text);
+                codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
             }
         }
         tab.setContent(borderPane);
@@ -155,8 +161,7 @@ public class MainController{
     @FXML
     private Tab addTab() {
         Tab tab = new Tab("Новая вкладка");
-        //tab.setContent(TabManager.createEmptyTab());
-        tab.setContent(MarkdownArea.createMarkdownArea());
+        tab.setContent(TabManager.createEmptyTab());
         TabManager.selectTab(tab, tabPane);
         return tab;
     }

@@ -1,0 +1,39 @@
+.styled-text-area .selection {
+    -fx-fill: #dadada;
+}
+.keyword {
+    -fx-fill: #420042;
+    -fx-font-weight: bold;
+}
+.link{
+    -fx-fill: purple;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+.semicolon {
+    -fx-font-weight: bold;
+}
+.paren {
+    -fx-fill: firebrick;
+    -fx-font-weight: bold;
+}
+.bracket {
+    -fx-fill: darkgreen;
+    -fx-font-weight: bold;
+}
+.brace {
+    -fx-fill: teal;
+    -fx-font-weight: bold;
+}
+.string {
+    -fx-fill: blue;
+}
+
+.comment {
+    -fx-fill: cadetblue;
+}
+
+.paragraph-box:has-caret {
+    -fx-background-color: #eaeaea;
+}

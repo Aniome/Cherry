@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -33,11 +34,11 @@ public class RunApplication extends Application {
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
         Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
+        scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/java-keywords.css")).toExternalForm());
         setIcon(stage);
         if (FolderPath == null){
             fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
-            scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("java-keywords.css")).toExternalForm());
             Stage InitialStage = new Stage();
             setIcon(InitialStage);
             InitController initController = fxmlLoader.getController();
