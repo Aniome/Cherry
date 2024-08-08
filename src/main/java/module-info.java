@@ -13,6 +13,7 @@ module com.app.cherry {
     requires org.fxmisc.richtext;
     requires reactfx;
     requires org.fxmisc.flowless;
+    requires atlantafx.base;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

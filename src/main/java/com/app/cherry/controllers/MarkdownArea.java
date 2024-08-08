@@ -18,6 +18,7 @@ import org.fxmisc.richtext.model.Paragraph;
 import org.fxmisc.richtext.model.StyleSpan;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.reactfx.collection.ListModification;
 
 import java.util.Collection;
@@ -36,25 +37,7 @@ public class MarkdownArea {
     public StackPane createMarkdownArea() {
         CodeArea codeArea = new CodeArea();
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
-        CopyNumberFactory copyNumberFactory = new CopyNumberFactory();
-        IntFunction<Node> graphicFactory = line -> {
-            HBox hbox = new HBox(numberFactory.apply(line), copyNumberFactory.apply(line));
-            hbox.setSpacing(1);
-            hbox.setAlignment(Pos.CENTER);
-
-            BorderPane borderPane1 = new BorderPane();
-            borderPane1.setCenter(numberFactory.apply(line));
-            borderPane1.setRight(copyNumberFactory.apply(line));
-            if (line == 0){
-                Rectangle rectangle = new Rectangle();
-                rectangle.setFill(Color.GRAY);
-                rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
-                rectangle.heightProperty().bind(codeArea.heightProperty());
-                StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
-                return new StackPane(rectangle, hbox);
-            }
-            return new StackPane(hbox);
-        };
+        IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);
 
         codeArea.setParagraphGraphicFactory(graphicFactory);
 
@@ -89,11 +72,35 @@ public class MarkdownArea {
             }
         });
 
+        codeArea.replaceText(0,0,"");
+
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
     }
 
+    private static @NotNull IntFunction<Node> createGraphicFactory(IntFunction<Node> numberFactory, CodeArea codeArea) {
+        CopyNumberFactory copyNumberFactory = new CopyNumberFactory();
+        IntFunction<Node> graphicFactory = line -> {
+            HBox hbox = new HBox(numberFactory.apply(line), copyNumberFactory.apply(line));
+            hbox.setSpacing(1);
+            hbox.setAlignment(Pos.CENTER);
+
+            BorderPane borderPane1 = new BorderPane();
+            borderPane1.setCenter(numberFactory.apply(line));
+            borderPane1.setRight(copyNumberFactory.apply(line));
+            if (line == 0){
+                Rectangle rectangle = new Rectangle();
+                rectangle.setFill(Color.GRAY);
+                rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
+                rectangle.heightProperty().bind(codeArea.heightProperty());
+                StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
+                return new StackPane(rectangle, hbox);
+            }
+            return new StackPane(hbox);
+        };
+        return graphicFactory;
+    }
+
     private StyleSpans<Collection<String>> computeHighlighting(String text) {
-        System.out.println(text);
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
@@ -111,7 +118,7 @@ public class MarkdownArea {
     private class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
         private final GenericStyledArea<PS, SEG, S> area;
         private final Function<String,StyleSpans<S>> computeStyles;
-        private int prevParagraph, prevTextLength;
+        private int index = 0;
 
         public VisibleParagraphStyler( GenericStyledArea<PS, SEG, S> area, Function<String,StyleSpans<S>> computeStyles ) {
             this.computeStyles = computeStyles;
@@ -122,18 +129,13 @@ public class MarkdownArea {
         public void accept( ListModification<? extends Paragraph<PS, SEG, S>> lm ) {
             if ( lm.getAddedSize() > 0 ){
                 Platform.runLater( () -> {
-                    int paragraph = Math.min( area.firstVisibleParToAllParIndex() + lm.getFrom(),
-                            area.getParagraphs().size() - 1);
-                    String text = area.getText(paragraph, 0, paragraph, area.getParagraphLength(paragraph));
-
-                    if ( paragraph != prevParagraph || text.length() != prevTextLength ) {
-                        if ( paragraph < area.getParagraphs().size()-1 ) {
-                            int startPos = area.getAbsolutePosition( paragraph, 0 );
-                            area.setStyleSpans( startPos, computeStyles.apply( text ) );
-                        }
-                        prevTextLength = text.length();
-                        prevParagraph = paragraph;
+                    int paragraphSize = area.getParagraphs().size();
+                    if (index < paragraphSize) {
+                        String text = area.getText(index, 0, index, area.getParagraphLength(index));
+                        int startPos = area.getAbsolutePosition( index, 0 );
+                        area.setStyleSpans( startPos, computeStyles.apply( text ) );
                     }
+                    index++;
                 });
             }
         }

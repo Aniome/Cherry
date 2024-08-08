@@ -22,8 +22,8 @@ public class TabManager {
         BorderPane borderPane = new BorderPane();
         Label label = new Label("Ни один файл не открыт");
         label.setFont(new Font(29));
-
         borderPane.setCenter(label);
+        borderPane.setStyle("-fx-background-color: #282a36");
         return borderPane;
     }
 
@@ -43,7 +43,7 @@ public class TabManager {
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
-        textField.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/text_field.css")).toExternalForm());
+        //textField.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/text_field.css")).toExternalForm());
         borderPane.setTop(textField);
 
         textField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {

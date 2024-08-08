@@ -150,10 +150,12 @@ public class MainController{
                 VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
                 CodeArea codeArea = virtualizedScrollPane.getContent();
                 final String text = FileService.readFile(selectedItem);
-                codeArea.replaceText(text);
+                codeArea.replaceText(0,0, text);
                 codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
             }
         }
+        //rgb(40, 42, 54)
+        borderPane.setStyle("-fx-background-color: #282a36");
         tab.setContent(borderPane);
     }
 
@@ -213,9 +215,7 @@ public class MainController{
         oldRoot = treeView.getRoot();
         treeView.setRoot(new TreeItem<>(""));
         List<Path> pathList = new LinkedList<>();
-        FavoriteNotesDAO.getFavoriteNotes().forEach(item -> {
-            pathList.add(Paths.get(item.getPathNote()));
-        });
+        FavoriteNotesDAO.getFavoriteNotes().forEach(item -> pathList.add(Paths.get(item.getPathNote())));
         loadItemsInTree(pathList);
         filesManagerButton.setDisable(false);
         favoriteNotesButton.setDisable(true);

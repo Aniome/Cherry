@@ -1,5 +1,8 @@
 package com.app.cherry;
 
+import atlantafx.base.theme.Dracula;
+import atlantafx.base.theme.PrimerDark;
+import atlantafx.base.theme.PrimerLight;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
 import com.app.cherry.dao.SettingsDAO;
@@ -25,6 +28,9 @@ public class RunApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        //Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+        //Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
         HibernateUtil.setUp();
         FolderPath = SettingsDAO.getPath();
         Double height = SettingsDAO.getHeight();
@@ -76,6 +82,7 @@ public class RunApplication extends Application {
         stage.setMinHeight(height);
         stage.show();
     }
+
     public static void main(String[] args) {
         launch();
     }
