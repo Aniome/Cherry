@@ -1,5 +1,6 @@
 package com.app.cherry.controls;
 
+import atlantafx.base.theme.Styles;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MarkdownArea;
 import javafx.geometry.Pos;

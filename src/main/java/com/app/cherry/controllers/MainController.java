@@ -1,5 +1,7 @@
 package com.app.cherry.controllers;
 
+import atlantafx.base.theme.Styles;
+import atlantafx.base.theme.Tweaks;
 import com.app.cherry.controls.TabManager;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.FileService;
@@ -44,6 +46,8 @@ public class MainController{
     Button favoriteNotesButton;
     @FXML
     VBox vbox;
+    @FXML
+    private Tab plusTab;
 
     final double renameWidth = 600;
     final double renameHeight = 250;
@@ -60,6 +64,7 @@ public class MainController{
 
     public void init(Stage mainStage, RunApplication runApplication){
         this.mainStage = mainStage;
+
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         treeView.setRoot(new TreeItem<>(""));
         treeView.setShowRoot(false);
@@ -91,17 +96,18 @@ public class MainController{
     }
 
     private void createScalable(){
-        ObservableList<Node> children = gridPane.getChildren();
-        gridPane.heightProperty().addListener((observableValue, number, t1) -> {
-            double newHeight = (t1.doubleValue() / 10) * 8;
-            for (Node button: children)
-                ((Button)button).setPrefHeight(newHeight);
-        });
-        gridPane.widthProperty().addListener((observableValue, number, t1) -> {
-            double newWidth = (t1.doubleValue() / 10) * 2;
-            for (Node button: children)
-                ((Button)button).setPrefWidth(newWidth);
-        });
+//        ObservableList<Node> children = gridPane.getChildren();
+//        gridPane.heightProperty().addListener((observableValue, number, t1) -> {
+//            double newHeight = (t1.doubleValue() / 10) * 8;
+//            for (Node button: children)
+//                ((Button)button).setPrefHeight(newHeight);
+//        });
+//        gridPane.widthProperty().addListener((observableValue, number, t1) -> {
+//            double newWidth = (t1.doubleValue() / 10) * 2;
+//            for (Node button: children)
+//                ((Button)button).setPrefWidth(newWidth);
+//        });
+
     }
 
     public void openModalWindow(){

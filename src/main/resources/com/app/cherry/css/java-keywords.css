@@ -1,11 +1,6 @@
 .styled-text-area .selection {
     -fx-fill: #dadada;
 }
-
-.tab-pane {
-    -color-tab-border-selected: #0a84ff;
-}
-
 .keyword {
     -fx-fill: #420042;
     -fx-font-weight: bold;

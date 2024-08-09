@@ -14,6 +14,9 @@ module com.app.cherry {
     requires reactfx;
     requires org.fxmisc.flowless;
     requires atlantafx.base;
+    requires org.kordamp.ikonli.core;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.fontawesome;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

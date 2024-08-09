@@ -10,6 +10,7 @@ import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.paint.Material;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
@@ -31,6 +32,7 @@ public class RunApplication extends Application {
         //Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         //Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+
         HibernateUtil.setUp();
         FolderPath = SettingsDAO.getPath();
         Double height = SettingsDAO.getHeight();
