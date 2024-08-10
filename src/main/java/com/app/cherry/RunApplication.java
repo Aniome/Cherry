@@ -1,8 +1,6 @@
 package com.app.cherry;
 
 import atlantafx.base.theme.Dracula;
-import atlantafx.base.theme.PrimerDark;
-import atlantafx.base.theme.PrimerLight;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
 import com.app.cherry.dao.SettingsDAO;
@@ -10,10 +8,8 @@ import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.paint.Material;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -29,8 +25,6 @@ public class RunApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-        //Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
 
         HibernateUtil.setUp();

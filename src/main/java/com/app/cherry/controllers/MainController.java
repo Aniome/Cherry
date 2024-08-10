@@ -1,7 +1,5 @@
 package com.app.cherry.controllers;
 
-import atlantafx.base.theme.Styles;
-import atlantafx.base.theme.Tweaks;
 import com.app.cherry.controls.TabManager;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.FileService;
@@ -22,7 +20,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -39,11 +36,11 @@ public class MainController{
     @FXML
     private GridPane gridPane;
     @FXML
-    Button filesManagerButton;
+    ToggleButton filesManagerButton;
     @FXML
-    Button searchButton;
+    ToggleButton searchButton;
     @FXML
-    Button favoriteNotesButton;
+    ToggleButton favoriteNotesButton;
     @FXML
     VBox vbox;
     @FXML
@@ -96,18 +93,17 @@ public class MainController{
     }
 
     private void createScalable(){
-//        ObservableList<Node> children = gridPane.getChildren();
-//        gridPane.heightProperty().addListener((observableValue, number, t1) -> {
-//            double newHeight = (t1.doubleValue() / 10) * 8;
-//            for (Node button: children)
-//                ((Button)button).setPrefHeight(newHeight);
-//        });
-//        gridPane.widthProperty().addListener((observableValue, number, t1) -> {
-//            double newWidth = (t1.doubleValue() / 10) * 2;
-//            for (Node button: children)
-//                ((Button)button).setPrefWidth(newWidth);
-//        });
-
+        ObservableList<Node> children = gridPane.getChildren();
+        gridPane.heightProperty().addListener((observableValue, number, t1) -> {
+            double newHeight = (t1.doubleValue() / 10) * 8;
+            for (Node button: children)
+                ((ToggleButton)button).setPrefHeight(newHeight);
+        });
+        gridPane.widthProperty().addListener((observableValue, number, t1) -> {
+            double newWidth = (t1.doubleValue() / 10) * 2;
+            for (Node button: children)
+                ((ToggleButton)button).setPrefWidth(newWidth);
+        });
     }
 
     public void openModalWindow(){

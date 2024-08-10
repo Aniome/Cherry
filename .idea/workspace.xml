@@ -12,15 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add dracula themes">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/tabPane.css" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fix icons">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/java-keywords.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/java-keywords.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -298,15 +294,8 @@
       <workItem from="1723132158683" duration="14889000" />
       <workItem from="1723187741583" duration="1217000" />
       <workItem from="1723181134273" duration="4702000" />
-      <workItem from="1723210141131" duration="13592000" />
-    </task>
-    <task id="LOCAL-00001" summary="add hibernate">
-      <option name="closed" value="true" />
-      <created>1702417772832</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1702417772832</updated>
+      <workItem from="1723210141131" duration="13622000" />
+      <workItem from="1723232369950" duration="12889000" />
     </task>
     <task id="LOCAL-00002" summary="add class for Alerts">
       <option name="closed" value="true" />
@@ -692,7 +681,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723142744376</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="add icons">
+      <option name="closed" value="true" />
+      <created>1723228779866</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1723228779867</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -711,8 +708,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fix bug with reading files" />
-    <MESSAGE value="add delete file function" />
     <MESSAGE value="fix add function" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="add drag notes" />
@@ -736,7 +731,9 @@
     <MESSAGE value="create code area" />
     <MESSAGE value="add codeArea" />
     <MESSAGE value="add dracula themes" />
-    <option name="LAST_COMMIT_MESSAGE" value="add dracula themes" />
+    <MESSAGE value="add icons" />
+    <MESSAGE value="fix icons" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix icons" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

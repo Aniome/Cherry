@@ -6,10 +6,10 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -20,7 +20,7 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <SplitPane fx:id="splitPane" dividerPositions="0.13671875" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
-    <BorderPane fx:id="vBox" prefHeight="720.0" prefWidth="208.0">
+    <BorderPane fx:id="vBox" prefHeight="720.0" prefWidth="208.0" style="-fx-border-color: #685ab3;">
         <bottom>
             <GridPane style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
                 <columnConstraints>
@@ -35,147 +35,126 @@
                     <RowConstraints />
                     <RowConstraints />
                 </rowConstraints>
-                <Button alignment="CENTER" mnemonicParsing="false" scaleX="0.75" scaleY="0.75" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Image/locker_safe_icon.png" />
-                        </ImageView>
-                    </graphic>
+                <Button alignment="CENTER" mnemonicParsing="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <tooltip>
                         <Tooltip text="Открыть другое хранилище" />
                     </tooltip>
+               <graphic>
+                  <FontIcon iconLiteral="mdsal-dns" scaleX="1.25" scaleY="1.25" />
+               </graphic>
                 </Button>
-                <Button mnemonicParsing="false" scaleX="0.75" scaleY="0.75" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="23.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Image/settings_outline_icon.png" />
-                        </ImageView>
-                    </graphic>
+                <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <tooltip>
                         <Tooltip text="Настройки" />
                     </tooltip>
+               <graphic>
+                  <FontIcon iconLiteral="mdmz-settings" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
+               </graphic>
                 </Button>
-                <Button mnemonicParsing="false" scaleX="0.75" scaleY="0.75" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Image/help_icon.png" />
-                        </ImageView>
-                    </graphic>
+                <Button mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <tooltip>
                         <Tooltip text="Справка" />
                     </tooltip>
+               <graphic>
+                  <FontIcon iconLiteral="mdoal-help" scaleX="1.25" scaleY="1.25" />
+               </graphic>
                 </Button>
             </GridPane>
         </bottom>
       <center>
-         <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="671.0" prefWidth="170.0" styleClass="classic" stylesheets="@../css/tabPane.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-           <tabs>
-             <Tab>
-               <content>
-                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
+            <VBox fx:id="vbox" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                    </padding>
+                    <Button mnemonicParsing="false" onMouseClicked="#createNote" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <tooltip>
+                            <Tooltip text="Новая заметка" />
+                        </tooltip>
                   <graphic>
-                     <FontIcon iconLiteral="mdal-folder" />
+                     <FontIcon iconLiteral="mdmz-note_add" scaleX="1.25" scaleY="1.25" />
                   </graphic>
-             </Tab>
-             <Tab>
-               <content>
-                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
+                    </Button>
+                    <Button mnemonicParsing="false" onMouseClicked="#createFolderInTree" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <tooltip>
+                            <Tooltip text="Новая папка" />
+                        </tooltip>
                   <graphic>
-                     <FontIcon iconLiteral="mdmz-search" selectionEnd="0" />
+                     <FontIcon iconLiteral="mdal-create_new_folder" scaleX="1.25" scaleY="1.25" />
                   </graphic>
-             </Tab>
-               <Tab>
-                 <content>
-                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                 </content>
-                  <graphic>
-                     <FontIcon iconLiteral="mdal-favorite" selectionEnd="0" />
-                  </graphic>
-               </Tab>
-           </tabs>
-         </TabPane>
+                    </Button>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+                </GridPane>
+                <TreeView fx:id="treeView" editable="true" VBox.vgrow="ALWAYS" />
+            <padding>
+               <Insets top="5.0" />
+            </padding>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            </VBox>
       </center>
+      <top>
+          <GridPane fx:id="gridPane" style="-fx-background-color: #282a36; -fx-border-color: #685ab3;"
+                    BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+              </rowConstraints>
+              <padding>
+                  <Insets bottom="15.0" top="10.0"/>
+              </padding>
+              <ToggleButton fx:id="filesManagerButton" mnemonicParsing="false" onAction="#showFiles"
+                            GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                 <toggleGroup>
+                     <ToggleGroup fx:id="maingroup"/>
+                 </toggleGroup>
+                 <graphic>
+                     <FontIcon iconLiteral="mdal-folder" scaleX="1.25" scaleY="1.25"/>
+                 </graphic>
+                 <tooltip>
+                     <Tooltip text="Файловый менеджер"/>
+                 </tooltip>
+              </ToggleButton>
+              <ToggleButton fx:id="searchButton" mnemonicParsing="false" toggleGroup="$maingroup"
+                            GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                 <graphic>
+                     <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0"/>
+                 </graphic>
+                 <tooltip>
+                     <Tooltip text="Файловый менеджер"/>
+                 </tooltip>
+              </ToggleButton>
+              <ToggleButton fx:id="favoriteNotesButton" mnemonicParsing="false" onAction="#showFavorites"
+                            toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.columnSpan="2147483647"
+                            GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                 <graphic>
+                     <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0"/>
+                 </graphic>
+                 <tooltip>
+                     <Tooltip text="Избранное"/>
+                 </tooltip>
+              </ToggleButton>
+          </GridPane>
+      </top>
     </BorderPane>
     <TabPane fx:id="tabPane" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS">
-      <Tab text="Untitled Tab">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                      <Button fx:id="filesManagerButton" graphicTextGap="0.0" mnemonicParsing="false" onAction="#showFiles" AnchorPane.leftAnchor="200.0">
-                          <tooltip>
-                              <Tooltip text="Файловый менеджер" />
-                          </tooltip>
-                     <graphic>
-                        <FontIcon iconLiteral="mdal-folder" />
-                     </graphic>
-                      </Button>
-                      <Button fx:id="favoriteNotesButton" alignment="CENTER" mnemonicParsing="false" onAction="#showFavorites">
-                          <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                  <Image url="@../Image/bookmark_icon.png" />
-                              </ImageView>
-                          </graphic>
-                          <tooltip>
-                              <Tooltip text="Избранное" />
-                          </tooltip>
-                      </Button>
-                      <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" AnchorPane.leftAnchor="100.0">
-                          <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                  <Image url="@../Image/search_icon.png" />
-                              </ImageView>
-                          </graphic>
-                          <tooltip>
-                              <Tooltip text="Файловый менеджер" />
-                          </tooltip>
-                      </Button>
-                     <VBox fx:id="vbox" layoutX="214.0" layoutY="198.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #282a36;">
-                         <GridPane>
-                             <columnConstraints>
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                             </columnConstraints>
-                             <rowConstraints>
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                             </rowConstraints>
-                             <padding>
-                                 <Insets bottom="5.0" />
-                             </padding>
-                             <Button mnemonicParsing="false" onMouseClicked="#createNote" scaleX="0.75" scaleY="0.75" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <graphic>
-                                     <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                         <Image url="@../Image/notes.png" />
-                                     </ImageView>
-                                 </graphic>
-                                 <tooltip>
-                                     <Tooltip text="Новая заметка" />
-                                 </tooltip>
-                             </Button>
-                             <Button mnemonicParsing="false" onMouseClicked="#createFolderInTree" scaleX="0.75" scaleY="0.75" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <graphic>
-                                     <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                                         <Image url="@../Image/basic_folder.png" />
-                                     </ImageView>
-                                 </graphic>
-                                 <tooltip>
-                                     <Tooltip text="Новая папка" />
-                                 </tooltip>
-                             </Button>
-                        <VBox.margin>
-                           <Insets bottom="5.0" />
-                        </VBox.margin>
-                         </GridPane>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                     </VBox>
-                      <TreeView fx:id="treeView" editable="true" layoutX="503.0" layoutY="277.0" prefHeight="565.0" prefWidth="150.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </Tab>
         <Tab closable="false" text="Новая вкладка">
             <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #282a36;">
                 <center>
