@@ -52,7 +52,9 @@ public class MainController{
     Stage renameStage;
     public static String newFileName;
     TreeCellFactory treeCellFactory;
-    TreeItem<String> oldRoot;
+    boolean favoriteSelected = false;
+    boolean filesManagerSelected = true;
+    TreeItem<String> filesManagerRoot;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -63,7 +65,8 @@ public class MainController{
         this.mainStage = mainStage;
 
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        treeView.setRoot(new TreeItem<>(""));
+        filesManagerRoot = new TreeItem<>("");
+        treeView.setRoot(filesManagerRoot);
         treeView.setShowRoot(false);
         loadFilesInTreeview();
         sortTreeView();
@@ -73,9 +76,29 @@ public class MainController{
 
         splitPane.setDividerPositions(0.12);
         splitPane.widthProperty().addListener((observableValue, number, t1) -> splitPane.setDividerPositions(0.12));
-        filesManagerButton.setDisable(true);
 
+        filesManagerButton.setSelected(true);
+
+        configureToggleButtons();
         createScalable();
+    }
+
+    private void configureToggleButtons(){
+        filesManagerButton.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if(!favoriteNotesButton.isSelected() && aBoolean && !searchButton.isSelected()){
+                filesManagerButton.setSelected(true);
+            }
+        });
+        favoriteNotesButton.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if(!filesManagerButton.isSelected() && aBoolean && !searchButton.isSelected()){
+                favoriteNotesButton.setSelected(true);
+            }
+        });
+        searchButton.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if(!filesManagerButton.isSelected() && aBoolean && !favoriteNotesButton.isSelected()){
+                searchButton.setSelected(true);
+            }
+        });
     }
 
     private void loadFilesInTreeview(){
@@ -156,7 +179,6 @@ public class MainController{
                 codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
             }
         }
-        //rgb(40, 42, 54)
         borderPane.setStyle("-fx-background-color: #282a36");
         tab.setContent(borderPane);
     }
@@ -205,22 +227,28 @@ public class MainController{
 
     @FXML
     private void showFiles(){
-        TreeItem<String> tempRoot = treeView.getRoot();
-        treeView.setRoot(oldRoot);
-        oldRoot = tempRoot;
-        favoriteNotesButton.setDisable(false);
-        filesManagerButton.setDisable(true);
+        if (filesManagerSelected){
+            return;
+        }
+        treeView.setRoot(filesManagerRoot);
+        favoriteSelected = false;
     }
 
     @FXML
     private void showFavorites(){
-        oldRoot = treeView.getRoot();
+        if (favoriteSelected){
+            return;
+        }
         treeView.setRoot(new TreeItem<>(""));
         List<Path> pathList = new LinkedList<>();
         FavoriteNotesDAO.getFavoriteNotes().forEach(item -> pathList.add(Paths.get(item.getPathNote())));
         loadItemsInTree(pathList);
-        filesManagerButton.setDisable(false);
-        favoriteNotesButton.setDisable(true);
+        filesManagerSelected = false;
+    }
+
+    @FXML
+    private void showSearch(){
+
     }
 
     private void loadItemsInTree(List<Path> pathList){
