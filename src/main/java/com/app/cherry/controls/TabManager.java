@@ -1,15 +1,11 @@
 package com.app.cherry.controls;
 
-import atlantafx.base.theme.Styles;
-import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MarkdownArea;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class TabManager {
     public static void selectTab(Tab tab, TabPane tabPane){
@@ -44,7 +40,6 @@ public class TabManager {
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
-        //textField.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/text_field.css")).toExternalForm());
         borderPane.setTop(textField);
 
         textField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {

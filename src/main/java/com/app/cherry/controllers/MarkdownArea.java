@@ -54,8 +54,6 @@ public class MarkdownArea {
             }
         });
 
-        codeArea.setParagraphGraphicFactory(graphicFactory);
-
         codeArea.getVisibleParagraphs().addModificationObserver
                 (new VisibleParagraphStyler<>(codeArea, this::computeHighlighting));
 
@@ -66,7 +64,7 @@ public class MarkdownArea {
             if ( KE.getCode() == KeyCode.ENTER ) {
                 int caretPosition = codeArea.getCaretPosition();
                 int currentParagraph = codeArea.getCurrentParagraph();
-                Matcher m0 = whiteSpace.matcher(codeArea.getParagraph( currentParagraph-1 ).getSegments().getFirst());
+                Matcher m0 = whiteSpace.matcher(codeArea.getParagraph(currentParagraph - 1).getSegments().getFirst());
                 if ( m0.find() )
                     Platform.runLater( () -> codeArea.insertText( caretPosition, m0.group() ) );
             }
@@ -89,7 +87,7 @@ public class MarkdownArea {
             borderPane1.setRight(copyNumberFactory.apply(line));
             if (line == 0){
                 Rectangle rectangle = new Rectangle();
-                rectangle.setFill(Color.GRAY);
+                rectangle.setFill(Color.web("#282c34"));
                 rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
                 rectangle.heightProperty().bind(codeArea.heightProperty());
                 StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
@@ -134,8 +132,11 @@ public class MarkdownArea {
                         String text = area.getText(index, 0, index, area.getParagraphLength(index));
                         int startPos = area.getAbsolutePosition( index, 0 );
                         area.setStyleSpans( startPos, computeStyles.apply( text ) );
+                        index++;
+                    } else {
+                        System.out.println(paragraphSize);
                     }
-                    index++;
+
                 });
             }
         }

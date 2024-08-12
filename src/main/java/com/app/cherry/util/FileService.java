@@ -1,15 +1,9 @@
 package com.app.cherry.util;
 
 import com.app.cherry.RunApplication;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import org.fxmisc.richtext.CodeArea;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,8 +16,12 @@ public class FileService {
     public static String readFile(TreeItem<String> treeItem){
         StringBuilder result = new StringBuilder();
         Path path = Paths.get(getPath(treeItem));
-        try {
-            Files.readAllLines(path).forEach(str -> result.append(str).append("\n"));
+        try (FileReader fr = new FileReader(path.toFile())) {
+            int i;
+            while ((i = fr.read()) != -1) {
+                char ch = (char) i;
+                result.append(ch);
+            }
         } catch (IOException e) {
             Alerts.CreateAndShowError(e.getMessage());
         }
@@ -31,11 +29,8 @@ public class FileService {
     }
 
     public static void writeFile(TreeItem<String> treeItem, CodeArea codeArea){
-        try (RandomAccessFile file = new RandomAccessFile(getPath(treeItem), "rw");
-            FileChannel channel = file.getChannel()) {
-            String text = codeArea.getText();
-            ByteBuffer buffer = ByteBuffer.wrap(text.getBytes());
-            channel.write(buffer);
+        try (FileWriter fileWriter = new FileWriter(getPath(treeItem))) {
+            fileWriter.write(codeArea.getText());
         } catch (IOException e) {
             Alerts.CreateAndShowWarning(e.getMessage());
         }

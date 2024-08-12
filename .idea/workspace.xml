@@ -12,11 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fix icons">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fix loading on toggle buttons">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MarkdownArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/java-keywords.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/java-keywords.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,15 +296,9 @@
       <workItem from="1723181134273" duration="4702000" />
       <workItem from="1723210141131" duration="13622000" />
       <workItem from="1723232369950" duration="12933000" />
-      <workItem from="1723364756767" duration="8217000" />
-    </task>
-    <task id="LOCAL-00003" summary="add load files">
-      <option name="closed" value="true" />
-      <created>1702731887883</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1702731887883</updated>
+      <workItem from="1723364756767" duration="10678000" />
+      <workItem from="1723378156983" duration="2793000" />
+      <workItem from="1723406252983" duration="6913000" />
     </task>
     <task id="LOCAL-00004" summary="add loading files">
       <option name="closed" value="true" />
@@ -689,7 +684,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723313555582</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="fix loading on toggle buttons">
+      <option name="closed" value="true" />
+      <created>1723376116207</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1723376116207</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -708,7 +711,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fix add function" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="add drag notes" />
     <MESSAGE value="some fixes" />
@@ -733,7 +735,8 @@
     <MESSAGE value="add dracula themes" />
     <MESSAGE value="add icons" />
     <MESSAGE value="fix icons" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix icons" />
+    <MESSAGE value="fix loading on toggle buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix loading on toggle buttons" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

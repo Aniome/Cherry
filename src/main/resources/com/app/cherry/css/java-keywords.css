@@ -1,12 +1,12 @@
 .styled-text-area .selection {
-    -fx-fill: #dadada;
+    -fx-fill: #404859;
 }
 .keyword {
     -fx-fill: #420042;
     -fx-font-weight: bold;
 }
 .link{
-    -fx-fill: purple;
+    -fx-fill: #c5b6d8;
     -fx-font-weight: bold;
     -fx-cursor: hand;
     -fx-underline: true;
@@ -35,5 +35,9 @@
 }
 
 .paragraph-box:has-caret {
-    -fx-background-color: #eaeaea;
+    -fx-background-color: #2c313c;
+}
+
+.code-area {
+    -fx-background-color: #1e1e1e;
 }
