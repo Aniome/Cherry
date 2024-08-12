@@ -1,16 +1,36 @@
 .styled-text-area .selection {
     -fx-fill: #404859;
 }
-.keyword {
-    -fx-fill: #420042;
-    -fx-font-weight: bold;
-}
+
 .link{
     -fx-fill: #c5b6d8;
     -fx-font-weight: bold;
     -fx-cursor: hand;
     -fx-underline: true;
 }
+
+.word-code {
+    -fx-fill: #a4b1a9;
+}
+
+.code-area {
+    -fx-background-color: #1e1e1e;
+}
+
+.paragraph-box:has-caret {
+    -fx-background-color: #2c313c;
+}
+
+.styled-text-area{
+    -fx-font-size: 22;
+}
+
+.lineno {
+    -fx-background-color: transparent;
+    -fx-font-style: normal;
+}
+
+
 .semicolon {
     -fx-font-weight: bold;
 }
@@ -34,10 +54,7 @@
     -fx-fill: cadetblue;
 }
 
-.paragraph-box:has-caret {
-    -fx-background-color: #2c313c;
-}
-
-.code-area {
-    -fx-background-color: #1e1e1e;
+.keyword {
+    -fx-fill: #420042;
+    -fx-font-weight: bold;
 }

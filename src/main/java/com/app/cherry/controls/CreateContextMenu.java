@@ -1,6 +1,6 @@
-package com.app.cherry.controllers;
+package com.app.cherry.controls;
 
-import com.app.cherry.controls.TabManager;
+import com.app.cherry.controllers.MainController;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.FileService;
 import com.app.cherry.util.Alerts;

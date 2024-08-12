@@ -2,7 +2,6 @@ module com.app.cherry {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
-
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires annotations;
@@ -17,6 +16,7 @@ module com.app.cherry {
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome;
+    requires org.scenicview.scenicview;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import org.scenicview.ScenicView;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -36,7 +38,7 @@ public class RunApplication extends Application {
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
         Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
-        scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/java-keywords.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/keywords.css")).toExternalForm());
         setIcon(stage);
         if (FolderPath == null){
             fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
@@ -50,7 +52,7 @@ public class RunApplication extends Application {
             InitialStage.setResizable(false);
         } else {
             MainController mainController = fxmlLoader.getController();
-            mainController.init(stage, this);
+            mainController.init(stage);
             stage.setHeight(height);
             stage.setWidth(width);
             prepareStage(MainHeight, MainWidth, scene, title, stage);
@@ -77,6 +79,7 @@ public class RunApplication extends Application {
         stage.setMinWidth(width);
         stage.setMinHeight(height);
         stage.show();
+        ScenicView.show(scene);
     }
 
     public static void main(String[] args) {

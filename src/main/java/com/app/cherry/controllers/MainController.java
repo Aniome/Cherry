@@ -1,5 +1,6 @@
 package com.app.cherry.controllers;
 
+import com.app.cherry.controls.CreateContextMenu;
 import com.app.cherry.controls.TabManager;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.FileService;
@@ -61,7 +62,7 @@ public class MainController{
         Platform.exit();
     }
 
-    public void init(Stage mainStage, RunApplication runApplication){
+    public void init(Stage mainStage){
         this.mainStage = mainStage;
 
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -172,6 +173,7 @@ public class MainController{
                 ((TextField) children).setText(filename);
             }
             if (children instanceof StackPane stackPane){
+                @SuppressWarnings("unchecked")
                 VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
                 CodeArea codeArea = virtualizedScrollPane.getContent();
                 final String text = FileService.readFile(selectedItem);

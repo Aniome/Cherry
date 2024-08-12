@@ -1,6 +1,5 @@
 package com.app.cherry.controls;
 
-import com.app.cherry.controllers.MarkdownArea;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;

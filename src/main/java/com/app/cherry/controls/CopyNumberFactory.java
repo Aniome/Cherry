@@ -1,4 +1,4 @@
-package com.app.cherry.controllers;
+package com.app.cherry.controls;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;

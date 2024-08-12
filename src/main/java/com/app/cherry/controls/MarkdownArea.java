@@ -1,11 +1,10 @@
-package com.app.cherry.controllers;
+package com.app.cherry.controls;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -31,8 +30,12 @@ import java.util.regex.Pattern;
 
 public class MarkdownArea {
     private static final String LINK_PATTERN = "\\b(" + "https://\\S+" + ")\\b";
+    private static final String WORDS_PATTERN = "\\w+";
 
-    private static final Pattern PATTERN = Pattern.compile("(?<LINK>" + LINK_PATTERN + ")");
+    private static final Pattern PATTERN = Pattern.compile(
+            "(?<LINK>" + LINK_PATTERN + ")"
+            + "|(?<WORDS>" + WORDS_PATTERN + ")"
+    );
 
     public StackPane createMarkdownArea() {
         CodeArea codeArea = new CodeArea();
@@ -70,21 +73,16 @@ public class MarkdownArea {
             }
         });
 
-        codeArea.replaceText(0,0,"");
-
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
     }
 
     private static @NotNull IntFunction<Node> createGraphicFactory(IntFunction<Node> numberFactory, CodeArea codeArea) {
         CopyNumberFactory copyNumberFactory = new CopyNumberFactory();
-        IntFunction<Node> graphicFactory = line -> {
+        return line -> {
             HBox hbox = new HBox(numberFactory.apply(line), copyNumberFactory.apply(line));
             hbox.setSpacing(1);
             hbox.setAlignment(Pos.CENTER);
 
-            BorderPane borderPane1 = new BorderPane();
-            borderPane1.setCenter(numberFactory.apply(line));
-            borderPane1.setRight(copyNumberFactory.apply(line));
             if (line == 0){
                 Rectangle rectangle = new Rectangle();
                 rectangle.setFill(Color.web("#282c34"));
@@ -95,7 +93,6 @@ public class MarkdownArea {
             }
             return new StackPane(hbox);
         };
-        return graphicFactory;
     }
 
     private StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -103,8 +100,10 @@ public class MarkdownArea {
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while(matcher.find()) {
-            String styleClass = matcher.group("LINK") != null ? "link" :
-                    null; /* never happens */ assert styleClass != null;
+            String styleClass =
+                    matcher.group("WORDS") != null ? "word-code" :
+                        matcher.group("LINK") != null ? "link" :
+                            null; /* never happens */ assert styleClass != null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
@@ -124,19 +123,21 @@ public class MarkdownArea {
         }
 
         @Override
-        public void accept( ListModification<? extends Paragraph<PS, SEG, S>> lm ) {
+        public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
             if ( lm.getAddedSize() > 0 ){
                 Platform.runLater( () -> {
                     int paragraphSize = area.getParagraphs().size();
                     if (index < paragraphSize) {
                         String text = area.getText(index, 0, index, area.getParagraphLength(index));
-                        int startPos = area.getAbsolutePosition( index, 0 );
-                        area.setStyleSpans( startPos, computeStyles.apply( text ) );
+                        int startPos = area.getAbsolutePosition(index, 0);
+                        area.setStyleSpans(startPos, computeStyles.apply(text));
                         index++;
                     } else {
-                        System.out.println(paragraphSize);
+                        int currentParagraph = area.getCurrentParagraph();
+                        String text = area.getText(currentParagraph, 0, currentParagraph, area.getParagraphLength(currentParagraph));
+                        int startPos = area.getAbsolutePosition(currentParagraph, 0);
+                        area.setStyleSpans(startPos, computeStyles.apply(text));
                     }
-
                 });
             }
         }
