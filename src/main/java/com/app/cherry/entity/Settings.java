@@ -23,20 +23,12 @@ public class Settings {
     @Column(name = "isMaximized")
     private Integer isMaximized;
 
-    public Settings(String path) {
-        this.lastPath = path;
-    }
+
+    @Column(name = "DividerPosition")
+    private Double dividerPosition;
 
     public Settings() {
 
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getLastPath() {
@@ -69,6 +61,14 @@ public class Settings {
 
     public void setIsMaximized(Integer isMaximized) {
         this.isMaximized = isMaximized;
+    }
+
+    public Double getDividerPosition() {
+        return dividerPosition;
+    }
+
+    public void setDividerPosition(Double dividerPosition) {
+        this.dividerPosition = dividerPosition;
     }
 
     @Override

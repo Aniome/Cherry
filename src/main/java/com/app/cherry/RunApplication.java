@@ -56,14 +56,16 @@ public class RunApplication extends Application {
             stage.setHeight(height);
             stage.setWidth(width);
             prepareStage(MainHeight, MainWidth, scene, title, stage);
-            stage.setMaximized(HibernateUtil.isMaximized());
+            stage.setMaximized(SettingsDAO.isMaximized());
+            mainController.afterShowing();
             stage.setOnHiding((event) -> {
                 boolean isMaximized = stage.isMaximized();
                 if (!isMaximized) {
                     SettingsDAO.setHeight(stage.getHeight());
                     SettingsDAO.setWidth(stage.getWidth());
                 }
-                HibernateUtil.setIsMaximized(isMaximized);
+                SettingsDAO.setIsMaximized(isMaximized);
+                SettingsDAO.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
                 HibernateUtil.tearDown();
             });
         }
@@ -79,7 +81,7 @@ public class RunApplication extends Application {
         stage.setMinWidth(width);
         stage.setMinHeight(height);
         stage.show();
-        ScenicView.show(scene);
+        //ScenicView.show(scene);
     }
 
     public static void main(String[] args) {

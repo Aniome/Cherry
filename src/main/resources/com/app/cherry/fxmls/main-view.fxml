@@ -19,10 +19,10 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<SplitPane fx:id="splitPane" dividerPositions="0.13671875" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
-    <BorderPane fx:id="vBox" prefHeight="720.0" prefWidth="208.0" style="-fx-border-color: #685ab3;">
+<SplitPane fx:id="splitPane" dividerPositions="0.13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="640.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
+    <BorderPane fx:id="borderPane" style="-fx-border-color: #685ab3;">
         <bottom>
-            <GridPane style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
+            <GridPane minWidth="165.0" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -62,7 +62,7 @@
             </GridPane>
         </bottom>
       <center>
-            <VBox fx:id="vbox" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
+            <VBox fx:id="vbox" minWidth="165.0" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
                 <GridPane>
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -107,7 +107,7 @@
             </VBox>
       </center>
       <top>
-          <GridPane fx:id="gridPane" style="-fx-background-color: #282a36; -fx-border-color: #685ab3;" BorderPane.alignment="CENTER">
+          <GridPane fx:id="gridPane" alignment="CENTER" minWidth="165.0" style="-fx-background-color: #282a36; -fx-border-color: #685ab3;" BorderPane.alignment="CENTER">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -119,7 +119,7 @@
               <padding>
                   <Insets bottom="15.0" top="10.0" />
               </padding>
-              <ToggleButton fx:id="filesManagerButton" mnemonicParsing="false" onMouseClicked="#showFiles" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+              <ToggleButton fx:id="filesManagerButton" mnemonicParsing="false" onMouseClicked="#showFiles" selected="true" style="-fx-line-spacing: 10;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                  <toggleGroup>
                      <ToggleGroup fx:id="maingroup" />
                  </toggleGroup>
@@ -138,7 +138,7 @@
                      <Tooltip text="Файловый менеджер" />
                  </tooltip>
               </ToggleButton>
-              <ToggleButton fx:id="favoriteNotesButton" mnemonicParsing="false" onAction="#showFavorites" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+              <ToggleButton fx:id="favoriteNotesButton" mnemonicParsing="false" onAction="#showFavorites" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                  <graphic>
                      <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
                  </graphic>
@@ -149,7 +149,7 @@
           </GridPane>
       </top>
     </BorderPane>
-    <TabPane fx:id="tabPane" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS">
+    <TabPane fx:id="tabPane" minWidth="150.0" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS">
         <Tab closable="false" text="Новая вкладка">
             <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #282a36;">
                 <center>

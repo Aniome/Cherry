@@ -3,6 +3,7 @@ package com.app.cherry.controllers;
 import com.app.cherry.controls.CreateContextMenu;
 import com.app.cherry.controls.TabManager;
 import com.app.cherry.dao.FavoriteNotesDAO;
+import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.FileService;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.EmptyExpandedTreeItem;
@@ -29,11 +30,13 @@ import java.util.*;
 
 public class MainController{
     @FXML
+    public BorderPane borderPane;
+    @FXML
     private TreeView<String> treeView;
     @FXML
     private TabPane tabPane;
     @FXML
-    private SplitPane splitPane;
+    public SplitPane splitPane;
     @FXML
     private GridPane gridPane;
     @FXML
@@ -75,13 +78,12 @@ public class MainController{
 
         treeCellFactory = new TreeCellFactory(treeView, this);
 
-        splitPane.setDividerPositions(0.12);
-        splitPane.widthProperty().addListener((observableValue, number, t1) -> splitPane.setDividerPositions(0.12));
-
-        filesManagerButton.setSelected(true);
-
         configureToggleButtons();
-        createScalable();
+        //createScalable();
+    }
+
+    public void afterShowing(){
+        splitPane.setDividerPositions(SettingsDAO.getDividerPosition());
     }
 
     private void configureToggleButtons(){

@@ -61,4 +61,35 @@ public class SettingsDAO {
             session.persist(settings);
         });
     }
+
+    public static Double getDividerPosition(){
+        Session session = HibernateUtil.sessionFactory.openSession();
+        Settings settings = session.get(Settings.class, 1);
+        session.close();
+        return settings.getDividerPosition();
+    }
+
+    public static void setDividerPosition(Double dividerPosition){
+        HibernateUtil.sessionFactory.inTransaction(session -> {
+           Settings settings = session.get(Settings.class, 1);
+           settings.setDividerPosition(dividerPosition);
+           session.persist(settings);
+        });
+    }
+
+    public static Boolean isMaximized(){
+        Session session = HibernateUtil.sessionFactory.openSession();
+        Settings settings = session.get(Settings.class, 1);
+        Integer isMaximized = settings.getIsMaximized();
+        session.close();
+        return isMaximized != null && isMaximized == 1;
+    }
+
+    public static void setIsMaximized(Boolean isMaximized){
+        HibernateUtil.sessionFactory.inTransaction(session -> {
+            Settings settings = session.get(Settings.class, 1);
+            settings.setIsMaximized(isMaximized ? 1 : 0);
+            session.persist(settings);
+        });
+    }
 }

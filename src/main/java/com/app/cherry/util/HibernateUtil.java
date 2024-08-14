@@ -1,7 +1,5 @@
 package com.app.cherry.util;
 
-import com.app.cherry.entity.Settings;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -35,22 +33,6 @@ public class HibernateUtil {
         if (sessionFactory != null) {
             sessionFactory.close();
         }
-    }
-
-    public static Boolean isMaximized(){
-        Session session = sessionFactory.openSession();
-        Settings settings = session.get(Settings.class, 1);
-        Integer isMaximized = settings.getIsMaximized();
-        session.close();
-        return isMaximized != null && isMaximized == 1;
-    }
-
-    public static void setIsMaximized(Boolean isMaximized){
-        sessionFactory.inTransaction(session -> {
-            Settings settings = session.get(Settings.class, 1);
-            settings.setIsMaximized(isMaximized ? 1 : 0);
-            session.persist(settings);
-        });
     }
 
 	/*
