@@ -3,9 +3,7 @@ package com.app.cherry.controllers;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.RunApplication;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,7 +12,6 @@ import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -41,12 +38,6 @@ public class InitController {
     private TextField textField;
 
     private Stage InitialStage;
-
-    private Stage MainStage;
-
-    public void setMainStage(Stage mainStage) {
-        MainStage = mainStage;
-    }
 
     public void setInitialStage(Stage initialStage) {
         InitialStage = initialStage;
@@ -144,12 +135,6 @@ public class InitController {
 
     private void ShowMainStage(){
         InitialStage.close();
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), RunApplication.MainWidth, RunApplication.MainHeight);
-            RunApplication.prepareStage(RunApplication.MainHeight, RunApplication.MainWidth, scene, RunApplication.title, MainStage);
-        } catch (IOException e) {
-            Alerts.CreateAndShowError(e.getMessage());
-        }
+        RunApplication.showMainWindow();
     }
 }

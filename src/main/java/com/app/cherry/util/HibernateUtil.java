@@ -37,36 +37,11 @@ public class HibernateUtil {
 
 	/*
     public void testBasicUsage() {
-        // create a couple of events...
-        sessionFactory.inTransaction(session -> {
-            session.persist(new Event("Our very first event!", now()));
-            session.persist(new Event("A follow up event", now()));
-        });
         // now lets pull events from the database and list them
         sessionFactory.inTransaction(session -> {
             session.createSelectionQuery("from Event", Event.class).getResultList()
                     .forEach(event -> out.println("Event (" + event.getDate() + ") : " + event.getTitle()));
         });
 	}
-
-	@SuppressWarnings("unchecked")
-	public void testBasicUsage() {
-		// create a couple of events...
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.save(new Settings("123"));
-		session.save( new Event( "A follow up event", new Date() ) );
-		session.getTransaction().commit();
-		session.close();
-
-		// now lets pull events from the database and list them
-		session = sessionFactory.openSession();
-        session.beginTransaction();
-        List result = session.createQuery( "from Event" ).list();
-		for ( Event event : (List<Event>) result ) {
-			System.out.println( "Event (" + event.getDate() + ") : " + event.getTitle() );
-		}
-        session.getTransaction().commit();
-        session.close();
-	}*/
+	*/
 }

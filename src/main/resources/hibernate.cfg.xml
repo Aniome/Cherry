@@ -7,6 +7,7 @@
     <property name="hibernate.jdbc.use_get_generated_keys">false</property>
     <mapping class="com.app.cherry.entity.Settings" />
     <mapping class="com.app.cherry.entity.FavoriteNotes" />
+    <mapping class="com.app.cherry.entity.RecentPaths" />
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>

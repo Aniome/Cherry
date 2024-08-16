@@ -47,8 +47,6 @@ public class MainController{
     ToggleButton favoriteNotesButton;
     @FXML
     VBox vbox;
-    @FXML
-    private Tab plusTab;
 
     final double renameWidth = 600;
     final double renameHeight = 250;
@@ -248,6 +246,11 @@ public class MainController{
         FavoriteNotesDAO.getFavoriteNotes().forEach(item -> pathList.add(Paths.get(item.getPathNote())));
         loadItemsInTree(pathList);
         filesManagerSelected = false;
+    }
+
+    @FXML
+    private void changeStorage(){
+        RunApplication.showInitialWindow();
     }
 
     @FXML

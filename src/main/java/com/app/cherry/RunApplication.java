@@ -24,50 +24,71 @@ public class RunApplication extends Application {
     private static final double InitialWidth = 600;
     public static final double MainHeight = 480;
     public static final double MainWidth = 640;
+    private static Stage mainStage;
+    private static Double height;
+    private static Double width;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
 
         HibernateUtil.setUp();
         FolderPath = SettingsDAO.getPath();
-        Double height = SettingsDAO.getHeight();
-        Double width = SettingsDAO.getWidth();
+        height = SettingsDAO.getHeight();
+        width = SettingsDAO.getWidth();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
-        Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
-        scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/keywords.css")).toExternalForm());
-        setIcon(stage);
+        mainStage = stage;
         if (FolderPath == null){
-            fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
+            showInitialWindow();
+        } else {
+            showMainWindow();
+        }
+    }
+
+    public static void showMainWindow() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
+            scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/keywords.css")).toExternalForm());
+            MainController mainController = fxmlLoader.getController();
+            mainController.init(mainStage);
+            setIcon(mainStage);
+            mainStage.setHeight(height);
+            mainStage.setWidth(width);
+            prepareStage(MainHeight, MainWidth, scene, title, mainStage);
+            mainStage.setMaximized(SettingsDAO.isMaximized());
+            mainController.afterShowing();
+            mainStage.setOnHiding((event) -> {
+                boolean isMaximized = mainStage.isMaximized();
+                if (!isMaximized) {
+                    SettingsDAO.setHeight(mainStage.getHeight());
+                    SettingsDAO.setWidth(mainStage.getWidth());
+                }
+                SettingsDAO.setIsMaximized(isMaximized);
+                SettingsDAO.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
+                SettingsDAO.setPath(FolderPath.toString());
+
+                HibernateUtil.tearDown();
+            });
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void showInitialWindow() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
             Stage InitialStage = new Stage();
             setIcon(InitialStage);
             InitController initController = fxmlLoader.getController();
             initController.setInitialStage(InitialStage);
-            initController.setMainStage(stage);
             prepareStage(InitialHeight, InitialWidth, secondScene,"", InitialStage);
             InitialStage.setResizable(false);
-        } else {
-            MainController mainController = fxmlLoader.getController();
-            mainController.init(stage);
-            stage.setHeight(height);
-            stage.setWidth(width);
-            prepareStage(MainHeight, MainWidth, scene, title, stage);
-            stage.setMaximized(SettingsDAO.isMaximized());
-            mainController.afterShowing();
-            stage.setOnHiding((event) -> {
-                boolean isMaximized = stage.isMaximized();
-                if (!isMaximized) {
-                    SettingsDAO.setHeight(stage.getHeight());
-                    SettingsDAO.setWidth(stage.getWidth());
-                }
-                SettingsDAO.setIsMaximized(isMaximized);
-                SettingsDAO.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
-                HibernateUtil.tearDown();
-            });
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
