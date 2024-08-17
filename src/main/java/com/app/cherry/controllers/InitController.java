@@ -1,11 +1,13 @@
 package com.app.cherry.controllers;
 
+import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.RunApplication;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -34,6 +36,9 @@ public class InitController {
 
     @FXML
     private Button OpenButton;
+
+    @FXML
+    private ListView<String> listView;
 
     private TextField textField;
 
@@ -136,5 +141,10 @@ public class InitController {
     private void ShowMainStage(){
         InitialStage.close();
         RunApplication.showMainWindow();
+    }
+
+    public void loadPaths(){
+        List<String> listRecentPaths = RecentPathsDAO.getPaths();
+        listView.getItems().addAll(listRecentPaths);
     }
 }

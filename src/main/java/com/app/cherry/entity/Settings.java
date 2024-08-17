@@ -27,10 +27,6 @@ public class Settings {
     @Column(name = "DividerPosition")
     private Double dividerPosition;
 
-    public Settings() {
-
-    }
-
     public String getLastPath() {
         return lastPath;
     }

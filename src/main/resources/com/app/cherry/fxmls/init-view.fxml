@@ -13,91 +13,83 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0"
-           prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.app.cherry.controllers.InitController">
+<SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.InitController">
    <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #282a36;">
       <center>
-         <ListView prefHeight="409.0" prefWidth="257.0" style="-fx-background-color: #282a36;"
-                   BorderPane.alignment="CENTER"/>
+         <ListView fx:id="listView" prefHeight="409.0" prefWidth="257.0" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER" />
       </center>
    </BorderPane>
-   <VBox fx:id="Vbox" alignment="TOP_CENTER" minHeight="200.0" minWidth="100.0" prefHeight="200.0" prefWidth="100.0"
-         style="-fx-background-color: #282a36;">
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"
-                 style="-fx-background-color: black;">
+   <VBox alignment="TOP_CENTER" minHeight="200.0" minWidth="100.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #282a36;">
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: black;">
          <cursor>
-            <Cursor fx:constant="DEFAULT"/>
+            <Cursor fx:constant="DEFAULT" />
          </cursor>
          <VBox.margin>
-            <Insets top="10.0"/>
+            <Insets top="10.0" />
          </VBox.margin>
-         <Image url="@../Image/cherry_icon.png"/>
+         <Image url="@../Image/cherry_icon.png" />
       </ImageView>
       <Button fx:id="Back" mnemonicParsing="false" onMouseClicked="#BackToMainMenu" text="Назад" visible="false">
          <VBox.margin>
-            <Insets top="15.0"/>
+            <Insets top="15.0" />
          </VBox.margin>
          <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
          </font>
       </Button>
-      <HBox fx:id="UpHBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
-            style="-fx-alignment: CENTER;">
+      <HBox fx:id="UpHBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-alignment: CENTER;">
          <VBox.margin>
-            <Insets/>
+            <Insets />
          </VBox.margin>
          <padding>
-            <Insets top="10.0"/>
+            <Insets top="10.0" />
          </padding>
          <Label text="Создать новое хранилище">
             <font>
-               <Font size="18.0"/>
+               <Font size="18.0" />
             </font>
             <HBox.margin>
-               <Insets/>
+               <Insets />
             </HBox.margin>
          </Label>
-         <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false"
-                 onMouseClicked="#TemplateStorage" text="Создать">
+         <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#TemplateStorage" text="Создать">
             <font>
-               <Font size="18.0"/>
+               <Font size="18.0" />
             </font>
          </Button>
       </HBox>
-      <HBox fx:id="DownHBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
-            style="-fx-alignment: CENTER;">
+      <HBox fx:id="DownHBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-alignment: CENTER;">
          <VBox.margin>
-            <Insets top="10.0"/>
+            <Insets top="10.0" />
          </VBox.margin>
          <Label text="Открыть хранилище">
             <font>
-               <Font size="18.0"/>
+               <Font size="18.0" />
             </font>
             <HBox.margin>
-               <Insets bottom="10.0"/>
+               <Insets bottom="10.0" />
             </HBox.margin>
          </Label>
          <Button fx:id="OpenButton" mnemonicParsing="false" onMouseClicked="#OpenStorage" text="Открыть">
             <font>
-               <Font size="18.0"/>
+               <Font size="18.0" />
             </font>
             <HBox.margin>
-               <Insets bottom="10.0"/>
+               <Insets bottom="10.0" />
             </HBox.margin>
          </Button>
       </HBox>
       <Label fx:id="DownLabel" alignment="TOP_LEFT">
          <VBox.margin>
-            <Insets bottom="10.0"/>
+            <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
       <Button fx:id="Create" mnemonicParsing="false" onMouseClicked="#CreateStorage" text="Создать" visible="false">
          <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="10.0"/>
+            <Insets bottom="10.0" />
          </VBox.margin>
       </Button>
    </VBox>

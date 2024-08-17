@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 
 @Entity
 public class RecentPaths {
-    @GeneratedValue
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic
-    @Column(name = "Path")
+    @Column(name = "path")
     private String path;
 
     public Integer getId() {

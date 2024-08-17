@@ -7,28 +7,42 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class RecentPathsDAO {
-    public static List<RecentPaths> getPaths(){
+    public static List<String> getPaths(){
         Session session = HibernateUtil.sessionFactory.openSession();
-        List<RecentPaths> recentPathsList = session.createQuery("from RecentPaths ", RecentPaths.class).getResultList();
+        List<String> recentPathsList = session.createQuery("select path from RecentPaths ", String.class).getResultList();
         session.close();
         return recentPathsList;
     }
 
     public static void addPath(String path){
         HibernateUtil.sessionFactory.inTransaction(session -> {
-            List<Integer> listId = session.createQuery("select id from RecentPaths", Integer.class).getResultList();
-            RecentPaths recentPaths = new RecentPaths();
-            recentPaths.setId(getId(listId));
-            recentPaths.setPath(path);
-            session.persist(recentPaths);
+            List<RecentPaths> listId = session.createQuery("from RecentPaths", RecentPaths.class).getResultList();
+            boolean notContains = false;
+            for (RecentPaths p: listId){
+                if (!p.getPath().equals(path)){
+                    notContains = true;
+                    break;
+                }
+            }
+            if (notContains || listId.isEmpty()){
+                RecentPaths recentPaths = new RecentPaths();
+                recentPaths.setId(getId(listId));
+                recentPaths.setPath(path);
+                session.persist(recentPaths);
+            }
         });
     }
 
-    public static Integer getId(List<Integer> listId){
+    public static Integer getId(List<RecentPaths> listId){
         int i;
         for (i = 0; i < Integer.MAX_VALUE; i++) {
-            if (!listId.contains(i)) {
-                break;
+            try {
+                if (listId.get(i).getId() == i) {
+                    i++;
+                    break;
+                }
+            } catch (IndexOutOfBoundsException e){
+                return i;
             }
         }
         return i;

@@ -13,18 +13,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add changing storage">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/RecentPathsDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/RecentPaths.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/HibernateUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/RecentPathsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/RecentPathsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/RecentPaths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/RecentPaths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/Settings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,6 +115,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.app.cherry.entity" />
       <recent name="com.app.cherry" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -308,15 +305,11 @@
       <workItem from="1723406252983" duration="32437000" />
       <workItem from="1723636585761" duration="10836000" />
       <workItem from="1723682292814" duration="4689000" />
-      <workItem from="1723752374252" duration="8256000" />
-    </task>
-    <task id="LOCAL-00007" summary="add divider listener">
-      <option name="closed" value="true" />
-      <created>1703114686631</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1703114686631</updated>
+      <workItem from="1723752374252" duration="13421000" />
+      <workItem from="1723805182860" duration="2359000" />
+      <workItem from="1723807555414" duration="6801000" />
+      <workItem from="1723817272981" duration="2807000" />
+      <workItem from="1723913850774" duration="3534000" />
     </task>
     <task id="LOCAL-00008" summary="add selected items on mouse enter">
       <option name="closed" value="true" />
@@ -702,7 +695,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723650797431</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="add changing storage">
+      <option name="closed" value="true" />
+      <created>1723798545553</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1723798545554</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
