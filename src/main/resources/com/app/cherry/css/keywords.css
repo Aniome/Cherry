@@ -1,3 +1,4 @@
+/*  Selected text */
 .styled-text-area .selection {
     -fx-fill: #404859;
 }
@@ -17,6 +18,7 @@
     -fx-background-color: #1e1e1e;
 }
 
+/* On select row*/
 .paragraph-box:has-caret {
     -fx-background-color: #2c313c;
 }
@@ -25,6 +27,11 @@
     -fx-font-size: 22;
 }
 
+.styled-text-area .caret {
+    -fx-stroke: #528bff;
+}
+
+/* Inside line number*/
 .lineno {
     -fx-background-color: transparent;
     -fx-font-style: normal;

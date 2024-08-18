@@ -1,4 +1,4 @@
-package com.app.cherry.controls;
+package com.app.cherry.controls.codearea;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 public class MarkdownArea {
     private static final String LINK_PATTERN = "\\b(" + "https://\\S+" + ")\\b";
-    private static final String WORDS_PATTERN = "\\w+";
+    private static final String WORDS_PATTERN = ".*";
 
     private static final Pattern PATTERN = Pattern.compile(
             "(?<LINK>" + LINK_PATTERN + ")"
@@ -63,12 +63,12 @@ public class MarkdownArea {
         // auto-indent: insert previous line's indents on enter
         final Pattern whiteSpace = Pattern.compile( "^\\s+" );
 
-        codeArea.addEventHandler( KeyEvent.KEY_PRESSED, KE -> {
+        codeArea.addEventHandler(KeyEvent.KEY_PRESSED, KE -> {
             if ( KE.getCode() == KeyCode.ENTER ) {
                 int caretPosition = codeArea.getCaretPosition();
                 int currentParagraph = codeArea.getCurrentParagraph();
                 Matcher m0 = whiteSpace.matcher(codeArea.getParagraph(currentParagraph - 1).getSegments().getFirst());
-                if ( m0.find() )
+                if (m0.find())
                     Platform.runLater( () -> codeArea.insertText( caretPosition, m0.group() ) );
             }
         });
@@ -103,7 +103,7 @@ public class MarkdownArea {
             String styleClass =
                     matcher.group("WORDS") != null ? "word-code" :
                         matcher.group("LINK") != null ? "link" :
-                            null; /* never happens */ assert styleClass != null;
+                                        null; /* never happens */ assert styleClass != null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
@@ -134,7 +134,8 @@ public class MarkdownArea {
                         index++;
                     } else {
                         int currentParagraph = area.getCurrentParagraph();
-                        String text = area.getText(currentParagraph, 0, currentParagraph, area.getParagraphLength(currentParagraph));
+                        String text = area.getText(currentParagraph, 0,
+                                currentParagraph, area.getParagraphLength(currentParagraph));
                         int startPos = area.getAbsolutePosition(currentParagraph, 0);
                         area.setStyleSpans(startPos, computeStyles.apply(text));
                     }

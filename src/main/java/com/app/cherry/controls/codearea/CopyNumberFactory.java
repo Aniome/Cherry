@@ -1,4 +1,4 @@
-package com.app.cherry.controls;
+package com.app.cherry.controls.codearea;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;

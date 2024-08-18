@@ -22,6 +22,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.kordamp.ikonli.javafx.FontIcon;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -109,9 +111,9 @@ public class MainController{
     private EmptyExpandedTreeItem creatingTreeItem(String str){
         if (str.contains(".md")) {
             str = str.replace(".md", "");
-            return new EmptyExpandedTreeItem(str, true);
+            return new EmptyExpandedTreeItem(str, true, "mdal-insert_drive_file");
         } else {
-            return new EmptyExpandedTreeItem(str, false);
+            return new EmptyExpandedTreeItem(str, false, "mdal-folder");
         }
     }
 
@@ -207,7 +209,7 @@ public class MainController{
         if (Folder == null) {
             return;
         }
-        EmptyExpandedTreeItem folder = new EmptyExpandedTreeItem(Folder.getName(), false);
+        EmptyExpandedTreeItem folder = new EmptyExpandedTreeItem(Folder.getName(), false, "mdal-folder");
         treeItem.getChildren().add(folder);
         sortTreeView();
     }
@@ -250,12 +252,13 @@ public class MainController{
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
             //check tree contains file
             TreeItem<String> containedItem = null;
-            EmptyExpandedTreeItem addedItem;
             for (TreeItem<String> i: rootList){
                 if (path[0].equals(i.getValue()))
                     containedItem = i;
             }
             //if tree contains file
+            EmptyExpandedTreeItem addedItem;
+            //added path in root tree
             if (containedItem != null){
                 TreeItem<String> treeItem = containedItem;
                 boolean isContained = false;
