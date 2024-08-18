@@ -7,7 +7,7 @@ import com.app.cherry.util.Alerts;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-public class CreateContextMenu {
+public class ApplicationContextMenu {
 
     public static ContextMenu folderContextMenu;
     public static ContextMenu noteContextMenu;
@@ -31,7 +31,6 @@ public class CreateContextMenu {
         noteContextMenu = new ContextMenu(getRenameMenuItem(renameStage, mainController),
                 getFavoriteMenuItem(treeView), getDeleteMenuItem(treeView, tabPane));
     }
-
 
     private static MenuItem getRenameMenuItem(Stage renameStage, MainController mainController) {
         MenuItem renameMenuItem = new MenuItem("Переименовать");

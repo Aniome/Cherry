@@ -1,9 +1,7 @@
-package com.app.cherry.controls;
+package com.app.cherry.controls.TreeViewItems;
 
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
-import javafx.scene.input.KeyCode;
 
 public class EditableTreeCell extends TreeCell<String> {
     @Override
@@ -24,5 +22,4 @@ public class EditableTreeCell extends TreeCell<String> {
         super.commitEdit(newValue);
         setContentDisplay(ContentDisplay.TEXT_ONLY);
     }
-
 }

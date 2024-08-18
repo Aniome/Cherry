@@ -1,13 +1,13 @@
 package com.app.cherry.controllers;
 
-import com.app.cherry.controls.CreateContextMenu;
+import com.app.cherry.controls.ApplicationContextMenu;
 import com.app.cherry.controls.TabManager;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.FileService;
 import com.app.cherry.RunApplication;
-import com.app.cherry.controls.EmptyExpandedTreeItem;
-import com.app.cherry.controls.TreeCellFactory;
+import com.app.cherry.controls.TreeViewItems.EmptyExpandedTreeItem;
+import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -72,12 +72,11 @@ public class MainController{
         treeView.setShowRoot(false);
         loadFilesInTreeview();
         sortTreeView();
-        CreateContextMenu.createContextMenu(treeView, this, renameStage, tabPane);
+        ApplicationContextMenu.createContextMenu(treeView, this, renameStage, tabPane);
 
-        treeCellFactory = new TreeCellFactory(treeView, this);
+        TreeCellFactory.build(treeView, this);
 
         configureToggleButtons();
-        //createScalable();
     }
 
     public void afterShowing(){
@@ -114,20 +113,6 @@ public class MainController{
         } else {
             return new EmptyExpandedTreeItem(str, false);
         }
-    }
-
-    private void createScalable(){
-        ObservableList<Node> children = gridPane.getChildren();
-        gridPane.heightProperty().addListener((observableValue, number, t1) -> {
-            double newHeight = (t1.doubleValue() / 10) * 8;
-            for (Node button: children)
-                ((ToggleButton)button).setPrefHeight(newHeight);
-        });
-        gridPane.widthProperty().addListener((observableValue, number, t1) -> {
-            double newWidth = (t1.doubleValue() / 10) * 2;
-            for (Node button: children)
-                ((ToggleButton)button).setPrefWidth(newWidth);
-        });
     }
 
     public void openModalWindow(){

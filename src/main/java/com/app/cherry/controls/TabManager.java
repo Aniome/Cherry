@@ -7,6 +7,8 @@ import javafx.scene.text.Font;
 import org.jetbrains.annotations.NotNull;
 
 public class TabManager {
+    private String oldTextFieldValue;
+
     public static void selectTab(Tab tab, TabPane tabPane){
         int count = tabPane.getTabs().size() - 1;
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
@@ -30,7 +32,6 @@ public class TabManager {
         TabManager.selectTab(tab, tabPane);
     }
 
-    private String oldTextFieldValue;
     //Creates a form and fills it with content
     @NotNull
     public BorderPane createTab(Tab tab){

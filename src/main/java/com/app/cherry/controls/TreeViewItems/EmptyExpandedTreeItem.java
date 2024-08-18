@@ -1,4 +1,4 @@
-package com.app.cherry.controls;
+package com.app.cherry.controls.TreeViewItems;
 
 import javafx.scene.control.TreeItem;
 

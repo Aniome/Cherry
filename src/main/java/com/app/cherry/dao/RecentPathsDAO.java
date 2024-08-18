@@ -16,35 +16,36 @@ public class RecentPathsDAO {
 
     public static void addPath(String path){
         HibernateUtil.sessionFactory.inTransaction(session -> {
-            List<RecentPaths> listId = session.createQuery("from RecentPaths", RecentPaths.class).getResultList();
-            boolean notContains = false;
-            for (RecentPaths p: listId){
-                if (!p.getPath().equals(path)){
-                    notContains = true;
-                    break;
-                }
-            }
-            if (notContains || listId.isEmpty()){
+            List<RecentPaths> pathsList = session.createQuery("from RecentPaths", RecentPaths.class).getResultList();
+            if (checkContainsPaths(pathsList, path) == -1 || pathsList.isEmpty()){
                 RecentPaths recentPaths = new RecentPaths();
-                recentPaths.setId(getId(listId));
+                List<Integer> listId = pathsList.stream().map(RecentPaths::getId).toList();
+                int id = HibernateUtil.getId(listId);
+                recentPaths.setId(id);
                 recentPaths.setPath(path);
                 session.persist(recentPaths);
             }
         });
     }
 
-    public static Integer getId(List<RecentPaths> listId){
-        int i;
-        for (i = 0; i < Integer.MAX_VALUE; i++) {
-            try {
-                if (listId.get(i).getId() == i) {
-                    i++;
-                    break;
-                }
-            } catch (IndexOutOfBoundsException e){
-                return i;
+    public static void removePath(String path){
+        HibernateUtil.sessionFactory.inTransaction(session -> {
+            List<RecentPaths> pathsList = session.createQuery("from RecentPaths", RecentPaths.class).getResultList();
+            int index = checkContainsPaths(pathsList, path);
+            if (index != -1){
+                session.remove(pathsList.get(index));
+            }
+        });
+    }
+
+    private static int checkContainsPaths(List<RecentPaths> listId, String path){
+        int index = -1;
+        for (int i = 0; i < listId.size(); i++){
+            if (listId.get(i).getPath().equals(path)){
+                index = i;
+                break;
             }
         }
-        return i;
+        return index;
     }
 }

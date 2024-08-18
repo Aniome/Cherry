@@ -3,10 +3,8 @@ package com.app.cherry;
 import atlantafx.base.theme.Dracula;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
-import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.dao.SettingsDAO;
-import com.app.cherry.entity.RecentPaths;
 import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -73,7 +71,6 @@ public class RunApplication extends Application {
                 SettingsDAO.setIsMaximized(isMaximized);
                 SettingsDAO.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
                 SettingsDAO.setPath(FolderPath.toString());
-
 
                 HibernateUtil.tearDown();
             });

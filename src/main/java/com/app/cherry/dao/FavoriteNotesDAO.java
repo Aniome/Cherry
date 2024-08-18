@@ -16,7 +16,9 @@ public class FavoriteNotesDAO {
                 return;
             }
             FavoriteNotes favoriteNotes = new FavoriteNotes();
-            favoriteNotes.setId(findId());
+            List<Integer> listId = favoriteNotesList.stream().map(FavoriteNotes::getId).toList();
+            int id = HibernateUtil.getId(listId);
+            favoriteNotes.setId(id);
             favoriteNotes.setPathNote(pathNote);
             session.persist(favoriteNotes);
         });
@@ -29,20 +31,6 @@ public class FavoriteNotesDAO {
             }
         }
         return false;
-    }
-
-    private static Integer findId(){
-        Session session = HibernateUtil.sessionFactory.openSession();
-        FavoriteNotes favoriteNotes;
-        int i;
-        for (i = 0; i < Integer.MAX_VALUE; i++) {
-            favoriteNotes = session.get(FavoriteNotes.class, i);
-            if (favoriteNotes == null){
-                break;
-            }
-        }
-        session.close();
-        return i;
     }
 
     public static List<FavoriteNotes> getFavoriteNotes(){

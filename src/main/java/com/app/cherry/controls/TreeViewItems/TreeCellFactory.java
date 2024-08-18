@@ -1,25 +1,18 @@
-package com.app.cherry.controls;
+package com.app.cherry.controls.TreeViewItems;
 
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.controls.ApplicationContextMenu;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import java.util.Optional;
 
 public class TreeCellFactory {
-    private final DataFormat JAVA_FORMAT = DataFormat.PLAIN_TEXT;
-    TreeView<String> treeView;
-    TreeItem<String> draggedItem;
-    MainController mainController;
-    TreeItem<String> parent;
+    private static final DataFormat JAVA_FORMAT = DataFormat.PLAIN_TEXT;
+    static TreeItem<String> draggedItem;
+    static TreeItem<String> parent;
 
-    public TreeCellFactory(TreeView<String> treeView, MainController mainController) {
-        this.treeView = treeView;
-        this.mainController = mainController;
-        init();
-    }
-
-    private void init(){
+    public static void build(TreeView<String> treeView, MainController mainController){
         treeView.setCellFactory(tree -> {
             TreeCell<String> treeCell = new EditableTreeCell();
 
@@ -27,7 +20,7 @@ public class TreeCellFactory {
                 TreeItem<String> treeItem = treeCell.getTreeItem();
                 if (treeItem == null)
                     return;
-                if (contextMenuIsShowing())
+                if (contextMenuIsShowing(treeView))
                     return;
                 if (!mouseEvent.isDragDetect())
                     return;
@@ -35,7 +28,7 @@ public class TreeCellFactory {
                 treeView.getSelectionModel().select(treeItem);
             });
             treeCell.setOnMouseExited(mouseEvent -> {
-                if (contextMenuIsShowing())
+                if (contextMenuIsShowing(treeView))
                     return;
                 treeView.setContextMenu(null);
                 treeView.getSelectionModel().clearSelection();
@@ -50,16 +43,16 @@ public class TreeCellFactory {
                 }
                 if (mouseButton.equals(MouseButton.SECONDARY)){
                     if (selectedItem.isLeaf()){
-                        treeView.setContextMenu(CreateContextMenu.noteContextMenu);
+                        treeView.setContextMenu(ApplicationContextMenu.noteContextMenu);
                     } else {
-                        treeView.setContextMenu(CreateContextMenu.folderContextMenu);
+                        treeView.setContextMenu(ApplicationContextMenu.folderContextMenu);
                     }
                 }
             });
             treeCell.setOnDragDetected((MouseEvent event) -> dragDetected(event, treeCell));
             treeCell.setOnDragOver((DragEvent event) -> dragOver(event, treeCell));
             treeCell.setOnDragDropped((DragEvent event) -> dragDrop(event, treeCell));
-            treeCell.setOnDragDone((DragEvent event) -> clearDropLocation());
+            treeCell.setOnDragDone((DragEvent event) -> clearDropLocation(treeView));
             treeCell.setOnDragEntered(dragEvent -> {
                 TreeItem<String> treeItem = treeCell.getTreeItem();
                 if (treeItem == null || draggedItem == treeItem){
@@ -119,12 +112,12 @@ public class TreeCellFactory {
         });
     }
 
-    private boolean contextMenuIsShowing(){
+    private static boolean contextMenuIsShowing(TreeView<String> treeView){
         ContextMenu contMenu = treeView.getContextMenu();
         return contMenu != null && contMenu.isShowing();
     }
 
-    private void dragDetected(MouseEvent event, TreeCell<String> treeCell) {
+    private static void dragDetected(MouseEvent event, TreeCell<String> treeCell) {
         draggedItem = treeCell.getTreeItem();
         if (draggedItem == null)
             return;
@@ -136,7 +129,7 @@ public class TreeCellFactory {
         event.consume();
     }
 
-    private void dragOver(DragEvent event, TreeCell<String> treeCell) {
+    private static void dragOver(DragEvent event, TreeCell<String> treeCell) {
         if (!event.getDragboard().hasContent(JAVA_FORMAT))
             return;
         TreeItem<String> thisItem = treeCell.getTreeItem();
@@ -146,7 +139,7 @@ public class TreeCellFactory {
         event.acceptTransferModes(TransferMode.MOVE);
     }
 
-    private void dragDrop(DragEvent event, TreeCell<String> treeCell) {
+    private static void dragDrop(DragEvent event, TreeCell<String> treeCell) {
         Dragboard db = event.getDragboard();
         if (!db.hasContent(JAVA_FORMAT))
             return;
@@ -166,7 +159,7 @@ public class TreeCellFactory {
         event.consume();
     }
 
-    private void clearDropLocation() {
+    private static void clearDropLocation(TreeView<String> treeView) {
         MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
         selectionModel.clearSelection();

@@ -1,14 +1,13 @@
 package com.app.cherry.controllers;
 
+import atlantafx.base.theme.Styles;
+import com.app.cherry.controls.ListViewItem;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.RunApplication;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
@@ -138,13 +137,15 @@ public class InitController {
         ShowMainStage();
     }
 
-    private void ShowMainStage(){
+    public void ShowMainStage(){
         InitialStage.close();
         RunApplication.showMainWindow();
     }
 
     public void loadPaths(){
         List<String> listRecentPaths = RecentPathsDAO.getPaths();
+        listView.setCellFactory(lvItem -> new ListViewItem(listView, this));
+        Styles.toggleStyleClass(listView, Styles.BORDERED);
         listView.getItems().addAll(listRecentPaths);
     }
 }

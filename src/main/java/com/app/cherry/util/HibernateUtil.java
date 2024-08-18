@@ -5,6 +5,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import java.io.File;
+import java.util.List;
 
 public class HibernateUtil {
     public static SessionFactory sessionFactory;
@@ -33,6 +34,20 @@ public class HibernateUtil {
         if (sessionFactory != null) {
             sessionFactory.close();
         }
+    }
+
+    public static Integer getId(List<Integer> listId){
+        int i;
+        for (i = 0; i < Integer.MAX_VALUE; i++) {
+            try {
+                if (!listId.contains(i)) {
+                    break;
+                }
+            } catch (IndexOutOfBoundsException e){
+                return --i;
+            }
+        }
+        return i;
     }
 
 	/*
