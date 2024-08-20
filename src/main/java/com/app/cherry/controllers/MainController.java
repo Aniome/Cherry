@@ -22,7 +22,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,8 +39,6 @@ public class MainController{
     @FXML
     public SplitPane splitPane;
     @FXML
-    private GridPane gridPane;
-    @FXML
     ToggleButton filesManagerButton;
     @FXML
     ToggleButton searchButton;
@@ -55,10 +52,11 @@ public class MainController{
     Stage mainStage;
     Stage renameStage;
     public static String newFileName;
-    TreeCellFactory treeCellFactory;
     boolean favoriteSelected = false;
     boolean filesManagerSelected = true;
     TreeItem<String> filesManagerRoot;
+    final String fileIconName = "mdal-insert_drive_file";
+    final String folderIconName = "mdal-folder_open";
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -111,9 +109,9 @@ public class MainController{
     private EmptyExpandedTreeItem creatingTreeItem(String str){
         if (str.contains(".md")) {
             str = str.replace(".md", "");
-            return new EmptyExpandedTreeItem(str, true, "mdal-insert_drive_file");
+            return new EmptyExpandedTreeItem(str, true, fileIconName);
         } else {
-            return new EmptyExpandedTreeItem(str, false, "mdal-folder");
+            return new EmptyExpandedTreeItem(str, false, folderIconName);
         }
     }
 
@@ -209,7 +207,7 @@ public class MainController{
         if (Folder == null) {
             return;
         }
-        EmptyExpandedTreeItem folder = new EmptyExpandedTreeItem(Folder.getName(), false, "mdal-folder");
+        EmptyExpandedTreeItem folder = new EmptyExpandedTreeItem(Folder.getName(), false, folderIconName);
         treeItem.getChildren().add(folder);
         sortTreeView();
     }

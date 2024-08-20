@@ -12,18 +12,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add work with db">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="up">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Cherry_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Cherry_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/CopyNumberFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/CopyNumberFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/EmptyExpandedTreeItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/EmptyExpandedTreeItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/CopyNumberFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/CopyNumberFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Databases.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/keywords.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/keywords.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,6 +83,7 @@
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Maven.Cherry [clean,javafx:run].executor&quot;: &quot;Run&quot;,
     &quot;Maven.Cherry [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [io.github.fvarrui:javapackager:1.7.6:package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.Cherry [jar:jar].executor&quot;: &quot;Run&quot;,
     &quot;Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:sign-verify].executor&quot;: &quot;Run&quot;,
     &quot;Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:test-jar].executor&quot;: &quot;Run&quot;,
@@ -104,7 +103,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15136719&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.26728112&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -139,7 +138,7 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="com.app.cherry.RunApplication" />
+      <option name="MAIN_CLASS_NAME" value="com.app.cherry.Launcher" />
       <module name="Cherry" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -175,6 +174,10 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Maven.Cherry [jar:jar]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Maven.Cherry [jar:jar]" />
@@ -315,14 +318,18 @@
       <workItem from="1723817272981" duration="2807000" />
       <workItem from="1723913850774" duration="33581000" />
       <workItem from="1724012286173" duration="4058000" />
-    </task>
-    <task id="LOCAL-00010" summary="add edit cell">
-      <option name="closed" value="true" />
-      <created>1703385842253</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1703385842253</updated>
+      <workItem from="1724016389749" duration="1338000" />
+      <workItem from="1724017751720" duration="186000" />
+      <workItem from="1724027152542" duration="213000" />
+      <workItem from="1724075078908" duration="2818000" />
+      <workItem from="1724085110297" duration="2335000" />
+      <workItem from="1724101750845" duration="1560000" />
+      <workItem from="1724105102402" duration="792000" />
+      <workItem from="1724124489165" duration="511000" />
+      <workItem from="1724125014499" duration="2153000" />
+      <workItem from="1724158855278" duration="523000" />
+      <workItem from="1724162532840" duration="4478000" />
+      <workItem from="1724172122195" duration="4674000" />
     </task>
     <task id="LOCAL-00011" summary="add rename">
       <option name="closed" value="true" />
@@ -708,7 +715,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723974301078</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="add some visual updated">
+      <option name="closed" value="true" />
+      <created>1724016877808</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1724016877808</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -727,7 +742,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="recursion deleting folder and files" />
     <MESSAGE value="fix some bugs" />
     <MESSAGE value="fix deleting" />
     <MESSAGE value="creating another context menu for folder and note" />
@@ -752,7 +766,8 @@
     <MESSAGE value="add changing storage" />
     <MESSAGE value="fixing loading in listview" />
     <MESSAGE value="add work with db" />
-    <option name="LAST_COMMIT_MESSAGE" value="add work with db" />
+    <MESSAGE value="add some visual updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="add some visual updated" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

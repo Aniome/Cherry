@@ -78,6 +78,7 @@ public class MarkdownArea {
 
     private static @NotNull IntFunction<Node> createGraphicFactory(IntFunction<Node> numberFactory, CodeArea codeArea) {
         CopyNumberFactory copyNumberFactory = new CopyNumberFactory();
+        copyNumberFactory.setCodeArea(codeArea);
         return line -> {
             HBox hbox = new HBox(numberFactory.apply(line), copyNumberFactory.apply(line));
             hbox.setSpacing(1);
@@ -124,7 +125,7 @@ public class MarkdownArea {
 
         @Override
         public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
-            if ( lm.getAddedSize() > 0 ){
+            if (lm.getAddedSize() > 0){
                 Platform.runLater( () -> {
                     int paragraphSize = area.getParagraphs().size();
                     if (index < paragraphSize) {
