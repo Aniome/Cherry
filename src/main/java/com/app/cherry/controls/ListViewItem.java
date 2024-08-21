@@ -5,6 +5,8 @@ import atlantafx.base.theme.Styles;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.dao.RecentPathsDAO;
+import com.app.cherry.util.Alerts;
+import com.app.cherry.util.FileService;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -21,8 +23,13 @@ public class ListViewItem extends ListCell<String> {
         titleLabel = new Label();
         titleLabel.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getClickCount() >= 2){
-                RunApplication.FolderPath = Paths.get(titleLabel.getText());
-                initController.ShowMainStage();
+                String path = titleLabel.getText();
+                if (FileService.checkExists(path)){
+                    RunApplication.FolderPath = Paths.get(path);
+                    initController.ShowMainStage();
+                } else {
+                    Alerts.CreateAndShowWarning("Папка не найдена");
+                }
             }
         });
 

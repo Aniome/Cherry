@@ -5,6 +5,7 @@ import com.app.cherry.controls.ListViewItem;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.RunApplication;
+import com.app.cherry.util.FileService;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -144,6 +145,15 @@ public class InitController {
 
     public void loadPaths(){
         List<String> listRecentPaths = RecentPathsDAO.getPaths();
+        Iterator<String> iterator = listRecentPaths.iterator();
+        while (iterator.hasNext()){
+            String path = iterator.next();
+            boolean isExist = FileService.checkExists(path);
+            if (!isExist){
+                RecentPathsDAO.removePath(path);
+                iterator.remove();
+            }
+        }
         listView.setCellFactory(lvItem -> new ListViewItem(listView, this));
         Styles.toggleStyleClass(listView, Styles.BORDERED);
         listView.getItems().addAll(listRecentPaths);

@@ -99,6 +99,10 @@ public class FileService {
         return file;
     }
 
+    public static boolean checkExists(String path) {
+        return new File(path).exists();
+    }
+
     public static boolean renameFile(String NewName, String OldName, String path){
         File oldFile = new File(path + "/" + OldName + ".md");
         File newFile = new File(path + "/" + NewName + ".md");
