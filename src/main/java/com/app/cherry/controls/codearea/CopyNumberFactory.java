@@ -39,7 +39,6 @@ public class CopyNumberFactory implements IntFunction<Node> {
         pasteButton.setOnMouseClicked(mouseEvent -> {
             Clipboard clipboard = Clipboard.getSystemClipboard();
             String pasteText = clipboard.getString();
-            Paragraph<Collection<String>, String, Collection<String>> paragraph = codeArea.getParagraph(lineNumber);
             codeArea.insertText(lineNumber, 0, pasteText);
         });
 

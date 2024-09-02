@@ -15,7 +15,9 @@ import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 
 public class RunApplication extends Application {
@@ -28,10 +30,13 @@ public class RunApplication extends Application {
     private static Stage mainStage;
     private static Double height;
     private static Double width;
+    public static ResourceBundle resourceBundle;
 
     @Override
     public void start(Stage stage) {
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+
+        resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
 
         HibernateUtil.setUp();
         FolderPath = SettingsDAO.getPath();
@@ -50,7 +55,7 @@ public class RunApplication extends Application {
 
     public static void showMainWindow() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"), resourceBundle);
             Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
             scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/keywords.css")).toExternalForm());
             MainController mainController = fxmlLoader.getController();

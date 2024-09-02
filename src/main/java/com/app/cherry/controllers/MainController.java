@@ -139,7 +139,9 @@ public class MainController{
             renameStage = stage;
             RenameViewController renameViewController = fxmlLoader.getController();
             renameViewController.init(stage);
-            RunApplication.prepareStage(renameHeight, renameWidth, scene, "Переименование элемента", stage);
+            //Переименование элемента
+            String renameWindowTitle = RunApplication.resourceBundle.getString("RenameWindowTitle");
+            RunApplication.prepareStage(renameHeight, renameWidth, scene, renameWindowTitle, stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
