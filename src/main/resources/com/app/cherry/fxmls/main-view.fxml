@@ -45,7 +45,7 @@
                 </Button>
                 <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <tooltip>
-                        <Tooltip text="Настройки" />
+                        <Tooltip text="%ToolTipSettings" />
                     </tooltip>
                <graphic>
                   <FontIcon iconLiteral="mdmz-settings" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
@@ -53,7 +53,7 @@
                 </Button>
                 <Button mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <tooltip>
-                        <Tooltip text="Справка" />
+                        <Tooltip text="%ToolTipHelp" />
                     </tooltip>
                <graphic>
                   <FontIcon iconLiteral="mdoal-help" scaleX="1.25" scaleY="1.25" />
@@ -76,7 +76,7 @@
                     </padding>
                     <Button mnemonicParsing="false" onMouseClicked="#createNote" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                         <tooltip>
-                            <Tooltip text="Новая заметка" />
+                            <Tooltip text="%ToolTipNewNote" />
                         </tooltip>
                   <graphic>
                      <FontIcon iconLiteral="mdmz-note_add" scaleX="1.25" scaleY="1.25" />
@@ -84,7 +84,7 @@
                     </Button>
                     <Button mnemonicParsing="false" onMouseClicked="#createFolderInTree" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                         <tooltip>
-                            <Tooltip text="Новая папка" />
+                            <Tooltip text="%ToolTipNewFolder" />
                         </tooltip>
                   <graphic>
                      <FontIcon iconLiteral="mdal-create_new_folder" scaleX="1.25" scaleY="1.25" />
@@ -127,7 +127,7 @@
                      <FontIcon iconLiteral="mdal-folder" scaleX="1.25" scaleY="1.25" />
                  </graphic>
                  <tooltip>
-                     <Tooltip text="Файловый менеджер" />
+                     <Tooltip text="%ToolTipFileManager" />
                  </tooltip>
               </ToggleButton>
               <ToggleButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch" toggleGroup="$maingroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -135,7 +135,7 @@
                      <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
                  </graphic>
                  <tooltip>
-                     <Tooltip text="Файловый менеджер" />
+                     <Tooltip text="%ToolTipSearch" />
                  </tooltip>
               </ToggleButton>
               <ToggleButton fx:id="favoriteNotesButton" mnemonicParsing="false" onAction="#showFavorites" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -143,17 +143,17 @@
                      <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
                  </graphic>
                  <tooltip>
-                     <Tooltip text="Избранное" />
+                     <Tooltip text="%ToolTipFavorites" />
                  </tooltip>
               </ToggleButton>
           </GridPane>
       </top>
     </BorderPane>
     <TabPane fx:id="tabPane" minWidth="150.0" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS">
-        <Tab closable="false" text="Новая вкладка">
+        <Tab closable="false" text="%EmptyTab">
             <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #282a36;">
                 <center>
-                    <Label text="Ни один файл не открыт" BorderPane.alignment="CENTER">
+                    <Label text="%EmptyPage" BorderPane.alignment="CENTER">
                         <font>
                             <Font size="29.0" />
                         </font>

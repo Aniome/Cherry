@@ -12,13 +12,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add paste button">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add some localization">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/CopyNumberFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/CopyNumberFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +103,7 @@
     "project.structure.proportion": "0.15136719",
     "project.structure.side.proportion": "0.26728112",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
+    "settings.editor.selected.configurable": "File.Encoding",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -344,15 +344,9 @@
       <workItem from="1724342850844" duration="5000" />
       <workItem from="1725203130727" duration="4466000" />
       <workItem from="1725283893484" duration="374000" />
-      <workItem from="1725290600797" duration="4430000" />
-    </task>
-    <task id="LOCAL-00014" summary="add create folder and fix bags">
-      <option name="closed" value="true" />
-      <created>1711638233693</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1711638233693</updated>
+      <workItem from="1725290600797" duration="4477000" />
+      <workItem from="1725380947250" duration="11000" />
+      <workItem from="1725727274551" duration="3386000" />
     </task>
     <task id="LOCAL-00015" summary="some fixes">
       <option name="closed" value="true" />
@@ -738,7 +732,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725207545431</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="add first localization">
+      <option name="closed" value="true" />
+      <created>1725295409967</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1725295409967</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -757,8 +759,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="refactoring MainController" />
-    <MESSAGE value="added creation of notes and folders via the context menu" />
     <MESSAGE value="added changes for favorite menu" />
     <MESSAGE value="added work db" />
     <MESSAGE value="load data in db and refactoring" />
@@ -782,7 +782,9 @@
     <MESSAGE value="add copy button" />
     <MESSAGE value="add checking paths in listview" />
     <MESSAGE value="add paste button" />
-    <option name="LAST_COMMIT_MESSAGE" value="add paste button" />
+    <MESSAGE value="add first localization" />
+    <MESSAGE value="add some localization" />
+    <option name="LAST_COMMIT_MESSAGE" value="add some localization" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
