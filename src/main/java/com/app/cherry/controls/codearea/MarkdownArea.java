@@ -1,14 +1,21 @@
 package com.app.cherry.controls.codearea;
 
+import com.app.cherry.RunApplication;
+import com.app.cherry.controllers.InitController;
+import com.app.cherry.controllers.WebViewController;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.GenericStyledArea;
@@ -20,6 +27,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.reactfx.collection.ListModification;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Consumer;
@@ -53,7 +61,19 @@ public class MarkdownArea {
             String clickedText = paragraph.getText();
 
             if (styleSpan.getStyle().contains("link")) {
-                System.out.println(clickedText);
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/web-view.fxml"));
+                    double InitialWidth = 200, InitialHeight = 200;
+                    Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
+                    Stage InitialStage = new Stage();
+                    RunApplication.setIcon(InitialStage);
+                    WebViewController initController = fxmlLoader.getController();
+                    initController.init();
+                    RunApplication.prepareStage(InitialHeight, InitialWidth, secondScene,"", InitialStage);
+
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         });
 
@@ -69,7 +89,7 @@ public class MarkdownArea {
                 int currentParagraph = codeArea.getCurrentParagraph();
                 Matcher m0 = whiteSpace.matcher(codeArea.getParagraph(currentParagraph - 1).getSegments().getFirst());
                 if (m0.find())
-                    Platform.runLater( () -> codeArea.insertText( caretPosition, m0.group() ) );
+                    Platform.runLater( () -> codeArea.insertText(caretPosition, m0.group()) );
             }
         });
 

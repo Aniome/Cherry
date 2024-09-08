@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<SplitPane fx:id="splitPane" dividerPositions="0.13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="640.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
+<SplitPane fx:id="splitPane" dividerPositions="0.13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="640.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
     <BorderPane fx:id="borderPane" style="-fx-border-color: #685ab3;" SplitPane.resizableWithParent="false">
         <bottom>
             <GridPane minWidth="165.0" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
