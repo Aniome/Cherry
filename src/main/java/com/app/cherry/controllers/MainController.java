@@ -9,10 +9,12 @@ import com.app.cherry.RunApplication;
 import com.app.cherry.controls.TreeViewItems.EmptyExpandedTreeItem;
 import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -165,6 +167,18 @@ public class MainController{
                 final String text = FileService.readFile(selectedItem);
                 codeArea.replaceText(0,0, text);
                 codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
+                codeArea.displaceCaret(0);
+                for (Node node : virtualizedScrollPane.lookupAll(".scroll-bar")){
+                    if (node instanceof ScrollBar scrollBar) {
+                        if (scrollBar.getOrientation() == Orientation.VERTICAL){
+                            //scrollBar.setValue(0);
+                            scrollBar.valueProperty().addListener((observableValue, s, t1) -> {
+                                //System.out.println(scrollBar.getValue());
+                                System.out.println(s);
+                            });
+                        }
+                    }
+                }
             }
         }
         borderPane.setStyle("-fx-background-color: #282a36");

@@ -1,7 +1,6 @@
 package com.app.cherry.controls.codearea;
 
 import com.app.cherry.RunApplication;
-import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.WebViewController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -63,14 +61,13 @@ public class MarkdownArea {
             if (styleSpan.getStyle().contains("link")) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/web-view.fxml"));
-                    double InitialWidth = 200, InitialHeight = 200;
-                    Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
-                    Stage InitialStage = new Stage();
-                    RunApplication.setIcon(InitialStage);
-                    WebViewController initController = fxmlLoader.getController();
-                    initController.init();
-                    RunApplication.prepareStage(InitialHeight, InitialWidth, secondScene,"", InitialStage);
-
+                    double webViewWidth = 800, webViewHeight = 600;
+                    Scene secondScene = new Scene(fxmlLoader.load(), webViewWidth, webViewHeight);
+                    Stage webViewStage = new Stage();
+                    RunApplication.setIcon(webViewStage);
+                    WebViewController webViewController = fxmlLoader.getController();
+                    webViewController.init(clickedText);
+                    RunApplication.prepareStage(webViewHeight, webViewWidth, secondScene,"", webViewStage);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
@@ -122,9 +119,9 @@ public class MarkdownArea {
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while(matcher.find()) {
             String styleClass =
-                    matcher.group("WORDS") != null ? "word-code" :
-                        matcher.group("LINK") != null ? "link" :
-                                        null; /* never happens */ assert styleClass != null;
+                    matcher.group("LINK") != null ? "link" :
+                        matcher.group("WORDS") != null ? "word-code" :
+                            null; /* never happens */ assert styleClass != null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();

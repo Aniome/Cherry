@@ -12,13 +12,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add some localization">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/WebViewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/web-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="trying configure scrollbar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/WebViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/WebViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -349,15 +350,11 @@
       <workItem from="1725727274551" duration="3417000" />
       <workItem from="1725740298800" duration="91000" />
       <workItem from="1725809033983" duration="154000" />
-      <workItem from="1725813340290" duration="2488000" />
-    </task>
-    <task id="LOCAL-00016" summary="add load files in tree">
-      <option name="closed" value="true" />
-      <created>1711766821625</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1711766821625</updated>
+      <workItem from="1725813340290" duration="2722000" />
+      <workItem from="1725982054228" duration="410000" />
+      <workItem from="1725992861042" duration="2235000" />
+      <workItem from="1725998789844" duration="305000" />
+      <workItem from="1726068086404" duration="7663000" />
     </task>
     <task id="LOCAL-00017" summary="add save resolution screen">
       <option name="closed" value="true" />
@@ -743,7 +740,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725732313381</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="add web view">
+      <option name="closed" value="true" />
+      <created>1725821786670</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1725821786670</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -762,8 +767,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added changes for favorite menu" />
-    <MESSAGE value="added work db" />
     <MESSAGE value="load data in db and refactoring" />
     <MESSAGE value="add loading in FavoriteNotes in tree" />
     <MESSAGE value="add changing content in tree on buttons" />
@@ -787,7 +790,9 @@
     <MESSAGE value="add paste button" />
     <MESSAGE value="add first localization" />
     <MESSAGE value="add some localization" />
-    <option name="LAST_COMMIT_MESSAGE" value="add some localization" />
+    <MESSAGE value="add web view" />
+    <MESSAGE value="trying configure scrollbar" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying configure scrollbar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
