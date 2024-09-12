@@ -17,9 +17,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<SplitPane fx:id="splitPane" dividerPositions="0.13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="640.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
+<SplitPane fx:id="splitPane" dividerPositions="0.13" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="640.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
     <BorderPane fx:id="borderPane" style="-fx-border-color: #685ab3;" SplitPane.resizableWithParent="false">
         <bottom>
             <GridPane minWidth="165.0" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
@@ -164,5 +165,14 @@
         <Tab closable="false" onSelectionChanged="#addTab" text="+">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
         </Tab>
+      <Tab text="Untitled Tab">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <HTMLEditor fx:id="htmleditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="460.0" prefWidth="972.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
     </TabPane>
 </SplitPane>

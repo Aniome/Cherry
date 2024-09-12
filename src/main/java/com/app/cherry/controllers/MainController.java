@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -48,6 +49,8 @@ public class MainController{
     ToggleButton favoriteNotesButton;
     @FXML
     VBox vbox;
+    @FXML
+    HTMLEditor htmleditor;
 
     final double renameWidth = 600;
     final double renameHeight = 250;
@@ -164,17 +167,23 @@ public class MainController{
                 @SuppressWarnings("unchecked")
                 VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
                 CodeArea codeArea = virtualizedScrollPane.getContent();
+                
                 final String text = FileService.readFile(selectedItem);
-                codeArea.replaceText(0,0, text);
+                htmleditor.setHtmlText(text);
+                codeArea.insertText(0,text);
+                //codeArea.replaceText(0,0, text);
                 codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
-                codeArea.displaceCaret(0);
+                //codeArea.displaceCaret(0);
                 for (Node node : virtualizedScrollPane.lookupAll(".scroll-bar")){
                     if (node instanceof ScrollBar scrollBar) {
                         if (scrollBar.getOrientation() == Orientation.VERTICAL){
-                            //scrollBar.setValue(0);
                             scrollBar.valueProperty().addListener((observableValue, s, t1) -> {
-                                //System.out.println(scrollBar.getValue());
-                                System.out.println(s);
+//                                double delta = t1.doubleValue() * -1;
+//                                codeArea.scrollYBy(delta);
+//                                System.out.println(s + " : " + t1);
+//                                System.out.println(scrollBar.getValue());
+//                                if (scrollBar.getValue() != 0)
+//                                    scrollBar.setValue(0);
                             });
                         }
                     }
@@ -183,6 +192,7 @@ public class MainController{
         }
         borderPane.setStyle("-fx-background-color: #282a36");
         tab.setContent(borderPane);
+        System.out.println("done");
     }
 
     //Creates a tab and gives focus to it
