@@ -169,7 +169,6 @@ public class MainController{
                 CodeArea codeArea = virtualizedScrollPane.getContent();
                 
                 final String text = FileService.readFile(selectedItem);
-                htmleditor.setHtmlText(text);
                 codeArea.insertText(0,text);
                 //codeArea.replaceText(0,0, text);
                 codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
@@ -188,11 +187,17 @@ public class MainController{
                         }
                     }
                 }
+
+
+                htmleditor.setHtmlText(text);
+                Node grid = htmleditor.lookup(".grid");
+                GridPane gridPane = (GridPane) grid;
+                //gridPane.
+                htmleditor.getHtmlText();
             }
         }
         borderPane.setStyle("-fx-background-color: #282a36");
         tab.setContent(borderPane);
-        System.out.println("done");
     }
 
     //Creates a tab and gives focus to it

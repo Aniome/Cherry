@@ -12,10 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="trying configure scrollbar">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="some changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,8 +182,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -359,14 +360,17 @@
       <workItem from="1726153334608" duration="493000" />
       <workItem from="1726153836752" duration="857000" />
       <workItem from="1726154709661" duration="844000" />
-    </task>
-    <task id="LOCAL-00018" summary="add maximized">
-      <option name="closed" value="true" />
-      <created>1713963040579</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1713963040579</updated>
+      <workItem from="1726165283700" duration="56000" />
+      <workItem from="1726187608527" duration="743000" />
+      <workItem from="1726188968279" duration="249000" />
+      <workItem from="1726189223720" duration="436000" />
+      <workItem from="1726189672816" duration="130000" />
+      <workItem from="1726189808252" duration="470000" />
+      <workItem from="1726191844983" duration="1229000" />
+      <workItem from="1726228253444" duration="1924000" />
+      <workItem from="1726243998645" duration="1204000" />
+      <workItem from="1726249136743" duration="404000" />
+      <workItem from="1726249548185" duration="2848000" />
     </task>
     <task id="LOCAL-00019" summary="configure .jar file and fix bugs">
       <option name="closed" value="true" />
@@ -752,7 +756,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726080783727</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="some changes">
+      <option name="closed" value="true" />
+      <created>1726165320479</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1726165320479</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -771,7 +783,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="load data in db and refactoring" />
     <MESSAGE value="add loading in FavoriteNotes in tree" />
     <MESSAGE value="add changing content in tree on buttons" />
     <MESSAGE value="added TabManager" />
@@ -796,7 +807,8 @@
     <MESSAGE value="add some localization" />
     <MESSAGE value="add web view" />
     <MESSAGE value="trying configure scrollbar" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying configure scrollbar" />
+    <MESSAGE value="some changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="some changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

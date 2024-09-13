@@ -110,7 +110,7 @@ public class RunApplication extends Application {
         stage.setMinWidth(width);
         stage.setMinHeight(height);
         stage.show();
-        //ScenicView.show(scene);
+        ScenicView.show(scene);
     }
 
     public static void main(String[] args) {
