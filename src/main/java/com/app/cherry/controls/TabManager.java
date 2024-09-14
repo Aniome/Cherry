@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+import javafx.scene.web.HTMLEditor;
 import org.jetbrains.annotations.NotNull;
 
 public class TabManager {
@@ -56,8 +57,13 @@ public class TabManager {
             }
         });
 
-        MarkdownArea markdownArea = new MarkdownArea();
-        borderPane.setCenter(markdownArea.createMarkdownArea());
+        //MarkdownArea markdownArea = new MarkdownArea();
+        //borderPane.setCenter(markdownArea.createMarkdownArea());
+        HTMLEditor htmlEditor = new HTMLEditor();
+        htmlEditor.onInputMethodTextChangedProperty().addListener((arg0, oldText, newText) -> {
+            System.out.println(newText);
+        });
+        borderPane.setCenter(htmlEditor);
 
         return borderPane;
     }

@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.web.HTMLEditor;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -49,8 +50,6 @@ public class MainController{
     ToggleButton favoriteNotesButton;
     @FXML
     VBox vbox;
-    @FXML
-    HTMLEditor htmleditor;
 
     final double renameWidth = 600;
     final double renameHeight = 250;
@@ -163,37 +162,31 @@ public class MainController{
             if (children instanceof TextField){
                 ((TextField) children).setText(filename);
             }
-            if (children instanceof StackPane stackPane){
-                @SuppressWarnings("unchecked")
-                VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
-                CodeArea codeArea = virtualizedScrollPane.getContent();
-                
+            if (children instanceof HTMLEditor htmlEditor){
                 final String text = FileService.readFile(selectedItem);
-                codeArea.insertText(0,text);
-                //codeArea.replaceText(0,0, text);
-                codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
-                //codeArea.displaceCaret(0);
-                for (Node node : virtualizedScrollPane.lookupAll(".scroll-bar")){
-                    if (node instanceof ScrollBar scrollBar) {
-                        if (scrollBar.getOrientation() == Orientation.VERTICAL){
-                            scrollBar.valueProperty().addListener((observableValue, s, t1) -> {
-//                                double delta = t1.doubleValue() * -1;
-//                                codeArea.scrollYBy(delta);
-//                                System.out.println(s + " : " + t1);
-//                                System.out.println(scrollBar.getValue());
-//                                if (scrollBar.getValue() != 0)
-//                                    scrollBar.setValue(0);
-                            });
-                        }
-                    }
-                }
+                //htmlEditor.setHtmlText(text);
+                Node grid = htmlEditor.lookup(".grid");
+                WebView webView = (WebView) htmlEditor.lookup(".web-view");
+                htmlEditor.onInputMethodTextChangedProperty().addListener((observableValue, eventHandler, t1) -> {
+                    System.out.println("text");
+                });
 
-
-                htmleditor.setHtmlText(text);
-                Node grid = htmleditor.lookup(".grid");
                 GridPane gridPane = (GridPane) grid;
-                //gridPane.
-                htmleditor.getHtmlText();
+                VBox vBox = new VBox();
+                //HBox hBox = new HBox(vBox, webView);
+                //gridPane.addRow(gridPane.getRowCount(), hBox);
+//                htmlEditor.onInputMethodTextChangedProperty().addListener((observable, oldValue, newValue) -> {
+//                    System.out.println("test");
+//                });
+            }
+            if (children instanceof StackPane stackPane){
+//                @SuppressWarnings("unchecked")
+//                VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
+//                CodeArea codeArea = virtualizedScrollPane.getContent();
+
+                final String text = FileService.readFile(selectedItem);
+                //codeArea.insertText(0,text);
+                //codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
             }
         }
         borderPane.setStyle("-fx-background-color: #282a36");
