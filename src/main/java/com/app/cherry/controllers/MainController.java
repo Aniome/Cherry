@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
@@ -167,26 +168,34 @@ public class MainController{
                 //htmlEditor.setHtmlText(text);
                 Node grid = htmlEditor.lookup(".grid");
                 WebView webView = (WebView) htmlEditor.lookup(".web-view");
-                htmlEditor.onInputMethodTextChangedProperty().addListener((observableValue, eventHandler, t1) -> {
-                    System.out.println("text");
+                webView.setOnKeyPressed(keyEvent -> {
+                    System.out.println("Hello");
                 });
-
+                webView.setStyle("-fx-background-color: #282a36");
                 GridPane gridPane = (GridPane) grid;
                 VBox vBox = new VBox();
-                //HBox hBox = new HBox(vBox, webView);
-                //gridPane.addRow(gridPane.getRowCount(), hBox);
-//                htmlEditor.onInputMethodTextChangedProperty().addListener((observable, oldValue, newValue) -> {
-//                    System.out.println("test");
-//                });
+                HBox hBox = new HBox(vBox, webView);
+                gridPane.addRow(gridPane.getRowCount(), hBox);
             }
             if (children instanceof StackPane stackPane){
-//                @SuppressWarnings("unchecked")
-//                VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
-//                CodeArea codeArea = virtualizedScrollPane.getContent();
+                @SuppressWarnings("unchecked")
+                VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
+                CodeArea codeArea = virtualizedScrollPane.getContent();
 
                 final String text = FileService.readFile(selectedItem);
-                //codeArea.insertText(0,text);
+
                 //codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
+
+                for (Node node : virtualizedScrollPane.lookupAll(".scroll-bar")){
+                    if (node instanceof ScrollBar scrollBar) {
+                        if (scrollBar.getOrientation() == Orientation.VERTICAL){
+                            //scrollBar.setValue(0);
+                            scrollBar.setDisable(true);
+                            break;
+                        }
+                    }
+                }
+                codeArea.insertText(0, text);
             }
         }
         borderPane.setStyle("-fx-background-color: #282a36");
@@ -196,7 +205,7 @@ public class MainController{
     //Creates a tab and gives focus to it
     @FXML
     private Tab addTab() {
-        Tab tab = new Tab("Новая вкладка");
+        Tab tab = new Tab(RunApplication.resourceBundle.getString("EmptyTab"));
         tab.setContent(TabManager.createEmptyTab());
         TabManager.selectTab(tab, tabPane);
         return tab;

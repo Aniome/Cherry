@@ -1,6 +1,6 @@
 package com.app.cherry.controls;
 
-import com.app.cherry.controls.codearea.MarkdownArea;
+import com.app.cherry.controls.codearea.MixedArea;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -57,13 +57,10 @@ public class TabManager {
             }
         });
 
-        //MarkdownArea markdownArea = new MarkdownArea();
+        MixedArea mixedArea = new MixedArea();
         //borderPane.setCenter(markdownArea.createMarkdownArea());
-        HTMLEditor htmlEditor = new HTMLEditor();
-        htmlEditor.onInputMethodTextChangedProperty().addListener((arg0, oldText, newText) -> {
-            System.out.println(newText);
-        });
-        borderPane.setCenter(htmlEditor);
+        //HTMLEditor htmlEditor = new HTMLEditor();
+        borderPane.setCenter(mixedArea.createMarkdownArea());
 
         return borderPane;
     }
