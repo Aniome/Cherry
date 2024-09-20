@@ -9,20 +9,15 @@ import com.app.cherry.RunApplication;
 import com.app.cherry.controls.TreeViewItems.EmptyExpandedTreeItem;
 import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.scene.web.HTMLEditor;
-import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -35,8 +30,6 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class MainController{
-    @FXML
-    public BorderPane borderPane;
     @FXML
     private TreeView<String> treeView;
     @FXML
@@ -163,39 +156,28 @@ public class MainController{
             if (children instanceof TextField){
                 ((TextField) children).setText(filename);
             }
-            if (children instanceof HTMLEditor htmlEditor){
-                final String text = FileService.readFile(selectedItem);
-                //htmlEditor.setHtmlText(text);
-                Node grid = htmlEditor.lookup(".grid");
-                WebView webView = (WebView) htmlEditor.lookup(".web-view");
-                webView.setOnKeyPressed(keyEvent -> {
-                    System.out.println("Hello");
-                });
-                webView.setStyle("-fx-background-color: #282a36");
-                GridPane gridPane = (GridPane) grid;
-                VBox vBox = new VBox();
-                HBox hBox = new HBox(vBox, webView);
-                gridPane.addRow(gridPane.getRowCount(), hBox);
-            }
             if (children instanceof StackPane stackPane){
                 @SuppressWarnings("unchecked")
                 VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
                 CodeArea codeArea = virtualizedScrollPane.getContent();
 
-                final String text = FileService.readFile(selectedItem);
-
-                //codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
-
-                for (Node node : virtualizedScrollPane.lookupAll(".scroll-bar")){
-                    if (node instanceof ScrollBar scrollBar) {
-                        if (scrollBar.getOrientation() == Orientation.VERTICAL){
-                            //scrollBar.setValue(0);
-                            scrollBar.setDisable(true);
+                final String text1 = FileService.readFile(selectedItem);
+                int length = text1.length();
+                char lastChar = text1.charAt(length-1);
+                if (lastChar == '\n'){
+                    int i;
+                    for (i = length - 1; i >= 0; i--) {
+                        if (text1.charAt(i) != '\n'){
                             break;
                         }
                     }
+                    codeArea.appendText(text1.substring(0,i));
+                    codeArea.appendText(text1.substring(i,length));
+                    //codeArea.insertText(0, text);
+                } else {
+                    codeArea.replaceText(0,0, text1);
                 }
-                codeArea.insertText(0, text);
+                //codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
             }
         }
         borderPane.setStyle("-fx-background-color: #282a36");

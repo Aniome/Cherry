@@ -43,7 +43,6 @@ public class MixedArea {
     );
 
     public StackPane createMarkdownArea() {
-        MarkdownArea markdownArea = new MarkdownArea("test");
         CodeArea codeArea = new CodeArea();
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);

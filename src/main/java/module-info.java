@@ -14,7 +14,6 @@ module com.app.cherry {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome;
     requires org.scenicview.scenicview;
-    //requires org.scenicview.scenicview;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
-import javafx.scene.web.HTMLEditor;
 import org.jetbrains.annotations.NotNull;
 
 public class TabManager {
@@ -58,8 +57,6 @@ public class TabManager {
         });
 
         MixedArea mixedArea = new MixedArea();
-        //borderPane.setCenter(markdownArea.createMarkdownArea());
-        //HTMLEditor htmlEditor = new HTMLEditor();
         borderPane.setCenter(mixedArea.createMarkdownArea());
 
         return borderPane;
