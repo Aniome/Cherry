@@ -161,21 +161,21 @@ public class MainController{
                 VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
                 CodeArea codeArea = virtualizedScrollPane.getContent();
 
-                final String text1 = FileService.readFile(selectedItem);
-                int length = text1.length();
-                char lastChar = text1.charAt(length-1);
+                final String text = FileService.readFile(selectedItem);
+                int length = text.length();
+                char lastChar = text.charAt(length-1);
                 if (lastChar == '\n'){
                     int i;
                     for (i = length - 1; i >= 0; i--) {
-                        if (text1.charAt(i) != '\n'){
+                        if (text.charAt(i) != '\n'){
                             break;
                         }
                     }
-                    codeArea.appendText(text1.substring(0,i));
-                    codeArea.appendText(text1.substring(i,length));
+                    codeArea.appendText(text.substring(0,i));
+                    codeArea.appendText(text.substring(i,length));
                     //codeArea.insertText(0, text);
                 } else {
-                    codeArea.replaceText(0,0, text1);
+                    codeArea.replaceText(0,0, text);
                 }
                 //codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
             }

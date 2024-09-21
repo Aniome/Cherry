@@ -1,11 +1,21 @@
 package com.app.cherry.controls;
 
 import com.app.cherry.controls.codearea.MixedArea;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.model.Paragraph;
 import org.jetbrains.annotations.NotNull;
+import org.reactfx.collection.LiveList;
+
+import java.util.Collection;
 
 public class TabManager {
     private String oldTextFieldValue;
@@ -37,11 +47,27 @@ public class TabManager {
     @NotNull
     public BorderPane createTab(Tab tab){
         BorderPane borderPane = new BorderPane();
+
         TextField textField = new TextField(tab.getText()){{
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
-        borderPane.setTop(textField);
+        Button button = new Button("Найти повторяющиеся строки");
+        button.setOnAction(e -> {
+            ObservableList<Node> childrens = borderPane.getChildren();
+            for (Node children: childrens){
+                if (children instanceof StackPane stackPane){
+                    @SuppressWarnings("unchecked")
+                    VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
+                    CodeArea codeArea = virtualizedScrollPane.getContent();
+                    LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs = codeArea.getParagraphs();
+                    int a = 1;
+                }
+            }
+        });
+        ToolBar toolBar = new ToolBar(button);
+        VBox vBox = new VBox(textField, toolBar);
+        borderPane.setTop(vBox);
 
         textField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
             //newPropertyValue - on focus

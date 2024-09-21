@@ -34,7 +34,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MixedArea {
-    private static final String LINK_PATTERN = "\\b(" + "https://\\S+" + ")\\b";
+    private static final String LINK_PATTERN = "\\b(" + "(http|https)://\\S+" + ")\\b";
     private static final String WORDS_PATTERN = ".*";
 
     private static final Pattern PATTERN = Pattern.compile(
