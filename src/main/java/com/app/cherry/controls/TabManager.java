@@ -1,6 +1,7 @@
 package com.app.cherry.controls;
 
 import com.app.cherry.controls.codearea.MixedArea;
+import com.app.cherry.util.Unique;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,6 +17,8 @@ import org.jetbrains.annotations.NotNull;
 import org.reactfx.collection.LiveList;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class TabManager {
     private String oldTextFieldValue;
@@ -54,6 +57,7 @@ public class TabManager {
         }};
         Button button = new Button("Найти повторяющиеся строки");
         button.setOnAction(e -> {
+            LinkedList<Unique> list = new LinkedList<>();
             ObservableList<Node> childrens = borderPane.getChildren();
             for (Node children: childrens){
                 if (children instanceof StackPane stackPane){
@@ -61,7 +65,21 @@ public class TabManager {
                     VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
                     CodeArea codeArea = virtualizedScrollPane.getContent();
                     LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs = codeArea.getParagraphs();
-                    int a = 1;
+                    for (Paragraph<Collection<String>, String, Collection<String>> paragraph: listParagraphs){
+                        list.add(new Unique(false, paragraph.getText()));
+                    }
+                    HashMap<String, LinkedList<Integer>> uniqueList = new HashMap<>();
+                    for (int i = 0; i < list.size(); i++) {
+                        String possibleUnique = list.get(i).getText();
+                        for (int j = 0; j < list.size(); j++) {
+                            String checkedUnique = list.get(j).getText();
+                            if (i != j && possibleUnique.equals(checkedUnique) && !checkedUnique.isEmpty()) {
+                                if (uniqueList.containsKey(possibleUnique)) {
+
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });

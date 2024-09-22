@@ -12,11 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fixing paste text">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="testing new button">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/FindViewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/Unique.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/find-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,15 +386,7 @@
       <workItem from="1726797785853" duration="4096000" />
       <workItem from="1726804747574" duration="729000" />
       <workItem from="1726909937104" duration="483000" />
-      <workItem from="1726913770947" duration="2499000" />
-    </task>
-    <task id="LOCAL-00023" summary="fix bugs">
-      <option name="closed" value="true" />
-      <created>1715710855816</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1715710855816</updated>
+      <workItem from="1726913770947" duration="26889000" />
     </task>
     <task id="LOCAL-00024" summary="fix bug with reading files">
       <option name="closed" value="true" />
@@ -779,7 +772,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726803936136</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="testing new button">
+      <option name="closed" value="true" />
+      <created>1726917718191</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1726917718192</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -798,7 +799,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added TabManager" />
     <MESSAGE value="test codearea" />
     <MESSAGE value="create code area" />
     <MESSAGE value="add codeArea" />
@@ -823,7 +823,8 @@
     <MESSAGE value="some changes" />
     <MESSAGE value="add new localization" />
     <MESSAGE value="fixing paste text" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing paste text" />
+    <MESSAGE value="testing new button" />
+    <option name="LAST_COMMIT_MESSAGE" value="testing new button" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -832,11 +833,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/dao/RecentPathsDAO.java</url>
           <line>33</line>
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
