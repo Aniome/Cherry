@@ -5,17 +5,18 @@ public class Unique {
     String text;
     int lineNumber;
 
+    public Unique(boolean isMarked, String text, int lineNumber) {
+        this.isMarked = isMarked;
+        this.text = text;
+        this.lineNumber = lineNumber;
+    }
+
     public int getLineNumber() {
         return lineNumber;
     }
 
     public void setLineNumber(int lineNumber) {
         this.lineNumber = lineNumber;
-    }
-
-    public Unique(boolean isMarked, String text) {
-        this.isMarked = isMarked;
-        this.text = text;
     }
 
     public boolean isMarked() {

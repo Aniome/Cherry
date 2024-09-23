@@ -16,9 +16,7 @@ import org.fxmisc.richtext.model.Paragraph;
 import org.jetbrains.annotations.NotNull;
 import org.reactfx.collection.LiveList;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class TabManager {
     private String oldTextFieldValue;
@@ -57,7 +55,6 @@ public class TabManager {
         }};
         Button button = new Button("Найти повторяющиеся строки");
         button.setOnAction(e -> {
-            LinkedList<Unique> list = new LinkedList<>();
             ObservableList<Node> childrens = borderPane.getChildren();
             for (Node children: childrens){
                 if (children instanceof StackPane stackPane){
@@ -65,21 +62,38 @@ public class TabManager {
                     VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
                     CodeArea codeArea = virtualizedScrollPane.getContent();
                     LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs = codeArea.getParagraphs();
-                    for (Paragraph<Collection<String>, String, Collection<String>> paragraph: listParagraphs){
-                        list.add(new Unique(false, paragraph.getText()));
+                    LinkedList<Unique> uniqueLinkedList = new LinkedList<>();
+                    for (int i = 0; i < listParagraphs.size(); i++) {
+                        uniqueLinkedList.add(new Unique(false, listParagraphs.get(i).getText(), i));
                     }
-                    HashMap<String, LinkedList<Integer>> uniqueList = new HashMap<>();
-                    for (int i = 0; i < list.size(); i++) {
-                        String possibleUnique = list.get(i).getText();
-                        for (int j = 0; j < list.size(); j++) {
-                            String checkedUnique = list.get(j).getText();
-                            if (i != j && possibleUnique.equals(checkedUnique) && !checkedUnique.isEmpty()) {
-                                if (uniqueList.containsKey(possibleUnique)) {
-
+                    HashMap<String, Set<Integer>> uniqueMap = new HashMap<>();
+                    for (int i = 0; i < uniqueLinkedList.size(); i++) {
+                        Unique uniqueI = uniqueLinkedList.get(i);
+                        if (uniqueI.isMarked()) {
+                            continue;
+                        }
+                        String uniqueTextI = uniqueI.getText();
+                        for (int j = 0; j < uniqueLinkedList.size(); j++) {
+                            if (i == j) {
+                                continue;
+                            }
+                            Unique uniqueJ = uniqueLinkedList.get(j);
+                            String uniqueTextJ = uniqueJ.getText();
+                            if (uniqueTextI.equals(uniqueTextJ) && !uniqueTextJ.isEmpty()) {
+                                if (uniqueMap.containsKey(uniqueTextI)) {
+                                    uniqueMap.get(uniqueTextI).add(uniqueJ.getLineNumber());
+                                    uniqueJ.setMarked(true);
+                                } else {
+                                    LinkedHashSet<Integer> uniqueSet = new LinkedHashSet<>();
+                                    uniqueSet.add(uniqueI.getLineNumber());
+                                    uniqueSet.add(uniqueJ.getLineNumber());
+                                    uniqueMap.put(uniqueTextI, uniqueSet);
+                                    uniqueJ.setMarked(true);
                                 }
                             }
                         }
                     }
+                    System.out.println(uniqueMap);
                 }
             }
         });

@@ -22,14 +22,12 @@ public class ListViewItem extends ListCell<String> {
     public ListViewItem(ListView<String> listView, InitController initController) {
         titleLabel = new Label();
         titleLabel.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() >= 2){
-                String path = titleLabel.getText();
-                if (FileService.checkExists(path)){
-                    RunApplication.FolderPath = Paths.get(path);
-                    initController.ShowMainStage();
-                } else {
-                    Alerts.CreateAndShowWarning("Папка не найдена");
-                }
+            String path = titleLabel.getText();
+            if (FileService.checkExists(path)){
+                RunApplication.FolderPath = Paths.get(path);
+                initController.ShowMainStage();
+            } else {
+                Alerts.CreateAndShowWarning("Папка не найдена");
             }
         });
 
