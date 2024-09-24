@@ -141,10 +141,12 @@ public class MixedArea {
 
         @Override
         public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
+            lm.materialize();
             if (lm.getAddedSize() > 0){
                 Platform.runLater( () -> {
                     int paragraphSize = area.getParagraphs().size();
                     if (index < paragraphSize) {
+                        //System.out.println(index);
                         String text = area.getText(index, 0, index, area.getParagraphLength(index));
                         int startPos = area.getAbsolutePosition(index, 0);
                         area.setStyleSpans(startPos, computeStyles.apply(text));
@@ -157,7 +159,24 @@ public class MixedArea {
                         area.setStyleSpans(startPos, computeStyles.apply(text));
                     }
                 });
+
             }
+//            Platform.runLater( () -> {
+//                int paragraphSize = area.getParagraphs().size();
+//                if (index < paragraphSize) {
+//                    System.out.println(index);
+//                    String text = area.getText(index, 0, index, area.getParagraphLength(index));
+//                    int startPos = area.getAbsolutePosition(index, 0);
+//                    area.setStyleSpans(startPos, computeStyles.apply(text));
+//                    index++;
+//                } else {
+//                    int currentParagraph = area.getCurrentParagraph();
+//                    String text = area.getText(currentParagraph, 0,
+//                            currentParagraph, area.getParagraphLength(currentParagraph));
+//                    int startPos = area.getAbsolutePosition(currentParagraph, 0);
+//                    area.setStyleSpans(startPos, computeStyles.apply(text));
+//                }
+//            });
         }
     }
 }
