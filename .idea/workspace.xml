@@ -12,10 +12,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add find duplicate">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add view for find duplicates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/FindViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/FindViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/find-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/find-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,45 +73,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Cherry [clean,javafx:run].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Cherry [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Cherry [io.github.fvarrui:javapackager:1.7.6:package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Cherry [jar:jar].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:sign-verify].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:test-jar].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Cherry [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Cherry [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/AppData/Local/SceneBuilder/SceneBuilder.exe&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15136719&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.26728112&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Main.executor": "Run",
+    "Maven.Cherry [clean,javafx:run].executor": "Run",
+    "Maven.Cherry [deploy].executor": "Run",
+    "Maven.Cherry [io.github.fvarrui:javapackager:1.7.6:package].executor": "Run",
+    "Maven.Cherry [jar:jar].executor": "Run",
+    "Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:sign-verify].executor": "Run",
+    "Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:test-jar].executor": "Run",
+    "Maven.Cherry [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
+    "Maven.Cherry [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/user/AppData/Local/SceneBuilder/SceneBuilder.exe",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15136719",
+    "project.structure.side.proportion": "0.26728112",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.app.cherry.entity" />
@@ -385,15 +388,7 @@
       <workItem from="1726804747574" duration="729000" />
       <workItem from="1726909937104" duration="483000" />
       <workItem from="1726913770947" duration="34268000" />
-      <workItem from="1727183118024" duration="5515000" />
-    </task>
-    <task id="LOCAL-00026" summary="fix add function">
-      <option name="closed" value="true" />
-      <created>1716516495387</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1716516495387</updated>
+      <workItem from="1727183118024" duration="31290000" />
     </task>
     <task id="LOCAL-00027" summary="fix bug">
       <option name="closed" value="true" />
@@ -779,7 +774,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727064636416</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="add multithreading">
+      <option name="closed" value="true" />
+      <created>1727191345350</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1727191345351</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -798,8 +801,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add codeArea" />
-    <MESSAGE value="add dracula themes" />
     <MESSAGE value="add icons" />
     <MESSAGE value="fix icons" />
     <MESSAGE value="fix loading on toggle buttons" />
@@ -823,7 +824,9 @@
     <MESSAGE value="testing new button" />
     <MESSAGE value="trying to add find duplicate" />
     <MESSAGE value="add find duplicate" />
-    <option name="LAST_COMMIT_MESSAGE" value="add find duplicate" />
+    <MESSAGE value="add multithreading" />
+    <MESSAGE value="add view for find duplicates" />
+    <option name="LAST_COMMIT_MESSAGE" value="add view for find duplicates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

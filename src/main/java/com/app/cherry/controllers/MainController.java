@@ -2,6 +2,7 @@ package com.app.cherry.controllers;
 
 import com.app.cherry.controls.ApplicationContextMenu;
 import com.app.cherry.controls.TabManager;
+import com.app.cherry.controls.codearea.MixedArea;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.FileService;
@@ -178,11 +179,22 @@ public class MainController{
                     codeArea.replaceText(0,0, text);
                 }
                 //codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
+
+                int codeAreaLength = codeArea.getParagraphs().size();
+                int pageLength = 80;
+                if (codeAreaLength > pageLength){
+                    MixedArea.applyStylesPage(pageLength);
+                    MixedArea.applyStyles(pageLength, codeAreaLength);
+                } else {
+                    MixedArea.applyStyles(0, codeAreaLength);
+                }
             }
         }
         borderPane.setStyle("-fx-background-color: #282a36");
         tab.setContent(borderPane);
     }
+
+
 
     //Creates a tab and gives focus to it
     @FXML

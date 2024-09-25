@@ -1,6 +1,7 @@
 package com.app.cherry.controls.codearea;
 
 import com.app.cherry.RunApplication;
+import com.app.cherry.controllers.FindViewController;
 import com.app.cherry.controllers.WebViewController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -36,14 +39,16 @@ import java.util.regex.Pattern;
 public class MixedArea {
     private static final String LINK_PATTERN = "\\b(" + "(http|https)://\\S+" + ")\\b";
     private static final String WORDS_PATTERN = ".*";
+    private static CodeArea codeArea;
 
     private static final Pattern PATTERN = Pattern.compile(
             "(?<LINK>" + LINK_PATTERN + ")"
             + "|(?<WORDS>" + WORDS_PATTERN + ")"
     );
 
-    public StackPane createMarkdownArea() {
+    public static StackPane createMarkdownArea() {
         CodeArea codeArea = new CodeArea();
+        MixedArea.codeArea = codeArea;
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);
 
@@ -73,8 +78,27 @@ public class MixedArea {
             }
         });
 
+        codeArea.setOnKeyPressed(event -> {
+            KeyCombination keyCombination = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
+            if (keyCombination.match(event)) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/find-view.fxml"));
+                    double findViewWidth = 800, findViewHeight = 600;
+                    Scene secondScene = new Scene(fxmlLoader.load(), findViewWidth, findViewHeight);
+                    Stage findViewStage = new Stage();
+                    findViewStage.setTitle("Найти");
+                    RunApplication.setIcon(findViewStage);
+                    FindViewController findViewController = fxmlLoader.getController();
+                    findViewController.init(codeArea);
+                    RunApplication.prepareStage(findViewHeight, findViewWidth, secondScene,"", findViewStage);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
         codeArea.getVisibleParagraphs().addModificationObserver
-                (new VisibleParagraphStyler<>(codeArea, this::computeHighlighting));
+                (new VisibleParagraphStyler<>(codeArea, MixedArea::computeHighlighting));
 
         // auto-indent: insert previous line's indents on enter
         final Pattern whiteSpace = Pattern.compile( "^\\s+" );
@@ -90,6 +114,28 @@ public class MixedArea {
         });
 
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
+    }
+
+    public static void applyStylesPage(int pageLength){
+        for (int i = 0; i < pageLength; i++) {
+            String textCodeArea = codeArea.getText(i, 0, i, codeArea.getParagraphLength(i));
+            int startPos = codeArea.getAbsolutePosition(i, 0);
+            codeArea.setStyleSpans(startPos, MixedArea.computeHighlighting(textCodeArea));
+        }
+    }
+
+    public static void applyStyles(int from, int to){
+        Thread thread = new Thread(() -> {
+            //add styling for the text
+            Platform.runLater(() -> {
+                for (int i = from; i < to; i++) {
+                    String textCodeArea = codeArea.getText(i, 0, i, codeArea.getParagraphLength(i));
+                    int startPos = codeArea.getAbsolutePosition(i, 0);
+                    codeArea.setStyleSpans(startPos, MixedArea.computeHighlighting(textCodeArea));
+                }
+            });
+        });
+        thread.start();
     }
 
     private static @NotNull IntFunction<Node> createGraphicFactory(IntFunction<Node> numberFactory, CodeArea codeArea) {
@@ -112,7 +158,7 @@ public class MixedArea {
         };
     }
 
-    private StyleSpans<Collection<String>> computeHighlighting(String text) {
+    public static StyleSpans<Collection<String>> computeHighlighting(String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
@@ -129,10 +175,10 @@ public class MixedArea {
         return spansBuilder.create();
     }
 
-    private class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
+    private static class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
         private final GenericStyledArea<PS, SEG, S> area;
         private final Function<String,StyleSpans<S>> computeStyles;
-        private int index = 0;
+        public int index = 0;
 
         public VisibleParagraphStyler( GenericStyledArea<PS, SEG, S> area, Function<String,StyleSpans<S>> computeStyles ) {
             this.computeStyles = computeStyles;
@@ -141,15 +187,10 @@ public class MixedArea {
 
         @Override
         public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
-            lm.materialize();
             if (lm.getAddedSize() > 0){
                 Platform.runLater( () -> {
                     int paragraphSize = area.getParagraphs().size();
                     if (index < paragraphSize) {
-                        //System.out.println(index);
-                        String text = area.getText(index, 0, index, area.getParagraphLength(index));
-                        int startPos = area.getAbsolutePosition(index, 0);
-                        area.setStyleSpans(startPos, computeStyles.apply(text));
                         index++;
                     } else {
                         int currentParagraph = area.getCurrentParagraph();
@@ -159,24 +200,7 @@ public class MixedArea {
                         area.setStyleSpans(startPos, computeStyles.apply(text));
                     }
                 });
-
             }
-//            Platform.runLater( () -> {
-//                int paragraphSize = area.getParagraphs().size();
-//                if (index < paragraphSize) {
-//                    System.out.println(index);
-//                    String text = area.getText(index, 0, index, area.getParagraphLength(index));
-//                    int startPos = area.getAbsolutePosition(index, 0);
-//                    area.setStyleSpans(startPos, computeStyles.apply(text));
-//                    index++;
-//                } else {
-//                    int currentParagraph = area.getCurrentParagraph();
-//                    String text = area.getText(currentParagraph, 0,
-//                            currentParagraph, area.getParagraphLength(currentParagraph));
-//                    int startPos = area.getAbsolutePosition(currentParagraph, 0);
-//                    area.setStyleSpans(startPos, computeStyles.apply(text));
-//                }
-//            });
         }
     }
 }

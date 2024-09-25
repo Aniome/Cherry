@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.app.cherry.controllers.FindViewController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.FindViewController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="473.0" minWidth="10.0" prefWidth="347.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="268.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="279.0" minHeight="10.0" prefHeight="172.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="395.0" minHeight="10.0" prefHeight="284.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <HBox alignment="TOP_CENTER" prefHeight="115.0" prefWidth="300.0" spacing="10.0">
+        <padding>
+            <Insets top="15.0" />
+        </padding>
+        <Label text="Найти: ">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <TextField alignment="TOP_LEFT" />
+    </HBox>
+    <VBox alignment="CENTER_LEFT" prefHeight="148.0" prefWidth="300.0" spacing="10.0" GridPane.columnIndex="1">
+        <Button mnemonicParsing="false" alignment="CENTER" prefHeight="36.0" prefWidth="223.0" text="Найти" />
+        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Подсчитать" />
+        <Button mnemonicParsing="false" onMouseClicked="#findDuplicates" text="Найти повторяющиеся строки" wrapText="true" />
+    </VBox>
+    <ListView fx:id="listView" prefHeight="315.0" prefWidth="350.0" GridPane.rowIndex="1" />
+</GridPane>
