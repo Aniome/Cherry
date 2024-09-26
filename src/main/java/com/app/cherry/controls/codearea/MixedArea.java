@@ -83,9 +83,10 @@ public class MixedArea {
             if (keyCombination.match(event)) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/find-view.fxml"));
-                    double findViewWidth = 800, findViewHeight = 600;
+                    double findViewWidth = 600, findViewHeight = 400;
                     Scene secondScene = new Scene(fxmlLoader.load(), findViewWidth, findViewHeight);
                     Stage findViewStage = new Stage();
+                    findViewStage.setResizable(false);
                     findViewStage.setTitle("Найти");
                     RunApplication.setIcon(findViewStage);
                     FindViewController findViewController = fxmlLoader.getController();

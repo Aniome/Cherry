@@ -1,8 +1,13 @@
 package com.app.cherry.controllers;
 
+import atlantafx.base.theme.Tweaks;
 import com.app.cherry.util.Unique;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.Paragraph;
 import org.reactfx.collection.LiveList;
@@ -11,7 +16,7 @@ import java.util.*;
 
 public class FindViewController {
     @FXML
-    ListView<String> listView;
+    Accordion accordion;
     private CodeArea codeArea;
 
     public void init(CodeArea codeArea) {
@@ -53,7 +58,17 @@ public class FindViewController {
                     }
                 }
             }
-            System.out.println(uniqueMap);
+            Platform.runLater( () -> {
+                for (String uniqueText : uniqueMap.keySet()) {
+                    String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[|]", "");
+                    String text = "Строка " + uniqueText + " повторяется на следующих строках: ";
+                    Label label = new Label(text + replacedString);
+                    TitledPane titledPane = new TitledPane("Найден дубликат строки", label);
+                    titledPane.getStyleClass().add(Tweaks.ALT_ICON);
+                    accordion.getPanes().add(titledPane);
+                }
+
+            });
         });
         thread.start();
     }
