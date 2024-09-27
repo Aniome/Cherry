@@ -86,7 +86,6 @@ public class MixedArea {
                     double findViewWidth = 600, findViewHeight = 400;
                     Scene secondScene = new Scene(fxmlLoader.load(), findViewWidth, findViewHeight);
                     Stage findViewStage = new Stage();
-                    findViewStage.setResizable(false);
                     findViewStage.setTitle("Найти");
                     RunApplication.setIcon(findViewStage);
                     FindViewController findViewController = fxmlLoader.getController();

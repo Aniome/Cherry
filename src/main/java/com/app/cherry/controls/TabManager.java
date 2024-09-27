@@ -43,18 +43,6 @@ public class TabManager {
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
-//        Button button = new Button("Найти повторяющиеся строки");
-//        button.setOnAction(event -> {
-//            ObservableList<Node> childrens = borderPane.getChildren();
-//            for (Node children: childrens){
-//                if (children instanceof StackPane stackPane){
-//                    @SuppressWarnings("unchecked")
-//                    VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
-//                    CodeArea codeArea = virtualizedScrollPane.getContent();
-//                }
-//            }
-//        });
-//        ToolBar toolBar = new ToolBar(button);
         VBox vBox = new VBox(textField);
         borderPane.setTop(vBox);
 

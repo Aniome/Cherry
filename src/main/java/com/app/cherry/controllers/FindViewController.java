@@ -1,13 +1,21 @@
 package com.app.cherry.controllers;
 
+import atlantafx.base.theme.Styles;
 import atlantafx.base.theme.Tweaks;
 import com.app.cherry.util.Unique;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.Paragraph;
 import org.reactfx.collection.LiveList;
@@ -17,59 +25,99 @@ import java.util.*;
 public class FindViewController {
     @FXML
     Accordion accordion;
+    @FXML
+    ProgressBar progressBar;
+    @FXML
+    Label label;
+    @FXML
+    StackPane stackPane;
+
     private CodeArea codeArea;
 
     public void init(CodeArea codeArea) {
         this.codeArea = codeArea;
+        progressBar.getStyleClass().add(Styles.LARGE);
     }
 
     @FXML
     private void findDuplicates() {
-        Thread thread = new Thread(() -> {
-            LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs = codeArea.getParagraphs();
-            LinkedList<Unique> uniqueLinkedList = new LinkedList<>();
-            for (int i = 0; i < listParagraphs.size(); i++) {
-                uniqueLinkedList.add(new Unique(false, listParagraphs.get(i).getText(), i));
-            }
-            HashMap<String, Set<Integer>> uniqueMap = new HashMap<>();
-            for (int i = 0; i < uniqueLinkedList.size(); i++) {
-                Unique uniqueI = uniqueLinkedList.get(i);
-                if (uniqueI.isMarked()) {
-                    continue;
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs = codeArea.getParagraphs();
+                LinkedList<Unique> uniqueLinkedList = new LinkedList<>();
+                for (int i = 0; i < listParagraphs.size(); i++) {
+                    uniqueLinkedList.add(new Unique(false, listParagraphs.get(i).getText(), i));
                 }
-                String uniqueTextI = uniqueI.getText();
-                for (int j = 0; j < uniqueLinkedList.size(); j++) {
-                    if (i == j) {
+                Platform.runLater(() -> {
+                    progressBar.setVisible(true);
+                });
+
+                int length = uniqueLinkedList.size();
+                HashMap<String, Set<Integer>> uniqueMap = new HashMap<>();
+                for (int i = 0; i < length; i++) {
+                    Unique uniqueI = uniqueLinkedList.get(i);
+                    if (uniqueI.isMarked()) {
                         continue;
                     }
-                    Unique uniqueJ = uniqueLinkedList.get(j);
-                    String uniqueTextJ = uniqueJ.getText();
-                    if (uniqueTextI.equals(uniqueTextJ) && !uniqueTextJ.isEmpty()) {
-                        if (uniqueMap.containsKey(uniqueTextI)) {
-                            uniqueMap.get(uniqueTextI).add(uniqueJ.getLineNumber());
-                            uniqueJ.setMarked(true);
-                        } else {
-                            LinkedHashSet<Integer> uniqueSet = new LinkedHashSet<>();
-                            uniqueSet.add(uniqueI.getLineNumber());
-                            uniqueSet.add(uniqueJ.getLineNumber());
-                            uniqueMap.put(uniqueTextI, uniqueSet);
-                            uniqueJ.setMarked(true);
+                    String uniqueTextI = uniqueI.getText();
+                    for (int j = 0; j < uniqueLinkedList.size(); j++) {
+                        if (i == j) {
+                            continue;
+                        }
+                        Unique uniqueJ = uniqueLinkedList.get(j);
+                        String uniqueTextJ = uniqueJ.getText();
+                        if (uniqueTextI.equals(uniqueTextJ) && !uniqueTextJ.isEmpty()) {
+                            if (uniqueMap.containsKey(uniqueTextI)) {
+                                uniqueMap.get(uniqueTextI).add(uniqueJ.getLineNumber());
+                                uniqueJ.setMarked(true);
+                            } else {
+                                LinkedHashSet<Integer> uniqueSet = new LinkedHashSet<>();
+                                uniqueSet.add(uniqueI.getLineNumber());
+                                uniqueSet.add(uniqueJ.getLineNumber());
+                                uniqueMap.put(uniqueTextI, uniqueSet);
+                                uniqueJ.setMarked(true);
+                            }
                         }
                     }
-                }
-            }
-            Platform.runLater( () -> {
-                for (String uniqueText : uniqueMap.keySet()) {
-                    String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[|]", "");
-                    String text = "Строка " + uniqueText + " повторяется на следующих строках: ";
-                    Label label = new Label(text + replacedString);
-                    TitledPane titledPane = new TitledPane("Найден дубликат строки", label);
-                    titledPane.getStyleClass().add(Tweaks.ALT_ICON);
-                    accordion.getPanes().add(titledPane);
+                    int percent = (i/length)*100;
+                    updateProgress(percent, 100);
+                    updateMessage(String.valueOf(percent));
                 }
 
-            });
+                Platform.runLater( () -> {
+                    for (String uniqueText : uniqueMap.keySet()) {
+                        String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[\\[\\]]", "");
+                        String text = "Строка " + uniqueText + " повторяется на следующих строках: ";
+                        TextFlow textFlow = new TextFlow(new Text(text + replacedString));
+                        textFlow.setTextAlignment(TextAlignment.JUSTIFY);
+                        BorderPane borderPane = new BorderPane(textFlow);
+                        //HBox hBox = new HBox(label);
+                        TitledPane titledPane = new TitledPane("Найден дубликат строки", borderPane);
+                        titledPane.animatedProperty().bind(new SimpleBooleanProperty(true));
+                        titledPane.getStyleClass().add(Tweaks.ALT_ICON);
+                        accordion.getPanes().add(titledPane);
+                    }
+                });
+                return null;
+            }
+        };
+
+        // reset properties, so we can start a new task
+        task.setOnSucceeded(evt2 -> {
+            progressBar.progressProperty().unbind();
+            label.textProperty().unbind();
+
+            progressBar.setProgress(0);
+            label.setText(null);
+
+            stackPane.pseudoClassStateChanged(Styles.STATE_SUCCESS, false);
+            stackPane.pseudoClassStateChanged(Styles.STATE_DANGER, false);
         });
-        thread.start();
+
+        progressBar.progressProperty().bind(task.progressProperty());
+        label.textProperty().bind(task.messageProperty());
+
+        new Thread(task).start();
     }
 }
