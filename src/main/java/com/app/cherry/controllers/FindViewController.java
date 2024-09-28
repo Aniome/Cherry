@@ -7,11 +7,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -20,6 +16,8 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.Paragraph;
 import org.reactfx.collection.LiveList;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 public class FindViewController {
@@ -41,17 +39,15 @@ public class FindViewController {
 
     @FXML
     private void findDuplicates() {
-        Task<Void> task = new Task<Void>() {
+        Task<Void> task = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs = codeArea.getParagraphs();
                 LinkedList<Unique> uniqueLinkedList = new LinkedList<>();
                 for (int i = 0; i < listParagraphs.size(); i++) {
                     uniqueLinkedList.add(new Unique(false, listParagraphs.get(i).getText(), i));
                 }
-                Platform.runLater(() -> {
-                    progressBar.setVisible(true);
-                });
+                Platform.runLater(() -> stackPane.setVisible(true));
 
                 int length = uniqueLinkedList.size();
                 HashMap<String, Set<Integer>> uniqueMap = new HashMap<>();
@@ -80,20 +76,27 @@ public class FindViewController {
                             }
                         }
                     }
-                    int percent = (i/length)*100;
-                    updateProgress(percent, 100);
-                    updateMessage(String.valueOf(percent));
+                    double percent = ((double)(i+1) / (double)length) * 100;
+
+                    BigDecimal bd = new BigDecimal(percent);
+                    bd = bd.setScale(2, RoundingMode.HALF_UP);
+                    double percentOut = bd.doubleValue();
+
+                    updateProgress(percentOut, 100);
+                    updateMessage(String.valueOf(percentOut));
                 }
 
-                Platform.runLater( () -> {
+                Platform.runLater(() -> {
                     for (String uniqueText : uniqueMap.keySet()) {
                         String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[\\[\\]]", "");
-                        String text = "Строка " + uniqueText + " повторяется на следующих строках: ";
-                        TextFlow textFlow = new TextFlow(new Text(text + replacedString));
+                        String findingString = "Строка " + uniqueText + " повторяется на следующих строках: ";
+                        TextFlow textFlow = new TextFlow(new Text(findingString + replacedString));
                         textFlow.setTextAlignment(TextAlignment.JUSTIFY);
-                        BorderPane borderPane = new BorderPane(textFlow);
-                        //HBox hBox = new HBox(label);
-                        TitledPane titledPane = new TitledPane("Найден дубликат строки", borderPane);
+                        textFlow.setMinHeight(70);
+                        ScrollPane scrollPane = new ScrollPane(textFlow);
+                        scrollPane.setFitToWidth(true);
+
+                        TitledPane titledPane = new TitledPane("Найден дубликат строки", scrollPane);
                         titledPane.animatedProperty().bind(new SimpleBooleanProperty(true));
                         titledPane.getStyleClass().add(Tweaks.ALT_ICON);
                         accordion.getPanes().add(titledPane);
@@ -111,8 +114,7 @@ public class FindViewController {
             progressBar.setProgress(0);
             label.setText(null);
 
-            stackPane.pseudoClassStateChanged(Styles.STATE_SUCCESS, false);
-            stackPane.pseudoClassStateChanged(Styles.STATE_DANGER, false);
+            stackPane.setVisible(false);
         });
 
         progressBar.progressProperty().bind(task.progressProperty());
