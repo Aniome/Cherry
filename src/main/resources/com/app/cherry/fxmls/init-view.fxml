@@ -44,7 +44,7 @@
          <padding>
             <Insets top="10.0" />
          </padding>
-         <Label text="Создать новое хранилище">
+         <Label text="%NewStorage">
             <font>
                <Font size="18.0" />
             </font>
@@ -62,7 +62,7 @@
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
-         <Label text="Открыть хранилище">
+         <Label text="%OpenStorage">
             <font>
                <Font size="18.0" />
             </font>
@@ -70,7 +70,7 @@
                <Insets bottom="10.0" />
             </HBox.margin>
          </Label>
-         <Button fx:id="OpenButton" mnemonicParsing="false" onMouseClicked="#OpenStorage" text="Открыть">
+         <Button fx:id="OpenButton" mnemonicParsing="false" onMouseClicked="#OpenStorage" text="%OpenButton">
             <font>
                <Font size="18.0" />
             </font>
@@ -84,7 +84,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
-      <Button fx:id="Create" mnemonicParsing="false" onMouseClicked="#CreateStorage" text="Создать" visible="false">
+      <Button fx:id="Create" mnemonicParsing="false" onMouseClicked="#CreateStorage" text="%CreateButton" visible="false">
          <font>
             <Font size="18.0" />
          </font>

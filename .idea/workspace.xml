@@ -15,8 +15,9 @@
     <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add scroll pane for find view">
       <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/dracula.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/FindViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/FindViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/find-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/find-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -391,15 +392,10 @@
       <workItem from="1727360323295" duration="9458000" />
       <workItem from="1727422881065" duration="4381000" />
       <workItem from="1727434594586" duration="29753000" />
-      <workItem from="1727502894593" duration="975000" />
-    </task>
-    <task id="LOCAL-00030" summary="extract new class">
-      <option name="closed" value="true" />
-      <created>1716931893898</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1716931893898</updated>
+      <workItem from="1727502894593" duration="1125000" />
+      <workItem from="1727504041720" duration="85000" />
+      <workItem from="1727612528320" duration="1291000" />
+      <workItem from="1727800515339" duration="1335000" />
     </task>
     <task id="LOCAL-00031" summary="some changes">
       <option name="closed" value="true" />
@@ -785,7 +781,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727462903603</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="add scroll pane for find view">
+      <option name="closed" value="true" />
+      <created>1727503882850</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1727503882851</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
