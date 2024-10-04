@@ -52,7 +52,7 @@
                <Insets />
             </HBox.margin>
          </Label>
-         <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#TemplateStorage" text="Создать">
+         <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#TemplateStorage" text="%CreateButton">
             <font>
                <Font size="18.0" />
             </font>

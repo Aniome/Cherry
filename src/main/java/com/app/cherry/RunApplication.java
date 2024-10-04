@@ -23,8 +23,8 @@ import java.util.ResourceBundle;
 public class RunApplication extends Application {
     public static Path FolderPath;
     public static final String title = "Cherry";
-    private static final double InitialHeight = 400;
-    private static final double InitialWidth = 600;
+    private static final double InitialHeight = 600;
+    private static final double InitialWidth = 800;
     public static final double MainHeight = 480;
     public static final double MainWidth = 640;
     private static Stage mainStage;
@@ -86,7 +86,7 @@ public class RunApplication extends Application {
 
     public static void showInitialWindow() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"), resourceBundle);
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
             Stage InitialStage = new Stage();
             setIcon(InitialStage);

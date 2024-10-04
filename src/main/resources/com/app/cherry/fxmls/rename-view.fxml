@@ -34,13 +34,11 @@
    </bottom>
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Введите новое имя">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
+         <Label text="Введите новое имя">
+            <font>
+               <Font size="18.0"/>
+            </font>
+         </Label>
       </HBox>
    </top>
    <right>

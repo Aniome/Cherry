@@ -10,16 +10,22 @@ import com.app.cherry.util.FileService;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.nio.file.Paths;
 
 public class ListViewItem extends ListCell<String> {
 
-    private final HBox root;
+    //private final ScrollPane scrollPane;
     private final Label titleLabel;
+    private final Label folderLabel;
+    private final HBox root;
+    private final ListView<String> listView;
 
     public ListViewItem(ListView<String> listView, InitController initController) {
+        this.listView = listView;
+
         titleLabel = new Label();
         titleLabel.setOnMouseClicked(mouseEvent -> {
             String path = titleLabel.getText();
@@ -30,6 +36,8 @@ public class ListViewItem extends ListCell<String> {
                 Alerts.CreateAndShowWarning("Папка не найдена");
             }
         });
+
+        folderLabel = new Label();
 
         FontIcon fontIcon = new FontIcon("mdal-close");
         fontIcon.setScaleX(1.3);
@@ -45,7 +53,15 @@ public class ListViewItem extends ListCell<String> {
             RecentPathsDAO.removePath(deletingPath);
         });
 
-        root = new HBox(titleLabel,
+//        BorderPane borderPane = new BorderPane();
+//        borderPane.setTop(folderLabel);
+//        borderPane.setCenter(titleLabel);
+//        borderPane.setRight(closeBtn);
+//        scrollPane = new ScrollPane(borderPane);
+
+        VBox vBox = new VBox(folderLabel, titleLabel);
+
+        root = new HBox(vBox,
                 new Spacer(),
                 closeBtn
         );
@@ -61,6 +77,10 @@ public class ListViewItem extends ListCell<String> {
             return;
         }
 
+
+        int lastSlash = value.lastIndexOf("\\") + 1;
+        String folderName = value.substring(lastSlash);
+        folderLabel.setText(folderName);
         titleLabel.setText(value);
         setGraphic(root);
     }
