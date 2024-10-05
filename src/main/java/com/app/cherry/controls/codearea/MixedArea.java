@@ -30,6 +30,7 @@ import org.reactfx.collection.ListModification;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -82,11 +83,13 @@ public class MixedArea {
             KeyCombination keyCombination = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
             if (keyCombination.match(event)) {
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/find-view.fxml"));
+                    ResourceBundle resourceBundle = RunApplication.resourceBundle;
+                    FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/find-view.fxml"),
+                            resourceBundle);
                     double findViewWidth = 600, findViewHeight = 400;
                     Scene secondScene = new Scene(fxmlLoader.load(), findViewWidth, findViewHeight);
                     Stage findViewStage = new Stage();
-                    findViewStage.setTitle("Найти");
+                    findViewStage.setTitle(resourceBundle.getString("FindViewTitle"));
                     RunApplication.setIcon(findViewStage);
                     FindViewController findViewController = fxmlLoader.getController();
                     findViewController.init(codeArea);
