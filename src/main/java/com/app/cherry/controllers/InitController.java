@@ -156,44 +156,22 @@ public class InitController {
                 iterator.remove();
             }
         }
+
         listView.setCellFactory(lvItem -> {
             ListViewItem treeCell = new ListViewItem(listView, this);
-
+            MultipleSelectionModel<String> selectionModel = listView.getSelectionModel();
             treeCell.setOnMouseEntered( mouseEvent -> {
-//                TreeItem<String> treeItem = treeCell.getTreeItem();
-//                if (treeItem == null)
-//                    return;
-//                treeView.getSelectionModel().select(treeItem);
                 String treeCellItem = treeCell.getItem();
                 if (treeCellItem == null)
                     return;
-                treeCell.updateSelected(true);
+                selectionModel.select(treeCellItem);
             });
             treeCell.setOnMouseExited(mouseEvent -> {
-                treeCell.updateSelected(false);
-                //treeView.getSelectionModel().clearSelection();
+                selectionModel.clearSelection();
             });
-//            treeCell.setOnMouseClicked(event -> {
-//                TreeItem<String> selectedItem = treeCell.getTreeItem();
-//                if (selectedItem == null)
-//                    return;
-//                MouseButton mouseButton = event.getButton();
-//                if (mouseButton.equals(MouseButton.PRIMARY) && selectedItem.isLeaf()){
-//                    mainController.loadDataOnFormOnClick(selectedItem);
-//                }
-//                if (mouseButton.equals(MouseButton.SECONDARY)){
-//                    if (selectedItem.isLeaf()){
-//                        treeView.setContextMenu(ApplicationContextMenu.noteContextMenu);
-//                    } else {
-//                        treeView.setContextMenu(ApplicationContextMenu.folderContextMenu);
-//                    }
-//                }
-//            });
-
 
             return treeCell;
         });
-        //Styles.toggleStyleClass(listView, Styles.BORDERED);
         listView.getItems().addAll(listRecentPaths);
         splitPane.setDividerPositions(0.35);
     }

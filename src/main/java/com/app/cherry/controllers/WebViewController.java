@@ -8,6 +8,10 @@ public class WebViewController {
     private WebView engine;
 
     public void init(String link){
-        engine.getEngine().load(link);
+        try {
+            engine.getEngine().load(link);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

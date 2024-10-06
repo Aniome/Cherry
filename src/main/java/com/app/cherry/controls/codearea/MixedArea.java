@@ -56,25 +56,16 @@ public class MixedArea {
         codeArea.setParagraphGraphicFactory(graphicFactory);
 
         codeArea.setOnMouseClicked(event -> {
-            int offset = codeArea.getCurrentParagraph();
-            Paragraph<Collection<String>, String, Collection<String>> paragraph = codeArea.getParagraph(offset);
-            StyleSpans<Collection<String>> styleSpans = paragraph.getStyleSpans();
-            int ind = styleSpans.getSpanCount();
-            StyleSpan<Collection<String>> styleSpan = styleSpans.getStyleSpan(ind - 1);
-            String clickedText = paragraph.getText();
+            if (event.isControlDown()) {
+                int offset = codeArea.getCurrentParagraph();
+                Paragraph<Collection<String>, String, Collection<String>> paragraph = codeArea.getParagraph(offset);
+                StyleSpans<Collection<String>> styleSpans = paragraph.getStyleSpans();
+                int ind = styleSpans.getSpanCount();
+                StyleSpan<Collection<String>> styleSpan = styleSpans.getStyleSpan(ind - 1);
+                String clickedText = paragraph.getText();
 
-            if (styleSpan.getStyle().contains("link")) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/web-view.fxml"));
-                    double webViewWidth = 800, webViewHeight = 600;
-                    Scene secondScene = new Scene(fxmlLoader.load(), webViewWidth, webViewHeight);
-                    Stage webViewStage = new Stage();
-                    RunApplication.setIcon(webViewStage);
-                    WebViewController webViewController = fxmlLoader.getController();
-                    webViewController.init(clickedText);
-                    RunApplication.prepareStage(webViewHeight, webViewWidth, secondScene,"", webViewStage);
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                if (styleSpan.getStyle().contains("link")) {
+                    RunApplication.showBrowser(clickedText);
                 }
             }
         });

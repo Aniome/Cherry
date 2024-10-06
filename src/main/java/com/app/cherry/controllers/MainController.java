@@ -194,8 +194,6 @@ public class MainController{
         tab.setContent(borderPane);
     }
 
-
-
     //Creates a tab and gives focus to it
     @FXML
     private Tab addTab() {

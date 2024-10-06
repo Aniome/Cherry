@@ -3,6 +3,7 @@ package com.app.cherry;
 import atlantafx.base.theme.Dracula;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.controllers.WebViewController;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.HibernateUtil;
@@ -95,6 +96,22 @@ public class RunApplication extends Application {
             prepareStage(InitialHeight, InitialWidth, secondScene,"", InitialStage);
             InitialStage.setResizable(false);
             initController.loadPaths();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void showBrowser(String clickedText){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/web-view.fxml"),
+                    resourceBundle);
+            double webViewWidth = 800, webViewHeight = 600;
+            Scene secondScene = new Scene(fxmlLoader.load(), webViewWidth, webViewHeight);
+            Stage webViewStage = new Stage();
+            setIcon(webViewStage);
+            WebViewController webViewController = fxmlLoader.getController();
+            webViewController.init(clickedText);
+            prepareStage(webViewHeight, webViewWidth, secondScene,"Browser", webViewStage);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
