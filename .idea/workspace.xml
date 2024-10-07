@@ -12,15 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fixing listview">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add listview selection">
       <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/dracula.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/WebViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/WebViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -404,15 +399,8 @@
       <workItem from="1727974482286" duration="48000" />
       <workItem from="1728051756344" duration="15213000" />
       <workItem from="1728143969566" duration="8967000" />
-      <workItem from="1728226854165" duration="7312000" />
-    </task>
-    <task id="LOCAL-00034" summary="recursion deleting folder and files">
-      <option name="closed" value="true" />
-      <created>1717285770432</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1717285770432</updated>
+      <workItem from="1728226854165" duration="7419000" />
+      <workItem from="1728319382714" duration="2488000" />
     </task>
     <task id="LOCAL-00035" summary="fix some bugs">
       <option name="closed" value="true" />
@@ -798,7 +786,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728153327876</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="add listview selection">
+      <option name="closed" value="true" />
+      <created>1728240844308</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1728240844308</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -817,7 +813,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="set min height" />
     <MESSAGE value="add changing storage" />
     <MESSAGE value="fixing loading in listview" />
     <MESSAGE value="add work with db" />
@@ -842,7 +837,8 @@
     <MESSAGE value="add translate for init view" />
     <MESSAGE value="some changes" />
     <MESSAGE value="fixing listview" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing listview" />
+    <MESSAGE value="add listview selection" />
+    <option name="LAST_COMMIT_MESSAGE" value="add listview selection" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
