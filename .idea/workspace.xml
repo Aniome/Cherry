@@ -12,7 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add listview selection">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fix regular expression">
       <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/dracula.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" afterDir="false" />
@@ -400,15 +400,8 @@
       <workItem from="1728051756344" duration="15213000" />
       <workItem from="1728143969566" duration="8967000" />
       <workItem from="1728226854165" duration="7419000" />
-      <workItem from="1728319382714" duration="2488000" />
-    </task>
-    <task id="LOCAL-00035" summary="fix some bugs">
-      <option name="closed" value="true" />
-      <created>1717872715130</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1717872715130</updated>
+      <workItem from="1728319382714" duration="2882000" />
+      <workItem from="1728403149091" duration="1195000" />
     </task>
     <task id="LOCAL-00036" summary="fix deleting">
       <option name="closed" value="true" />
@@ -794,7 +787,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728240844308</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="fix regular expression">
+      <option name="closed" value="true" />
+      <created>1728323102675</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1728323102676</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -813,7 +814,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add changing storage" />
     <MESSAGE value="fixing loading in listview" />
     <MESSAGE value="add work with db" />
     <MESSAGE value="add some visual updated" />
@@ -838,7 +838,8 @@
     <MESSAGE value="some changes" />
     <MESSAGE value="fixing listview" />
     <MESSAGE value="add listview selection" />
-    <option name="LAST_COMMIT_MESSAGE" value="add listview selection" />
+    <MESSAGE value="fix regular expression" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix regular expression" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

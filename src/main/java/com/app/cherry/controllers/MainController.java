@@ -148,10 +148,10 @@ public class MainController{
     public void loadDataOnFormOnClick(TreeItem<String> selectedItem){
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         tab.setContent(null);
-        TabManager tabManager = new TabManager();
-        BorderPane borderPane = tabManager.createTab(tab);
         String filename = selectedItem.getValue();
         tab.setText(filename);
+        TabManager tabManager = new TabManager();
+        BorderPane borderPane = tabManager.createTab(tab);
         ObservableList<Node> childrens = borderPane.getChildren();
         for (Node children: childrens){
             if (children instanceof TextField){
