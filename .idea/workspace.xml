@@ -12,10 +12,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fix regular expression">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fix bug with tab name">
       <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/dracula.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -401,15 +406,8 @@
       <workItem from="1728143969566" duration="8967000" />
       <workItem from="1728226854165" duration="7419000" />
       <workItem from="1728319382714" duration="2882000" />
-      <workItem from="1728403149091" duration="1195000" />
-    </task>
-    <task id="LOCAL-00036" summary="fix deleting">
-      <option name="closed" value="true" />
-      <created>1717907518217</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1717907518217</updated>
+      <workItem from="1728403149091" duration="1353000" />
+      <workItem from="1728480373279" duration="4386000" />
     </task>
     <task id="LOCAL-00037" summary="creating another context menu for folder and note">
       <option name="closed" value="true" />
@@ -795,7 +793,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728323102676</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="fix bug with tab name">
+      <option name="closed" value="true" />
+      <created>1728404494659</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1728404494659</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -814,7 +820,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fixing loading in listview" />
     <MESSAGE value="add work with db" />
     <MESSAGE value="add some visual updated" />
     <MESSAGE value="add copy button" />
@@ -839,7 +844,8 @@
     <MESSAGE value="fixing listview" />
     <MESSAGE value="add listview selection" />
     <MESSAGE value="fix regular expression" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix regular expression" />
+    <MESSAGE value="fix bug with tab name" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug with tab name" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

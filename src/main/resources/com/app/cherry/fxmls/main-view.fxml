@@ -43,7 +43,7 @@
                   <FontIcon iconLiteral="mdi2s-safe" scaleX="1.5" scaleY="1.5" />
                </graphic>
                 </Button>
-                <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                <Button mnemonicParsing="false" onAction="#settings" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <tooltip>
                         <Tooltip text="%ToolTipSettings" />
                     </tooltip>

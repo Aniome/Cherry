@@ -1,5 +1,6 @@
 package com.app.cherry.controls;
 
+import com.app.cherry.RunApplication;
 import com.app.cherry.controls.codearea.MixedArea;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -20,7 +21,7 @@ public class TabManager {
 
     public static BorderPane createEmptyTab(){
         BorderPane borderPane = new BorderPane();
-        Label label = new Label("Ни один файл не открыт");
+        Label label = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
         label.setFont(new Font(29));
         borderPane.setCenter(label);
         borderPane.setStyle("-fx-background-color: #282a36");

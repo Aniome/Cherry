@@ -1,5 +1,6 @@
 package com.app.cherry.controllers;
 
+import atlantafx.base.controls.ModalPane;
 import com.app.cherry.controls.ApplicationContextMenu;
 import com.app.cherry.controls.TabManager;
 import com.app.cherry.controls.codearea.MixedArea;
@@ -265,6 +266,21 @@ public class MainController{
     @FXML
     private void showSearch(){
 
+    }
+
+    @FXML
+    private void settings(){
+//        ModalPane modalPane = new ModalPane();
+//        Dialog dialog = new Dialog();
+//        dialog.setHeight(450);
+        //450, 450
+
+//        Button openBtn = new Button("Open Dialog");
+//        openBtn.setOnAction(evt -> modalPane.show(dialog));
+//
+//        Button closeBtn = new Button("Close");
+//        closeBtn.setOnAction(evt -> modalPane.hide(true));
+//        dialog.getChildren().setAll(closeBtn);
     }
 
     private void loadItemsInTree(List<Path> pathList){
