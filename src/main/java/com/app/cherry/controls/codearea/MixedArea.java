@@ -1,5 +1,6 @@
 package com.app.cherry.controls.codearea;
 
+import atlantafx.base.controls.ModalPane;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.FindViewController;
 import javafx.application.Platform;
@@ -106,7 +107,7 @@ public class MixedArea {
             }
         });
 
-        return new StackPane(new VirtualizedScrollPane<>(codeArea));
+        return new StackPane(new VirtualizedScrollPane<>(codeArea), new ModalPane());
     }
 
     public static void applyStylesPage(int pageLength){

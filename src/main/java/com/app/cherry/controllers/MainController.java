@@ -159,8 +159,11 @@ public class MainController{
                 ((TextField) children).setText(filename);
             }
             if (children instanceof StackPane stackPane){
+                var stackPaneChildrens = stackPane.getChildren();
+
                 @SuppressWarnings("unchecked")
-                VirtualizedScrollPane<CodeArea> virtualizedScrollPane = (VirtualizedScrollPane<CodeArea>) stackPane.getChildren().getFirst();
+                VirtualizedScrollPane<CodeArea> virtualizedScrollPane =
+                        (VirtualizedScrollPane<CodeArea>) stackPaneChildrens.getFirst();
                 CodeArea codeArea = virtualizedScrollPane.getContent();
 
                 final String text = FileService.readFile(selectedItem);
@@ -189,6 +192,9 @@ public class MainController{
                 } else {
                     MixedArea.applyStyles(0, codeAreaLength);
                 }
+
+                ModalPane modalPane = (ModalPane) stackPaneChildrens.getLast();
+
             }
         }
         borderPane.setStyle("-fx-background-color: #282a36");
