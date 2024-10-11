@@ -1,6 +1,7 @@
 package com.app.cherry.controllers;
 
 import atlantafx.base.controls.ModalPane;
+import atlantafx.base.layout.ModalBox;
 import com.app.cherry.controls.ApplicationContextMenu;
 import com.app.cherry.controls.TabManager;
 import com.app.cherry.controls.codearea.MixedArea;
@@ -15,12 +16,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -46,6 +50,8 @@ public class MainController{
     ToggleButton favoriteNotesButton;
     @FXML
     VBox vbox;
+    @FXML
+    ModalPane modalPane;
 
     final double renameWidth = 600;
     final double renameHeight = 250;
@@ -77,6 +83,8 @@ public class MainController{
         TreeCellFactory.build(treeView, this);
 
         configureToggleButtons();
+        modalPane.hide();
+        splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
     public void afterShowing(){
@@ -115,7 +123,7 @@ public class MainController{
         }
     }
 
-    public void openModalWindow(){
+    public void openRenameWindow(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
@@ -159,7 +167,7 @@ public class MainController{
                 ((TextField) children).setText(filename);
             }
             if (children instanceof StackPane stackPane){
-                var stackPaneChildrens = stackPane.getChildren();
+                ObservableList<Node> stackPaneChildrens = stackPane.getChildren();
 
                 @SuppressWarnings("unchecked")
                 VirtualizedScrollPane<CodeArea> virtualizedScrollPane =
@@ -192,9 +200,6 @@ public class MainController{
                 } else {
                     MixedArea.applyStyles(0, codeAreaLength);
                 }
-
-                ModalPane modalPane = (ModalPane) stackPaneChildrens.getLast();
-
             }
         }
         borderPane.setStyle("-fx-background-color: #282a36");
@@ -276,17 +281,24 @@ public class MainController{
 
     @FXML
     private void settings(){
-//        ModalPane modalPane = new ModalPane();
-//        Dialog dialog = new Dialog();
-//        dialog.setHeight(450);
-        //450, 450
+        Button closeBtn = new Button("Close");
+        closeBtn.setOnAction(evt -> modalPane.hide(true));
+        VBox vbox = new VBox(closeBtn);
 
-//        Button openBtn = new Button("Open Dialog");
-//        openBtn.setOnAction(evt -> modalPane.show(dialog));
-//
-//        Button closeBtn = new Button("Close");
-//        closeBtn.setOnAction(evt -> modalPane.hide(true));
-//        dialog.getChildren().setAll(closeBtn);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(vbox);
+
+        ModalBox test = new ModalBox(modalPane);
+
+        SplitPane splitPane = new SplitPane();
+        splitPane.maxHeightProperty().bind(splitPane.heightProperty().subtract(200));
+        splitPane.maxWidthProperty().bind(splitPane.widthProperty().subtract(200));
+        String style = "-fx-background-color: -color-bg-default;" +
+                "-fx-background-radius: 20;";
+        splitPane.setStyle(style);
+        splitPane.setPadding(new Insets(10));
+
+        modalPane.show(test);
     }
 
     private void loadItemsInTree(List<Path> pathList){

@@ -41,7 +41,7 @@ public class ApplicationContextMenu {
         MenuItem renameMenuItem = new MenuItem(RunApplication.resourceBundle.getString("ContextMenuRename"));
         renameMenuItem.setOnAction(actionEvent -> {
             if (renameStage == null)
-                mainController.openModalWindow();
+                mainController.openRenameWindow();
             else
                 renameStage.show();
         });

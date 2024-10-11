@@ -107,7 +107,7 @@ public class MixedArea {
             }
         });
 
-        return new StackPane(new VirtualizedScrollPane<>(codeArea), new ModalPane());
+        return new StackPane(new VirtualizedScrollPane<>(codeArea));
     }
 
     public static void applyStylesPage(int pageLength){
