@@ -17,14 +17,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -239,12 +237,13 @@ public class MainController{
     }
 
     public void createFolder(TreeItem<String> treeItem){
-        File Folder = FileService.createFolderMarkdown(treeItem);
-        if (Folder == null) {
+        File folder = FileService.createFolderMarkdown(treeItem);
+        if (folder == null) {
             return;
         }
-        EmptyExpandedTreeItem folder = new EmptyExpandedTreeItem(Folder.getName(), false, folderIconName);
-        treeItem.getChildren().add(folder);
+        EmptyExpandedTreeItem expandedTreeItem =
+                new EmptyExpandedTreeItem(folder.getName(), false, folderIconName);
+        treeItem.getChildren().add(expandedTreeItem);
         sortTreeView();
     }
 
@@ -283,22 +282,32 @@ public class MainController{
     private void settings(){
         Button closeBtn = new Button("Close");
         closeBtn.setOnAction(evt -> modalPane.hide(true));
-        VBox vbox = new VBox(closeBtn);
+        VBox settingsVbox = new VBox(closeBtn);
 
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(vbox);
+        VBox tabsVbox = new VBox();
 
-        ModalBox test = new ModalBox(modalPane);
+        SplitPane modalSplitPane = new SplitPane(tabsVbox, settingsVbox);
 
-        SplitPane splitPane = new SplitPane();
-        splitPane.maxHeightProperty().bind(splitPane.heightProperty().subtract(200));
-        splitPane.maxWidthProperty().bind(splitPane.widthProperty().subtract(200));
+        VBox content = new VBox(modalSplitPane);
+        content.setStyle("-fx-background-color: white");
+        content.setTranslateX(50);
+        content.setTranslateY(50);
+        VBox.setVgrow(content, Priority.ALWAYS);
+        content.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        ModalBox modalBox = new ModalBox(modalPane);
+        modalBox.maxHeightProperty().bind(splitPane.heightProperty().subtract(200));
+        modalBox.maxWidthProperty().bind(splitPane.widthProperty().subtract(200));
+        content.minHeightProperty().bind(modalBox.heightProperty().subtract(100));
+        content.minWidthProperty().bind(modalBox.widthProperty().subtract(100));
+        modalSplitPane.minHeightProperty().bind(content.heightProperty());
+        modalSplitPane.minWidthProperty().bind(content.widthProperty());
+        modalBox.addContent(content);
         String style = "-fx-background-color: -color-bg-default;" +
                 "-fx-background-radius: 20;";
-        splitPane.setStyle(style);
-        splitPane.setPadding(new Insets(10));
+        modalBox.setStyle(style);
 
-        modalPane.show(test);
+        modalPane.show(modalBox);
     }
 
     private void loadItemsInTree(List<Path> pathList){

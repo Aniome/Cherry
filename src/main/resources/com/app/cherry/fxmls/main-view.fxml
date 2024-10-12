@@ -27,160 +27,160 @@
             <bottom>
                 <GridPane minWidth="165.0" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
+                        <Insets bottom="5.0" top="5.0"/>
                     </padding>
                     <rowConstraints>
-                        <RowConstraints />
-                        <RowConstraints />
+                        <RowConstraints/>
+                        <RowConstraints/>
                     </rowConstraints>
-                    <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#changeStorage" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                            <tooltip>
-                                <Tooltip text="%ToolTipAnotherStorage" />
-                            </tooltip>
-                            <graphic>
-                                <FontIcon iconLiteral="mdi2s-safe" scaleX="1.5" scaleY="1.5" />
-                            </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#settings" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                            <tooltip>
-                                <Tooltip text="%ToolTipSettings" />
-                            </tooltip>
-                            <graphic>
-                                <FontIcon iconLiteral="mdmz-settings" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
-                            </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                            <tooltip>
-                                <Tooltip text="%ToolTipHelp" />
-                            </tooltip>
-                            <graphic>
-                                <FontIcon iconLiteral="mdoal-help" scaleX="1.25" scaleY="1.25" />
-                            </graphic>
-                        </Button>
-                    </children>
+                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#changeStorage"
+                            GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <tooltip>
+                            <Tooltip text="%ToolTipAnotherStorage"/>
+                        </tooltip>
+                        <graphic>
+                            <FontIcon iconLiteral="mdi2s-safe" scaleX="1.5" scaleY="1.5"/>
+                        </graphic>
+                    </Button>
+                    <Button mnemonicParsing="false" onAction="#settings" GridPane.columnIndex="1"
+                            GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <tooltip>
+                            <Tooltip text="%ToolTipSettings"/>
+                        </tooltip>
+                        <graphic>
+                            <FontIcon iconLiteral="mdmz-settings" scaleX="1.25" scaleY="1.25" selectionEnd="0"/>
+                        </graphic>
+                    </Button>
+                    <Button mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                            GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <tooltip>
+                            <Tooltip text="%ToolTipHelp"/>
+                        </tooltip>
+                        <graphic>
+                            <FontIcon iconLiteral="mdoal-help" scaleX="1.25" scaleY="1.25"/>
+                        </graphic>
+                    </Button>
                 </GridPane>
             </bottom>
             <center>
-                <VBox fx:id="vbox" minWidth="165.0" style="-fx-background-color: #282a36;" BorderPane.alignment="CENTER">
+                <VBox fx:id="vbox" minWidth="165.0" style="-fx-background-color: #282a36;"
+                      BorderPane.alignment="CENTER">
                     <padding>
-                        <Insets top="5.0" />
+                        <Insets top="5.0"/>
                     </padding>
                     <opaqueInsets>
-                        <Insets />
+                        <Insets/>
                     </opaqueInsets>
-                    <children>
-                        <GridPane>
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <padding>
-                                <Insets bottom="10.0" top="10.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="5.0" />
-                            </VBox.margin>
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                            <children>
-                                <Button mnemonicParsing="false" onMouseClicked="#createNote" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <tooltip>
-                                        <Tooltip text="%ToolTipNewNote" />
-                                    </tooltip>
-                                    <graphic>
-                                        <FontIcon iconLiteral="mdmz-note_add" scaleX="1.25" scaleY="1.25" />
-                                    </graphic>
-                                </Button>
-                                <Button mnemonicParsing="false" onMouseClicked="#createFolderInTree" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <tooltip>
-                                        <Tooltip text="%ToolTipNewFolder" />
-                                    </tooltip>
-                                    <graphic>
-                                        <FontIcon iconLiteral="mdal-create_new_folder" scaleX="1.25" scaleY="1.25" />
-                                    </graphic>
-                                </Button>
-                            </children>
-                        </GridPane>
-                        <TreeView fx:id="treeView" editable="true" VBox.vgrow="ALWAYS" />
-                    </children>
+                    <GridPane>
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <padding>
+                            <Insets bottom="10.0" top="10.0"/>
+                        </padding>
+                        <VBox.margin>
+                            <Insets bottom="5.0"/>
+                        </VBox.margin>
+                        <opaqueInsets>
+                            <Insets/>
+                        </opaqueInsets>
+                        <Button mnemonicParsing="false" onMouseClicked="#createNote" GridPane.halignment="CENTER"
+                                GridPane.valignment="CENTER">
+                            <tooltip>
+                                <Tooltip text="%ToolTipNewNote"/>
+                            </tooltip>
+                            <graphic>
+                                <FontIcon iconLiteral="mdmz-note_add" scaleX="1.25" scaleY="1.25"/>
+                            </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onMouseClicked="#createFolderInTree"
+                                GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <tooltip>
+                                <Tooltip text="%ToolTipNewFolder"/>
+                            </tooltip>
+                            <graphic>
+                                <FontIcon iconLiteral="mdal-create_new_folder" scaleX="1.25" scaleY="1.25"/>
+                            </graphic>
+                        </Button>
+                    </GridPane>
+                    <TreeView fx:id="treeView" editable="true" VBox.vgrow="ALWAYS"/>
                 </VBox>
             </center>
             <top>
-                <GridPane alignment="CENTER" minWidth="165.0" style="-fx-background-color: #282a36; -fx-border-color: #685ab3;" BorderPane.alignment="CENTER">
+                <GridPane alignment="CENTER" minWidth="165.0"
+                          style="-fx-background-color: #282a36; -fx-border-color: #685ab3;"
+                          BorderPane.alignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <padding>
-                        <Insets bottom="15.0" top="10.0" />
+                        <Insets bottom="15.0" top="10.0"/>
                     </padding>
-                    <children>
-                        <ToggleButton fx:id="filesManagerButton" mnemonicParsing="false" onMouseClicked="#showFiles" selected="true" style="-fx-line-spacing: 10;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <toggleGroup>
-                                <ToggleGroup fx:id="maingroup" />
-                            </toggleGroup>
-                            <graphic>
-                                <FontIcon iconLiteral="mdal-folder" scaleX="1.25" scaleY="1.25" />
-                            </graphic>
-                            <tooltip>
-                                <Tooltip text="%ToolTipFileManager" />
-                            </tooltip>
-                        </ToggleButton>
-                        <ToggleButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch" toggleGroup="$maingroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <graphic>
-                                <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
-                            </graphic>
-                            <tooltip>
-                                <Tooltip text="%ToolTipSearch" />
-                            </tooltip>
-                        </ToggleButton>
-                        <ToggleButton fx:id="favoriteNotesButton" mnemonicParsing="false" onAction="#showFavorites" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <graphic>
-                                <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
-                            </graphic>
-                            <tooltip>
-                                <Tooltip text="%ToolTipFavorites" />
-                            </tooltip>
-                        </ToggleButton>
-                    </children>
+                    <ToggleButton fx:id="filesManagerButton" mnemonicParsing="false" onMouseClicked="#showFiles"
+                                  selected="true" style="-fx-line-spacing: 10;" GridPane.halignment="CENTER"
+                                  GridPane.valignment="CENTER">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="maingroup"/>
+                        </toggleGroup>
+                        <graphic>
+                            <FontIcon iconLiteral="mdal-folder" scaleX="1.25" scaleY="1.25"/>
+                        </graphic>
+                        <tooltip>
+                            <Tooltip text="%ToolTipFileManager"/>
+                        </tooltip>
+                    </ToggleButton>
+                    <ToggleButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch"
+                                  toggleGroup="$maingroup" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                  GridPane.valignment="CENTER">
+                        <graphic>
+                            <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0"/>
+                        </graphic>
+                        <tooltip>
+                            <Tooltip text="%ToolTipSearch"/>
+                        </tooltip>
+                    </ToggleButton>
+                    <ToggleButton fx:id="favoriteNotesButton" mnemonicParsing="false" onAction="#showFavorites"
+                                  toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                                  GridPane.valignment="CENTER">
+                        <graphic>
+                            <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0"/>
+                        </graphic>
+                        <tooltip>
+                            <Tooltip text="%ToolTipFavorites"/>
+                        </tooltip>
+                    </ToggleButton>
                 </GridPane>
             </top>
         </BorderPane>
         <TabPane fx:id="tabPane" minWidth="150.0" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS">
-            <tabs>
-                <Tab closable="false" text="%EmptyTab">
-                    <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #282a36;">
-                            <center>
-                                <Label text="%EmptyPage" BorderPane.alignment="CENTER">
-                                    <font>
-                                        <Font size="29.0" />
-                                    </font>
-                                </Label>
-                            </center>
-                        </BorderPane>
-                    </content>
-                </Tab>
-                <Tab closable="false" onSelectionChanged="#addTab" text="+">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
-            </tabs>
+            <Tab closable="false" text="%EmptyTab">
+                <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #282a36;">
+                    <center>
+                        <Label text="%EmptyPage" BorderPane.alignment="CENTER">
+                            <font>
+                                <Font size="29.0"/>
+                            </font>
+                        </Label>
+                    </center>
+                </BorderPane>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#addTab" text="+">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </Tab>
         </TabPane>
     </SplitPane>
    <ModalPane fx:id="modalPane">

@@ -12,6 +12,7 @@ target/
 *.iml
 *.ipr
 src/main/resources/com/app/cherry/Databases.db
+src/main/resources/com/app/cherry/css/dracula.css
 
 ### Eclipse ###
 .apt_generated
