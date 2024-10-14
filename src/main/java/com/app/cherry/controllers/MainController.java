@@ -7,6 +7,7 @@ import com.app.cherry.controls.TabManager;
 import com.app.cherry.controls.codearea.MixedArea;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.dao.SettingsDAO;
+import com.app.cherry.entity.FavoriteNotes;
 import com.app.cherry.util.FileService;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.TreeViewItems.EmptyExpandedTreeItem;
@@ -263,7 +264,14 @@ public class MainController{
         }
         treeView.setRoot(new TreeItem<>(""));
         List<Path> pathList = new LinkedList<>();
-        FavoriteNotesDAO.getFavoriteNotes().forEach(item -> pathList.add(Paths.get(item.getPathNote())));
+        Objects.requireNonNull(FavoriteNotesDAO.getFavoriteNotes()).forEach(item -> {
+            String path = item.getPathNote();
+            if (FileService.checkExists(path)){
+                pathList.add(Paths.get(path));
+            } else {
+                FavoriteNotesDAO.deleteFavoriteNote(item.getId());
+            }
+        });
         loadItemsInTree(pathList);
         filesManagerSelected = false;
     }
@@ -311,7 +319,14 @@ public class MainController{
     }
 
     private void loadItemsInTree(List<Path> pathList){
-        pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
+        pathList = pathList.stream().map(path -> {
+            try {
+                return RunApplication.FolderPath.relativize(path);
+            } catch (Exception e) {
+
+                return null;
+            }
+        }).toList();
         pathList.forEach(item -> {
             String[] path = item.toString().split("\\\\");
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();

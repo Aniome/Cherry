@@ -1,5 +1,6 @@
 package com.app.cherry.dao;
 
+import com.app.cherry.RunApplication;
 import com.app.cherry.entity.FavoriteNotes;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.HibernateUtil;
@@ -10,7 +11,8 @@ public class FavoriteNotesDAO {
 
     public static void setPathNote(String pathNote){
         HibernateUtil.sessionFactory.inTransaction(session -> {
-            List<FavoriteNotes> favoriteNotesList = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
+            List<FavoriteNotes> favoriteNotesList
+                    = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
             if (containsPathNote(pathNote, favoriteNotesList)){
                 Alerts.CreateAndShowWarning("Элемент уже в избранном");
                 return;
@@ -35,8 +37,23 @@ public class FavoriteNotesDAO {
 
     public static List<FavoriteNotes> getFavoriteNotes(){
         Session session = HibernateUtil.sessionFactory.openSession();
-        List<FavoriteNotes> favoriteNotes = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
+        List<FavoriteNotes> favoriteNotes
+                = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
         session.close();
+        for (FavoriteNotes item : favoriteNotes){
+            if (item.getPathNote().contains((CharSequence) RunApplication.FolderPath)){
+                return null;
+            }
+        }
         return favoriteNotes;
+    }
+
+    public static void deleteFavoriteNote(int id){
+        HibernateUtil.sessionFactory.inTransaction(session -> {
+            FavoriteNotes deletingNote = session.find(FavoriteNotes.class, id);
+            if (deletingNote != null){
+                session.remove(deletingNote);
+            }
+        });
     }
 }

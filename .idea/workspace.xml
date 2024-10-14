@@ -12,13 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="simple modal pane">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add changes for modalPane">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/SettingsModalWindow.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/dracula.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -425,15 +424,8 @@
       <workItem from="1728581958466" duration="6408000" />
       <workItem from="1728592042066" duration="5944000" />
       <workItem from="1728614969756" duration="13478000" />
-      <workItem from="1728690811713" duration="14938000" />
-    </task>
-    <task id="LOCAL-00040" summary="added changes for favorite menu">
-      <option name="closed" value="true" />
-      <created>1718650438236</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1718650438236</updated>
+      <workItem from="1728690811713" duration="15285000" />
+      <workItem from="1728880528473" duration="11010000" />
     </task>
     <task id="LOCAL-00041" summary="added work db">
       <option name="closed" value="true" />
@@ -819,7 +811,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728671112668</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="add changes for modalPane">
+      <option name="closed" value="true" />
+      <created>1728719069297</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1728719069298</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -838,7 +838,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add copy button" />
     <MESSAGE value="add checking paths in listview" />
     <MESSAGE value="add paste button" />
     <MESSAGE value="add first localization" />
@@ -863,7 +862,8 @@
     <MESSAGE value="add localization to contextmenu" />
     <MESSAGE value="some changes" />
     <MESSAGE value="simple modal pane" />
-    <option name="LAST_COMMIT_MESSAGE" value="simple modal pane" />
+    <MESSAGE value="add changes for modalPane" />
+    <option name="LAST_COMMIT_MESSAGE" value="add changes for modalPane" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
