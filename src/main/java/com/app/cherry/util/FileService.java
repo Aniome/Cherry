@@ -3,12 +3,17 @@ package com.app.cherry.util;
 import com.app.cherry.RunApplication;
 import javafx.scene.control.TreeItem;
 import org.fxmisc.richtext.CodeArea;
-import java.io.*;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class FileService {
     //List for FileVisitor
@@ -23,7 +28,7 @@ public class FileService {
                 result.append(ch);
             }
         } catch (IOException e) {
-            Alerts.CreateAndShowError(e.getMessage());
+            Alerts.createAndShowError(e.getMessage());
         }
         return result.toString();
     }
@@ -32,7 +37,7 @@ public class FileService {
         try (FileWriter fileWriter = new FileWriter(getPath(treeItem))) {
             fileWriter.write(codeArea.getText());
         } catch (IOException e) {
-            Alerts.CreateAndShowWarning(e.getMessage());
+            Alerts.createAndShowWarning(e.getMessage());
         }
     }
 
@@ -57,7 +62,7 @@ public class FileService {
         try {
             Files.walkFileTree(path, new mdFileVisitor());
         } catch (IOException e) {
-            Alerts.CreateAndShowError(e.getMessage());
+            Alerts.createAndShowError(e.getMessage());
         }
         return pathList;
     }
@@ -72,7 +77,7 @@ public class FileService {
                 return null;
             }
         } catch (IOException e) {
-            Alerts.CreateAndShowError(e.getMessage());
+            Alerts.createAndShowError(e.getMessage());
             return null;
         }
     }
@@ -88,11 +93,13 @@ public class FileService {
     }
 
     public static File checkExists(String path, String extension) {
-        File file = new File(path + "\\Без названия" + extension);
+        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        String untitled = "\\" + resourceBundle.getString("FileNameUntitled");
+        File file = new File(path + untitled + extension);
         if (file.exists()) {
             int i = 1;
             while (file.exists()){
-                file = new File(path + "\\Без названия" + i + extension);
+                file = new File(path + untitled + i + extension);
                 i++;
             }
         }

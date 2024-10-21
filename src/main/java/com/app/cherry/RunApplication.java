@@ -10,9 +10,8 @@ import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.image.Image;
-import org.scenicview.ScenicView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -56,9 +55,11 @@ public class RunApplication extends Application {
 
     public static void showMainWindow() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"), resourceBundle);
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    RunApplication.class.getResource("fxmls/main-view.fxml"), resourceBundle);
             Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
-            scene.getStylesheets().add(Objects.requireNonNull(RunApplication.class.getResource("css/keywords.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull
+                    (RunApplication.class.getResource("css/keywords.css")).toExternalForm());
             MainController mainController = fxmlLoader.getController();
             mainController.init(mainStage);
             setIcon(mainStage);

@@ -8,13 +8,17 @@ import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.FileService;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 
 public class ListViewItem extends ListCell<String> {
 
@@ -57,7 +61,8 @@ public class ListViewItem extends ListCell<String> {
                 RunApplication.FolderPath = Paths.get(path);
                 initController.ShowMainStage();
             } else {
-                Alerts.CreateAndShowWarning("Папка не найдена");
+                ResourceBundle resourceBundle = RunApplication.resourceBundle;
+                Alerts.createAndShowWarning(resourceBundle.getString("InitFolderNotFound"));
             }
         });
     }

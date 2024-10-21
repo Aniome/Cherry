@@ -3,8 +3,8 @@ package com.app.cherry.controls;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
 import com.app.cherry.dao.FavoriteNotesDAO;
-import com.app.cherry.util.FileService;
 import com.app.cherry.util.Alerts;
+import com.app.cherry.util.FileService;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -70,7 +70,7 @@ public class ApplicationContextMenu {
                 selectedTab.setContent(TabManager.createEmptyTab());
                 selectedTab.setText(resourceBundle.getString("EmptyTab"));
             } else {
-                Alerts.CreateAndShowWarning(resourceBundle.getString("ContextMenuDeleteFailed"));
+                Alerts.createAndShowWarning(resourceBundle.getString("ContextMenuDeleteFailed"));
             }
         });
         return deleteMenuItem;

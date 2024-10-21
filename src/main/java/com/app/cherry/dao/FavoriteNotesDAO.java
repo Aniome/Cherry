@@ -5,6 +5,7 @@ import com.app.cherry.entity.FavoriteNotes;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.HibernateUtil;
 import org.hibernate.Session;
+
 import java.util.List;
 
 public class FavoriteNotesDAO {
@@ -14,7 +15,7 @@ public class FavoriteNotesDAO {
             List<FavoriteNotes> favoriteNotesList
                     = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
             if (containsPathNote(pathNote, favoriteNotesList)){
-                Alerts.CreateAndShowWarning("Элемент уже в избранном");
+                Alerts.createAndShowWarning("Элемент уже в избранном");
                 return;
             }
             FavoriteNotes favoriteNotes = new FavoriteNotes();
@@ -41,8 +42,8 @@ public class FavoriteNotesDAO {
                 = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
         session.close();
         for (FavoriteNotes item : favoriteNotes){
-            if (item.getPathNote().contains((CharSequence) RunApplication.FolderPath)){
-                return null;
+            if (!item.getPathNote().contains(RunApplication.FolderPath.toString())){
+                return List.of();
             }
         }
         return favoriteNotes;

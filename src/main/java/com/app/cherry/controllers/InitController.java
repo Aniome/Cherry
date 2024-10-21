@@ -1,9 +1,9 @@
 package com.app.cherry.controllers;
 
+import com.app.cherry.RunApplication;
 import com.app.cherry.controls.ListViewItem;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
-import com.app.cherry.RunApplication;
 import com.app.cherry.util.FileService;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,9 +12,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 public class InitController {
 
@@ -130,11 +133,11 @@ public class InitController {
     @FXML
     private void CreateStorage(){
         if (textField.getText().isEmpty()){
-            Alerts.CreateAndShowWarning("Укажите имя хранилища");
+            Alerts.createAndShowWarning("Укажите имя хранилища");
             return;
         }
         if (RunApplication.FolderPath == null){
-            Alerts.CreateAndShowWarning("Укажите путь до хранилища");
+            Alerts.createAndShowWarning("Укажите путь до хранилища");
             return;
         }
         ShowMainStage();
@@ -166,9 +169,7 @@ public class InitController {
                     return;
                 selectionModel.select(treeCellItem);
             });
-            treeCell.setOnMouseExited(mouseEvent -> {
-                selectionModel.clearSelection();
-            });
+            treeCell.setOnMouseExited(mouseEvent -> selectionModel.clearSelection());
 
             return treeCell;
         });

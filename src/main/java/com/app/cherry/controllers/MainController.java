@@ -2,27 +2,28 @@ package com.app.cherry.controllers;
 
 import atlantafx.base.controls.ModalPane;
 import atlantafx.base.layout.ModalBox;
+import com.app.cherry.RunApplication;
 import com.app.cherry.controls.ApplicationContextMenu;
 import com.app.cherry.controls.TabManager;
+import com.app.cherry.controls.TreeViewItems.EmptyExpandedTreeItem;
+import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import com.app.cherry.controls.codearea.MixedArea;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.dao.SettingsDAO;
-import com.app.cherry.entity.FavoriteNotes;
 import com.app.cherry.util.FileService;
-import com.app.cherry.RunApplication;
-import com.app.cherry.controls.TreeViewItems.EmptyExpandedTreeItem;
-import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.*;
-import javafx.scene.layout.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -32,7 +33,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 public class MainController{
     @FXML
@@ -319,14 +323,7 @@ public class MainController{
     }
 
     private void loadItemsInTree(List<Path> pathList){
-        pathList = pathList.stream().map(path -> {
-            try {
-                return RunApplication.FolderPath.relativize(path);
-            } catch (Exception e) {
-
-                return null;
-            }
-        }).toList();
+        pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
         pathList.forEach(item -> {
             String[] path = item.toString().split("\\\\");
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();

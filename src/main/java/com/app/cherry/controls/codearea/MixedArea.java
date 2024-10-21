@@ -1,6 +1,5 @@
 package com.app.cherry.controls.codearea;
 
-import atlantafx.base.controls.ModalPane;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.FindViewController;
 import javafx.application.Platform;
@@ -27,6 +26,7 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.reactfx.collection.ListModification;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -140,15 +140,15 @@ public class MixedArea {
             hbox.setSpacing(1);
             hbox.setAlignment(Pos.CENTER);
 
-            if (line == 0){
-                Rectangle rectangle = new Rectangle();
-                rectangle.setFill(Color.web("#282c34"));
-                rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
-                rectangle.heightProperty().bind(codeArea.heightProperty());
-                StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
-                return new StackPane(rectangle, hbox);
-            }
-            return new StackPane(hbox);
+            Rectangle rectangle = new Rectangle();
+            rectangle.setFill(Color.web("#282c34"));
+            rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
+            rectangle.heightProperty().bind(hbox.heightProperty());
+            StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
+            StackPane stackPane = new StackPane(rectangle, hbox);
+            stackPane.toFront();
+            stackPane.setTranslateZ(10);
+            return stackPane;
         };
     }
 
