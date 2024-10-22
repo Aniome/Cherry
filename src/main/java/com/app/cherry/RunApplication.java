@@ -3,14 +3,21 @@ package com.app.cherry;
 import atlantafx.base.theme.Dracula;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.controllers.RenameViewController;
 import com.app.cherry.controllers.WebViewController;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.dao.SettingsDAO;
+import com.app.cherry.util.FileService;
 import com.app.cherry.util.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,6 +34,8 @@ public class RunApplication extends Application {
     private static final double InitialWidth = 800;
     public static final double MainHeight = 480;
     public static final double MainWidth = 640;
+    public static final double renameWidth = 600;
+    public static final double renameHeight = 250;
     private static Stage mainStage;
     private static Double height;
     private static Double width;
@@ -115,6 +124,38 @@ public class RunApplication extends Application {
             prepareStage(webViewHeight, webViewWidth, secondScene,"Browser", webViewStage);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public static void showRenameWindow(TreeView<String> treeView, TabPane tabPane){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
+            Stage stage = new Stage();
+            RunApplication.setIcon(stage);
+            stage.setResizable(false);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(mainStage);
+            stage.setOnHiding((event) -> {
+                String newFileName = MainController.newFileName;
+                if (newFileName == null) {
+                    return;
+                }
+                TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+                boolean b = FileService.renameFile(newFileName, selectedItem.getValue(),
+                        RunApplication.FolderPath.toString());
+                if (b){
+                    selectedItem.setValue(newFileName);
+                    Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+                    selectedTab.setText(newFileName);
+                }
+            });
+            RenameViewController renameViewController = fxmlLoader.getController();
+            renameViewController.init(stage);
+            String renameWindowTitle = RunApplication.resourceBundle.getString("RenameWindowTitle");
+            RunApplication.prepareStage(renameHeight, renameWidth, scene, renameWindowTitle, stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

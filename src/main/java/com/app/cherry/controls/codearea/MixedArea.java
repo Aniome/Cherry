@@ -142,12 +142,16 @@ public class MixedArea {
 
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(Color.web("#282c34"));
-            rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
-            rectangle.heightProperty().bind(hbox.heightProperty());
+            if (codeArea.getParagraphs().size() - 1 == line && line != 1){
+                rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
+                rectangle.heightProperty().bind(codeArea.heightProperty());
+            } else {
+                rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
+                rectangle.heightProperty().bind(hbox.heightProperty());
+            }
             StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
             StackPane stackPane = new StackPane(rectangle, hbox);
             stackPane.toFront();
-            stackPane.setTranslateZ(10);
             return stackPane;
         };
     }

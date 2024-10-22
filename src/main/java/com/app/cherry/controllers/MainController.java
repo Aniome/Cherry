@@ -1,12 +1,12 @@
 package com.app.cherry.controllers;
 
 import atlantafx.base.controls.ModalPane;
-import atlantafx.base.layout.ModalBox;
+import com.app.cherry.ModalPane.SettingsModal;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.ApplicationContextMenu;
 import com.app.cherry.controls.TabManager;
-import com.app.cherry.controls.TreeViewItems.EmptyExpandedTreeItem;
 import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
+import com.app.cherry.controls.TreeViewItems.TreeItemCustom;
 import com.app.cherry.controls.codearea.MixedArea;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.dao.SettingsDAO;
@@ -15,22 +15,17 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
@@ -56,8 +51,6 @@ public class MainController{
     @FXML
     ModalPane modalPane;
 
-    final double renameWidth = 600;
-    final double renameHeight = 250;
     Stage mainStage;
     Stage renameStage;
     public static String newFileName;
@@ -117,44 +110,17 @@ public class MainController{
         loadItemsInTree(pathList);
     }
 
-    private EmptyExpandedTreeItem creatingTreeItem(String str){
+    private TreeItemCustom creatingTreeItem(String str){
         if (str.contains(".md")) {
             str = str.replace(".md", "");
-            return new EmptyExpandedTreeItem(str, true, fileIconName);
+            return new TreeItemCustom(str, true, fileIconName);
         } else {
-            return new EmptyExpandedTreeItem(str, false, folderIconName);
+            return new TreeItemCustom(str, false, folderIconName);
         }
     }
 
     public void openRenameWindow(){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
-            Stage stage = new Stage();
-            RunApplication.setIcon(stage);
-            stage.setResizable(false);
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(mainStage);
-            stage.setOnHiding((event) -> {
-                if (newFileName == null) {
-                    return;
-                }
-                TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-                boolean b = FileService.renameFile(newFileName, selectedItem.getValue(), RunApplication.FolderPath.toString());
-                if (b){
-                    selectedItem.setValue(newFileName);
-                    Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-                    selectedTab.setText(newFileName);
-                }
-            });
-            renameStage = stage;
-            RenameViewController renameViewController = fxmlLoader.getController();
-            renameViewController.init(stage);
-            String renameWindowTitle = RunApplication.resourceBundle.getString("RenameWindowTitle");
-            RunApplication.prepareStage(renameHeight, renameWidth, scene, renameWindowTitle, stage);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        RunApplication.showRenameWindow(treeView, tabPane);
     }
 
     public void loadDataOnFormOnClick(TreeItem<String> selectedItem){
@@ -179,19 +145,21 @@ public class MainController{
 
                 final String text = FileService.readFile(selectedItem);
                 int length = text.length();
-                char lastChar = text.charAt(length-1);
-                if (lastChar == '\n'){
-                    int i;
-                    for (i = length - 1; i >= 0; i--) {
-                        if (text.charAt(i) != '\n'){
-                            break;
+                if (length > 0) {
+                    char lastChar = text.charAt(length - 1);
+                    if (lastChar == '\n'){
+                        int i;
+                        for (i = length - 1; i >= 0; i--) {
+                            if (text.charAt(i) != '\n'){
+                                break;
+                            }
                         }
+                        codeArea.appendText(text.substring(0,i));
+                        codeArea.appendText(text.substring(i,length));
+                        //codeArea.insertText(0, text);
+                    } else {
+                        codeArea.replaceText(0,0, text);
                     }
-                    codeArea.appendText(text.substring(0,i));
-                    codeArea.appendText(text.substring(i,length));
-                    //codeArea.insertText(0, text);
-                } else {
-                    codeArea.replaceText(0,0, text);
                 }
                 //codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
 
@@ -231,8 +199,7 @@ public class MainController{
         }
         String name = newNote.getName().replace(".md", "");
         TabManager.addTab(name, tabPane);
-        TreeItem<String> treeItem = new TreeItem<>(name);
-        parent.getChildren().add(treeItem);
+        parent.getChildren().add(new TreeItemCustom(name, true, fileIconName));
         sortTreeView();
     }
 
@@ -246,9 +213,9 @@ public class MainController{
         if (folder == null) {
             return;
         }
-        EmptyExpandedTreeItem expandedTreeItem =
-                new EmptyExpandedTreeItem(folder.getName(), false, folderIconName);
-        treeItem.getChildren().add(expandedTreeItem);
+        TreeItemCustom folderTreeItem =
+                new TreeItemCustom(folder.getName(), false, folderIconName);
+        treeItem.getChildren().add(folderTreeItem);
         sortTreeView();
     }
 
@@ -292,34 +259,8 @@ public class MainController{
 
     @FXML
     private void settings(){
-        Button closeBtn = new Button("Close");
-        closeBtn.setOnAction(evt -> modalPane.hide(true));
-        VBox settingsVbox = new VBox(closeBtn);
-
-        VBox tabsVbox = new VBox();
-
-        SplitPane modalSplitPane = new SplitPane(tabsVbox, settingsVbox);
-
-        VBox content = new VBox(modalSplitPane);
-        content.setStyle("-fx-background-color: white");
-        content.setTranslateX(50);
-        content.setTranslateY(50);
-        VBox.setVgrow(content, Priority.ALWAYS);
-        content.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-
-        ModalBox modalBox = new ModalBox(modalPane);
-        modalBox.maxHeightProperty().bind(splitPane.heightProperty().subtract(200));
-        modalBox.maxWidthProperty().bind(splitPane.widthProperty().subtract(200));
-        content.minHeightProperty().bind(modalBox.heightProperty().subtract(100));
-        content.minWidthProperty().bind(modalBox.widthProperty().subtract(100));
-        modalSplitPane.minHeightProperty().bind(content.heightProperty());
-        modalSplitPane.minWidthProperty().bind(content.widthProperty());
-        modalBox.addContent(content);
-        String style = "-fx-background-color: -color-bg-default;" +
-                "-fx-background-radius: 20;";
-        modalBox.setStyle(style);
-
-        modalPane.show(modalBox);
+        SettingsModal settingsModal = new SettingsModal();
+        settingsModal.build(modalPane, splitPane);
     }
 
     private void loadItemsInTree(List<Path> pathList){
@@ -334,7 +275,7 @@ public class MainController{
                     containedItem = i;
             }
             //if tree contains file
-            EmptyExpandedTreeItem addedItem;
+            TreeItemCustom addedItem;
             //added path in root tree
             if (containedItem != null){
                 TreeItem<String> treeItem = containedItem;

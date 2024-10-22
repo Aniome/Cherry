@@ -5,6 +5,7 @@ import com.app.cherry.controls.ApplicationContextMenu;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
+
 import java.util.Optional;
 
 public class TreeCellFactory {
@@ -144,7 +145,7 @@ public class TreeCellFactory {
         if (!db.hasContent(JAVA_FORMAT))
             return;
 
-        EmptyExpandedTreeItem thisItem = (EmptyExpandedTreeItem)treeCell.getTreeItem();
+        TreeItemCustom thisItem = (TreeItemCustom)treeCell.getTreeItem();
         TreeItem<String> droppedItemParent = draggedItem.getParent();
 
         // remove from previous location

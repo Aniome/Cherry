@@ -12,22 +12,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="some fixing db">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add localization and fix bug with rectangle code area">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ListViewItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ListViewItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/EmptyExpandedTreeItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/TreeItemCustom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/TreeCellFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/TreeCellFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/FavoriteNotesDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/Alerts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/Alerts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/HibernateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -449,15 +441,9 @@
       <workItem from="1729375834946" duration="15000" />
       <workItem from="1729431010370" duration="120000" />
       <workItem from="1729530557746" duration="3080000" />
-      <workItem from="1729533677798" duration="3057000" />
-    </task>
-    <task id="LOCAL-00042" summary="load data in db and refactoring">
-      <option name="closed" value="true" />
-      <created>1718869203507</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1718869203507</updated>
+      <workItem from="1729533677798" duration="3506000" />
+      <workItem from="1729542831089" duration="3717000" />
+      <workItem from="1729595303516" duration="11733000" />
     </task>
     <task id="LOCAL-00043" summary="add loading in FavoriteNotes in tree">
       <option name="closed" value="true" />
@@ -843,7 +829,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728921285775</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="add localization and fix bug with rectangle code area">
+      <option name="closed" value="true" />
+      <created>1729537064887</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1729537064887</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -862,7 +856,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add paste button" />
     <MESSAGE value="add first localization" />
     <MESSAGE value="add some localization" />
     <MESSAGE value="add web view" />
@@ -887,7 +880,9 @@
     <MESSAGE value="simple modal pane" />
     <MESSAGE value="add changes for modalPane" />
     <MESSAGE value="some fixing db" />
-    <option name="LAST_COMMIT_MESSAGE" value="some fixing db" />
+    <MESSAGE value="add localization and fix bug with rectangle code area" />
+    <option name="LAST_COMMIT_MESSAGE" value="add localization and fix bug with rectangle code area" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
