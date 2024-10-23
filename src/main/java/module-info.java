@@ -28,4 +28,6 @@ module com.app.cherry {
     opens com.app.cherry.controls.TreeViewItems;
     exports com.app.cherry.controls.codearea;
     opens com.app.cherry.controls.codearea;
+    exports com.app.cherry.controls.listViewItems;
+    opens com.app.cherry.controls.listViewItems;
 }

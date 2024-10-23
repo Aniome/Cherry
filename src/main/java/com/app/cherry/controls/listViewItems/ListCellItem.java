@@ -1,4 +1,4 @@
-package com.app.cherry.controls;
+package com.app.cherry.controls.listViewItems;
 
 import atlantafx.base.controls.Spacer;
 import atlantafx.base.theme.Styles;
@@ -20,13 +20,13 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-public class ListViewItem extends ListCell<String> {
+public class ListCellItem extends ListCell<String> {
 
     private final Label titleLabel;
     private final Label folderLabel;
     private final HBox root;
 
-    public ListViewItem(ListView<String> listView, InitController initController) {
+    public ListCellItem(ListView<String> listView, InitController initController) {
 
         titleLabel = new Label();
 
@@ -59,7 +59,7 @@ public class ListViewItem extends ListCell<String> {
             String path = titleLabel.getText();
             if (FileService.checkExists(path)){
                 RunApplication.FolderPath = Paths.get(path);
-                initController.ShowMainStage();
+                initController.showMainStage();
             } else {
                 ResourceBundle resourceBundle = RunApplication.resourceBundle;
                 Alerts.createAndShowWarning(resourceBundle.getString("InitFolderNotFound"));

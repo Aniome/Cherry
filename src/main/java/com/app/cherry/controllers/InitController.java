@@ -1,7 +1,7 @@
 package com.app.cherry.controllers;
 
 import com.app.cherry.RunApplication;
-import com.app.cherry.controls.ListViewItem;
+import com.app.cherry.controls.listViewItems.ListCellItem;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.FileService;
@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class InitController {
 
@@ -55,8 +56,9 @@ public class InitController {
 
     @FXML
     private void TemplateStorage(){
+        ResourceBundle resourceBundle = RunApplication.resourceBundle;
         //change buttons
-        ChangeControls(UpHBox, new String[]{"Имя хранилища"});
+        ChangeControls(UpHBox, new String[]{resourceBundle.getString("InitNameStorage")});
         ChangeControls(DownHBox, new String[]{"Расположение", "Просмотр"});
 
         textField = new TextField(){{
@@ -111,7 +113,7 @@ public class InitController {
                 DownLabel.setFont(new Font(12));
                 DownLabel.setText("Хранилище будет расположено по пути: " + RunApplication.FolderPath.toString());
             }else {
-                ShowMainStage();
+                showMainStage();
             }
         });
     }
@@ -140,10 +142,10 @@ public class InitController {
             Alerts.createAndShowWarning("Укажите путь до хранилища");
             return;
         }
-        ShowMainStage();
+        showMainStage();
     }
 
-    public void ShowMainStage(){
+    public void showMainStage(){
         InitialStage.close();
         RunApplication.showMainWindow();
     }
@@ -161,7 +163,7 @@ public class InitController {
         }
 
         listView.setCellFactory(lvItem -> {
-            ListViewItem treeCell = new ListViewItem(listView, this);
+            ListCellItem treeCell = new ListCellItem(listView, this);
             MultipleSelectionModel<String> selectionModel = listView.getSelectionModel();
             treeCell.setOnMouseEntered( mouseEvent -> {
                 String treeCellItem = treeCell.getItem();

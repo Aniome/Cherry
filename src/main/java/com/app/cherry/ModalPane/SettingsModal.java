@@ -2,15 +2,16 @@ package com.app.cherry.ModalPane;
 
 import atlantafx.base.controls.ModalPane;
 import atlantafx.base.layout.ModalBox;
+import com.app.cherry.RunApplication;
+import com.app.cherry.controls.listViewItems.ListCellSettingsModal;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+import java.util.Objects;
 
 public class SettingsModal {
     public void build(ModalPane modalPane, SplitPane splitPane) {
@@ -18,21 +19,20 @@ public class SettingsModal {
         closeBtn.setOnAction(evt -> modalPane.hide(true));
         VBox settingsVbox = new VBox(closeBtn);
 
-        VBox tabsVbox = createTabsVbox();
+        HBox tabsVbox = createTabsVbox();
 
         SplitPane modalSplitPane = new SplitPane(tabsVbox, settingsVbox);
         modalSplitPane.setDividerPositions(0.2);
 
         VBox content = new VBox(modalSplitPane);
         content.setTranslateY(50);
-        VBox.setVgrow(content, Priority.ALWAYS);
-        content.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         ModalBox modalBox = new ModalBox(modalPane);
         modalBox.maxHeightProperty().bind(splitPane.heightProperty().subtract(200));
         modalBox.maxWidthProperty().bind(splitPane.widthProperty().subtract(200));
         content.minHeightProperty().bind(modalBox.heightProperty().subtract(50));
         content.minWidthProperty().bind(modalBox.widthProperty());
+        content.maxHeightProperty().bind(modalBox.heightProperty().subtract(50));
         modalSplitPane.minHeightProperty().bind(content.heightProperty());
         modalSplitPane.minWidthProperty().bind(content.widthProperty());
         modalBox.addContent(content);
@@ -43,22 +43,28 @@ public class SettingsModal {
         modalPane.show(modalBox);
     }
 
-    private VBox createTabsVbox(){
-        Font font = new Font("Arial", 18);
-        ToggleButton mainSettingsBtn = new ToggleButton("Main Settings");
-        mainSettingsBtn.setFont(font);
-        ToggleButton otherSettingsBtn = new ToggleButton("Other Settings");
-        otherSettingsBtn.setFont(font);
-        mainSettingsBtn.setSelected(true);
-        ToggleGroup toggleGroup = new ToggleGroup();
-        toggleGroup.getToggles().addAll(mainSettingsBtn, otherSettingsBtn);
+    private HBox createTabsVbox(){
+        ListView<String> listView = new ListView<>();
+        listView.getItems().addAll("main", "other");
+        listView.setPadding(new Insets(10, 10, 10, 10));
+        listView.setStyle("-fx-border-radius: 20;");
+        listView.setCellFactory(item ->{
+            ListCellSettingsModal listCellSettingsModal = new ListCellSettingsModal();
+            listCellSettingsModal.setOnMouseClicked(event -> {
+                String listViewItem = listCellSettingsModal.getItem();
+                if (listViewItem == null)
+                    return;
+                if (listViewItem.equals("main")) {
+                    System.out.println("test");
+                }
+            });
+            return listCellSettingsModal;
+        });
 
-        VBox tabsVbox = new VBox(mainSettingsBtn, otherSettingsBtn);
-        tabsVbox.setPadding(new Insets(10, 10, 10, 10));
-        tabsVbox.setAlignment(Pos.TOP_LEFT);
-        tabsVbox.setSpacing(10);
-        BackgroundFill backgroundFill = new BackgroundFill(Color.web("#262626"), CornerRadii.EMPTY, Insets.EMPTY);
-        tabsVbox.setBackground(new Background(backgroundFill));
+        HBox tabsVbox = new HBox(listView);
+        tabsVbox.getStylesheets().add(Objects.requireNonNull
+                (RunApplication.class.getResource("css/settingsModalListView.css")).toExternalForm());
+        listView.maxHeightProperty().bind(tabsVbox.heightProperty());
 
         return tabsVbox;
     }

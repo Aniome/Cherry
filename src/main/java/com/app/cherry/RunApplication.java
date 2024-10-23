@@ -97,7 +97,8 @@ public class RunApplication extends Application {
 
     public static void showInitialWindow() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"), resourceBundle);
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"),
+                    resourceBundle);
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
             Stage InitialStage = new Stage();
             setIcon(InitialStage);
