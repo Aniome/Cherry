@@ -1,11 +1,13 @@
 package com.app.cherry.ModalPane;
 
 import atlantafx.base.controls.ModalPane;
+import atlantafx.base.controls.Spacer;
 import atlantafx.base.layout.ModalBox;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.listViewItems.ListCellSettingsModal;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
@@ -15,11 +17,13 @@ import java.util.Objects;
 
 public class SettingsModal {
     public void build(ModalPane modalPane, SplitPane splitPane) {
-        Button closeBtn = new Button("Close");
-        closeBtn.setOnAction(evt -> modalPane.hide(true));
-        VBox settingsVbox = new VBox(closeBtn);
-
-        HBox tabsVbox = createTabsVbox();
+        VBox settingsVbox = new VBox();
+        settingsVbox.setSpacing(10);
+        settingsVbox.setPadding(new Insets(10, 10, 10, 10));
+        settingsVbox.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-padding: 10;" +
+                "-fx-border-color: #6759b1;");
+        mainSettings(settingsVbox);
+        HBox tabsVbox = createTabsVbox(settingsVbox);
 
         SplitPane modalSplitPane = new SplitPane(tabsVbox, settingsVbox);
         modalSplitPane.setDividerPositions(0.2);
@@ -43,9 +47,9 @@ public class SettingsModal {
         modalPane.show(modalBox);
     }
 
-    private HBox createTabsVbox(){
+    private HBox createTabsVbox(VBox settingsVbox) {
         ListView<String> listView = new ListView<>();
-        listView.getItems().addAll("main", "other");
+        listView.getItems().addAll("Основные");
         listView.setPadding(new Insets(10, 10, 10, 10));
         listView.setStyle("-fx-border-radius: 20;");
         listView.setCellFactory(item ->{
@@ -54,8 +58,8 @@ public class SettingsModal {
                 String listViewItem = listCellSettingsModal.getItem();
                 if (listViewItem == null)
                     return;
-                if (listViewItem.equals("main")) {
-                    System.out.println("test");
+                if (listViewItem.equals("Основные")) {
+                    mainSettings(settingsVbox);
                 }
             });
             return listCellSettingsModal;
@@ -67,5 +71,19 @@ public class SettingsModal {
         listView.maxHeightProperty().bind(tabsVbox.heightProperty());
 
         return tabsVbox;
+    }
+
+    private void mainSettings(VBox settingsVbox) {
+        settingsVbox.getChildren().clear();
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        choiceBox.getItems().addAll("Russian", "English");
+        choiceBox.getSelectionModel().selectFirst();
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Selected: " + newValue);
+        });
+
+        HBox languageSettings = new HBox(new Label("Язык"), new Spacer(), choiceBox);
+        settingsVbox.getChildren().add(languageSettings);
     }
 }

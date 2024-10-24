@@ -59,7 +59,8 @@ public class InitController {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         //change buttons
         ChangeControls(UpHBox, new String[]{resourceBundle.getString("InitNameStorage")});
-        ChangeControls(DownHBox, new String[]{"Расположение", "Просмотр"});
+        ChangeControls(DownHBox, new String[]{resourceBundle.getString("InitLocation"),
+                resourceBundle.getString("InitBrowse")});
 
         textField = new TextField(){{
             setFont(new Font(18));
@@ -109,9 +110,11 @@ public class InitController {
         Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(InitialStage));
         selectedDirectory.ifPresent(file -> {
             RunApplication.FolderPath = Paths.get(file.toURI());
-            if (OpenButton.getText().equals("Просмотр")){
+            ResourceBundle resourceBundle = RunApplication.resourceBundle;
+            if (OpenButton.getText().equals(resourceBundle.getString("InitBrowse"))) {
                 DownLabel.setFont(new Font(12));
-                DownLabel.setText("Хранилище будет расположено по пути: " + RunApplication.FolderPath.toString());
+                DownLabel.setText(resourceBundle.getString("InitStoragePath") + " "
+                        + RunApplication.FolderPath.toString());
             }else {
                 showMainStage();
             }
@@ -120,10 +123,12 @@ public class InitController {
 
     @FXML
     private void BackToMainMenu(){
-        ChangeControls(UpHBox, new String[]{"Создать новое хранилище"});
-        ChangeControls(DownHBox, new String[]{"Открыть хранилище", "Открыть"});
+        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        ChangeControls(UpHBox, new String[]{resourceBundle.getString("NewStorage")});
+        ChangeControls(DownHBox, new String[]{resourceBundle.getString("OpenStorage"),
+                resourceBundle.getString("OpenButton")});
 
-        UpHBox.getChildren().add(new Button("Создать"){{
+        UpHBox.getChildren().add(new Button(resourceBundle.getString("CreateButton")){{
             setFont(new Font(18));
             setOnMouseClicked(mouseEvent -> TemplateStorage());
         }});
@@ -134,12 +139,13 @@ public class InitController {
 
     @FXML
     private void CreateStorage(){
+        ResourceBundle resourceBundle = RunApplication.resourceBundle;
         if (textField.getText().isEmpty()){
-            Alerts.createAndShowWarning("Укажите имя хранилища");
+            Alerts.createAndShowWarning(resourceBundle.getString("InitLabelNameStorage"));
             return;
         }
         if (RunApplication.FolderPath == null){
-            Alerts.createAndShowWarning("Укажите путь до хранилища");
+            Alerts.createAndShowWarning(resourceBundle.getString("InitLabelPathStorage"));
             return;
         }
         showMainStage();
