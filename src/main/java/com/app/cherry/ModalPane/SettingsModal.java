@@ -6,14 +6,14 @@ import atlantafx.base.layout.ModalBox;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.listViewItems.ListCellSettingsModal;
 import javafx.geometry.Insets;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class SettingsModal {
     public void build(ModalPane modalPane, SplitPane splitPane) {
@@ -49,7 +49,9 @@ public class SettingsModal {
 
     private HBox createTabsVbox(VBox settingsVbox) {
         ListView<String> listView = new ListView<>();
-        listView.getItems().addAll("Основные");
+        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        String tabGeneral = resourceBundle.getString("SettingsTabGeneral");
+        listView.getItems().addAll(tabGeneral);
         listView.setPadding(new Insets(10, 10, 10, 10));
         listView.setStyle("-fx-border-radius: 20;");
         listView.setCellFactory(item ->{
@@ -58,7 +60,7 @@ public class SettingsModal {
                 String listViewItem = listCellSettingsModal.getItem();
                 if (listViewItem == null)
                     return;
-                if (listViewItem.equals("Основные")) {
+                if (listViewItem.equals(tabGeneral)) {
                     mainSettings(settingsVbox);
                 }
             });
@@ -75,15 +77,41 @@ public class SettingsModal {
 
     private void mainSettings(VBox settingsVbox) {
         settingsVbox.getChildren().clear();
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Russian", "English");
-        choiceBox.getSelectionModel().selectFirst();
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Selected: " + newValue);
+        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        String languageEng = resourceBundle.getString("LanguageEng");
+        String languageRus = resourceBundle.getString("LanguageRus");
+
+        ChoiceBox<String> languageChoiceBox = new ChoiceBox<>();
+        languageChoiceBox.getItems().addAll(languageEng, languageRus);
+        Locale locale = resourceBundle.getLocale();
+        SingleSelectionModel<String> languageChoiceBoxSelectionModel = languageChoiceBox.getSelectionModel();
+        if (locale.equals(Locale.ENGLISH)){
+            languageChoiceBoxSelectionModel.select(languageEng);
+        } else {
+            languageChoiceBoxSelectionModel.select(languageRus);
+        }
+        Label languageLabel = new Label(resourceBundle.getString("SettingsLanguage"));
+        languageLabel.setFont(new Font(18));
+        HBox languageSettings = new HBox(languageLabel, new Spacer(), languageChoiceBox);
+
+        languageChoiceBoxSelectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals(languageRus)) {
+                RunApplication.resourceBundle = ResourceBundle.getBundle("local/text",
+                        Locale.of("ru"));
+            } else {
+                RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+            }
         });
 
-        HBox languageSettings = new HBox(new Label("Язык"), new Spacer(), choiceBox);
-        settingsVbox.getChildren().add(languageSettings);
+
+        Label themLabel = new Label(resourceBundle.getString("SettingsTheme"));
+        languageLabel.setFont(new Font(18));
+        ChoiceBox<String> themeChoiceBox = new ChoiceBox<>();
+        themeChoiceBox.getItems().addAll("Cupertino Light", "Dracula");
+        HBox themeSettings = new HBox(themLabel, new Spacer(), themeChoiceBox);
+
+
+        settingsVbox.getChildren().addAll(languageSettings, themeSettings);
     }
 }
