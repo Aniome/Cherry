@@ -78,31 +78,12 @@ public class MainController{
 
         TreeCellFactory.build(treeView, this);
 
-        configureToggleButtons();
         modalPane.hide();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
     public void afterShowing(){
         splitPane.setDividerPositions(SettingsDAO.getDividerPosition());
-    }
-
-    private void configureToggleButtons(){
-        filesManagerButton.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
-            if(!favoriteNotesButton.isSelected() && aBoolean && !searchButton.isSelected()){
-                filesManagerButton.setSelected(true);
-            }
-        });
-        favoriteNotesButton.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
-            if(!filesManagerButton.isSelected() && aBoolean && !searchButton.isSelected()){
-                favoriteNotesButton.setSelected(true);
-            }
-        });
-        searchButton.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
-            if(!filesManagerButton.isSelected() && aBoolean && !favoriteNotesButton.isSelected()){
-                searchButton.setSelected(true);
-            }
-        });
     }
 
     private void loadFilesInTreeview(){

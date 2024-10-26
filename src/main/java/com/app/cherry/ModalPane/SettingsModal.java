@@ -111,8 +111,8 @@ public class SettingsModal {
         Label themLabel = new Label(resourceBundle.getString("SettingsTheme"));
         languageLabel.setFont(new Font(18));
         ChoiceBox<String> themeChoiceBox = new ChoiceBox<>();
-        String dracula = "Dracula";
-        String cupertinoLight = "Cupertino Light";
+        String dracula = "Dark";
+        String cupertinoLight = "Light";
         themeChoiceBox.getItems().addAll(cupertinoLight, dracula);
         HBox themeSettings = new HBox(themLabel, new Spacer(), themeChoiceBox);
         SingleSelectionModel<String> themeChoiceBoxSelectionModel = themeChoiceBox.getSelectionModel();

@@ -2,7 +2,9 @@ package com.app.cherry.controllers;
 
 import atlantafx.base.theme.Styles;
 import atlantafx.base.theme.Tweaks;
-import com.app.cherry.util.Unique;
+import com.app.cherry.RunApplication;
+import com.app.cherry.util.Alerts;
+import com.app.cherry.util.UniqueElementCodeArea;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -42,17 +44,18 @@ public class FindViewController {
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() {
-                LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs = codeArea.getParagraphs();
-                LinkedList<Unique> uniqueLinkedList = new LinkedList<>();
+                LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs =
+                        codeArea.getParagraphs();
+                LinkedList<UniqueElementCodeArea> uniqueLinkedList = new LinkedList<>();
                 for (int i = 0; i < listParagraphs.size(); i++) {
-                    uniqueLinkedList.add(new Unique(false, listParagraphs.get(i).getText(), i));
+                    uniqueLinkedList.add(new UniqueElementCodeArea(false, listParagraphs.get(i).getText(), i));
                 }
                 Platform.runLater(() -> stackPane.setVisible(true));
 
                 int length = uniqueLinkedList.size();
                 HashMap<String, Set<Integer>> uniqueMap = new HashMap<>();
                 for (int i = 0; i < length; i++) {
-                    Unique uniqueI = uniqueLinkedList.get(i);
+                    UniqueElementCodeArea uniqueI = uniqueLinkedList.get(i);
                     if (uniqueI.isMarked()) {
                         continue;
                     }
@@ -61,7 +64,7 @@ public class FindViewController {
                         if (i == j) {
                             continue;
                         }
-                        Unique uniqueJ = uniqueLinkedList.get(j);
+                        UniqueElementCodeArea uniqueJ = uniqueLinkedList.get(j);
                         String uniqueTextJ = uniqueJ.getText();
                         if (uniqueTextI.equals(uniqueTextJ) && !uniqueTextJ.isEmpty()) {
                             if (uniqueMap.containsKey(uniqueTextI)) {
@@ -76,27 +79,34 @@ public class FindViewController {
                             }
                         }
                     }
-                    double percent = ((double)(i+1) / (double)length) * 100;
+                    double progressPercent = ((double)(i+1) / (double)length) * 100;
 
-                    BigDecimal bd = new BigDecimal(percent);
+                    BigDecimal bd = new BigDecimal(progressPercent);
                     bd = bd.setScale(2, RoundingMode.HALF_UP);
                     double percentOut = bd.doubleValue();
 
                     updateProgress(percentOut, 100);
-                    updateMessage(String.valueOf(percentOut));
+                    updateMessage(percentOut + "%");
                 }
 
                 Platform.runLater(() -> {
+                    ResourceBundle resourceBundle = RunApplication.resourceBundle;
+                    if (uniqueMap.isEmpty()) {
+                        Alerts.createAndShowWarning(resourceBundle.getString("DuplicatesNotFound"));
+                    }
                     for (String uniqueText : uniqueMap.keySet()) {
-                        String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[\\[\\]]", "");
-                        String findingString = "Строка " + uniqueText + " повторяется на следующих строках: ";
+                        String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[\\[\\]]",
+                                "");
+                        String findingString = resourceBundle.getString("FindingStringP1") + " " + uniqueText
+                                + " " + resourceBundle.getString("FindingStringP2") + " ";
                         TextFlow textFlow = new TextFlow(new Text(findingString + replacedString));
                         textFlow.setTextAlignment(TextAlignment.JUSTIFY);
                         textFlow.setMinHeight(70);
                         ScrollPane scrollPane = new ScrollPane(textFlow);
                         scrollPane.setFitToWidth(true);
 
-                        TitledPane titledPane = new TitledPane("Найден дубликат строки", scrollPane);
+                        TitledPane titledPane = new TitledPane(
+                                resourceBundle.getString("DuplicateStringFound"), scrollPane);
                         titledPane.animatedProperty().bind(new SimpleBooleanProperty(true));
                         titledPane.getStyleClass().add(Tweaks.ALT_ICON);
                         accordion.getPanes().add(titledPane);
