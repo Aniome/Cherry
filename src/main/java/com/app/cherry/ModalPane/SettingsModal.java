@@ -3,8 +3,11 @@ package com.app.cherry.ModalPane;
 import atlantafx.base.controls.ModalPane;
 import atlantafx.base.controls.Spacer;
 import atlantafx.base.layout.ModalBox;
+import atlantafx.base.theme.CupertinoLight;
+import atlantafx.base.theme.Dracula;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.listViewItems.ListCellSettingsModal;
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -108,8 +111,24 @@ public class SettingsModal {
         Label themLabel = new Label(resourceBundle.getString("SettingsTheme"));
         languageLabel.setFont(new Font(18));
         ChoiceBox<String> themeChoiceBox = new ChoiceBox<>();
-        themeChoiceBox.getItems().addAll("Cupertino Light", "Dracula");
+        String dracula = "Dracula";
+        String cupertinoLight = "Cupertino Light";
+        themeChoiceBox.getItems().addAll(cupertinoLight, dracula);
         HBox themeSettings = new HBox(themLabel, new Spacer(), themeChoiceBox);
+        SingleSelectionModel<String> themeChoiceBoxSelectionModel = themeChoiceBox.getSelectionModel();
+        if (Application.getUserAgentStylesheet().contains("dracula")){
+            themeChoiceBoxSelectionModel.select(dracula);
+        } else {
+            themeChoiceBoxSelectionModel.select(cupertinoLight);
+        }
+        themeChoiceBoxSelectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals(dracula)) {
+                Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+            } else {
+                Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+            }
+        });
+
 
 
         settingsVbox.getChildren().addAll(languageSettings, themeSettings);

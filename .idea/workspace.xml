@@ -12,11 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add localization and settings configure">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add localization and work with settings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -445,15 +443,8 @@
       <workItem from="1729710183118" duration="803000" />
       <workItem from="1729711469750" duration="1840000" />
       <workItem from="1729792819326" duration="2664000" />
-      <workItem from="1729879216798" duration="2993000" />
-    </task>
-    <task id="LOCAL-00046" summary="test codearea">
-      <option name="closed" value="true" />
-      <created>1722879458469</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1722879458469</updated>
+      <workItem from="1729879216798" duration="3336000" />
+      <workItem from="1729967922308" duration="744000" />
     </task>
     <task id="LOCAL-00047" summary="create code area">
       <option name="closed" value="true" />
@@ -839,7 +830,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729795815516</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="add localization and work with settings">
+      <option name="closed" value="true" />
+      <created>1729882493787</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1729882493787</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -858,7 +857,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="trying configure scrollbar" />
     <MESSAGE value="add new localization" />
     <MESSAGE value="fixing paste text" />
     <MESSAGE value="testing new button" />
@@ -883,7 +881,8 @@
     <MESSAGE value="fix bug and customization settings" />
     <MESSAGE value="change vbox to listview and add cell factory" />
     <MESSAGE value="add localization and settings configure" />
-    <option name="LAST_COMMIT_MESSAGE" value="add localization and settings configure" />
+    <MESSAGE value="add localization and work with settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="add localization and work with settings" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
