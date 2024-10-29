@@ -6,7 +6,7 @@ import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
-import com.app.cherry.util.FileService;
+import com.app.cherry.util.io.FileService;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

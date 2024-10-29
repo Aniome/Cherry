@@ -1,8 +1,7 @@
-package com.app.cherry.util;
+package com.app.cherry.util.io;
 
 import com.app.cherry.RunApplication;
 
-import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;

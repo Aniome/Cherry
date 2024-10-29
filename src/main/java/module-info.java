@@ -15,6 +15,7 @@ module com.app.cherry {
     requires org.kordamp.ikonli.fontawesome;
     requires org.scenicview.scenicview;
     requires static lombok;
+    requires com.fasterxml.jackson.databind;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;
@@ -31,4 +32,8 @@ module com.app.cherry {
     opens com.app.cherry.controls.codearea;
     exports com.app.cherry.controls.listViewItems;
     opens com.app.cherry.controls.listViewItems;
+    exports com.app.cherry.util.io;
+    opens com.app.cherry.util.io;
+    exports com.app.cherry.util.configuration;
+    opens com.app.cherry.util.configuration;
 }

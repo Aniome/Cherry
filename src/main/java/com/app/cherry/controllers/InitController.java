@@ -4,7 +4,7 @@ import com.app.cherry.RunApplication;
 import com.app.cherry.controls.listViewItems.ListCellItem;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
-import com.app.cherry.util.FileService;
+import com.app.cherry.util.io.FileService;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -48,11 +49,8 @@ public class InitController {
 
     private TextField textField;
 
+    @Setter
     private Stage InitialStage;
-
-    public void setInitialStage(Stage initialStage) {
-        InitialStage = initialStage;
-    }
 
     @FXML
     private void TemplateStorage(){

@@ -4,7 +4,7 @@ import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.Alerts;
-import com.app.cherry.util.FileService;
+import com.app.cherry.util.io.FileService;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 

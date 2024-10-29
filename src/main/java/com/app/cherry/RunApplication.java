@@ -1,14 +1,14 @@
 package com.app.cherry;
 
-import atlantafx.base.theme.Dracula;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.controllers.MainController;
 import com.app.cherry.controllers.RenameViewController;
 import com.app.cherry.controllers.WebViewController;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.dao.SettingsDAO;
-import com.app.cherry.util.FileService;
 import com.app.cherry.util.HibernateUtil;
+import com.app.cherry.util.configuration.ApplyConfiguration;
+import com.app.cherry.util.io.FileService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -37,20 +36,14 @@ public class RunApplication extends Application {
     public static final double renameWidth = 600;
     public static final double renameHeight = 250;
     private static Stage mainStage;
-    private static Double height;
-    private static Double width;
     public static ResourceBundle resourceBundle;
 
     @Override
     public void start(Stage stage) {
-        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
-
-        resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+        ApplyConfiguration.build(stage);
 
         HibernateUtil.setUp();
         FolderPath = SettingsDAO.getPath();
-        height = SettingsDAO.getHeight();
-        width = SettingsDAO.getWidth();
 
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
@@ -72,10 +65,7 @@ public class RunApplication extends Application {
             MainController mainController = fxmlLoader.getController();
             mainController.init(mainStage);
             setIcon(mainStage);
-            mainStage.setHeight(height);
-            mainStage.setWidth(width);
             prepareStage(MainHeight, MainWidth, scene, title, mainStage);
-            mainStage.setMaximized(SettingsDAO.isMaximized());
             mainController.afterShowing();
             mainStage.setOnHiding((event) -> {
                 RecentPathsDAO.addPath(FolderPath.toString());

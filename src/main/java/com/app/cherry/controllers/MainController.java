@@ -9,8 +9,8 @@ import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import com.app.cherry.controls.TreeViewItems.TreeItemCustom;
 import com.app.cherry.controls.codearea.MixedArea;
 import com.app.cherry.dao.FavoriteNotesDAO;
-import com.app.cherry.dao.SettingsDAO;
-import com.app.cherry.util.FileService;
+import com.app.cherry.util.configuration.ApplyConfiguration;
+import com.app.cherry.util.io.FileService;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -83,7 +83,7 @@ public class MainController{
     }
 
     public void afterShowing(){
-        splitPane.setDividerPositions(SettingsDAO.getDividerPosition());
+        splitPane.setDividerPositions(ApplyConfiguration.getDividerPosition());
     }
 
     private void loadFilesInTreeview(){
