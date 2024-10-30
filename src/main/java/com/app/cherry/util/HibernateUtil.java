@@ -18,7 +18,7 @@ public class HibernateUtil {
         String dbPath = String.format("jdbc:sqlite:%s/Databases.db", absolutePath);
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
-                //.applySetting("hibernate.connection.url", dbPath)
+                .applySetting("hibernate.connection.url", dbPath)
                 .build();
         try {
             sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();

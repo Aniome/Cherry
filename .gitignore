@@ -11,7 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
-src/main/resources/com/app/cherry/Databases.db
+Databases.db
 src/main/resources/com/app/cherry/css/dracula.css
 
 ### Eclipse ###
@@ -38,3 +38,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/Databases.db
