@@ -1,12 +1,9 @@
 package com.app.cherry.controls.codearea;
 
 import com.app.cherry.RunApplication;
-import com.app.cherry.controllers.FindViewController;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -15,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.GenericStyledArea;
@@ -27,10 +23,8 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.reactfx.collection.ListModification;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -65,7 +59,7 @@ public class MixedArea {
                 String clickedText = paragraph.getText();
 
                 if (styleSpan.getStyle().contains("link")) {
-                    RunApplication.showBrowser(clickedText);
+                    RunApplication.showBrowserWindow(clickedText);
                 }
             }
         });
@@ -73,21 +67,7 @@ public class MixedArea {
         codeArea.setOnKeyPressed(event -> {
             KeyCombination keyCombination = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
             if (keyCombination.match(event)) {
-                try {
-                    ResourceBundle resourceBundle = RunApplication.resourceBundle;
-                    FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/find-view.fxml"),
-                            resourceBundle);
-                    double findViewWidth = 600, findViewHeight = 400;
-                    Scene secondScene = new Scene(fxmlLoader.load(), findViewWidth, findViewHeight);
-                    Stage findViewStage = new Stage();
-                    findViewStage.setTitle(resourceBundle.getString("FindViewTitle"));
-                    RunApplication.setIcon(findViewStage);
-                    FindViewController findViewController = fxmlLoader.getController();
-                    findViewController.init(codeArea);
-                    RunApplication.prepareStage(findViewHeight, findViewWidth, secondScene,"", findViewStage);
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                RunApplication.showFindWindow(codeArea);
             }
         });
 

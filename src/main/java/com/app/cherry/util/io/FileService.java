@@ -119,7 +119,7 @@ public class FileService {
     }
 
     public static String getPath(TreeItem<String> treeItem){
-        StringBuilder pathname = new StringBuilder(RunApplication.FolderPath.toString() + "\\");
+        StringBuilder pathname = new StringBuilder(RunApplication.FolderPath.toString() + "//");
         List<String> list = new LinkedList<>();
         TreeItem<String> loadingItem = treeItem;
         while (treeItem.getParent() != null){

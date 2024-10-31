@@ -1,13 +1,10 @@
 package com.app.cherry;
 
-import com.app.cherry.controllers.InitController;
-import com.app.cherry.controllers.MainController;
-import com.app.cherry.controllers.RenameViewController;
-import com.app.cherry.controllers.WebViewController;
-import com.app.cherry.dao.RecentPathsDAO;
+import com.app.cherry.controllers.*;
 import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.HibernateUtil;
 import com.app.cherry.util.configuration.ApplyConfiguration;
+import com.app.cherry.util.configuration.SavingConfiguration;
 import com.app.cherry.util.io.FileService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +16,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.fxmisc.richtext.CodeArea;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -67,19 +65,7 @@ public class RunApplication extends Application {
             setIcon(mainStage);
             prepareStage(MainHeight, MainWidth, scene, title, mainStage);
             mainController.afterShowing();
-            mainStage.setOnHiding((event) -> {
-                RecentPathsDAO.addPath(FolderPath.toString());
-                boolean isMaximized = mainStage.isMaximized();
-                if (!isMaximized) {
-                    SettingsDAO.setHeight(mainStage.getHeight());
-                    SettingsDAO.setWidth(mainStage.getWidth());
-                }
-                SettingsDAO.setIsMaximized(isMaximized);
-                SettingsDAO.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
-                SettingsDAO.setPath(FolderPath.toString());
-
-                HibernateUtil.tearDown();
-            });
+            SavingConfiguration.observableMainStage(mainStage, mainController);
         } catch (IOException e){
             System.out.println(e.getMessage());
         }
@@ -90,19 +76,20 @@ public class RunApplication extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"),
                     resourceBundle);
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
-            Stage InitialStage = new Stage();
-            setIcon(InitialStage);
+            Stage initialStage = new Stage();
+            setIcon(initialStage);
+            SavingConfiguration.initStage = initialStage;
             InitController initController = fxmlLoader.getController();
-            initController.setInitialStage(InitialStage);
-            prepareStage(InitialHeight, InitialWidth, secondScene,"", InitialStage);
-            InitialStage.setResizable(false);
+            initController.setInitialStage(initialStage);
+            prepareStage(InitialHeight, InitialWidth, secondScene,"", initialStage);
+            initialStage.setResizable(false);
             initController.loadPaths();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static void showBrowser(String clickedText){
+    public static void showBrowserWindow(String clickedText) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/web-view.fxml"),
                     resourceBundle);
@@ -110,6 +97,7 @@ public class RunApplication extends Application {
             Scene secondScene = new Scene(fxmlLoader.load(), webViewWidth, webViewHeight);
             Stage webViewStage = new Stage();
             setIcon(webViewStage);
+            SavingConfiguration.browserStage = webViewStage;
             WebViewController webViewController = fxmlLoader.getController();
             webViewController.init(clickedText);
             prepareStage(webViewHeight, webViewWidth, secondScene,"Browser", webViewStage);
@@ -118,7 +106,7 @@ public class RunApplication extends Application {
         }
     }
 
-    public static void showRenameWindow(TreeView<String> treeView, TabPane tabPane){
+    public static void showRenameWindow(TreeView<String> treeView, TabPane tabPane) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
@@ -127,6 +115,7 @@ public class RunApplication extends Application {
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(mainStage);
+            SavingConfiguration.renameStage = stage;
             stage.setOnHiding((event) -> {
                 String newFileName = MainController.newFileName;
                 if (newFileName == null) {
@@ -150,11 +139,30 @@ public class RunApplication extends Application {
         }
     }
 
-    public static void setIcon(Stage stage){
+    public static void showFindWindow(CodeArea codeArea) {
+        try {
+            ResourceBundle resourceBundle = RunApplication.resourceBundle;
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/find-view.fxml"),
+                    resourceBundle);
+            double findViewWidth = 600, findViewHeight = 400;
+            Scene secondScene = new Scene(fxmlLoader.load(), findViewWidth, findViewHeight);
+            Stage findViewStage = new Stage();
+            findViewStage.setTitle(resourceBundle.getString("FindViewTitle"));
+            SavingConfiguration.findStage = findViewStage;
+            RunApplication.setIcon(findViewStage);
+            FindViewController findViewController = fxmlLoader.getController();
+            findViewController.init(codeArea);
+            RunApplication.prepareStage(findViewHeight, findViewWidth, secondScene,"", findViewStage);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void setIcon(Stage stage) {
         stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("Image/cherry_icon.png"))));
     }
 
-    public static void prepareStage(double height, double width, Scene scene, String title, Stage stage){
+    public static void prepareStage(double height, double width, Scene scene, String title, Stage stage) {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setMinWidth(width);

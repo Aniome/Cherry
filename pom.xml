@@ -139,7 +139,7 @@
             <artifactId>scenicview</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}\scenicview.jar</systemPath>
+            <systemPath>${project.basedir}/scenicview.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

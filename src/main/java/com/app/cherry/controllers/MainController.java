@@ -247,7 +247,7 @@ public class MainController{
     private void loadItemsInTree(List<Path> pathList){
         pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
         pathList.forEach(item -> {
-            String[] path = item.toString().split("\\\\");
+            String[] path = item.toString().split("/");
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
             //check tree contains file
             TreeItem<String> containedItem = null;
