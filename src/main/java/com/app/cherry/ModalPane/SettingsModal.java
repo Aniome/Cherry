@@ -7,6 +7,8 @@ import atlantafx.base.theme.CupertinoLight;
 import atlantafx.base.theme.Dracula;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.listViewItems.ListCellSettingsModal;
+import com.app.cherry.util.configuration.ApplyConfiguration;
+import com.app.cherry.util.configuration.SavingConfiguration;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -102,8 +104,10 @@ public class SettingsModal {
             if (newValue.equals(languageRus)) {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text",
                         Locale.of("ru"));
+                SavingConfiguration.language = "ru";
             } else {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+                SavingConfiguration.language = "en";
             }
         });
 
@@ -124,9 +128,12 @@ public class SettingsModal {
         themeChoiceBoxSelectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals(dracula)) {
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+                ApplyConfiguration.setTheme(dracula);
             } else {
                 Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+                ApplyConfiguration.setTheme(cupertinoLight);
             }
+            ApplyConfiguration.applyThemeOnMainPage();
         });
 
 

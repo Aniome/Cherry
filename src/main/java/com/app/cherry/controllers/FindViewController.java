@@ -79,7 +79,7 @@ public class FindViewController {
                             }
                         }
                     }
-                    double progressPercent = ((double)(i+1) / (double)length) * 100;
+                    double progressPercent = ((double) (i + 1) / (double) length) * 100;
 
                     BigDecimal bd = new BigDecimal(progressPercent);
                     bd = bd.setScale(2, RoundingMode.HALF_UP);

@@ -50,6 +50,8 @@ public class MainController{
     VBox vbox;
     @FXML
     ModalPane modalPane;
+    @FXML
+    BorderPane borderPane;
 
     Stage mainStage;
     Stage renameStage;
@@ -80,18 +82,24 @@ public class MainController{
 
         modalPane.hide();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        setTheme();
     }
 
-    public void afterShowing(){
+    private void setTheme() {
+        ApplyConfiguration.setBorderPane(borderPane);
+        ApplyConfiguration.applyThemeOnMainPage();
+    }
+
+    public void afterShowing() {
         splitPane.setDividerPositions(ApplyConfiguration.getDividerPosition());
     }
 
-    private void loadFilesInTreeview(){
+    private void loadFilesInTreeview() {
         List<Path> pathList = FileService.getListFiles();
         loadItemsInTree(pathList);
     }
 
-    private TreeItemCustom creatingTreeItem(String str){
+    private TreeItemCustom creatingTreeItem(String str) {
         if (str.contains(".md")) {
             str = str.replace(".md", "");
             return new TreeItemCustom(str, true, fileIconName);
@@ -100,7 +108,7 @@ public class MainController{
         }
     }
 
-    public void openRenameWindow(){
+    public void openRenameWindow() {
         RunApplication.showRenameWindow(treeView, tabPane);
     }
 
@@ -245,7 +253,7 @@ public class MainController{
     }
 
     private void loadItemsInTree(List<Path> pathList){
-        pathList = pathList.stream().map(path -> RunApplication.FolderPath.relativize(path)).toList();
+        pathList = pathList.stream().map(path -> RunApplication.folderPath.relativize(path)).toList();
         pathList.forEach(item -> {
             String[] path = item.toString().split("/");
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();

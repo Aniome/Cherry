@@ -42,7 +42,7 @@ public class FavoriteNotesDAO {
                 = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
         session.close();
         for (FavoriteNotes item : favoriteNotes){
-            if (!item.getPathNote().contains(RunApplication.FolderPath.toString())){
+            if (!item.getPathNote().contains(RunApplication.folderPath.toString())){
                 return List.of();
             }
         }

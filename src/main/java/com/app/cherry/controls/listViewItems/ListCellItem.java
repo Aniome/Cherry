@@ -58,7 +58,7 @@ public class ListCellItem extends ListCell<String> {
         root.setOnMouseClicked(mouseEvent -> {
             String path = titleLabel.getText();
             if (FileService.checkExists(path)){
-                RunApplication.FolderPath = Paths.get(path);
+                RunApplication.folderPath = Paths.get(path);
                 initController.showMainStage();
             } else {
                 ResourceBundle resourceBundle = RunApplication.resourceBundle;

@@ -15,7 +15,7 @@ public class mdFileVisitor extends SimpleFileVisitor<Path> {
     }
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs){
-        if (RunApplication.FolderPath.equals(dir)){
+        if (RunApplication.folderPath.equals(dir)){
             return FileVisitResult.CONTINUE;
         }
         FileService.pathList.add(dir);

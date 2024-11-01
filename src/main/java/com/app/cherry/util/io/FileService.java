@@ -59,7 +59,7 @@ public class FileService {
 
     public static List<Path> getListFiles(){
         pathList = new LinkedList<>();
-        Path path = RunApplication.FolderPath;
+        Path path = RunApplication.folderPath;
         try {
             Files.walkFileTree(path, new mdFileVisitor());
         } catch (IOException e) {
@@ -95,7 +95,7 @@ public class FileService {
 
     public static File checkExists(String path, String extension) {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
-        String untitled = "\\" + resourceBundle.getString("FileNameUntitled");
+        String untitled = RunApplication.separator + resourceBundle.getString("FileNameUntitled");
         File file = new File(path + untitled + extension);
         if (file.exists()) {
             int i = 1;
@@ -111,15 +111,15 @@ public class FileService {
         return new File(path).exists();
     }
 
-    public static boolean renameFile(String NewName, String OldName, String path){
-        File oldFile = new File(path + "/" + OldName + ".md");
-        File newFile = new File(path + "/" + NewName + ".md");
+    public static boolean renameFile(String newName, String oldName, String path){
+        File oldFile = new File(path + "/" + oldName + ".md");
+        File newFile = new File(path + "/" + newName + ".md");
 
         return oldFile.renameTo(newFile);
     }
 
-    public static String getPath(TreeItem<String> treeItem){
-        StringBuilder pathname = new StringBuilder(RunApplication.FolderPath.toString() + "//");
+    public static String getPath(TreeItem<String> treeItem) {
+        StringBuilder pathName = new StringBuilder(RunApplication.folderPath.toString() + RunApplication.separator);
         List<String> list = new LinkedList<>();
         TreeItem<String> loadingItem = treeItem;
         while (treeItem.getParent() != null){
@@ -127,11 +127,11 @@ public class FileService {
             treeItem = treeItem.getParent();
         }
         list = list.reversed();
-        list.forEach(item -> pathname.append(item).append("\\"));
-        pathname.deleteCharAt(pathname.length() - 1);
+        list.forEach(item -> pathName.append(item).append("\\"));
+        pathName.deleteCharAt(pathName.length() - 1);
         if (loadingItem.isLeaf()){
-            pathname.append(".md");
+            pathName.append(".md");
         }
-        return pathname.toString();
+        return pathName.toString();
     }
 }

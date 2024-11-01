@@ -1,5 +1,6 @@
 package com.app.cherry.util;
 
+import com.app.cherry.RunApplication;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -15,6 +16,7 @@ public class HibernateUtil {
         // A SessionFactory is set up once for an application!
         File path = new File("");
         String absolutePath = path.getAbsolutePath().replace("\\", "/");
+        RunApplication.appPath = absolutePath;
         String dbPath = String.format("jdbc:sqlite:%s/Databases.db", absolutePath);
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml

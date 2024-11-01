@@ -25,7 +25,8 @@ import java.util.ResourceBundle;
 
 
 public class RunApplication extends Application {
-    public static Path FolderPath;
+    private static Stage mainStage;
+    public static Path folderPath;
     public static final String title = "Cherry";
     private static final double InitialHeight = 600;
     private static final double InitialWidth = 800;
@@ -33,22 +34,28 @@ public class RunApplication extends Application {
     public static final double MainWidth = 640;
     public static final double renameWidth = 600;
     public static final double renameHeight = 250;
-    private static Stage mainStage;
     public static ResourceBundle resourceBundle;
+    public static String separator;
+    public static String appPath;
 
     @Override
     public void start(Stage stage) {
         ApplyConfiguration.build(stage);
 
         HibernateUtil.setUp();
-        FolderPath = SettingsDAO.getPath();
+        folderPath = SettingsDAO.getPath();
 
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
         mainStage = stage;
-        if (FolderPath == null){
+        if (folderPath == null){
             showInitialWindow();
         } else {
+            if (folderPath.toString().contains("/")){
+                separator = "/";
+            } else {
+                separator = "\\";
+            }
             showMainWindow();
         }
     }
@@ -78,7 +85,7 @@ public class RunApplication extends Application {
             Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
             Stage initialStage = new Stage();
             setIcon(initialStage);
-            SavingConfiguration.initStage = initialStage;
+            SavingConfiguration.observableInitStage(initialStage);
             InitController initController = fxmlLoader.getController();
             initController.setInitialStage(initialStage);
             prepareStage(InitialHeight, InitialWidth, secondScene,"", initialStage);
@@ -97,6 +104,8 @@ public class RunApplication extends Application {
             Scene secondScene = new Scene(fxmlLoader.load(), webViewWidth, webViewHeight);
             Stage webViewStage = new Stage();
             setIcon(webViewStage);
+            webViewStage.initModality(Modality.WINDOW_MODAL);
+            webViewStage.initOwner(mainStage);
             SavingConfiguration.browserStage = webViewStage;
             WebViewController webViewController = fxmlLoader.getController();
             webViewController.init(clickedText);
@@ -123,7 +132,7 @@ public class RunApplication extends Application {
                 }
                 TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
                 boolean b = FileService.renameFile(newFileName, selectedItem.getValue(),
-                        RunApplication.FolderPath.toString());
+                        RunApplication.folderPath.toString());
                 if (b){
                     selectedItem.setValue(newFileName);
                     Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();

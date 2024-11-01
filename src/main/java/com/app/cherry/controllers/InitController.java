@@ -107,12 +107,12 @@ public class InitController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(InitialStage));
         selectedDirectory.ifPresent(file -> {
-            RunApplication.FolderPath = Paths.get(file.toURI());
+            RunApplication.folderPath = Paths.get(file.toURI());
             ResourceBundle resourceBundle = RunApplication.resourceBundle;
             if (OpenButton.getText().equals(resourceBundle.getString("InitBrowse"))) {
                 DownLabel.setFont(new Font(12));
                 DownLabel.setText(resourceBundle.getString("InitStoragePath") + " "
-                        + RunApplication.FolderPath.toString());
+                        + RunApplication.folderPath.toString());
             }else {
                 showMainStage();
             }
@@ -142,7 +142,7 @@ public class InitController {
             Alerts.createAndShowWarning(resourceBundle.getString("InitLabelNameStorage"));
             return;
         }
-        if (RunApplication.FolderPath == null){
+        if (RunApplication.folderPath == null){
             Alerts.createAndShowWarning(resourceBundle.getString("InitLabelPathStorage"));
             return;
         }
