@@ -54,7 +54,7 @@ public class RunApplication extends Application {
             if (folderPath.toString().contains("/")){
                 separator = "/";
             } else {
-                separator = "\\";
+                separator = "\\\\";
             }
             showMainWindow();
         }

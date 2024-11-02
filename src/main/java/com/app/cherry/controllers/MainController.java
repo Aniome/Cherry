@@ -162,7 +162,8 @@ public class MainController{
                 }
             }
         }
-        borderPane.setStyle("-fx-background-color: #282a36");
+        //borderPane.setStyle("-fx-background-color: #282a36");
+        //borderPane.setStyle("-fx-background-color: -color-bg-default;");
         tab.setContent(borderPane);
     }
 
@@ -177,11 +178,11 @@ public class MainController{
 
     //Event on the note creation button
     @FXML
-    private void createNote(){
+    private void createNote() {
         createFile(treeView.getRoot());
     }
 
-    public void createFile(TreeItem<String> parent){
+    public void createFile(TreeItem<String> parent) {
         File newNote = FileService.createFileMarkdown(parent);
         if (newNote == null){
             return;
@@ -193,11 +194,11 @@ public class MainController{
     }
 
     @FXML
-    private void createFolderInTree(){
+    private void createFolderInTree() {
         createFolder(treeView.getRoot());
     }
 
-    public void createFolder(TreeItem<String> treeItem){
+    public void createFolder(TreeItem<String> treeItem) {
         File folder = FileService.createFolderMarkdown(treeItem);
         if (folder == null) {
             return;
@@ -209,7 +210,7 @@ public class MainController{
     }
 
     @FXML
-    private void showFiles(){
+    private void showFiles() {
         if (filesManagerSelected){
             return;
         }
@@ -218,8 +219,8 @@ public class MainController{
     }
 
     @FXML
-    private void showFavorites(){
-        if (favoriteSelected){
+    private void showFavorites() {
+        if (favoriteSelected) {
             return;
         }
         treeView.setRoot(new TreeItem<>(""));
@@ -242,20 +243,20 @@ public class MainController{
     }
 
     @FXML
-    private void showSearch(){
+    private void showSearch() {
 
     }
 
     @FXML
-    private void settings(){
+    private void settings() {
         SettingsModal settingsModal = new SettingsModal();
         settingsModal.build(modalPane, splitPane);
     }
 
-    private void loadItemsInTree(List<Path> pathList){
+    private void loadItemsInTree(List<Path> pathList) {
         pathList = pathList.stream().map(path -> RunApplication.folderPath.relativize(path)).toList();
         pathList.forEach(item -> {
-            String[] path = item.toString().split("/");
+            String[] path = item.toString().split(RunApplication.separator);
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
             //check tree contains file
             TreeItem<String> containedItem = null;
@@ -304,7 +305,7 @@ public class MainController{
         });
     }
 
-    private void sortTreeView(){
+    private void sortTreeView() {
         SortedList<TreeItem<String>> content = treeView.getRoot().getChildren().sorted(Comparator.comparing(TreeItem::getValue));
         treeView.getRoot().getChildren().setAll(content);
     }
