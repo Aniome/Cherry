@@ -11,28 +11,34 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import lombok.Getter;
-import lombok.Setter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ApplyConfiguration {
-    @Getter
     private static double dividerPosition;
-    @Getter
-    @Setter
-    private static String theme;
-    @Setter
+
+    public static double getDividerPosition() {
+        return dividerPosition;
+    }
+
+    public static String theme;
+
     private static BorderPane borderPane;
+
+    public static void setBorderPane(BorderPane borderPane) {
+        ApplyConfiguration.borderPane = borderPane;
+    }
+
     private static final String dark = "Dark";
 
     public static void build(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            SettingsData settingsData = objectMapper.readValue(
-                    RunApplication.class.getResource("settings.json"), SettingsData.class);
+            SettingsData settingsData = objectMapper.readValue(new File(RunApplication.appPath +
+                    "/settings.json"), SettingsData.class);
 
             if (settingsData.language.equals("en")) {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);

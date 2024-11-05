@@ -1,13 +1,9 @@
 package com.app.cherry.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Objects;
 
-@Getter
-@Setter
 @Entity
 public class Settings {
     @GeneratedValue
@@ -43,5 +39,53 @@ public class Settings {
     @Override
     public int hashCode() {
         return Objects.hash(id, lastPath);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getLastPath() {
+        return lastPath;
+    }
+
+    public void setLastPath(String lastPath) {
+        this.lastPath = lastPath;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public Double getWidth() {
+        return width;
+    }
+
+    public void setWidth(Double width) {
+        this.width = width;
+    }
+
+    public Integer getIsMaximized() {
+        return isMaximized;
+    }
+
+    public void setIsMaximized(Integer isMaximized) {
+        this.isMaximized = isMaximized;
+    }
+
+    public Double getDividerPosition() {
+        return dividerPosition;
+    }
+
+    public void setDividerPosition(Double dividerPosition) {
+        this.dividerPosition = dividerPosition;
     }
 }

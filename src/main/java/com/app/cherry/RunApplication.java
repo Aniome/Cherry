@@ -40,9 +40,9 @@ public class RunApplication extends Application {
 
     @Override
     public void start(Stage stage) {
+        HibernateUtil.setUp();
         ApplyConfiguration.build(stage);
 
-        HibernateUtil.setUp();
         folderPath = SettingsDAO.getPath();
 
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -87,7 +87,7 @@ public class RunApplication extends Application {
             setIcon(initialStage);
             SavingConfiguration.observableInitStage(initialStage);
             InitController initController = fxmlLoader.getController();
-            initController.setInitialStage(initialStage);
+            initController.InitialStage = initialStage;
             prepareStage(InitialHeight, InitialWidth, secondScene,"", initialStage);
             initialStage.setResizable(false);
             initController.loadPaths();

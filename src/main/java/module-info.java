@@ -13,9 +13,10 @@ module com.app.cherry {
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome;
-    requires org.scenicview.scenicview;
-    requires static lombok;
+    //requires org.scenicview.scenicview;
     requires com.fasterxml.jackson.databind;
+    requires javafx.fxml;
+    requires javafx.web;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

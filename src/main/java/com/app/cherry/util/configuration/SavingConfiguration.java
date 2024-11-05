@@ -33,12 +33,11 @@ public class SavingConfiguration {
 
             settingsData.setMaximized(isMaximized);
             settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
-            settingsData.setTheme(ApplyConfiguration.getTheme());
+            settingsData.setTheme(ApplyConfiguration.theme);
             settingsData.setLanguage(language);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            String settings = RunApplication.appPath + "/src/main/resources/com/app/cherry/settings.json";
-            System.out.println(settings);
+            String settings = RunApplication.appPath + "/settings.json";
             try {
                 objectMapper.writeValue(new File(settings), settingsData);
             } catch (IOException e) {

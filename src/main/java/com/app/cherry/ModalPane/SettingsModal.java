@@ -128,10 +128,10 @@ public class SettingsModal {
         themeChoiceBoxSelectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals(dracula)) {
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
-                ApplyConfiguration.setTheme(dracula);
+                ApplyConfiguration.theme = dracula;
             } else {
                 Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
-                ApplyConfiguration.setTheme(cupertinoLight);
+                ApplyConfiguration.theme = cupertinoLight;
             }
             ApplyConfiguration.applyThemeOnMainPage();
         });

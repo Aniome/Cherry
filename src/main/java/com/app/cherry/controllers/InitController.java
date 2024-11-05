@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import lombok.Setter;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -49,8 +48,7 @@ public class InitController {
 
     private TextField textField;
 
-    @Setter
-    private Stage InitialStage;
+    public Stage InitialStage;
 
     @FXML
     private void TemplateStorage(){
