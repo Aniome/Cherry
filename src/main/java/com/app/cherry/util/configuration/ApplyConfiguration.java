@@ -8,13 +8,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ApplyConfiguration {
@@ -33,6 +36,8 @@ public class ApplyConfiguration {
     }
 
     private static final String dark = "Dark";
+
+    private static Scene mainScene;
 
     public static void build(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -69,18 +74,53 @@ public class ApplyConfiguration {
     }
 
     public static void applyThemeOnMainPage() {
-        String borderColor = "-fx-border-color: ";
-        if (theme.equals(dark)) {
-            borderColor = borderColor + "#685ab3;";
-        } else {
-            borderColor = borderColor + "#d1d1d6;";
-        }
+        String borderColor = buildBorderStyle();
         borderPane.setStyle(borderColor);
         ObservableList<Node> borderPaneChildren = borderPane.getChildren();
         for (Node borderPaneChild : borderPaneChildren) {
             if (borderPaneChild instanceof GridPane gridPane) {
                 gridPane.setStyle(borderColor);
             }
+        }
+    }
+
+    public static void applyThemeOnSettingsPage(VBox vBox, String style) {
+        String vBoxStyle = style + buildBorderStyle();
+        vBox.setStyle(vBoxStyle);
+    }
+
+    private static String buildBorderStyle() {
+        String borderColor = "-fx-border-color: ";
+        if (theme.equals(dark)) {
+            borderColor = borderColor + "#685ab3;";
+        } else {
+            borderColor = borderColor + "#d1d1d6;";
+        }
+        return borderColor;
+    }
+
+    public static void applyThemeOnMarkdownArea(Scene scene) {
+        ApplyConfiguration.mainScene = scene;
+        setThemeOnScene();
+    }
+
+    /* use after set main scene */
+    public static void applyThemeOnMarkdownArea() {
+        setThemeOnScene();
+    }
+
+    private static void setThemeOnScene() {
+        ObservableList<String> mainSceneStylesheets = mainScene.getStylesheets();
+        if (theme.equals(dark)) {
+            mainSceneStylesheets.remove(Objects.requireNonNull
+                    (RunApplication.class.getResource("css/themes/light.css")).toExternalForm());
+            mainSceneStylesheets.add(Objects.requireNonNull
+                    (RunApplication.class.getResource("css/themes/dark.css")).toExternalForm());
+        } else {
+            mainSceneStylesheets.remove(Objects.requireNonNull
+                    (RunApplication.class.getResource("css/themes/dark.css")).toExternalForm());
+            mainSceneStylesheets.add(Objects.requireNonNull
+                    (RunApplication.class.getResource("css/themes/light.css")).toExternalForm());
         }
     }
 }

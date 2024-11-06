@@ -31,7 +31,7 @@ import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MixedArea {
+public class MarkdownArea {
     private static final String LINK_PATTERN = "(http|https)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]+";
     private static final String WORDS_PATTERN = ".*";
     private static CodeArea codeArea;
@@ -43,7 +43,7 @@ public class MixedArea {
 
     public static StackPane createMarkdownArea() {
         CodeArea codeArea = new CodeArea();
-        MixedArea.codeArea = codeArea;
+        MarkdownArea.codeArea = codeArea;
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);
 
@@ -72,7 +72,7 @@ public class MixedArea {
         });
 
         codeArea.getVisibleParagraphs().addModificationObserver
-                (new VisibleParagraphStyler<>(codeArea, MixedArea::computeHighlighting));
+                (new VisibleParagraphStyler<>(codeArea, MarkdownArea::computeHighlighting));
 
         // auto-indent: insert previous line's indents on enter
         final Pattern whiteSpace = Pattern.compile( "^\\s+" );
@@ -81,7 +81,8 @@ public class MixedArea {
             if ( KE.getCode() == KeyCode.ENTER ) {
                 int caretPosition = codeArea.getCaretPosition();
                 int currentParagraph = codeArea.getCurrentParagraph();
-                Matcher m0 = whiteSpace.matcher(codeArea.getParagraph(currentParagraph - 1).getSegments().getFirst());
+                Matcher m0 = whiteSpace.matcher(codeArea.getParagraph(currentParagraph - 1).getSegments()
+                        .getFirst());
                 if (m0.find())
                     Platform.runLater( () -> codeArea.insertText(caretPosition, m0.group()) );
             }
@@ -94,7 +95,7 @@ public class MixedArea {
         for (int i = 0; i < pageLength; i++) {
             String textCodeArea = codeArea.getText(i, 0, i, codeArea.getParagraphLength(i));
             int startPos = codeArea.getAbsolutePosition(i, 0);
-            codeArea.setStyleSpans(startPos, MixedArea.computeHighlighting(textCodeArea));
+            codeArea.setStyleSpans(startPos, MarkdownArea.computeHighlighting(textCodeArea));
         }
     }
 
@@ -105,7 +106,7 @@ public class MixedArea {
                 for (int i = from; i < to; i++) {
                     String textCodeArea = codeArea.getText(i, 0, i, codeArea.getParagraphLength(i));
                     int startPos = codeArea.getAbsolutePosition(i, 0);
-                    codeArea.setStyleSpans(startPos, MixedArea.computeHighlighting(textCodeArea));
+                    codeArea.setStyleSpans(startPos, MarkdownArea.computeHighlighting(textCodeArea));
                 }
             });
         });
@@ -121,8 +122,9 @@ public class MixedArea {
             hbox.setAlignment(Pos.CENTER);
 
             Rectangle rectangle = new Rectangle();
-            rectangle.setFill(Color.web("#282c34"));
-            if (codeArea.getParagraphs().size() - 1 == line && line != 1){
+            //rectangle.setFill(Color.web("#282c34"));
+            rectangle.setFill(Color.TRANSPARENT);
+            if (line == 0) {
                 rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
                 rectangle.heightProperty().bind(codeArea.heightProperty());
             } else {
@@ -153,19 +155,21 @@ public class MixedArea {
         return spansBuilder.create();
     }
 
-    private static class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
+    private static class VisibleParagraphStyler<PS, SEG, S> implements
+            Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
         private final GenericStyledArea<PS, SEG, S> area;
         private final Function<String,StyleSpans<S>> computeStyles;
         public int index = 0;
 
-        public VisibleParagraphStyler( GenericStyledArea<PS, SEG, S> area, Function<String,StyleSpans<S>> computeStyles ) {
+        public VisibleParagraphStyler( GenericStyledArea<PS, SEG, S> area,
+                                       Function<String,StyleSpans<S>> computeStyles ) {
             this.computeStyles = computeStyles;
             this.area = area;
         }
 
         @Override
         public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
-            if (lm.getAddedSize() > 0){
+            if (lm.getAddedSize() > 0) {
                 Platform.runLater( () -> {
                     int paragraphSize = area.getParagraphs().size();
                     if (index < paragraphSize) {

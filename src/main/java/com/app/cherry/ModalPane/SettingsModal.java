@@ -25,8 +25,8 @@ public class SettingsModal {
         VBox settingsVbox = new VBox();
         settingsVbox.setSpacing(10);
         settingsVbox.setPadding(new Insets(10, 10, 10, 10));
-        settingsVbox.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-padding: 10;" +
-                "-fx-border-color: #6759b1;");
+        ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, "-fx-background-radius: 10; " +
+                "-fx-border-radius: 10; -fx-padding: 10;");
         mainSettings(settingsVbox);
         HBox tabsVbox = createTabsVbox(settingsVbox);
 
@@ -129,6 +129,7 @@ public class SettingsModal {
             if (newValue.equals(dracula)) {
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
                 ApplyConfiguration.theme = dracula;
+                ApplyConfiguration.applyThemeOnMarkdownArea();
             } else {
                 Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
                 ApplyConfiguration.theme = cupertinoLight;

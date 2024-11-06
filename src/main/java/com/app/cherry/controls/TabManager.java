@@ -1,7 +1,7 @@
 package com.app.cherry.controls;
 
 import com.app.cherry.RunApplication;
-import com.app.cherry.controls.codearea.MixedArea;
+import com.app.cherry.controls.codearea.MarkdownArea;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -60,7 +60,7 @@ public class TabManager {
             }
         });
 
-        borderPane.setCenter(MixedArea.createMarkdownArea());
+        borderPane.setCenter(MarkdownArea.createMarkdownArea());
 
         return borderPane;
     }

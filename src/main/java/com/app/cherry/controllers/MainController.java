@@ -7,7 +7,7 @@ import com.app.cherry.controls.ApplicationContextMenu;
 import com.app.cherry.controls.TabManager;
 import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import com.app.cherry.controls.TreeViewItems.TreeItemCustom;
-import com.app.cherry.controls.codearea.MixedArea;
+import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.io.FileService;
@@ -155,15 +155,13 @@ public class MainController{
                 int codeAreaLength = codeArea.getParagraphs().size();
                 int pageLength = 80;
                 if (codeAreaLength > pageLength){
-                    MixedArea.applyStylesPage(pageLength);
-                    MixedArea.applyStyles(pageLength, codeAreaLength);
+                    MarkdownArea.applyStylesPage(pageLength);
+                    MarkdownArea.applyStyles(pageLength, codeAreaLength);
                 } else {
-                    MixedArea.applyStyles(0, codeAreaLength);
+                    MarkdownArea.applyStyles(0, codeAreaLength);
                 }
             }
         }
-        //borderPane.setStyle("-fx-background-color: #282a36");
-        //borderPane.setStyle("-fx-background-color: -color-bg-default;");
         tab.setContent(borderPane);
     }
 

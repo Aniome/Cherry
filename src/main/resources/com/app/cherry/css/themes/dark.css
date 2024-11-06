@@ -1,0 +1,21 @@
+.code-area {
+    -fx-background-color: #1e1e1e;
+}
+
+/*  Selected text */
+.styled-text-area .selection {
+    -fx-fill: #404859;
+}
+
+/* On select row*/
+.paragraph-box:has-caret {
+    -fx-background-color: #2c313c;
+}
+
+.word-code {
+    -fx-fill: #a4b1a9;
+}
+
+.styled-text-area .caret {
+    -fx-stroke: #528bff;
+}
