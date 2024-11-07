@@ -23,11 +23,7 @@ import java.util.ResourceBundle;
 public class SettingsModal {
     public void build(ModalPane modalPane, SplitPane splitPane) {
         VBox settingsVbox = new VBox();
-        settingsVbox.setSpacing(10);
-        settingsVbox.setPadding(new Insets(10, 10, 10, 10));
-        ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, "-fx-background-radius: 10; " +
-                "-fx-border-radius: 10; -fx-padding: 10;");
-        mainSettings(settingsVbox);
+        createMainSettings(settingsVbox);
         HBox tabsVbox = createTabsVbox(settingsVbox);
 
         SplitPane modalSplitPane = new SplitPane(tabsVbox, settingsVbox);
@@ -66,7 +62,7 @@ public class SettingsModal {
                 if (listViewItem == null)
                     return;
                 if (listViewItem.equals(tabGeneral)) {
-                    mainSettings(settingsVbox);
+                    createMainSettings(settingsVbox);
                 }
             });
             return listCellSettingsModal;
@@ -80,13 +76,19 @@ public class SettingsModal {
         return tabsVbox;
     }
 
-    private void mainSettings(VBox settingsVbox) {
+    private void createMainSettings(VBox settingsVbox) {
         settingsVbox.getChildren().clear();
+
+        settingsVbox.setSpacing(10);
+        settingsVbox.setPadding(new Insets(10, 10, 10, 10));
+        String settingsVboxStyle = "-fx-background-radius: 10; -fx-border-radius: 20;";
+        ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
 
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         String languageEng = resourceBundle.getString("LanguageEng");
         String languageRus = resourceBundle.getString("LanguageRus");
 
+        //Language settings
         ChoiceBox<String> languageChoiceBox = new ChoiceBox<>();
         languageChoiceBox.getItems().addAll(languageEng, languageRus);
         Locale locale = resourceBundle.getLocale();
@@ -111,7 +113,7 @@ public class SettingsModal {
             }
         });
 
-
+        //Theme settings
         Label themLabel = new Label(resourceBundle.getString("SettingsTheme"));
         languageLabel.setFont(new Font(18));
         ChoiceBox<String> themeChoiceBox = new ChoiceBox<>();
@@ -130,9 +132,12 @@ public class SettingsModal {
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
                 ApplyConfiguration.theme = dracula;
                 ApplyConfiguration.applyThemeOnMarkdownArea();
+                ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
             } else {
                 Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
                 ApplyConfiguration.theme = cupertinoLight;
+                ApplyConfiguration.applyThemeOnMarkdownArea();
+                ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
             }
             ApplyConfiguration.applyThemeOnMainPage();
         });

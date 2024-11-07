@@ -67,7 +67,7 @@ public class RunApplication extends Application {
             Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
             scene.getStylesheets().add(Objects.requireNonNull
                     (RunApplication.class.getResource("css/keywords.css")).toExternalForm());
-            ApplyConfiguration.applyThemeOnMarkdownArea(scene);
+            ApplyConfiguration.setMainScene(scene);
             MainController mainController = fxmlLoader.getController();
             mainController.init(mainStage);
             setIcon(mainStage);

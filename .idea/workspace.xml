@@ -12,20 +12,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="optimization for creating runnable app">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/themes/dark.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/themes/light.css" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="some changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MixedArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/keywords.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/keywords.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/css/themes/light.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -477,14 +470,10 @@
       <workItem from="1730861545557" duration="72000" />
       <workItem from="1730884389217" duration="24000" />
       <workItem from="1730884882731" duration="1000" />
-    </task>
-    <task id="LOCAL-00053" summary="change colors and fixing bugs">
-      <option name="closed" value="true" />
-      <created>1723446153288</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1723446153288</updated>
+      <workItem from="1730906824972" duration="42000" />
+      <workItem from="1730940474048" duration="6152000" />
+      <workItem from="1730946690981" duration="1576000" />
+      <workItem from="1730951388859" duration="1002000" />
     </task>
     <task id="LOCAL-00054" summary="change font size and colors">
       <option name="closed" value="true" />
@@ -870,7 +859,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730815187294</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="some changes">
+      <option name="closed" value="true" />
+      <created>1730906855881</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1730906855882</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -899,7 +896,6 @@
     <MESSAGE value="fix regular expression" />
     <MESSAGE value="fix bug with tab name" />
     <MESSAGE value="add localization to contextmenu" />
-    <MESSAGE value="some changes" />
     <MESSAGE value="simple modal pane" />
     <MESSAGE value="add changes for modalPane" />
     <MESSAGE value="some fixing db" />
@@ -914,7 +910,8 @@
     <MESSAGE value="refactoring and add saving configuration" />
     <MESSAGE value="fixing separator" />
     <MESSAGE value="optimization for creating runnable app" />
-    <option name="LAST_COMMIT_MESSAGE" value="optimization for creating runnable app" />
+    <MESSAGE value="some changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="some changes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

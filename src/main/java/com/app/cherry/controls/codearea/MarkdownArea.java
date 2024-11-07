@@ -1,6 +1,7 @@
 package com.app.cherry.controls.codearea;
 
 import com.app.cherry.RunApplication;
+import com.app.cherry.util.configuration.ApplyConfiguration;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -10,7 +11,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -122,8 +122,7 @@ public class MarkdownArea {
             hbox.setAlignment(Pos.CENTER);
 
             Rectangle rectangle = new Rectangle();
-            //rectangle.setFill(Color.web("#282c34"));
-            rectangle.setFill(Color.TRANSPARENT);
+            ApplyConfiguration.setRectangle(rectangle);
             if (line == 0) {
                 rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
                 rectangle.heightProperty().bind(codeArea.heightProperty());

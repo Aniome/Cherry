@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -36,8 +38,8 @@ public class ApplyConfiguration {
     }
 
     private static final String dark = "Dark";
-
     private static Scene mainScene;
+    private static Rectangle rectangle;
 
     public static void build(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -99,7 +101,7 @@ public class ApplyConfiguration {
         return borderColor;
     }
 
-    public static void applyThemeOnMarkdownArea(Scene scene) {
+    public static void setMainScene(Scene scene) {
         ApplyConfiguration.mainScene = scene;
         setThemeOnScene();
     }
@@ -107,20 +109,31 @@ public class ApplyConfiguration {
     /* use after set main scene */
     public static void applyThemeOnMarkdownArea() {
         setThemeOnScene();
+        setThemeOnRectangleLineNumber();
     }
 
     private static void setThemeOnScene() {
         ObservableList<String> mainSceneStylesheets = mainScene.getStylesheets();
+        String darkTheme = Objects.requireNonNull
+                (RunApplication.class.getResource("css/themes/dark.css")).toExternalForm();
         if (theme.equals(dark)) {
-            mainSceneStylesheets.remove(Objects.requireNonNull
-                    (RunApplication.class.getResource("css/themes/light.css")).toExternalForm());
-            mainSceneStylesheets.add(Objects.requireNonNull
-                    (RunApplication.class.getResource("css/themes/dark.css")).toExternalForm());
+            mainSceneStylesheets.add(darkTheme);
         } else {
-            mainSceneStylesheets.remove(Objects.requireNonNull
-                    (RunApplication.class.getResource("css/themes/dark.css")).toExternalForm());
-            mainSceneStylesheets.add(Objects.requireNonNull
-                    (RunApplication.class.getResource("css/themes/light.css")).toExternalForm());
+            mainSceneStylesheets.remove(darkTheme);
+        }
+    }
+
+    public static void setRectangle(Rectangle rectangle) {
+        ApplyConfiguration.rectangle = rectangle;
+        setThemeOnRectangleLineNumber();
+    }
+
+    private static void setThemeOnRectangleLineNumber() {
+        if (rectangle == null) return;
+        if (theme.equals(dark)) {
+            rectangle.setFill(Color.web("#282c34"));
+        } else {
+            rectangle.setFill(Color.TRANSPARENT);
         }
     }
 }
