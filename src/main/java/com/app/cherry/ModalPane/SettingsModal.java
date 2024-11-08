@@ -131,18 +131,15 @@ public class SettingsModal {
             if (newValue.equals(dracula)) {
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
                 ApplyConfiguration.theme = dracula;
-                ApplyConfiguration.applyThemeOnMarkdownArea();
-                ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
             } else {
                 Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
                 ApplyConfiguration.theme = cupertinoLight;
-                ApplyConfiguration.applyThemeOnMarkdownArea();
-                ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
             }
+            ApplyConfiguration.applyThemeOnMarkdownArea();
+            ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
             ApplyConfiguration.applyThemeOnMainPage();
+            ApplyConfiguration.applyThemeOnStackPaneBackgroundLineNumber();
         });
-
-
 
         settingsVbox.getChildren().addAll(languageSettings, themeSettings);
     }

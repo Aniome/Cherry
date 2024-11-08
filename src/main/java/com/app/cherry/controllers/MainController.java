@@ -51,7 +51,7 @@ public class MainController{
     @FXML
     ModalPane modalPane;
     @FXML
-    BorderPane borderPane;
+    BorderPane leftPanelBorderPane;
 
     Stage mainStage;
     Stage renameStage;
@@ -86,7 +86,7 @@ public class MainController{
     }
 
     private void setTheme() {
-        ApplyConfiguration.setBorderPane(borderPane);
+        ApplyConfiguration.setLeftPanelBorderPane(leftPanelBorderPane);
         ApplyConfiguration.applyThemeOnMainPage();
     }
 
@@ -113,6 +113,7 @@ public class MainController{
     }
 
     public void loadDataOnFormOnClick(TreeItem<String> selectedItem){
+        ApplyConfiguration.listLineNumber.clear();
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         tab.setContent(null);
         String filename = selectedItem.getValue();
@@ -120,11 +121,11 @@ public class MainController{
         TabManager tabManager = new TabManager();
         BorderPane borderPane = tabManager.createTab(tab);
         ObservableList<Node> childrens = borderPane.getChildren();
-        for (Node children: childrens){
-            if (children instanceof TextField){
+        for (Node children: childrens) {
+            if (children instanceof TextField) {
                 ((TextField) children).setText(filename);
             }
-            if (children instanceof StackPane stackPane){
+            if (children instanceof StackPane stackPane) {
                 ObservableList<Node> stackPaneChildrens = stackPane.getChildren();
 
                 @SuppressWarnings("unchecked")

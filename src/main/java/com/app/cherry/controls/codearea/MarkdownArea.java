@@ -122,7 +122,7 @@ public class MarkdownArea {
             hbox.setAlignment(Pos.CENTER);
 
             Rectangle rectangle = new Rectangle();
-            ApplyConfiguration.setRectangle(rectangle);
+            ApplyConfiguration.applyThemeOnRectangleBackgroundLineNumber(rectangle);
             if (line == 0) {
                 rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
                 rectangle.heightProperty().bind(codeArea.heightProperty());
@@ -133,6 +133,7 @@ public class MarkdownArea {
             StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
             StackPane stackPane = new StackPane(rectangle, hbox);
             stackPane.toFront();
+            ApplyConfiguration.listLineNumber.add(stackPane);
             return stackPane;
         };
     }

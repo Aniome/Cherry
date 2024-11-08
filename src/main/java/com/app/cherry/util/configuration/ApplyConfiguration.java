@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,28 +19,18 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ApplyConfiguration {
     private static double dividerPosition;
-
-    public static double getDividerPosition() {
-        return dividerPosition;
-    }
-
     public static String theme;
-
-    private static BorderPane borderPane;
-
-    public static void setBorderPane(BorderPane borderPane) {
-        ApplyConfiguration.borderPane = borderPane;
-    }
-
+    private static BorderPane leftPanelBorderPane;
     private static final String dark = "Dark";
     private static Scene mainScene;
-    private static Rectangle rectangle;
+    public static LinkedList<StackPane> listLineNumber = new LinkedList<>();
 
     public static void build(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -75,10 +66,18 @@ public class ApplyConfiguration {
         }
     }
 
+    public static double getDividerPosition() {
+        return dividerPosition;
+    }
+
+    public static void setLeftPanelBorderPane(BorderPane borderPane) {
+        ApplyConfiguration.leftPanelBorderPane = borderPane;
+    }
+
     public static void applyThemeOnMainPage() {
         String borderColor = buildBorderStyle();
-        borderPane.setStyle(borderColor);
-        ObservableList<Node> borderPaneChildren = borderPane.getChildren();
+        leftPanelBorderPane.setStyle(borderColor);
+        ObservableList<Node> borderPaneChildren = leftPanelBorderPane.getChildren();
         for (Node borderPaneChild : borderPaneChildren) {
             if (borderPaneChild instanceof GridPane gridPane) {
                 gridPane.setStyle(borderColor);
@@ -109,7 +108,6 @@ public class ApplyConfiguration {
     /* use after set main scene */
     public static void applyThemeOnMarkdownArea() {
         setThemeOnScene();
-        setThemeOnRectangleLineNumber();
     }
 
     private static void setThemeOnScene() {
@@ -123,17 +121,26 @@ public class ApplyConfiguration {
         }
     }
 
-    public static void setRectangle(Rectangle rectangle) {
-        ApplyConfiguration.rectangle = rectangle;
-        setThemeOnRectangleLineNumber();
+    public static void applyThemeOnRectangleBackgroundLineNumber(Rectangle rectangle) {
+        if (theme.equals(dark))
+            rectangle.setFill(Color.web("#282a36"));
+        else
+            rectangle.setFill(Color.WHITE);
     }
 
-    private static void setThemeOnRectangleLineNumber() {
-        if (rectangle == null) return;
-        if (theme.equals(dark)) {
-            rectangle.setFill(Color.web("#282c34"));
-        } else {
-            rectangle.setFill(Color.TRANSPARENT);
+    public static void applyThemeOnStackPaneBackgroundLineNumber() {
+        for (Node listLineChildren : listLineNumber) {
+            if (listLineChildren instanceof StackPane lineNumberStackPane) {
+                var stackPaneChildren = lineNumberStackPane.getChildren();
+                for (Node stackPaneChild : stackPaneChildren) {
+                    if (stackPaneChild instanceof Rectangle rectangle) {
+                        if (theme.equals(dark))
+                            rectangle.setFill(Color.web("#282a36"));
+                        else
+                            rectangle.setFill(Color.WHITE);
+                    }
+                }
+            }
         }
     }
 }
