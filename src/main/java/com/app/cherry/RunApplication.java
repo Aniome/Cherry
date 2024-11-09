@@ -1,7 +1,6 @@
 package com.app.cherry;
 
 import com.app.cherry.controllers.*;
-import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.HibernateUtil;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.SavingConfiguration;
@@ -42,8 +41,6 @@ public class RunApplication extends Application {
     public void start(Stage stage) {
         HibernateUtil.setUp();
         ApplyConfiguration.build(stage);
-
-        folderPath = SettingsDAO.getPath();
 
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height

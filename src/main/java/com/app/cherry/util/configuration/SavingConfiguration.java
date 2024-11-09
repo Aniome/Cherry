@@ -2,11 +2,12 @@ package com.app.cherry.util.configuration;
 
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.dao.RecentPathsDAO;
-import com.app.cherry.dao.SettingsDAO;
 import com.app.cherry.util.HibernateUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,19 +23,10 @@ public class SavingConfiguration {
     public static void observableMainStage(Stage stage, MainController mainController) {
         mainStage = stage;
         stage.setOnHiding(windowEvent -> {
-            RecentPathsDAO.addPath(RunApplication.folderPath.toString());
-            boolean isMaximized = stage.isMaximized();
-            SettingsData settingsData = new SettingsData();
-            if (!isMaximized) {
-                settingsData.setHeight(stage.getHeight());
-                settingsData.setWidth(stage.getWidth());
-            }
-            SettingsDAO.setPath(RunApplication.folderPath.toString());
+            String path = RunApplication.folderPath.toString();
+            RecentPathsDAO.addPath(path);
 
-            settingsData.setMaximized(isMaximized);
-            settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
-            settingsData.setTheme(ApplyConfiguration.theme);
-            settingsData.setLanguage(language);
+            SettingsData settingsData = createSettingsData(stage, mainController, path);
 
             ObjectMapper objectMapper = new ObjectMapper();
             String settings = RunApplication.appPath + "/settings.json";
@@ -52,6 +44,25 @@ public class SavingConfiguration {
                 HibernateUtil.tearDown();
             }
         });
+    }
+
+    @NotNull
+    private static SettingsData createSettingsData(Stage stage, MainController mainController, String path) {
+        SettingsData settingsData = new SettingsData();
+
+        boolean isMaximized = stage.isMaximized();
+        settingsData.setLastPath(path);
+        if (!isMaximized) {
+            settingsData.setHeight(stage.getHeight());
+            settingsData.setWidth(stage.getWidth());
+        }
+
+        settingsData.setMaximized(isMaximized);
+        settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
+        settingsData.setTheme(ApplyConfiguration.theme);
+        settingsData.setLanguage(language);
+        settingsData.setFontSize(MarkdownArea.fontSize);
+        return settingsData;
     }
 
     public static void observableInitStage(Stage stage){

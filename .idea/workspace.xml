@@ -12,16 +12,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="finalization changing theme">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fixing bug with changing color background in line number">
+      <change afterPath="$PROJECT_DIR$/identifier.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/SettingsDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/Settings.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SettingsData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SettingsData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/rename-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/rename-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -477,15 +485,9 @@
       <workItem from="1730940474048" duration="6152000" />
       <workItem from="1730946690981" duration="1576000" />
       <workItem from="1730951388859" duration="1090000" />
-      <workItem from="1731078017490" duration="8139000" />
-    </task>
-    <task id="LOCAL-00055" summary="set min height">
-      <option name="closed" value="true" />
-      <created>1723650797431</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1723650797431</updated>
+      <workItem from="1731078017490" duration="8406000" />
+      <workItem from="1731155044060" duration="8459000" />
+      <workItem from="1731166357825" duration="8620000" />
     </task>
     <task id="LOCAL-00056" summary="add changing storage">
       <option name="closed" value="true" />
@@ -871,7 +873,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730952460546</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="fixing bug with changing color background in line number">
+      <option name="closed" value="true" />
+      <created>1731086462135</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1731086462135</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -890,7 +900,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="improved view for find duplicates" />
     <MESSAGE value="update view for find duplicates" />
     <MESSAGE value="add scroll pane for find view" />
     <MESSAGE value="add translate for init view" />
@@ -915,7 +924,8 @@
     <MESSAGE value="optimization for creating runnable app" />
     <MESSAGE value="some changes" />
     <MESSAGE value="finalization changing theme" />
-    <option name="LAST_COMMIT_MESSAGE" value="finalization changing theme" />
+    <MESSAGE value="fixing bug with changing color background in line number" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing bug with changing color background in line number" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

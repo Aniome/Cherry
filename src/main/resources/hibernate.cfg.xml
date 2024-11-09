@@ -5,7 +5,6 @@
     <property name="connection.url">jdbc:sqlite:D:/Programming/Java/Projects/Cherry/src/main/resources/com/app/cherry/Databases.db</property>
     <property name="connection.driver_class">org.sqlite.JDBC</property>
     <property name="hibernate.jdbc.use_get_generated_keys">false</property>
-    <mapping class="com.app.cherry.entity.Settings" />
     <mapping class="com.app.cherry.entity.FavoriteNotes" />
     <mapping class="com.app.cherry.entity.RecentPaths" />
     <!-- DB schema will be updated if needed -->

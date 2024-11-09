@@ -5,6 +5,7 @@ import atlantafx.base.controls.Spacer;
 import atlantafx.base.layout.ModalBox;
 import atlantafx.base.theme.CupertinoLight;
 import atlantafx.base.theme.Dracula;
+import atlantafx.base.util.IntegerStringConverter;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.listViewItems.ListCellSettingsModal;
 import com.app.cherry.util.configuration.ApplyConfiguration;
@@ -89,11 +90,21 @@ public class SettingsModal {
         String languageRus = resourceBundle.getString("LanguageRus");
 
         //Language settings
+        HBox languageSettings = changeLanguage(resourceBundle, languageEng, languageRus);
+
+        //Theme settings
+        HBox themeSettings = changeTheme(resourceBundle, settingsVbox, settingsVboxStyle);
+
+        settingsVbox.getChildren().addAll(languageSettings, themeSettings);
+    }
+
+    private static HBox changeLanguage(ResourceBundle resourceBundle, String languageEng,
+                                                    String languageRus) {
         ChoiceBox<String> languageChoiceBox = new ChoiceBox<>();
         languageChoiceBox.getItems().addAll(languageEng, languageRus);
         Locale locale = resourceBundle.getLocale();
         SingleSelectionModel<String> languageChoiceBoxSelectionModel = languageChoiceBox.getSelectionModel();
-        if (locale.equals(Locale.ENGLISH)){
+        if (locale.equals(Locale.ENGLISH)) {
             languageChoiceBoxSelectionModel.select(languageEng);
         } else {
             languageChoiceBoxSelectionModel.select(languageRus);
@@ -112,10 +123,11 @@ public class SettingsModal {
                 SavingConfiguration.language = "en";
             }
         });
+        return languageSettings;
+    }
 
-        //Theme settings
+    private static HBox changeTheme(ResourceBundle resourceBundle, VBox settingsVbox, String settingsVboxStyle) {
         Label themLabel = new Label(resourceBundle.getString("SettingsTheme"));
-        languageLabel.setFont(new Font(18));
         ChoiceBox<String> themeChoiceBox = new ChoiceBox<>();
         String dracula = "Dark";
         String cupertinoLight = "Light";
@@ -140,7 +152,16 @@ public class SettingsModal {
             ApplyConfiguration.applyThemeOnMainPage();
             ApplyConfiguration.applyThemeOnStackPaneBackgroundLineNumber();
         });
+        return themeSettings;
+    }
 
-        settingsVbox.getChildren().addAll(languageSettings, themeSettings);
+    private static HBox changeFontSize(ResourceBundle resourceBundle) {
+        Label changeFontLabel = new Label(resourceBundle.getString("SettingsLabelFontSize"));
+        Spinner<Integer> fontSize = new Spinner<>(1, 100, 1);
+        IntegerStringConverter.createFor(fontSize);
+        fontSize.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+        fontSize.setEditable(true);
+
+        return new HBox(changeFontLabel, new Spacer(), fontSize);
     }
 }

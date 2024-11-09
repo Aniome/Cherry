@@ -35,6 +35,7 @@ public class MarkdownArea {
     private static final String LINK_PATTERN = "(http|https)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]+";
     private static final String WORDS_PATTERN = ".*";
     private static CodeArea codeArea;
+    public static int fontSize;
 
     private static final Pattern PATTERN = Pattern.compile(
             "(?<LINK>" + LINK_PATTERN + ")"
@@ -43,6 +44,7 @@ public class MarkdownArea {
 
     public static StackPane createMarkdownArea() {
         CodeArea codeArea = new CodeArea();
+        codeArea.setStyle("-fx-font-size: "+ fontSize +"px;");
         MarkdownArea.codeArea = codeArea;
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);

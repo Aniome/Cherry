@@ -67,7 +67,7 @@ public class MainController{
         Platform.exit();
     }
 
-    public void init(Stage mainStage){
+    public void init(Stage mainStage) {
         this.mainStage = mainStage;
 
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

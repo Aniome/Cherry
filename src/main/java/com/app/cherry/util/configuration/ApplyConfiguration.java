@@ -3,6 +3,7 @@ package com.app.cherry.util.configuration;
 import atlantafx.base.theme.CupertinoLight;
 import atlantafx.base.theme.Dracula;
 import com.app.cherry.RunApplication;
+import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.util.Alerts;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
@@ -19,6 +20,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Objects;
@@ -37,6 +41,15 @@ public class ApplyConfiguration {
         try {
             SettingsData settingsData = objectMapper.readValue(new File(RunApplication.appPath +
                     "/settings.json"), SettingsData.class);
+
+            Path folderPath = Paths.get(settingsData.getLastPath());
+            boolean condition = Files.exists(folderPath) && Files.isExecutable(folderPath)
+                    && Files.isDirectory(folderPath);
+            if (condition){
+                RunApplication.folderPath = folderPath;
+            } else {
+                RunApplication.folderPath = null;
+            }
 
             if (settingsData.language.equals("en")) {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
@@ -61,6 +74,8 @@ public class ApplyConfiguration {
             mainStage.setMaximized(settingsData.maximized);
 
             dividerPosition = settingsData.dividerPosition;
+
+            MarkdownArea.fontSize = settingsData.getFontSize();
         } catch (IOException e) {
             Alerts.createAndShowWarning(e.getMessage());
         }
