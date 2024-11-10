@@ -12,24 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fixing bug with changing color background in line number">
-      <change afterPath="$PROJECT_DIR$/identifier.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="refactoring and add settings on change font size">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/dao/SettingsDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/entity/Settings.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SettingsData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SettingsData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/rename-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/rename-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,50 +70,50 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Run",
-    "Application.RunApplication.executor": "Run",
-    "Maven.Cherry [clean,javafx:run].executor": "Run",
-    "Maven.Cherry [deploy].executor": "Run",
-    "Maven.Cherry [io.github.fvarrui:javapackager:1.7.6:package].executor": "Run",
-    "Maven.Cherry [jar:jar].executor": "Run",
-    "Maven.Cherry [org.apache.maven.plugins:maven-install-plugin:2.4:install-file].executor": "Run",
-    "Maven.Cherry [org.apache.maven.plugins:maven-install-plugin:2.4:install].executor": "Run",
-    "Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:jar].executor": "Run",
-    "Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:sign-verify].executor": "Run",
-    "Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:test-jar].executor": "Run",
-    "Maven.Cherry [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
-    "Maven.Cherry [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/user/AppData/Local/SceneBuilder/SceneBuilder.exe",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15136719",
-    "project.structure.side.proportion": "0.26728112",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RunApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [clean,javafx:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [io.github.fvarrui:javapackager:1.7.6:package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [jar:jar].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [org.apache.maven.plugins:maven-install-plugin:2.4:install-file].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [org.apache.maven.plugins:maven-install-plugin:2.4:install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:jar].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:sign-verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [org.apache.maven.plugins:maven-jar-plugin:2.4:test-jar].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Cherry [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/AppData/Local/SceneBuilder/SceneBuilder.exe&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15136719&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.26728112&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.app.cherry.entity" />
@@ -487,15 +473,8 @@
       <workItem from="1730951388859" duration="1090000" />
       <workItem from="1731078017490" duration="8406000" />
       <workItem from="1731155044060" duration="8459000" />
-      <workItem from="1731166357825" duration="8620000" />
-    </task>
-    <task id="LOCAL-00056" summary="add changing storage">
-      <option name="closed" value="true" />
-      <created>1723798545553</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1723798545554</updated>
+      <workItem from="1731166357825" duration="8930000" />
+      <workItem from="1731259505950" duration="2026000" />
     </task>
     <task id="LOCAL-00057" summary="fixing loading in listview">
       <option name="closed" value="true" />
@@ -881,7 +860,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731086462135</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="refactoring and add settings on change font size">
+      <option name="closed" value="true" />
+      <created>1731175767075</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1731175767075</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -900,7 +887,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update view for find duplicates" />
     <MESSAGE value="add scroll pane for find view" />
     <MESSAGE value="add translate for init view" />
     <MESSAGE value="fixing listview" />
@@ -925,7 +911,8 @@
     <MESSAGE value="some changes" />
     <MESSAGE value="finalization changing theme" />
     <MESSAGE value="fixing bug with changing color background in line number" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing bug with changing color background in line number" />
+    <MESSAGE value="refactoring and add settings on change font size" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring and add settings on change font size" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

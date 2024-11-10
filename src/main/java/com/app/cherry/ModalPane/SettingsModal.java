@@ -7,6 +7,7 @@ import atlantafx.base.theme.CupertinoLight;
 import atlantafx.base.theme.Dracula;
 import atlantafx.base.util.IntegerStringConverter;
 import com.app.cherry.RunApplication;
+import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.controls.listViewItems.ListCellSettingsModal;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.SavingConfiguration;
@@ -95,7 +96,10 @@ public class SettingsModal {
         //Theme settings
         HBox themeSettings = changeTheme(resourceBundle, settingsVbox, settingsVboxStyle);
 
-        settingsVbox.getChildren().addAll(languageSettings, themeSettings);
+        //Font size settings
+        HBox fontSizeSettings = changeFontSize(resourceBundle);
+
+        settingsVbox.getChildren().addAll(languageSettings, themeSettings, fontSizeSettings);
     }
 
     private static HBox changeLanguage(ResourceBundle resourceBundle, String languageEng,
@@ -157,10 +161,14 @@ public class SettingsModal {
 
     private static HBox changeFontSize(ResourceBundle resourceBundle) {
         Label changeFontLabel = new Label(resourceBundle.getString("SettingsLabelFontSize"));
-        Spinner<Integer> fontSize = new Spinner<>(1, 100, 1);
+        Spinner<Integer> fontSize = new Spinner<>(1, 50, MarkdownArea.fontSize);
         IntegerStringConverter.createFor(fontSize);
         fontSize.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         fontSize.setEditable(true);
+
+        fontSize.valueProperty().addListener((observable, oldValue, newValue) -> {
+            MarkdownArea.fontSize = newValue;
+        });
 
         return new HBox(changeFontLabel, new Spacer(), fontSize);
     }
