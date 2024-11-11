@@ -115,7 +115,8 @@ public class RunApplication extends Application {
 
     public static void showRenameWindow(TreeView<String> treeView, TabPane tabPane) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"),
+                    resourceBundle);
             Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
             Stage stage = new Stage();
             RunApplication.setIcon(stage);
@@ -142,7 +143,7 @@ public class RunApplication extends Application {
             String renameWindowTitle = RunApplication.resourceBundle.getString("RenameWindowTitle");
             RunApplication.prepareStage(renameHeight, renameWidth, scene, renameWindowTitle, stage);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -160,6 +161,24 @@ public class RunApplication extends Application {
             FindViewController findViewController = fxmlLoader.getController();
             findViewController.init(codeArea);
             RunApplication.prepareStage(findViewHeight, findViewWidth, secondScene,"", findViewStage);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void showHelpStage() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/help-view.fxml"));
+            double helpViewWidth = 800, helpViewHeight = 600;
+            Scene scene = new Scene(fxmlLoader.load(), helpViewWidth, helpViewHeight);
+            Stage stage = new Stage();
+            RunApplication.setIcon(stage);
+            stage.setResizable(false);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(mainStage);
+            RunApplication.prepareStage(renameHeight, renameWidth, scene, "", stage);
+            HelpViewController helpViewController = fxmlLoader.getController();
+            helpViewController.init();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

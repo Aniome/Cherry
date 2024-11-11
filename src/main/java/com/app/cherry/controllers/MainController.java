@@ -247,6 +247,11 @@ public class MainController{
     }
 
     @FXML
+    private void help() {
+        RunApplication.showHelpStage();
+    }
+
+    @FXML
     private void settings() {
         SettingsModal settingsModal = new SettingsModal();
         settingsModal.build(modalPane, splitPane);

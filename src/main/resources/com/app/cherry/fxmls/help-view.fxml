@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.HelpViewController">
+   <top>
+      <BorderPane prefHeight="112.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <center>
+            <Text stroke="#686464" strokeType="OUTSIDE" text="Cherry" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.835038959980011" green="0.9078947305679321" blue="0.033625729382038116" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+         </center>
+      </BorderPane>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <Text fx:id="textDescription" fill="#fcfcfc" stroke="BLACK" strokeType="OUTSIDE" text="Text" textAlignment="CENTER" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font></Text>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>
