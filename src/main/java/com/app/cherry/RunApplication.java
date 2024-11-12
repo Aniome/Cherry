@@ -66,7 +66,6 @@ public class RunApplication extends Application {
                     (RunApplication.class.getResource("css/keywords.css")).toExternalForm());
             ApplyConfiguration.setMainScene(scene);
             MainController mainController = fxmlLoader.getController();
-            mainController.init(mainStage);
             setIcon(mainStage);
             prepareStage(MainHeight, MainWidth, scene, title, mainStage);
             mainController.afterShowing();
@@ -168,7 +167,8 @@ public class RunApplication extends Application {
 
     public static void showHelpStage() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/help-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/help-view.fxml"),
+                    resourceBundle);
             double helpViewWidth = 800, helpViewHeight = 600;
             Scene scene = new Scene(fxmlLoader.load(), helpViewWidth, helpViewHeight);
             Stage stage = new Stage();
@@ -177,8 +177,6 @@ public class RunApplication extends Application {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(mainStage);
             RunApplication.prepareStage(renameHeight, renameWidth, scene, "", stage);
-            HelpViewController helpViewController = fxmlLoader.getController();
-            helpViewController.init();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

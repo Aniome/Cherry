@@ -53,23 +53,22 @@ public class MainController{
     @FXML
     BorderPane leftPanelBorderPane;
 
-    Stage mainStage;
     Stage renameStage;
     public static String newFileName;
     boolean favoriteSelected = false;
     boolean filesManagerSelected = true;
+    boolean searchSelected = false;
     TreeItem<String> filesManagerRoot;
     final String fileIconName = "mdal-insert_drive_file";
     final String folderIconName = "mdal-folder_open";
+    ObservableList<Node> fileManagerVbox;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
         Platform.exit();
     }
 
-    public void init(Stage mainStage) {
-        this.mainStage = mainStage;
-
+    public void initialize() {
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         filesManagerRoot = new TreeItem<>("");
         treeView.setRoot(filesManagerRoot);
@@ -210,11 +209,12 @@ public class MainController{
 
     @FXML
     private void showFiles() {
-        if (filesManagerSelected){
+        if (filesManagerSelected) {
             return;
         }
         treeView.setRoot(filesManagerRoot);
         favoriteSelected = false;
+        searchSelected = false;
     }
 
     @FXML
@@ -234,16 +234,27 @@ public class MainController{
         });
         loadItemsInTree(pathList);
         filesManagerSelected = false;
+        searchSelected = false;
+    }
+
+    @FXML
+    private void showSearch() {
+        if (searchSelected) {
+            return;
+        }
+        fileManagerVbox = vbox.getChildren();
+        vbox.getChildren().clear();
+        TextField searchField = new TextField();
+        vbox.getChildren().add(searchField);
+        searchField.setOnInputMethodTextChanged(inputMethodEvent -> {
+            System.out.println("change");
+        });
+        searchSelected = true;
     }
 
     @FXML
     private void changeStorage(){
         RunApplication.showInitialWindow();
-    }
-
-    @FXML
-    private void showSearch() {
-
     }
 
     @FXML

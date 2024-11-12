@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.Font?>
@@ -34,12 +36,15 @@
    </top>
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <center>
-            <Text fx:id="textDescription" fill="#fcfcfc" stroke="BLACK" strokeType="OUTSIDE" text="Text" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <top>
+            <Label text="%HelpDescription" textAlignment="JUSTIFY" wrapText="true" BorderPane.alignment="CENTER">
                <font>
-                  <Font size="18.0" />
-               </font></Text>
-         </center>
+                  <Font size="24.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="50.0" right="50.0" />
+               </padding></Label>
+         </top>
       </BorderPane>
    </center>
 </BorderPane>
