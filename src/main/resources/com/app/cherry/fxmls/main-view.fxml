@@ -107,33 +107,35 @@
                     <padding>
                         <Insets bottom="15.0" top="10.0" />
                     </padding>
-                    <ToggleButton fx:id="filesManagerButton" mnemonicParsing="false" onMouseClicked="#showFiles" selected="true" style="-fx-line-spacing: 10;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                        <toggleGroup>
-                            <ToggleGroup fx:id="maingroup" />
-                        </toggleGroup>
-                        <graphic>
-                            <FontIcon iconLiteral="mdal-folder" scaleX="1.25" scaleY="1.25" />
-                        </graphic>
-                        <tooltip>
-                            <Tooltip text="%ToolTipFileManager" />
-                        </tooltip>
-                    </ToggleButton>
-                    <ToggleButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch" toggleGroup="$maingroup" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                        <graphic>
-                            <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
-                        </graphic>
-                        <tooltip>
-                            <Tooltip text="%ToolTipSearch" />
-                        </tooltip>
-                    </ToggleButton>
-                    <ToggleButton fx:id="favoriteNotesButton" mnemonicParsing="false" onAction="#showFavorites" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                        <graphic>
-                            <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
-                        </graphic>
-                        <tooltip>
-                            <Tooltip text="%ToolTipFavorites" />
-                        </tooltip>
-                    </ToggleButton>
+               <children>
+                  <RadioButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch" styleClass="toggle-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <graphic>
+                               <FontIcon iconLiteral="mdmz-search" scaleX="1.5" scaleY="1.5" selectionEnd="0" />
+                     </graphic>
+                     <tooltip>
+                               <Tooltip text="%ToolTipSearch" />
+                     </tooltip>
+                     <toggleGroup>
+                               <ToggleGroup fx:id="maingroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="favoriteNotesButton" mnemonicParsing="false" onMouseClicked="#showFavorites" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <graphic>
+                               <FontIcon iconLiteral="mdral-bookmark" scaleX="1.5" scaleY="1.5" selectionEnd="0" />
+                     </graphic>
+                     <tooltip>
+                               <Tooltip text="%ToolTipFavorites" />
+                     </tooltip>
+                  </RadioButton>
+                  <RadioButton fx:id="filesManagerButton" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#showFiles" selected="true" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <graphic>
+                               <FontIcon iconLiteral="mdal-folder" scaleX="1.5" scaleY="1.5" />
+                     </graphic>
+                     <tooltip>
+                               <Tooltip text="%ToolTipFileManager" />
+                     </tooltip>
+                  </RadioButton>
+               </children>
                 </GridPane>
             </top>
         </BorderPane>

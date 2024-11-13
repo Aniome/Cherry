@@ -15,12 +15,11 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -28,10 +27,7 @@ import org.fxmisc.richtext.CodeArea;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class MainController{
     @FXML
@@ -41,11 +37,11 @@ public class MainController{
     @FXML
     public SplitPane splitPane;
     @FXML
-    ToggleButton filesManagerButton;
+    RadioButton filesManagerButton;
     @FXML
-    ToggleButton searchButton;
+    RadioButton searchButton;
     @FXML
-    ToggleButton favoriteNotesButton;
+    RadioButton favoriteNotesButton;
     @FXML
     VBox vbox;
     @FXML
@@ -55,13 +51,10 @@ public class MainController{
 
     Stage renameStage;
     public static String newFileName;
-    boolean favoriteSelected = false;
-    boolean filesManagerSelected = true;
-    boolean searchSelected = false;
     TreeItem<String> filesManagerRoot;
     final String fileIconName = "mdal-insert_drive_file";
     final String folderIconName = "mdal-folder_open";
-    ObservableList<Node> fileManagerVbox;
+    ArrayList<Node> fileManagerVbox;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -76,6 +69,11 @@ public class MainController{
         loadFilesInTreeview();
         sortTreeView();
         ApplicationContextMenu.createContextMenu(treeView, this, renameStage, tabPane);
+
+        filesManagerButton.getStyleClass().remove("radio-button");
+        searchButton.getStyleClass().remove("radio-button");
+        favoriteNotesButton.getStyleClass().remove("radio-button");
+        fileManagerVbox = new ArrayList<>();
 
         TreeCellFactory.build(treeView, this);
 
@@ -209,19 +207,69 @@ public class MainController{
 
     @FXML
     private void showFiles() {
-        if (filesManagerSelected) {
-            return;
+        ObservableList<Node> listVbox = vbox.getChildren();
+        boolean afterSearch = false;
+        for (Node node : listVbox) {
+            if (node instanceof TextField) {
+                afterSearch = true;
+                break;
+            }
+        }
+        if (afterSearch) {
+            listVbox.clear();
+            listVbox.addAll(fileManagerVbox);
+            fileManagerVbox.clear();
         }
         treeView.setRoot(filesManagerRoot);
-        favoriteSelected = false;
-        searchSelected = false;
+    }
+
+    @FXML
+    private void showSearch() {
+        ObservableList<Node> vboxChildren = vbox.getChildren();
+        fileManagerVbox.addAll(vboxChildren);
+        vboxChildren.clear();
+
+        TextField searchField = new TextField();
+        ListView<String> listView = new ListView<>();
+        HBox hBox = new HBox(searchField);
+        hBox.setPadding(new Insets(10));
+        vboxChildren.addAll(hBox, listView);
+        VBox.setVgrow(listView, Priority.ALWAYS);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            listView.getItems().clear();
+            ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
+            ObservableList<String> listViewItems = listView.getItems();
+            for (TreeItem<String> item : rootList) {
+                if (item.getValue().contains(newValue)) {
+                    listViewItems.add(item.getValue());
+                }
+                if (findRecursive(item, newValue)) {
+                    listViewItems.add(item.getValue());
+                }
+            }
+        });
+    }
+
+    private boolean findRecursive(TreeItem<String> item, String findingValue) {
+        if (item.getValue().contains(findingValue)) {
+            return true;
+        }
+        if (item.isLeaf()) {
+            return false;
+        } else {
+            ObservableList<TreeItem<String>> childrenList = item.getChildren();
+            for (TreeItem<String> child : childrenList) {
+                if (findRecursive(child, findingValue)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @FXML
     private void showFavorites() {
-        if (favoriteSelected) {
-            return;
-        }
         treeView.setRoot(new TreeItem<>(""));
         List<Path> pathList = new LinkedList<>();
         Objects.requireNonNull(FavoriteNotesDAO.getFavoriteNotes()).forEach(item -> {
@@ -233,23 +281,6 @@ public class MainController{
             }
         });
         loadItemsInTree(pathList);
-        filesManagerSelected = false;
-        searchSelected = false;
-    }
-
-    @FXML
-    private void showSearch() {
-        if (searchSelected) {
-            return;
-        }
-        fileManagerVbox = vbox.getChildren();
-        vbox.getChildren().clear();
-        TextField searchField = new TextField();
-        vbox.getChildren().add(searchField);
-        searchField.setOnInputMethodTextChanged(inputMethodEvent -> {
-            System.out.println("change");
-        });
-        searchSelected = true;
     }
 
     @FXML
