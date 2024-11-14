@@ -25,8 +25,9 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
 public class MainController{
@@ -244,28 +245,38 @@ public class MainController{
                 if (item.getValue().contains(newValue)) {
                     listViewItems.add(item.getValue());
                 }
-                if (findRecursive(item, newValue)) {
-                    listViewItems.add(item.getValue());
-                }
+
+            }
+
+            Path startPath = Paths.get("path/to/start/directory");
+            try {
+                Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        // Обработка найденного файла
+                        System.out.println(file.toString());
+                        return FileVisitResult.CONTINUE;
+                    }
+                    @Override
+                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                        // Обработка директории перед входом в нее
+                        System.out.println("Entering directory: " + dir.toString());
+                        return FileVisitResult.CONTINUE;
+                    }
+                    @Override public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                        // Обработка ошибок при посещении файла
+                        System.err.println("Failed to visit file: " + file.toString());
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+            } catch (IOException e) {
+                System.out.println("Failed to visit directory: " + e.toString());
             }
         });
     }
 
-    private boolean findRecursive(TreeItem<String> item, String findingValue) {
-        if (item.getValue().contains(findingValue)) {
-            return true;
-        }
-        if (item.isLeaf()) {
-            return false;
-        } else {
-            ObservableList<TreeItem<String>> childrenList = item.getChildren();
-            for (TreeItem<String> child : childrenList) {
-                if (findRecursive(child, findingValue)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    private void findRecursive(TreeItem<String> item, String findingValue) {
+
     }
 
     @FXML
