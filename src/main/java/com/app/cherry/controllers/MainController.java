@@ -9,6 +9,7 @@ import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import com.app.cherry.controls.TreeViewItems.TreeItemCustom;
 import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.dao.FavoriteNotesDAO;
+import com.app.cherry.util.Alerts;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.io.FileService;
 import javafx.application.Platform;
@@ -237,46 +238,44 @@ public class MainController{
         vboxChildren.addAll(hBox, listView);
         VBox.setVgrow(listView, Priority.ALWAYS);
 
+        ResourceBundle resourceBundle = RunApplication.resourceBundle;
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             listView.getItems().clear();
-            ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
             ObservableList<String> listViewItems = listView.getItems();
-            for (TreeItem<String> item : rootList) {
-                if (item.getValue().contains(newValue)) {
-                    listViewItems.add(item.getValue());
-                }
-
-            }
-
-            Path startPath = Paths.get("path/to/start/directory");
             try {
-                Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
+                Files.walkFileTree(RunApplication.folderPath, new SimpleFileVisitor<>() {
                     @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        // Обработка найденного файла
-                        System.out.println(file.toString());
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                        addToListView(file);
                         return FileVisitResult.CONTINUE;
                     }
+
                     @Override
-                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                        // Обработка директории перед входом в нее
-                        System.out.println("Entering directory: " + dir.toString());
+                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+                        addToListView(dir);
                         return FileVisitResult.CONTINUE;
                     }
-                    @Override public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                        // Обработка ошибок при посещении файла
-                        System.err.println("Failed to visit file: " + file.toString());
+
+                    @Override
+                    public FileVisitResult visitFileFailed(Path file, IOException exc) {
+                        Alerts.createAndShowWarning(resourceBundle.getString("FailedVisitFile") + " "
+                                + file.toString());
                         return FileVisitResult.CONTINUE;
+                    }
+
+                    private void addToListView(Path path) {
+                        String pathString = path.toString();
+                        int ind = pathString.lastIndexOf(RunApplication.separator);
+                        pathString = pathString.substring(ind + 1);
+                        if (pathString.contains(newValue)) {
+                            listViewItems.add(pathString);
+                        }
                     }
                 });
             } catch (IOException e) {
-                System.out.println("Failed to visit directory: " + e.toString());
+                Alerts.createAndShowError(resourceBundle.getString("FailedVisitDirectory") + " " + e);
             }
         });
-    }
-
-    private void findRecursive(TreeItem<String> item, String findingValue) {
-
     }
 
     @FXML
@@ -313,7 +312,11 @@ public class MainController{
     private void loadItemsInTree(List<Path> pathList) {
         pathList = pathList.stream().map(path -> RunApplication.folderPath.relativize(path)).toList();
         pathList.forEach(item -> {
-            String[] path = item.toString().split(RunApplication.separator);
+            String separator = "\\\\";
+            if (item.toString().contains("/")) {
+                separator = "/";
+            }
+            String[] path = item.toString().split(separator);
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
             //check tree contains file
             TreeItem<String> containedItem = null;
