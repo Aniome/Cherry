@@ -1,7 +1,7 @@
 package com.app.cherry.controllers;
 
 import com.app.cherry.RunApplication;
-import com.app.cherry.controls.listViewItems.ListCellItem;
+import com.app.cherry.controls.listViewItems.ListCellItemInitPage;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.io.FileService;
@@ -165,7 +165,7 @@ public class InitController {
         }
 
         listView.setCellFactory(lvItem -> {
-            ListCellItem treeCell = new ListCellItem(listView, this);
+            ListCellItemInitPage treeCell = new ListCellItemInitPage(listView, this);
             MultipleSelectionModel<String> selectionModel = listView.getSelectionModel();
             treeCell.setOnMouseEntered( mouseEvent -> {
                 String treeCellItem = treeCell.getItem();

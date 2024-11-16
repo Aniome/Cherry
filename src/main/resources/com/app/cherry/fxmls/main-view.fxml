@@ -110,7 +110,7 @@
                <children>
                   <RadioButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch" styleClass="toggle-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <graphic>
-                               <FontIcon iconLiteral="mdmz-search" scaleX="1.5" scaleY="1.5" selectionEnd="0" />
+                               <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
                      </graphic>
                      <tooltip>
                                <Tooltip text="%ToolTipSearch" />
@@ -121,7 +121,7 @@
                   </RadioButton>
                   <RadioButton fx:id="favoriteNotesButton" mnemonicParsing="false" onMouseClicked="#showFavorites" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <graphic>
-                               <FontIcon iconLiteral="mdral-bookmark" scaleX="1.5" scaleY="1.5" selectionEnd="0" />
+                               <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
                      </graphic>
                      <tooltip>
                                <Tooltip text="%ToolTipFavorites" />

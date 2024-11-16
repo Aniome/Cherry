@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.text.Font;
 
-public class ListCellSettingsModal extends ListCell<String> {
+public class ListCellItems extends ListCell<String> {
     @Override
     public void updateItem(String value, boolean empty) {
         super.updateItem(value, empty);

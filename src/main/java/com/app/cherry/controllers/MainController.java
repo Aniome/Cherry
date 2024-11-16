@@ -12,6 +12,7 @@ import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.io.FileService;
+import com.app.cherry.util.structures.SearchListViewItem;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -212,7 +213,7 @@ public class MainController{
         ObservableList<Node> listVbox = vbox.getChildren();
         boolean afterSearch = false;
         for (Node node : listVbox) {
-            if (node instanceof TextField) {
+            if (node instanceof ListView) {
                 afterSearch = true;
                 break;
             }
@@ -232,7 +233,7 @@ public class MainController{
         vboxChildren.clear();
 
         TextField searchField = new TextField();
-        ListView<String> listView = new ListView<>();
+        ListView<SearchListViewItem> listView = new ListView<>();
         HBox hBox = new HBox(searchField);
         hBox.setPadding(new Insets(10));
         vboxChildren.addAll(hBox, listView);
@@ -240,8 +241,10 @@ public class MainController{
 
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty())
+                return;
             listView.getItems().clear();
-            ObservableList<String> listViewItems = listView.getItems();
+            ObservableList<SearchListViewItem> listViewItems = listView.getItems();
             try {
                 Files.walkFileTree(RunApplication.folderPath, new SimpleFileVisitor<>() {
                     @Override
@@ -268,13 +271,30 @@ public class MainController{
                         int ind = pathString.lastIndexOf(RunApplication.separator);
                         pathString = pathString.substring(ind + 1);
                         if (pathString.contains(newValue)) {
-                            listViewItems.add(pathString);
+                            if (pathString.contains(".md")) {
+                                pathString = pathString.replace(".md", "");
+                            }
+                            listViewItems.add(new SearchListViewItem(pathString, path));
                         }
                     }
                 });
             } catch (IOException e) {
                 Alerts.createAndShowError(resourceBundle.getString("FailedVisitDirectory") + " " + e);
             }
+
+//            listView.setCellFactory(lvItem -> {
+//                ListCell<SearchListViewItem> listCellItem = new ListCellItems();
+//                listCellItem.setOnMouseClicked(event -> {
+//                    String searchResult = listCellItem.getText();
+//                    if (searchResult.isEmpty()) {
+//                        return;
+//                    }
+//
+//                });
+//
+//                return listCellItem;
+//            });
+
         });
     }
 

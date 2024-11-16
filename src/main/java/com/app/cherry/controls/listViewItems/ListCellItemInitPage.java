@@ -20,13 +20,13 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-public class ListCellItem extends ListCell<String> {
+public class ListCellItemInitPage extends ListCell<String> {
 
     private final Label titleLabel;
     private final Label folderLabel;
     private final HBox root;
 
-    public ListCellItem(ListView<String> listView, InitController initController) {
+    public ListCellItemInitPage(ListView<String> listView, InitController initController) {
 
         titleLabel = new Label();
 

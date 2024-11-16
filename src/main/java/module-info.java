@@ -35,4 +35,6 @@ module com.app.cherry {
     opens com.app.cherry.util.io;
     exports com.app.cherry.util.configuration;
     opens com.app.cherry.util.configuration;
+    exports com.app.cherry.util.structures;
+    opens com.app.cherry.util.structures;
 }

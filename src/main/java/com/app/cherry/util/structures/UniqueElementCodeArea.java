@@ -1,4 +1,4 @@
-package com.app.cherry.util;
+package com.app.cherry.util.structures;
 
 public class UniqueElementCodeArea {
     boolean isMarked;

@@ -4,7 +4,7 @@ import atlantafx.base.theme.Styles;
 import atlantafx.base.theme.Tweaks;
 import com.app.cherry.RunApplication;
 import com.app.cherry.util.Alerts;
-import com.app.cherry.util.UniqueElementCodeArea;
+import com.app.cherry.util.structures.UniqueElementCodeArea;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
