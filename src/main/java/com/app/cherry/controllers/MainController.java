@@ -265,13 +265,15 @@ public class MainController{
                 Files.walkFileTree(RunApplication.folderPath, new SimpleFileVisitor<>() {
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                        addToListView(file);
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                    @Override
-                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-                        addToListView(dir);
+                        String pathString = file.toString();
+                        int ind = pathString.lastIndexOf(RunApplication.separator);
+                        pathString = pathString.substring(ind + 1);
+                        if (pathString.contains(newValue)) {
+                            if (pathString.contains(".md")) {
+                                pathString = pathString.replace(".md", "");
+                            }
+                            listViewItems.add(new SearchListViewItem(pathString, file));
+                        }
                         return FileVisitResult.CONTINUE;
                     }
 
@@ -281,18 +283,6 @@ public class MainController{
                                 + file.toString());
                         return FileVisitResult.CONTINUE;
                     }
-
-                    private void addToListView(Path path) {
-                        String pathString = path.toString();
-                        int ind = pathString.lastIndexOf(RunApplication.separator);
-                        pathString = pathString.substring(ind + 1);
-                        if (pathString.contains(newValue)) {
-                            if (pathString.contains(".md")) {
-                                pathString = pathString.replace(".md", "");
-                            }
-                            listViewItems.add(new SearchListViewItem(pathString, path));
-                        }
-                    }
                 });
             } catch (IOException e) {
                 Alerts.createAndShowError(resourceBundle.getString("FailedVisitDirectory") + " " + e);
@@ -301,11 +291,11 @@ public class MainController{
             listView.setCellFactory(lvItem -> {
                 ListCellItemSearch listCellItem = new ListCellItemSearch();
                 listCellItem.setOnMouseClicked(event -> {
-                    String searchResult = listCellItem.getText();
+                    SearchListViewItem item = listCellItem.getItem();
+                    String searchResult = item.searchText;
                     if (searchResult == null || searchResult.isEmpty()) {
                         return;
                     }
-                    SearchListViewItem item = listCellItem.getItem();
                     loadDataOnFormOnClick(item.path, item.searchText);
                 });
                 return listCellItem;

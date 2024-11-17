@@ -12,17 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="working with searching">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItemSearch.java" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="working with cell factory">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItemsSettingsModal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/SearchListViewItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/SearchListViewItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +74,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Application.RunApplication.executor": "Run",
     "Maven.Cherry [clean,javafx:run].executor": "Run",
     "Maven.Cherry [deploy].executor": "Run",
@@ -498,15 +491,7 @@
       <workItem from="1731688532100" duration="5193000" />
       <workItem from="1731763097938" duration="2529000" />
       <workItem from="1731781663791" duration="8116000" />
-      <workItem from="1731858989419" duration="8476000" />
-    </task>
-    <task id="LOCAL-00064" summary="add some localization">
-      <option name="closed" value="true" />
-      <created>1725732313381</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1725732313381</updated>
+      <workItem from="1731858989419" duration="10341000" />
     </task>
     <task id="LOCAL-00065" summary="add web view">
       <option name="closed" value="true" />
@@ -892,7 +877,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731783590082</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="working with cell factory">
+      <option name="closed" value="true" />
+      <created>1731869852185</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1731869852185</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -923,7 +916,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="simple modal pane" />
     <MESSAGE value="add changes for modalPane" />
     <MESSAGE value="some fixing db" />
     <MESSAGE value="add localization and fix bug with rectangle code area" />
@@ -948,7 +940,8 @@
     <MESSAGE value="trying search" />
     <MESSAGE value="finalization search and refactoring" />
     <MESSAGE value="working with searching" />
-    <option name="LAST_COMMIT_MESSAGE" value="working with searching" />
+    <MESSAGE value="working with cell factory" />
+    <option name="LAST_COMMIT_MESSAGE" value="working with cell factory" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
