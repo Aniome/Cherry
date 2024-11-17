@@ -4,6 +4,7 @@ import com.app.cherry.RunApplication;
 import com.app.cherry.util.Alerts;
 import javafx.scene.control.TreeItem;
 import org.fxmisc.richtext.CodeArea;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
@@ -22,6 +23,16 @@ public class FileService {
     public static String readFile(TreeItem<String> treeItem){
         StringBuilder result = new StringBuilder();
         Path path = Paths.get(getPath(treeItem));
+        return readFile(path, result);
+    }
+
+    public static String readFile(Path path){
+        StringBuilder result = new StringBuilder();
+        return readFile(path, result);
+    }
+
+    @NotNull
+    private static String readFile(Path path, StringBuilder result) {
         try (FileReader fr = new FileReader(path.toFile())) {
             int i;
             while ((i = fr.read()) != -1) {

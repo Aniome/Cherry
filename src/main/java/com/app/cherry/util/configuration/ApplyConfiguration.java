@@ -34,7 +34,7 @@ public class ApplyConfiguration {
     private static BorderPane leftPanelBorderPane;
     private static final String dark = "Dark";
     private static Scene mainScene;
-    public static LinkedList<StackPane> listLineNumber = new LinkedList<>();
+    public static LinkedList<StackPane> listStackPaneLineNumber = new LinkedList<>();
 
     public static void build(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -144,7 +144,7 @@ public class ApplyConfiguration {
     }
 
     public static void applyThemeOnStackPaneBackgroundLineNumber() {
-        for (Node listLineChildren : listLineNumber) {
+        for (Node listLineChildren : listStackPaneLineNumber) {
             if (listLineChildren instanceof StackPane lineNumberStackPane) {
                 var stackPaneChildren = lineNumberStackPane.getChildren();
                 for (Node stackPaneChild : stackPaneChildren) {

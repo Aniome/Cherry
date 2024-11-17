@@ -12,19 +12,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="finalization search and refactoring">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/SearchListViewItem.java" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="working with searching">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItemSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/FindViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/FindViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItemInitPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellSettingsModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/UniqueElementCodeArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/UniqueElementCodeArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItemsSettingsModal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/SearchListViewItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/SearchListViewItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +81,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.RunApplication.executor": "Run",
     "Maven.Cherry [clean,javafx:run].executor": "Run",
     "Maven.Cherry [deploy].executor": "Run",
@@ -100,6 +98,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -498,15 +497,8 @@
       <workItem from="1731608036077" duration="2588000" />
       <workItem from="1731688532100" duration="5193000" />
       <workItem from="1731763097938" duration="2529000" />
-      <workItem from="1731781663791" duration="1824000" />
-    </task>
-    <task id="LOCAL-00063" summary="add first localization">
-      <option name="closed" value="true" />
-      <created>1725295409967</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1725295409967</updated>
+      <workItem from="1731781663791" duration="8116000" />
+      <workItem from="1731858989419" duration="8476000" />
     </task>
     <task id="LOCAL-00064" summary="add some localization">
       <option name="closed" value="true" />
@@ -892,7 +884,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731693738455</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="working with searching">
+      <option name="closed" value="true" />
+      <created>1731783590082</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1731783590082</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -923,7 +923,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add localization to contextmenu" />
     <MESSAGE value="simple modal pane" />
     <MESSAGE value="add changes for modalPane" />
     <MESSAGE value="some fixing db" />
@@ -948,7 +947,8 @@
     <MESSAGE value="add search tab" />
     <MESSAGE value="trying search" />
     <MESSAGE value="finalization search and refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="finalization search and refactoring" />
+    <MESSAGE value="working with searching" />
+    <option name="LAST_COMMIT_MESSAGE" value="working with searching" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -961,7 +961,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java</url>
-          <line>98</line>
+          <line>109</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>

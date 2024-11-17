@@ -8,6 +8,7 @@ import com.app.cherry.controls.TabManager;
 import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import com.app.cherry.controls.TreeViewItems.TreeItemCustom;
 import com.app.cherry.controls.codearea.MarkdownArea;
+import com.app.cherry.controls.listViewItems.ListCellItemSearch;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.configuration.ApplyConfiguration;
@@ -58,6 +59,7 @@ public class MainController{
     final String fileIconName = "mdal-insert_drive_file";
     final String folderIconName = "mdal-folder_open";
     ArrayList<Node> fileManagerVbox;
+    ArrayList<SearchListViewItem> searchListViewItems;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -77,6 +79,7 @@ public class MainController{
         searchButton.getStyleClass().remove("radio-button");
         favoriteNotesButton.getStyleClass().remove("radio-button");
         fileManagerVbox = new ArrayList<>();
+        searchListViewItems = new ArrayList<>();
 
         TreeCellFactory.build(treeView, this);
 
@@ -112,11 +115,19 @@ public class MainController{
         RunApplication.showRenameWindow(treeView, tabPane);
     }
 
-    public void loadDataOnFormOnClick(TreeItem<String> selectedItem){
-        ApplyConfiguration.listLineNumber.clear();
+    public void loadDataOnFormOnClick(TreeItem<String> selectedItem) {
+        String filename = selectedItem.getValue();
+        loadDataOnFormOnClick(filename, null, selectedItem);
+    }
+
+    public void loadDataOnFormOnClick(Path path, String filename) {
+        loadDataOnFormOnClick(filename, path, null);
+    }
+
+    private void loadDataOnFormOnClick(String filename, Path path, TreeItem<String> selectedItem) {
+        ApplyConfiguration.listStackPaneLineNumber.clear();
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         tab.setContent(null);
-        String filename = selectedItem.getValue();
         tab.setText(filename);
         TabManager tabManager = new TabManager();
         BorderPane borderPane = tabManager.createTab(tab);
@@ -133,7 +144,11 @@ public class MainController{
                         (VirtualizedScrollPane<CodeArea>) stackPaneChildrens.getFirst();
                 CodeArea codeArea = virtualizedScrollPane.getContent();
 
-                final String text = FileService.readFile(selectedItem);
+                String text;
+                if (path == null)
+                    text = FileService.readFile(selectedItem);
+                else
+                    text = FileService.readFile(path);
                 int length = text.length();
                 if (length > 0) {
                     char lastChar = text.charAt(length - 1);
@@ -244,6 +259,7 @@ public class MainController{
             if (newValue.isEmpty())
                 return;
             listView.getItems().clear();
+            searchListViewItems.clear();
             ObservableList<SearchListViewItem> listViewItems = listView.getItems();
             try {
                 Files.walkFileTree(RunApplication.folderPath, new SimpleFileVisitor<>() {
@@ -282,18 +298,18 @@ public class MainController{
                 Alerts.createAndShowError(resourceBundle.getString("FailedVisitDirectory") + " " + e);
             }
 
-//            listView.setCellFactory(lvItem -> {
-//                ListCell<SearchListViewItem> listCellItem = new ListCellItems();
-//                listCellItem.setOnMouseClicked(event -> {
-//                    String searchResult = listCellItem.getText();
-//                    if (searchResult.isEmpty()) {
-//                        return;
-//                    }
-//
-//                });
-//
-//                return listCellItem;
-//            });
+            listView.setCellFactory(lvItem -> {
+                ListCellItemSearch listCellItem = new ListCellItemSearch();
+                listCellItem.setOnMouseClicked(event -> {
+                    String searchResult = listCellItem.getText();
+                    if (searchResult == null || searchResult.isEmpty()) {
+                        return;
+                    }
+                    SearchListViewItem item = listCellItem.getItem();
+                    loadDataOnFormOnClick(item.path, item.searchText);
+                });
+                return listCellItem;
+            });
 
         });
     }

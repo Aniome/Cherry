@@ -135,7 +135,7 @@ public class MarkdownArea {
             StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
             StackPane stackPane = new StackPane(rectangle, hbox);
             stackPane.toFront();
-            ApplyConfiguration.listLineNumber.add(stackPane);
+            ApplyConfiguration.listStackPaneLineNumber.add(stackPane);
             return stackPane;
         };
     }

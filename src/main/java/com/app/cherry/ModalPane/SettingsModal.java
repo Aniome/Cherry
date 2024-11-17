@@ -8,7 +8,7 @@ import atlantafx.base.theme.Dracula;
 import atlantafx.base.util.IntegerStringConverter;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.codearea.MarkdownArea;
-import com.app.cherry.controls.listViewItems.ListCellItems;
+import com.app.cherry.controls.listViewItems.ListCellItemsSettingsModal;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.SavingConfiguration;
 import javafx.application.Application;
@@ -58,7 +58,7 @@ public class SettingsModal {
         listView.setPadding(new Insets(10, 10, 10, 10));
         listView.setStyle("-fx-border-radius: 20;");
         listView.setCellFactory(item ->{
-            ListCellItems listCellSettingsModal = new ListCellItems();
+            ListCellItemsSettingsModal listCellSettingsModal = new ListCellItemsSettingsModal();
             listCellSettingsModal.setOnMouseClicked(event -> {
                 String listViewItem = listCellSettingsModal.getItem();
                 if (listViewItem == null)

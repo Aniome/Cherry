@@ -1,12 +1,12 @@
 package com.app.cherry.controls.listViewItems;
 
+import com.app.cherry.util.structures.SearchListViewItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.text.Font;
 
-public class ListCellItems extends ListCell<String> {
+public class ListCellItemSearch extends ListCell<SearchListViewItem> {
     @Override
-    public void updateItem(String value, boolean empty) {
+    public void updateItem(SearchListViewItem value, boolean empty) {
         super.updateItem(value, empty);
 
         if (empty) {
@@ -14,9 +14,7 @@ public class ListCellItems extends ListCell<String> {
             return;
         }
 
-        Font font = new Font("Arial", 14);
-        Label label = new Label(value);
-        label.setFont(font);
+        Label label = new Label(value.toString());
         setGraphic(label);
     }
 }

@@ -10,4 +10,9 @@ public class SearchListViewItem {
         this.searchText = searchText;
         this.path = path;
     }
+
+    @Override
+    public String toString() {
+        return searchText;
+    }
 }
