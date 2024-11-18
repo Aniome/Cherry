@@ -12,10 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="working with cell factory">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="finalization search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItemInitPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/listViewItems/ListCellItemInitPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +76,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.RunApplication.executor": "Run",
     "Maven.Cherry [clean,javafx:run].executor": "Run",
     "Maven.Cherry [deploy].executor": "Run",
@@ -491,15 +493,8 @@
       <workItem from="1731688532100" duration="5193000" />
       <workItem from="1731763097938" duration="2529000" />
       <workItem from="1731781663791" duration="8116000" />
-      <workItem from="1731858989419" duration="10341000" />
-    </task>
-    <task id="LOCAL-00065" summary="add web view">
-      <option name="closed" value="true" />
-      <created>1725821786670</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1725821786670</updated>
+      <workItem from="1731858989419" duration="11293000" />
+      <workItem from="1731946958346" duration="6686000" />
     </task>
     <task id="LOCAL-00066" summary="trying configure scrollbar">
       <option name="closed" value="true" />
@@ -885,7 +880,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731869852185</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="finalization search">
+      <option name="closed" value="true" />
+      <created>1731871939672</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1731871939672</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -916,7 +919,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add changes for modalPane" />
     <MESSAGE value="some fixing db" />
     <MESSAGE value="add localization and fix bug with rectangle code area" />
     <MESSAGE value="fix bug and customization settings" />
@@ -941,7 +943,8 @@
     <MESSAGE value="finalization search and refactoring" />
     <MESSAGE value="working with searching" />
     <MESSAGE value="working with cell factory" />
-    <option name="LAST_COMMIT_MESSAGE" value="working with cell factory" />
+    <MESSAGE value="finalization search" />
+    <option name="LAST_COMMIT_MESSAGE" value="finalization search" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

@@ -19,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -76,9 +77,30 @@ public class ApplyConfiguration {
             dividerPosition = settingsData.dividerPosition;
 
             MarkdownArea.fontSize = settingsData.getFontSize();
-        } catch (IOException e) {
+        }
+        catch (FileNotFoundException e) {
+            applyDefaultSettings(mainStage);
+        }
+        catch (IOException e) {
             Alerts.createAndShowWarning(e.getMessage());
         }
+    }
+
+    private static void applyDefaultSettings(Stage mainStage) {
+        RunApplication.folderPath = null;
+
+        RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+        SavingConfiguration.language = "en";
+
+        theme = dark;
+        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+
+        mainStage.setWidth(1280);
+        mainStage.setHeight(720);
+
+        dividerPosition = 0.13;
+
+        MarkdownArea.fontSize = 12;
     }
 
     public static double getDividerPosition() {

@@ -6,6 +6,7 @@ import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.InitController;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
+import com.app.cherry.util.configuration.SavingConfiguration;
 import com.app.cherry.util.io.FileService;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -60,6 +61,7 @@ public class ListCellItemInitPage extends ListCell<String> {
             if (FileService.checkExists(path)){
                 RunApplication.folderPath = Paths.get(path);
                 initController.showMainStage();
+                SavingConfiguration.preparationMainStage = true;
             } else {
                 ResourceBundle resourceBundle = RunApplication.resourceBundle;
                 Alerts.createAndShowWarning(resourceBundle.getString("InitFolderNotFound"));
