@@ -7,14 +7,15 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class RecentPathsDAO {
-    public static List<String> getPaths(){
+    public static List<String> getPaths() {
         Session session = HibernateUtil.sessionFactory.openSession();
-        List<String> recentPathsList = session.createQuery("select path from RecentPaths ", String.class).getResultList();
+        List<String> recentPathsList = session.createQuery("SELECT path FROM RecentPaths",
+                String.class).getResultList();
         session.close();
         return recentPathsList;
     }
 
-    public static void addPath(String path){
+    public static void addPath(String path) {
         HibernateUtil.sessionFactory.inTransaction(session -> {
             List<RecentPaths> pathsList = session.createQuery("from RecentPaths", RecentPaths.class).getResultList();
             if (checkContainsPaths(pathsList, path) == -1 || pathsList.isEmpty()){
@@ -28,20 +29,20 @@ public class RecentPathsDAO {
         });
     }
 
-    public static void removePath(String path){
+    public static void removePath(String path) {
         HibernateUtil.sessionFactory.inTransaction(session -> {
             List<RecentPaths> pathsList = session.createQuery("from RecentPaths", RecentPaths.class).getResultList();
             int index = checkContainsPaths(pathsList, path);
-            if (index != -1){
+            if (index != -1) {
                 session.remove(pathsList.get(index));
             }
         });
     }
 
-    private static int checkContainsPaths(List<RecentPaths> listId, String path){
+    private static int checkContainsPaths(List<RecentPaths> listId, String path) {
         int index = -1;
-        for (int i = 0; i < listId.size(); i++){
-            if (listId.get(i).getPath().equals(path)){
+        for (int i = 0; i < listId.size(); i++) {
+            if (listId.get(i).getPath().equals(path)) {
                 index = i;
                 break;
             }

@@ -1,6 +1,8 @@
 package com.app.cherry.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class FavoriteNotes {
@@ -9,6 +11,13 @@ public class FavoriteNotes {
     private Integer id;
     @Column(name = "pathNote")
     private String pathNote;
+
+    public FavoriteNotes() {}
+
+    public FavoriteNotes(Integer id, String pathNote) {
+        this.id = id;
+        this.pathNote = pathNote;
+    }
 
     public Integer getId() {
         return id;

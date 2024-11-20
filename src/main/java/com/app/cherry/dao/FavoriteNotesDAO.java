@@ -5,17 +5,18 @@ import com.app.cherry.entity.FavoriteNotes;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.exception.GenericJDBCException;
 
 import java.util.List;
 
 public class FavoriteNotesDAO {
 
-    public static void setPathNote(String pathNote){
+    public static void setPathNote(String pathNote) {
         HibernateUtil.sessionFactory.inTransaction(session -> {
             List<FavoriteNotes> favoriteNotesList
                     = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
-            if (containsPathNote(pathNote, favoriteNotesList)){
-                Alerts.createAndShowWarning("Элемент уже в избранном");
+            if (containsPathNote(pathNote, favoriteNotesList)) {
+                Alerts.createAndShowWarning(RunApplication.resourceBundle.getString("FavoriteNotesContains"));
                 return;
             }
             FavoriteNotes favoriteNotes = new FavoriteNotes();
@@ -27,7 +28,7 @@ public class FavoriteNotesDAO {
         });
     }
 
-    private static boolean containsPathNote(String pathNote, List<FavoriteNotes> favoriteNotesList){
+    private static boolean containsPathNote(String pathNote, List<FavoriteNotes> favoriteNotesList) {
         for(FavoriteNotes favoriteNotes : favoriteNotesList){
             if(favoriteNotes.getPathNote().equals(pathNote)){
                 return true;
@@ -36,20 +37,30 @@ public class FavoriteNotesDAO {
         return false;
     }
 
-    public static List<FavoriteNotes> getFavoriteNotes(){
+    public static List<FavoriteNotes> getFavoriteNotes() {
         Session session = HibernateUtil.sessionFactory.openSession();
-        List<FavoriteNotes> favoriteNotes
-                = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
-        session.close();
-        for (FavoriteNotes item : favoriteNotes){
-            if (!item.getPathNote().contains(RunApplication.folderPath.toString())){
-                return List.of();
+        try {
+            List<FavoriteNotes> favoriteNotes
+                    = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
+            session.close();
+            for (FavoriteNotes item : favoriteNotes) {
+                if (!item.getPathNote().contains(RunApplication.folderPath.toString())){
+                    return List.of();
+                }
             }
+            return favoriteNotes;
+        } catch (GenericJDBCException e) {
+            createTable(session);
+            return null;
         }
-        return favoriteNotes;
     }
 
-    public static void deleteFavoriteNote(int id){
+    private static void createTable(Session session) {
+        FavoriteNotes favoriteNotes = new FavoriteNotes(0, "");
+        session.persist(favoriteNotes);
+    }
+
+    public static void deleteFavoriteNote(int id) {
         HibernateUtil.sessionFactory.inTransaction(session -> {
             FavoriteNotes deletingNote = session.find(FavoriteNotes.class, id);
             if (deletingNote != null){

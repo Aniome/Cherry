@@ -60,8 +60,8 @@ public class ListCellItemInitPage extends ListCell<String> {
             String path = titleLabel.getText();
             if (FileService.checkExists(path)){
                 RunApplication.folderPath = Paths.get(path);
-                initController.showMainStage();
                 SavingConfiguration.preparationMainStage = true;
+                initController.showMainStage();
             } else {
                 ResourceBundle resourceBundle = RunApplication.resourceBundle;
                 Alerts.createAndShowWarning(resourceBundle.getString("InitFolderNotFound"));

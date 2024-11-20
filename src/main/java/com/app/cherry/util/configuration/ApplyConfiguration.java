@@ -100,7 +100,7 @@ public class ApplyConfiguration {
 
         dividerPosition = 0.13;
 
-        MarkdownArea.fontSize = 12;
+        MarkdownArea.fontSize = 22;
     }
 
     public static double getDividerPosition() {

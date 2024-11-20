@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.fxmisc.richtext.CodeArea;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -168,6 +169,8 @@ public class SettingsModal {
 
         fontSize.valueProperty().addListener((observable, oldValue, newValue) -> {
             MarkdownArea.fontSize = newValue;
+            CodeArea codeArea = MarkdownArea.getCodeArea();
+            codeArea.setStyle("-fx-font-size: "+ newValue +"px;");
         });
 
         return new HBox(changeFontLabel, new Spacer(), fontSize);
