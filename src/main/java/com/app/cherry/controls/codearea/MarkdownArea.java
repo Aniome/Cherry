@@ -1,6 +1,7 @@
 package com.app.cherry.controls.codearea;
 
 import com.app.cherry.RunApplication;
+import com.app.cherry.controllers.MainController;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -90,6 +91,8 @@ public class MarkdownArea {
             }
         });
 
+        MainController.codeArea = codeArea;
+
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
     }
 
@@ -172,18 +175,19 @@ public class MarkdownArea {
         @Override
         public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
             if (lm.getAddedSize() > 0) {
-                Platform.runLater( () -> {
-                    int paragraphSize = area.getParagraphs().size();
-                    if (index < paragraphSize) {
-                        index++;
-                    } else {
-                        int currentParagraph = area.getCurrentParagraph();
-                        String text = area.getText(currentParagraph, 0,
-                                currentParagraph, area.getParagraphLength(currentParagraph));
-                        int startPos = area.getAbsolutePosition(currentParagraph, 0);
-                        area.setStyleSpans(startPos, computeStyles.apply(text));
-                    }
-                });
+                int paragraphSize = area.getParagraphs().size();
+                if (index < paragraphSize) {
+                    index++;
+                } else {
+                    int currentParagraph = area.getCurrentParagraph();
+                    String text = area.getText(currentParagraph, 0,
+                            currentParagraph, area.getParagraphLength(currentParagraph));
+                    int startPos = area.getAbsolutePosition(currentParagraph, 0);
+                    area.setStyleSpans(startPos, computeStyles.apply(text));
+                }
+//                Platform.runLater( () -> {
+//
+//                });
             }
         }
     }

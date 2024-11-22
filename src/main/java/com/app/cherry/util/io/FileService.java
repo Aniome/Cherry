@@ -3,13 +3,14 @@ package com.app.cherry.util.io;
 import com.app.cherry.RunApplication;
 import com.app.cherry.util.Alerts;
 import javafx.scene.control.TreeItem;
-import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,11 +46,18 @@ public class FileService {
         return result.toString();
     }
 
-    public static void writeFile(TreeItem<String> treeItem, CodeArea codeArea){
-        try (FileWriter fileWriter = new FileWriter(getPath(treeItem))) {
-            fileWriter.write(codeArea.getText());
+    public static void writeFile(TreeItem<String> treeItem, String content){
+//        try (FileWriter fileWriter = new FileWriter(getPath(treeItem))) {
+//            fileWriter.write(codeArea.getText());
+//        } catch (IOException e) {
+//            Alerts.createAndShowWarning(e.getMessage());
+//        }
+        try (RandomAccessFile file = new RandomAccessFile(getPath(treeItem), "rw");
+             FileChannel channel = file.getChannel()) {
+            ByteBuffer buffer = ByteBuffer.wrap(content.getBytes());
+            channel.write(buffer);
         } catch (IOException e) {
-            Alerts.createAndShowWarning(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 

@@ -51,11 +51,11 @@ public class InitController {
     public Stage InitialStage;
 
     @FXML
-    private void TemplateStorage(){
+    private void templateStorage(){
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         //change buttons
-        ChangeControls(UpHBox, new String[]{resourceBundle.getString("InitNameStorage")});
-        ChangeControls(DownHBox, new String[]{resourceBundle.getString("InitLocation"),
+        changeControls(UpHBox, new String[]{resourceBundle.getString("InitNameStorage")});
+        changeControls(DownHBox, new String[]{resourceBundle.getString("InitLocation"),
                 resourceBundle.getString("InitBrowse")});
 
         textField = new TextField(){{
@@ -64,15 +64,15 @@ public class InitController {
         UpHBox.getChildren().add(textField);
 
         //Change visible buttons
-        ChangeVisibleButtons(true);
+        changeVisibleButtons(true);
     }
 
-    private void ChangeControls(HBox Hbox, String[] strings){
-        Iterator<Node> iterator = CreateIterator(Hbox);
-        IterationControls(iterator, strings);
+    private void changeControls(HBox Hbox, String[] strings){
+        Iterator<Node> iterator = createIterator(Hbox);
+        iterationControls(iterator, strings);
     }
 
-    private void IterationControls(Iterator<Node> iterator, String[] str){
+    private void iterationControls(Iterator<Node> iterator, String[] str){
         while (iterator.hasNext()){
             Node node = iterator.next();
             if (node instanceof Label){
@@ -91,17 +91,17 @@ public class InitController {
         }
     }
 
-    private void ChangeVisibleButtons(boolean value){
+    private void changeVisibleButtons(boolean value){
         Back.setVisible(value);
         Create.setVisible(value);
     }
 
-    private Iterator<Node> CreateIterator(HBox Hbox){
+    private Iterator<Node> createIterator(HBox Hbox){
         return Hbox.getChildren().iterator();
     }
 
     @FXML
-    private void OpenStorage(){
+    private void openStorage(){
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(InitialStage));
         selectedDirectory.ifPresent(file -> {
@@ -118,23 +118,23 @@ public class InitController {
     }
 
     @FXML
-    private void BackToMainMenu(){
+    private void backToMainMenu(){
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
-        ChangeControls(UpHBox, new String[]{resourceBundle.getString("NewStorage")});
-        ChangeControls(DownHBox, new String[]{resourceBundle.getString("OpenStorage"),
+        changeControls(UpHBox, new String[]{resourceBundle.getString("NewStorage")});
+        changeControls(DownHBox, new String[]{resourceBundle.getString("OpenStorage"),
                 resourceBundle.getString("OpenButton")});
 
         UpHBox.getChildren().add(new Button(resourceBundle.getString("CreateButton")){{
             setFont(new Font(18));
-            setOnMouseClicked(mouseEvent -> TemplateStorage());
+            setOnMouseClicked(mouseEvent -> templateStorage());
         }});
 
-        ChangeVisibleButtons(false);
+        changeVisibleButtons(false);
         DownLabel.setText("");
     }
 
     @FXML
-    private void CreateStorage(){
+    private void createStorage(){
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         if (textField.getText().isEmpty()){
             Alerts.createAndShowWarning(resourceBundle.getString("InitLabelNameStorage"));

@@ -22,10 +22,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +36,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
-public class MainController{
+public class MainController {
     @FXML
     private TreeView<String> treeView;
     @FXML
@@ -60,6 +63,8 @@ public class MainController{
     final String folderIconName = "mdal-folder_open";
     ArrayList<Node> fileManagerVbox;
     ArrayList<SearchListViewItem> searchListViewItems;
+    public static CodeArea codeArea;
+    public static TextField titleTextField;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -131,54 +136,48 @@ public class MainController{
         tab.setText(filename);
         TabManager tabManager = new TabManager();
         BorderPane borderPane = tabManager.createTab(tab);
-        ObservableList<Node> childrens = borderPane.getChildren();
-        for (Node children: childrens) {
-            if (children instanceof TextField) {
-                ((TextField) children).setText(filename);
-            }
-            if (children instanceof StackPane stackPane) {
-                ObservableList<Node> stackPaneChildrens = stackPane.getChildren();
 
-                @SuppressWarnings("unchecked")
-                VirtualizedScrollPane<CodeArea> virtualizedScrollPane =
-                        (VirtualizedScrollPane<CodeArea>) stackPaneChildrens.getFirst();
-                CodeArea codeArea = virtualizedScrollPane.getContent();
+        tab.setContent(borderPane);
 
-                String text;
-                if (path == null)
-                    text = FileService.readFile(selectedItem);
-                else
-                    text = FileService.readFile(path);
-                int length = text.length();
-                if (length > 0) {
-                    char lastChar = text.charAt(length - 1);
-                    if (lastChar == '\n'){
-                        int i;
-                        for (i = length - 1; i >= 0; i--) {
-                            if (text.charAt(i) != '\n'){
-                                break;
-                            }
-                        }
-                        codeArea.appendText(text.substring(0,i));
-                        codeArea.appendText(text.substring(i,length));
-                        //codeArea.insertText(0, text);
-                    } else {
-                        codeArea.replaceText(0,0, text);
+        String text;
+        if (path == null)
+            text = FileService.readFile(selectedItem);
+        else
+            text = FileService.readFile(path);
+        int length = text.length();
+        if (length > 0) {
+            if (text.endsWith("\n")) {
+                int i;
+                for (i = length - 1; i >= 0; i--) {
+                    if (text.charAt(i) != '\n') {
+                        break;
                     }
-                }
-                //codeArea.textProperty().addListener((observableValue, s, t1) -> FileService.writeFile(selectedItem, codeArea));
 
-                int codeAreaLength = codeArea.getParagraphs().size();
-                int pageLength = 80;
-                if (codeAreaLength > pageLength){
-                    MarkdownArea.applyStylesPage(pageLength);
-                    MarkdownArea.applyStyles(pageLength, codeAreaLength);
-                } else {
-                    MarkdownArea.applyStyles(0, codeAreaLength);
                 }
+                codeArea.appendText(text.substring(0, i));
+                codeArea.appendText(text.substring(i, length));
+            } else {
+                codeArea.replaceText(0, 0, text);
             }
         }
-        tab.setContent(borderPane);
+
+        int codeAreaLength = codeArea.getParagraphs().size();
+        int pageLength = 80;
+        if (codeAreaLength > pageLength) {
+            MarkdownArea.applyStylesPage(pageLength);
+            MarkdownArea.applyStyles(pageLength, codeAreaLength);
+        } else {
+            MarkdownArea.applyStyles(0, codeAreaLength);
+        }
+
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                codeArea.textProperty().addListener((observableValue, s, t1) -> {
+                    //FileService.writeFile(selectedItem, t1);
+                });
+            });
+        });
+        thread.start();
     }
 
     //Creates a tab and gives focus to it
@@ -198,7 +197,7 @@ public class MainController{
 
     public void createFile(TreeItem<String> parent) {
         File newNote = FileService.createFileMarkdown(parent);
-        if (newNote == null){
+        if (newNote == null) {
             return;
         }
         String name = newNote.getName().replace(".md", "");
@@ -263,8 +262,9 @@ public class MainController{
             ObservableList<SearchListViewItem> listViewItems = listView.getItems();
             try {
                 Files.walkFileTree(RunApplication.folderPath, new SimpleFileVisitor<>() {
+                    @NotNull
                     @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                    public FileVisitResult visitFile(Path file, @NotNull BasicFileAttributes attrs) {
                         String pathString = file.toString();
                         int ind = pathString.lastIndexOf(RunApplication.separator);
                         pathString = pathString.substring(ind + 1);
@@ -277,8 +277,9 @@ public class MainController{
                         return FileVisitResult.CONTINUE;
                     }
 
+                    @NotNull
                     @Override
-                    public FileVisitResult visitFileFailed(Path file, IOException exc) {
+                    public FileVisitResult visitFileFailed(Path file, @NotNull IOException exc) {
                         Alerts.createAndShowWarning(resourceBundle.getString("FailedVisitFile") + " "
                                 + file.toString());
                         return FileVisitResult.CONTINUE;
@@ -310,7 +311,7 @@ public class MainController{
         List<Path> pathList = new LinkedList<>();
         Objects.requireNonNull(FavoriteNotesDAO.getFavoriteNotes()).forEach(item -> {
             String path = item.getPathNote();
-            if (FileService.checkExists(path)){
+            if (FileService.checkExists(path)) {
                 pathList.add(Paths.get(path));
             } else {
                 FavoriteNotesDAO.deleteFavoriteNote(item.getId());
@@ -320,7 +321,7 @@ public class MainController{
     }
 
     @FXML
-    private void changeStorage(){
+    private void changeStorage() {
         RunApplication.showInitialWindow();
     }
 
@@ -346,27 +347,27 @@ public class MainController{
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
             //check tree contains file
             TreeItem<String> containedItem = null;
-            for (TreeItem<String> i: rootList){
+            for (TreeItem<String> i : rootList) {
                 if (path[0].equals(i.getValue()))
                     containedItem = i;
             }
             //if tree contains file
             TreeItemCustom addedItem;
             //added path in root tree
-            if (containedItem != null){
+            if (containedItem != null) {
                 TreeItem<String> treeItem = containedItem;
                 boolean isContained = false;
-                for (int i = 1; i < path.length; i++){
+                for (int i = 1; i < path.length; i++) {
                     ObservableList<TreeItem<String>> treeList = treeItem.getChildren();
-                    for (TreeItem<String> treeListItem: treeList){
+                    for (TreeItem<String> treeListItem : treeList) {
                         //check subtree for file existence
-                        if (path[i].equals(treeListItem.getValue())){
+                        if (path[i].equals(treeListItem.getValue())) {
                             treeItem = treeListItem;
                             isContained = true;
                             break;
                         }
                     }
-                    if (isContained){
+                    if (isContained) {
                         isContained = false;
                         continue;
                     }
@@ -378,7 +379,7 @@ public class MainController{
                 //creating tree hierarchy
                 TreeItem<String> treeItem = treeView.getRoot();
                 TreeItem<String> newTreeItem;
-                for (String str: path){
+                for (String str : path) {
                     newTreeItem = creatingTreeItem(str);
                     treeItem.getChildren().add(newTreeItem);
                     treeItem = newTreeItem;

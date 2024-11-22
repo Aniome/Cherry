@@ -1,6 +1,7 @@
 package com.app.cherry.controls;
 
 import com.app.cherry.RunApplication;
+import com.app.cherry.controllers.MainController;
 import com.app.cherry.controls.codearea.MarkdownArea;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -59,6 +60,8 @@ public class TabManager {
                 tab.setText(textField.getText());
             }
         });
+
+        MainController.titleTextField = textField;
 
         borderPane.setCenter(MarkdownArea.createMarkdownArea());
 

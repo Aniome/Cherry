@@ -23,7 +23,7 @@
          </VBox.margin>
          <Image url="@../Image/cherry_icon.png" />
       </ImageView>
-      <Button fx:id="Back" mnemonicParsing="false" onMouseClicked="#BackToMainMenu" text="Назад" visible="false">
+      <Button fx:id="Back" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="Назад" visible="false">
          <VBox.margin>
             <Insets top="15.0" />
          </VBox.margin>
@@ -46,7 +46,7 @@
                <Insets />
             </HBox.margin>
          </Label>
-         <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#TemplateStorage" text="%CreateButton">
+         <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#templateStorage" text="%CreateButton">
             <font>
                <Font size="18.0" />
             </font>
@@ -64,7 +64,7 @@
                <Insets bottom="10.0" />
             </HBox.margin>
          </Label>
-         <Button fx:id="OpenButton" mnemonicParsing="false" onMouseClicked="#OpenStorage" text="%OpenButton">
+         <Button fx:id="OpenButton" mnemonicParsing="false" onMouseClicked="#openStorage" text="%OpenButton">
             <font>
                <Font size="18.0" />
             </font>
@@ -78,7 +78,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
-      <Button fx:id="Create" mnemonicParsing="false" onMouseClicked="#CreateStorage" text="%CreateButton" visible="false">
+      <Button fx:id="Create" mnemonicParsing="false" onMouseClicked="#createStorage" text="%CreateButton" visible="false">
          <font>
             <Font size="18.0" />
          </font>
