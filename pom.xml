@@ -157,7 +157,11 @@
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <version>4.1.0</version>
         </dependency>
-        <!-- -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.15.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

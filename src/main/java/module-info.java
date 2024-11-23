@@ -15,6 +15,7 @@ module com.app.cherry {
     requires org.kordamp.ikonli.fontawesome;
     requires org.scenicview.scenicview;
     requires com.fasterxml.jackson.databind;
+    requires com.sun.jna.platform;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

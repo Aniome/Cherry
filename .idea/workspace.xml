@@ -12,15 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="refactoring and add work create table">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="optimization writing text in file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/InitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/DeletingFileVisitor.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -507,15 +504,10 @@
       <workItem from="1732145665053" duration="145000" />
       <workItem from="1732148326333" duration="2951000" />
       <workItem from="1732235364498" duration="10059000" />
-      <workItem from="1732250278982" duration="772000" />
-    </task>
-    <task id="LOCAL-00068" summary="some changes">
-      <option name="closed" value="true" />
-      <created>1726253132357</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1726253132358</updated>
+      <workItem from="1732250278982" duration="945000" />
+      <workItem from="1732323743592" duration="4237000" />
+      <workItem from="1732328963867" duration="1198000" />
+      <workItem from="1732330405971" duration="2554000" />
     </task>
     <task id="LOCAL-00069" summary="some changes">
       <option name="closed" value="true" />
@@ -901,7 +893,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732069649014</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="optimization writing text in file">
+      <option name="closed" value="true" />
+      <created>1732252869225</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1732252869226</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -932,7 +932,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fix bug and customization settings" />
     <MESSAGE value="change vbox to listview and add cell factory" />
     <MESSAGE value="add localization and settings configure" />
     <MESSAGE value="add localization and work with settings" />
@@ -957,24 +956,11 @@
     <MESSAGE value="finalization search" />
     <MESSAGE value="working with saving configuration" />
     <MESSAGE value="refactoring and add work create table" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring and add work create table" />
+    <MESSAGE value="optimization writing text in file" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimization writing text in file" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java</url>
-          <line>145</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="root.children.get(8)" />
