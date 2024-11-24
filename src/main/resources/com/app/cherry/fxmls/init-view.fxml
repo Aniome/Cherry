@@ -23,7 +23,7 @@
          </VBox.margin>
          <Image url="@../Image/cherry_icon.png" />
       </ImageView>
-      <Button fx:id="Back" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="Назад" visible="false">
+      <Button fx:id="Back" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="%InitBack" visible="false">
          <VBox.margin>
             <Insets top="15.0" />
          </VBox.margin>

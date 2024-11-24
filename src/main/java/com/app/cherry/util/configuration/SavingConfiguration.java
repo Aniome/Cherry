@@ -37,7 +37,7 @@ public class SavingConfiguration {
         });
     }
 
-    public static void observableInitStage(Stage stage){
+    public static void observableInitStage(Stage stage) {
         initStage = stage;
         stage.setOnHiding(windowEvent -> {
             if (mainStage == null && !preparationMainStage) {

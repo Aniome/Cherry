@@ -45,15 +45,19 @@ public class RunApplication extends Application {
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
         mainStage = stage;
-        if (folderPath == null){
+        if (folderPath == null) {
             showInitialWindow();
         } else {
-            if (folderPath.toString().contains("/")){
-                separator = "/";
-            } else {
-                separator = "\\";
-            }
+            setSeparator(folderPath);
             showMainWindow();
+        }
+    }
+
+    public static void setSeparator(Path folderPath) {
+        if (folderPath.toString().contains("/")) {
+            separator = "/";
+        } else {
+            separator = "\\";
         }
     }
 

@@ -4,6 +4,7 @@ import com.app.cherry.RunApplication;
 import com.app.cherry.controls.listViewItems.ListCellItemInitPage;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
+import com.app.cherry.util.configuration.SavingConfiguration;
 import com.app.cherry.util.io.FileService;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,6 +15,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
@@ -51,14 +53,14 @@ public class InitController {
     public Stage InitialStage;
 
     @FXML
-    private void templateStorage(){
+    private void templateStorage() {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         //change buttons
         changeControls(UpHBox, new String[]{resourceBundle.getString("InitNameStorage")});
         changeControls(DownHBox, new String[]{resourceBundle.getString("InitLocation"),
                 resourceBundle.getString("InitBrowse")});
 
-        textField = new TextField(){{
+        textField = new TextField() {{
             setFont(new Font(18));
         }};
         UpHBox.getChildren().add(textField);
@@ -67,25 +69,25 @@ public class InitController {
         changeVisibleButtons(true);
     }
 
-    private void changeControls(HBox Hbox, String[] strings){
+    private void changeControls(HBox Hbox, String[] strings) {
         Iterator<Node> iterator = createIterator(Hbox);
         iterationControls(iterator, strings);
     }
 
-    private void iterationControls(Iterator<Node> iterator, String[] str){
-        while (iterator.hasNext()){
+    private void iterationControls(Iterator<Node> iterator, String[] str) {
+        while (iterator.hasNext()) {
             Node node = iterator.next();
-            if (node instanceof Label){
+            if (node instanceof Label) {
                 ((Label) node).setText(str[0]);
             }
-            if (node instanceof Button){
+            if (node instanceof Button) {
                 if (str.length < 2) {
                     iterator.remove();
                 }else{
                     ((Button) node).setText(str[1]);
                 }
             }
-            if (node instanceof TextField){
+            if (node instanceof TextField) {
                 iterator.remove();
             }
         }
@@ -101,11 +103,13 @@ public class InitController {
     }
 
     @FXML
-    private void openStorage(){
+    private void openStorage() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(InitialStage));
         selectedDirectory.ifPresent(file -> {
-            RunApplication.folderPath = Paths.get(file.toURI());
+            Path path = Paths.get(file.toURI());
+            RunApplication.folderPath = path;
+            RunApplication.setSeparator(path);
             ResourceBundle resourceBundle = RunApplication.resourceBundle;
             if (OpenButton.getText().equals(resourceBundle.getString("InitBrowse"))) {
                 DownLabel.setFont(new Font(12));
@@ -118,7 +122,7 @@ public class InitController {
     }
 
     @FXML
-    private void backToMainMenu(){
+    private void backToMainMenu() {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         changeControls(UpHBox, new String[]{resourceBundle.getString("NewStorage")});
         changeControls(DownHBox, new String[]{resourceBundle.getString("OpenStorage"),
@@ -134,9 +138,10 @@ public class InitController {
     }
 
     @FXML
-    private void createStorage(){
+    private void createStorage() {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
-        if (textField.getText().isEmpty()){
+        String folderName = textField.getText();
+        if (folderName.isEmpty()){
             Alerts.createAndShowWarning(resourceBundle.getString("InitLabelNameStorage"));
             return;
         }
@@ -144,15 +149,24 @@ public class InitController {
             Alerts.createAndShowWarning(resourceBundle.getString("InitLabelPathStorage"));
             return;
         }
-        showMainStage();
+        RunApplication.setSeparator(RunApplication.folderPath);
+        String path = RunApplication.folderPath.toString() + RunApplication.separator + folderName;
+        RunApplication.folderPath = Paths.get(path);
+        File folder = new File(path);
+        if (folder.mkdir()) {
+            showMainStage();
+        } else {
+            Alerts.createAndShowWarning(resourceBundle.getString("InitFailedCreateFolder"));
+        }
     }
 
-    public void showMainStage(){
+    public void showMainStage() {
+        SavingConfiguration.preparationMainStage = true;
         InitialStage.close();
         RunApplication.showMainWindow();
     }
 
-    public void loadPaths(){
+    public void loadPaths() {
         List<String> listRecentPaths = RecentPathsDAO.getPaths();
         Iterator<String> iterator = listRecentPaths.iterator();
         while (iterator.hasNext()){
