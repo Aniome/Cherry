@@ -52,14 +52,4 @@ public class HibernateUtil {
         }
         return i;
     }
-
-	/*
-    public void testBasicUsage() {
-        // now lets pull events from the database and list them
-        sessionFactory.inTransaction(session -> {
-            session.createSelectionQuery("from Event", Event.class).getResultList()
-                    .forEach(event -> out.println("Event (" + event.getDate() + ") : " + event.getTitle()));
-        });
-	}
-	*/
 }

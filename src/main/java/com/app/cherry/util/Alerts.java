@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 public class Alerts {
 
-    public static void createAndShowWarning(String message){
+    public static void createAndShowWarning(String message) {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(resourceBundle.getString("AlertWarning"));
@@ -15,7 +15,7 @@ public class Alerts {
         alert.showAndWait();
     }
 
-    public static void createAndShowError(String message){
+    public static void createAndShowError(String message) {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(resourceBundle.getString("AlertError"));

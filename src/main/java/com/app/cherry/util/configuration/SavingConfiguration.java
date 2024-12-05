@@ -46,7 +46,7 @@ public class SavingConfiguration {
         });
     }
 
-    private static void closeWindow(Stage stage){
+    private static void closeWindow(Stage stage) {
         if (stage != null)
             stage.close();
     }
