@@ -64,7 +64,6 @@ public class MainController {
     ArrayList<Node> fileManagerVbox;
     ArrayList<SearchListViewItem> searchListViewItems;
     public static CodeArea codeArea;
-    public static TextField titleTextField;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -134,10 +133,9 @@ public class MainController {
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         tab.setContent(null);
         tab.setText(filename);
-        TabManager tabManager = new TabManager();
-        BorderPane borderPane = tabManager.createTab(tab);
 
-        tab.setContent(borderPane);
+        TabManager tabManager = new TabManager();
+        tab.setContent(tabManager.createTab(tab, selectedItem));
 
         String text;
         if (path == null)
@@ -201,8 +199,9 @@ public class MainController {
             return;
         }
         String name = newNote.getName().replace(".md", "");
-        TabManager.addTab(name, tabPane);
-        parent.getChildren().add(new TreeItemCustom(name, true, fileIconName));
+        TreeItemCustom newTreeItem = new TreeItemCustom(name, true, fileIconName);
+        TabManager.addTab(name, tabPane, newTreeItem);
+        parent.getChildren().add(newTreeItem);
         sortTreeView();
     }
 
@@ -393,7 +392,8 @@ public class MainController {
     }
 
     private void sortTreeView() {
-        SortedList<TreeItem<String>> content = treeView.getRoot().getChildren().sorted(Comparator.comparing(TreeItem::getValue));
+        SortedList<TreeItem<String>> content = treeView.getRoot().getChildren()
+                .sorted(Comparator.comparing(TreeItem::getValue));
         treeView.getRoot().getChildren().setAll(content);
     }
 }

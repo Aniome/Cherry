@@ -29,8 +29,8 @@ public class FavoriteNotesDAO {
     }
 
     private static boolean containsPathNote(String pathNote, List<FavoriteNotes> favoriteNotesList) {
-        for(FavoriteNotes favoriteNotes : favoriteNotesList){
-            if(favoriteNotes.getPathNote().equals(pathNote)){
+        for(FavoriteNotes favoriteNotes : favoriteNotesList) {
+            if(favoriteNotes.getPathNote().equals(pathNote)) {
                 return true;
             }
         }
@@ -44,7 +44,7 @@ public class FavoriteNotesDAO {
                     = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
             session.close();
             for (FavoriteNotes item : favoriteNotes) {
-                if (!item.getPathNote().contains(RunApplication.folderPath.toString())){
+                if (!item.getPathNote().contains(RunApplication.folderPath.toString())) {
                     return List.of();
                 }
             }
@@ -63,7 +63,7 @@ public class FavoriteNotesDAO {
     public static void deleteFavoriteNote(int id) {
         HibernateUtil.sessionFactory.inTransaction(session -> {
             FavoriteNotes deletingNote = session.find(FavoriteNotes.class, id);
-            if (deletingNote != null){
+            if (deletingNote != null) {
                 session.remove(deletingNote);
             }
         });

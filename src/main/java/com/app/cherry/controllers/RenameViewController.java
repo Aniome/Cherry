@@ -1,15 +1,10 @@
 package com.app.cherry.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class RenameViewController {
-
-    @FXML
-    private Button OkButton;
-
     @FXML
     private TextField txtField;
 
@@ -20,7 +15,7 @@ public class RenameViewController {
     }
 
     @FXML
-    private void Confirm(){
+    private void confirm(){
         String txtFieldText = txtField.getText();
         if (txtFieldText.isEmpty())
             return;
@@ -29,7 +24,7 @@ public class RenameViewController {
     }
 
     @FXML
-    private void Cancel(){
+    private void cancel(){
         stage.close();
     }
 }

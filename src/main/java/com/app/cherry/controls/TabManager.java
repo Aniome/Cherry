@@ -1,7 +1,6 @@
 package com.app.cherry.controls;
 
 import com.app.cherry.RunApplication;
-import com.app.cherry.controllers.MainController;
 import com.app.cherry.controls.codearea.MarkdownArea;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -13,14 +12,14 @@ import org.jetbrains.annotations.NotNull;
 public class TabManager {
     private String oldTextFieldValue;
 
-    public static void selectTab(Tab tab, TabPane tabPane){
+    public static void selectTab(Tab tab, TabPane tabPane) {
         int count = tabPane.getTabs().size() - 1;
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         tabPane.getTabs().add(count, tab);
         selectionModel.select(tab);
     }
 
-    public static BorderPane createEmptyTab(){
+    public static BorderPane createEmptyTab() {
         BorderPane borderPane = new BorderPane();
         Label label = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
         label.setFont(new Font(29));
@@ -29,42 +28,42 @@ public class TabManager {
         return borderPane;
     }
 
-    public static void addTab(String fileName, TabPane tabPane){
+    public static void addTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
         Tab tab = new Tab(fileName);
         TabManager tabManager = new TabManager();
-        tab.setContent(tabManager.createTab(tab));
+        tab.setContent(tabManager.createTab(tab, selectedItem));
         TabManager.selectTab(tab, tabPane);
     }
 
     //Creates a form and fills it with content
     @NotNull
-    public BorderPane createTab(Tab tab){
-        BorderPane borderPane = new BorderPane();
-
-        TextField textField = new TextField(tab.getText()){{
+    public BorderPane createTab(Tab tab, TreeItem<String> selectedItem) {
+        TextField noteName = new TextField(tab.getText()){{
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
-        VBox vBox = new VBox(textField);
-        borderPane.setTop(vBox);
+        //borderPane.setTop(vBox);
 
-        textField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+        noteName.focusedProperty().addListener((arg0,
+                                                 oldPropertyValue, newPropertyValue) -> {
             //newPropertyValue - on focus
             //oldPropertyValue - out focus
+            String noteNameText = noteName.getText();
             if (newPropertyValue) {
-                oldTextFieldValue = textField.getText();
+                oldTextFieldValue = noteNameText;
             }
-            if (oldPropertyValue && textField.getText().isEmpty()) {
-                textField.setText(oldTextFieldValue);
+            if (oldPropertyValue && noteNameText.isEmpty()) {
+                noteName.setText(oldTextFieldValue);
             } else {
-                tab.setText(textField.getText());
+                tab.setText(noteNameText);
+
             }
         });
 
-        MainController.titleTextField = textField;
+        //borderPane.setCenter(MarkdownArea.createMarkdownArea());
 
-        borderPane.setCenter(MarkdownArea.createMarkdownArea());
-
-        return borderPane;
+        //center top right bottom left
+        return new BorderPane(MarkdownArea.createMarkdownArea(), new VBox(noteName), null, null,
+                null);
     }
 }

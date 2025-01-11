@@ -39,14 +39,14 @@ public class HibernateUtil {
         }
     }
 
-    public static Integer getId(List<Integer> listId){
+    public static Integer getId(List<Integer> listId) {
         int i;
         for (i = 0; i < Integer.MAX_VALUE; i++) {
             try {
                 if (!listId.contains(i)) {
                     break;
                 }
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 return --i;
             }
         }

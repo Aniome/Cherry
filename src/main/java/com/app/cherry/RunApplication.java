@@ -88,7 +88,7 @@ public class RunApplication extends Application {
             setIcon(initialStage);
             SavingConfiguration.observableInitStage(initialStage);
             InitController initController = fxmlLoader.getController();
-            initController.InitialStage = initialStage;
+            initController.initialStage = initialStage;
             prepareStage(InitialHeight, InitialWidth, secondScene,"", initialStage);
             initialStage.setResizable(false);
             initController.loadPaths();
@@ -121,13 +121,13 @@ public class RunApplication extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"),
                     resourceBundle);
             Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
-            Stage stage = new Stage();
-            RunApplication.setIcon(stage);
-            stage.setResizable(false);
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(mainStage);
-            SavingConfiguration.renameStage = stage;
-            stage.setOnHiding((event) -> {
+            Stage renameStage = new Stage();
+            RunApplication.setIcon(renameStage);
+            renameStage.setResizable(false);
+            renameStage.initModality(Modality.WINDOW_MODAL);
+            renameStage.initOwner(mainStage);
+            SavingConfiguration.renameStage = renameStage;
+            renameStage.setOnHiding((event) -> {
                 String newFileName = MainController.newFileName;
                 if (newFileName == null) {
                     return;
@@ -135,16 +135,16 @@ public class RunApplication extends Application {
                 TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
                 boolean b = FileService.renameFile(newFileName, selectedItem.getValue(),
                         RunApplication.folderPath.toString());
-                if (b){
+                if (b) {
                     selectedItem.setValue(newFileName);
                     Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
                     selectedTab.setText(newFileName);
                 }
             });
             RenameViewController renameViewController = fxmlLoader.getController();
-            renameViewController.init(stage);
+            renameViewController.init(renameStage);
             String renameWindowTitle = RunApplication.resourceBundle.getString("RenameWindowTitle");
-            RunApplication.prepareStage(renameHeight, renameWidth, scene, renameWindowTitle, stage);
+            RunApplication.prepareStage(renameHeight, renameWidth, scene, renameWindowTitle, renameStage);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

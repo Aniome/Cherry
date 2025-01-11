@@ -23,47 +23,39 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class InitController {
-
     @FXML
-    private HBox UpHBox;
-
+    private HBox upHBox;
     @FXML
-    private HBox DownHBox;
-
+    private HBox downHBox;
     @FXML
-    private Button Back;
-
+    private Button back;
     @FXML
-    private Button Create;
-
+    private Button create;
     @FXML
-    private Label DownLabel;
-
+    private Label downLabel;
     @FXML
-    private Button OpenButton;
-
+    private Button openButton;
     @FXML
     private ListView<String> listView;
-
     @FXML
     private SplitPane splitPane;
 
     private TextField textField;
 
-    public Stage InitialStage;
+    public Stage initialStage;
 
     @FXML
     private void templateStorage() {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         //change buttons
-        changeControls(UpHBox, new String[]{resourceBundle.getString("InitNameStorage")});
-        changeControls(DownHBox, new String[]{resourceBundle.getString("InitLocation"),
+        changeControls(upHBox, new String[]{resourceBundle.getString("InitNameStorage")});
+        changeControls(downHBox, new String[]{resourceBundle.getString("InitLocation"),
                 resourceBundle.getString("InitBrowse")});
 
         textField = new TextField() {{
             setFont(new Font(18));
         }};
-        UpHBox.getChildren().add(textField);
+        upHBox.getChildren().add(textField);
 
         //Change visible buttons
         changeVisibleButtons(true);
@@ -94,8 +86,8 @@ public class InitController {
     }
 
     private void changeVisibleButtons(boolean value){
-        Back.setVisible(value);
-        Create.setVisible(value);
+        back.setVisible(value);
+        create.setVisible(value);
     }
 
     private Iterator<Node> createIterator(HBox Hbox){
@@ -105,15 +97,15 @@ public class InitController {
     @FXML
     private void openStorage() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(InitialStage));
+        Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(initialStage));
         selectedDirectory.ifPresent(file -> {
             Path path = Paths.get(file.toURI());
             RunApplication.folderPath = path;
             RunApplication.setSeparator(path);
             ResourceBundle resourceBundle = RunApplication.resourceBundle;
-            if (OpenButton.getText().equals(resourceBundle.getString("InitBrowse"))) {
-                DownLabel.setFont(new Font(12));
-                DownLabel.setText(resourceBundle.getString("InitStoragePath") + " "
+            if (openButton.getText().equals(resourceBundle.getString("InitBrowse"))) {
+                downLabel.setFont(new Font(12));
+                downLabel.setText(resourceBundle.getString("InitStoragePath") + " "
                         + RunApplication.folderPath.toString());
             }else {
                 showMainStage();
@@ -124,17 +116,17 @@ public class InitController {
     @FXML
     private void backToMainMenu() {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
-        changeControls(UpHBox, new String[]{resourceBundle.getString("NewStorage")});
-        changeControls(DownHBox, new String[]{resourceBundle.getString("OpenStorage"),
+        changeControls(upHBox, new String[]{resourceBundle.getString("NewStorage")});
+        changeControls(downHBox, new String[]{resourceBundle.getString("OpenStorage"),
                 resourceBundle.getString("OpenButton")});
 
-        UpHBox.getChildren().add(new Button(resourceBundle.getString("CreateButton")){{
+        upHBox.getChildren().add(new Button(resourceBundle.getString("CreateButton")){{
             setFont(new Font(18));
             setOnMouseClicked(mouseEvent -> templateStorage());
         }});
 
         changeVisibleButtons(false);
-        DownLabel.setText("");
+        downLabel.setText("");
     }
 
     @FXML
@@ -162,7 +154,7 @@ public class InitController {
 
     public void showMainStage() {
         SavingConfiguration.preparationMainStage = true;
-        InitialStage.close();
+        initialStage.close();
         RunApplication.showMainWindow();
     }
 

@@ -23,7 +23,7 @@
          </VBox.margin>
          <Image url="@../Image/cherry_icon.png" />
       </ImageView>
-      <Button fx:id="Back" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="%InitBack" visible="false">
+      <Button fx:id="back" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="%InitBack" visible="false">
          <VBox.margin>
             <Insets top="15.0" />
          </VBox.margin>
@@ -31,7 +31,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <HBox fx:id="UpHBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-alignment: CENTER;">
+      <HBox fx:id="upHBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-alignment: CENTER;">
          <VBox.margin>
             <Insets />
          </VBox.margin>
@@ -52,7 +52,7 @@
             </font>
          </Button>
       </HBox>
-      <HBox fx:id="DownHBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-alignment: CENTER;">
+      <HBox fx:id="downHBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-alignment: CENTER;">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
@@ -64,7 +64,7 @@
                <Insets bottom="10.0" />
             </HBox.margin>
          </Label>
-         <Button fx:id="OpenButton" mnemonicParsing="false" onMouseClicked="#openStorage" text="%OpenButton">
+         <Button fx:id="openButton" mnemonicParsing="false" onMouseClicked="#openStorage" text="%OpenButton">
             <font>
                <Font size="18.0" />
             </font>
@@ -73,12 +73,12 @@
             </HBox.margin>
          </Button>
       </HBox>
-      <Label fx:id="DownLabel" alignment="TOP_LEFT">
+      <Label fx:id="downLabel" alignment="TOP_LEFT">
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
-      <Button fx:id="Create" mnemonicParsing="false" onMouseClicked="#createStorage" text="%CreateButton" visible="false">
+      <Button fx:id="create" mnemonicParsing="false" onMouseClicked="#createStorage" text="%CreateButton" visible="false">
          <font>
             <Font size="18.0" />
          </font>
