@@ -2,6 +2,7 @@ package com.app.cherry.controls;
 
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.codearea.MarkdownArea;
+import com.app.cherry.util.io.FileService;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -42,7 +43,6 @@ public class TabManager {
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
-        //borderPane.setTop(vBox);
 
         noteName.focusedProperty().addListener((arg0,
                                                  oldPropertyValue, newPropertyValue) -> {
@@ -57,10 +57,14 @@ public class TabManager {
             } else {
                 tab.setText(noteNameText);
 
+                boolean conditions = FileService.renameFile(noteNameText, selectedItem.getValue(),
+                        RunApplication.folderPath.toString());
+                if (conditions) {
+                    selectedItem.setValue(noteNameText);
+                    tab.setText(noteNameText);
+                }
             }
         });
-
-        //borderPane.setCenter(MarkdownArea.createMarkdownArea());
 
         //center top right bottom left
         return new BorderPane(MarkdownArea.createMarkdownArea(), new VBox(noteName), null, null,

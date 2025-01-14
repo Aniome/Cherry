@@ -147,7 +147,7 @@ public class MarkdownArea {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-        while(matcher.find()) {
+        while (matcher.find()) {
             String styleClass =
                     matcher.group("LINK") != null ? "link" :
                         matcher.group("WORDS") != null ? "word-code" :
@@ -185,9 +185,6 @@ public class MarkdownArea {
                     int startPos = area.getAbsolutePosition(currentParagraph, 0);
                     area.setStyleSpans(startPos, computeStyles.apply(text));
                 }
-//                Platform.runLater( () -> {
-//
-//                });
             }
         }
     }

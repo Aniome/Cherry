@@ -133,9 +133,9 @@ public class RunApplication extends Application {
                     return;
                 }
                 TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-                boolean b = FileService.renameFile(newFileName, selectedItem.getValue(),
+                boolean conditions = FileService.renameFile(newFileName, selectedItem.getValue(),
                         RunApplication.folderPath.toString());
-                if (b) {
+                if (conditions) {
                     selectedItem.setValue(newFileName);
                     Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
                     selectedTab.setText(newFileName);

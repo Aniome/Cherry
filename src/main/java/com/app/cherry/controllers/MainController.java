@@ -150,7 +150,6 @@ public class MainController {
                     if (text.charAt(i) != '\n') {
                         break;
                     }
-
                 }
                 codeArea.appendText(text.substring(0, i));
                 codeArea.appendText(text.substring(i, length));
