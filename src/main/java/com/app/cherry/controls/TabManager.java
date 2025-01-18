@@ -3,10 +3,15 @@ package com.app.cherry.controls;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.util.io.FileService;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -39,7 +44,9 @@ public class TabManager {
     //Creates a form and fills it with content
     @NotNull
     public BorderPane createTab(Tab tab, TreeItem<String> selectedItem) {
-        String style = "-fx-background-radius: 0; -fx-border-radius: 0; -fx-border-color: transparent;";
+        StackPane markdownArea = MarkdownArea.createMarkdownArea();
+
+        String style = "-fx-border-width: 0; -fx-border-style: none;";
 
         TextField noteName = new TextField(tab.getText()){{
             setFont(new Font(16));
@@ -69,6 +76,15 @@ public class TabManager {
         });
         noteName.setStyle(style);
 
+        HBox hBoxTitleBar = getHBoxTitleBar(selectedItem, style, noteName);
+        HBox.setHgrow(noteName, Priority.ALWAYS);
+
+        //center top right bottom left
+        return new BorderPane(markdownArea, hBoxTitleBar, null, null, null);
+    }
+
+    @NotNull
+    private static HBox getHBoxTitleBar(TreeItem<String> selectedItem, String style, TextField noteName) {
         FontIcon saveIcon = new FontIcon("bx-save");
         saveIcon.setScaleX(1.5);
         saveIcon.setScaleY(1.5);
@@ -76,11 +92,12 @@ public class TabManager {
         saveButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         saveButton.setStyle(style);
 
-        BorderPane titleBorderPane = new BorderPane(noteName, null, saveButton, null, null);
-        titleBorderPane.setStyle("-fx-border-color: transparent; -fx-border-width: 0;");
+        CodeArea codeArea = MarkdownArea.getCodeArea();
+        saveButton.setOnMouseClicked(event -> FileService.writeFile(selectedItem, codeArea.getText()));
 
-        //center top right bottom left
-        return new BorderPane(MarkdownArea.createMarkdownArea(), titleBorderPane,
-                null, null, null);
+        HBox hBoxTitleBar = new HBox(noteName, saveButton);
+        hBoxTitleBar.setSpacing(10);
+        hBoxTitleBar.setPadding(new Insets(5));
+        return hBoxTitleBar;
     }
 }

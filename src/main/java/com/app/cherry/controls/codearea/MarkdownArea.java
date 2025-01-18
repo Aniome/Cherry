@@ -44,9 +44,8 @@ public class MarkdownArea {
     );
 
     public static StackPane createMarkdownArea() {
-        CodeArea codeArea = new CodeArea();
+        MarkdownArea.codeArea = new CodeArea();
         codeArea.setStyle("-fx-font-size: "+ fontSize +"px;");
-        MarkdownArea.codeArea = codeArea;
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);
 
@@ -96,7 +95,7 @@ public class MarkdownArea {
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
     }
 
-    public static void applyStylesPage(int pageLength){
+    public static void applyStylesPage(int pageLength) {
         for (int i = 0; i < pageLength; i++) {
             String textCodeArea = codeArea.getText(i, 0, i, codeArea.getParagraphLength(i));
             int startPos = codeArea.getAbsolutePosition(i, 0);
@@ -104,7 +103,7 @@ public class MarkdownArea {
         }
     }
 
-    public static void applyStyles(int from, int to){
+    public static void applyStyles(int from, int to) {
         Thread thread = new Thread(() -> {
             //add styling for the text
             Platform.runLater(() -> {

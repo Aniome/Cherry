@@ -166,15 +166,6 @@ public class MainController {
         } else {
             MarkdownArea.applyStyles(0, codeAreaLength);
         }
-
-        Thread thread = new Thread(() -> {
-            Platform.runLater(() -> {
-                codeArea.textProperty().addListener((observableValue, s, t1) -> {
-                    //FileService.writeFile(selectedItem, t1);
-                });
-            });
-        });
-        thread.start();
     }
 
     //Creates a tab and gives focus to it
@@ -299,7 +290,6 @@ public class MainController {
                 });
                 return listCellItem;
             });
-
         });
     }
 
