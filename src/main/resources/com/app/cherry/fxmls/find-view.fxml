@@ -10,8 +10,8 @@
          <padding>
             <Insets top="10.0" />
          </padding>
-         <Button alignment="CENTER" mnemonicParsing="false" prefHeight="36.0" prefWidth="223.0" text="%FindButton" />
-         <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="223.0" text="%CountButton" />
+         <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#find" prefHeight="36.0" prefWidth="223.0" text="%FindButton" />
+         <Button mnemonicParsing="false" onMouseClicked="#findCount" prefHeight="36.0" prefWidth="223.0" text="%CountButton" />
          <Button mnemonicParsing="false" onMouseClicked="#findDuplicates" prefHeight="36.0" prefWidth="223.0" text="%FindDuplicatesButton" wrapText="true" />
          <StackPane fx:id="stackPane" prefHeight="41.0" prefWidth="241.0" visible="false">
             <ProgressBar fx:id="progressBar" prefHeight="23.0" prefWidth="223.0" progress="0.0" />
@@ -23,20 +23,20 @@
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
             <opaqueInsets>
-               <Insets/>
+               <Insets />
             </opaqueInsets>
             <padding>
-               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <Label text="%FindLabel">
                <font>
-                  <Font size="16.0"/>
+                  <Font size="16.0" />
                </font>
             </Label>
-            <TextField alignment="TOP_LEFT"/>
+            <TextField fx:id="searchText" alignment="TOP_LEFT" />
          </HBox>
          <ScrollPane fitToHeight="true" fitToWidth="true">
-            <Accordion fx:id="accordion"/>
+            <Accordion fx:id="accordion" />
          </ScrollPane>
       </VBox>
    </center>

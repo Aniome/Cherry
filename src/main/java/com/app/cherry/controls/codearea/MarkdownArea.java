@@ -67,9 +67,13 @@ public class MarkdownArea {
         });
 
         codeArea.setOnKeyPressed(event -> {
-            KeyCombination keyCombination = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
-            if (keyCombination.match(event)) {
+            KeyCombination findCombination = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
+            if (findCombination.match(event)) {
                 RunApplication.showFindWindow(codeArea);
+            }
+            KeyCombination saveCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            if (saveCombination.match(event)) {
+
             }
         });
 

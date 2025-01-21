@@ -48,7 +48,7 @@ public class TabManager {
 
         String style = "-fx-border-width: 0; -fx-border-style: none;";
 
-        TextField noteName = new TextField(tab.getText()){{
+        TextField noteName = new TextField(tab.getText()) {{
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
