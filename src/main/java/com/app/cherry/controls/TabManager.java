@@ -11,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -44,7 +43,7 @@ public class TabManager {
     //Creates a form and fills it with content
     @NotNull
     public BorderPane createTab(Tab tab, TreeItem<String> selectedItem) {
-        StackPane markdownArea = MarkdownArea.createMarkdownArea();
+        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem);
 
         String style = "-fx-border-width: 0; -fx-border-style: none;";
 
@@ -91,9 +90,7 @@ public class TabManager {
         Button saveButton = new Button("", saveIcon);
         saveButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         saveButton.setStyle(style);
-
-        CodeArea codeArea = MarkdownArea.getCodeArea();
-        saveButton.setOnMouseClicked(event -> FileService.writeFile(selectedItem, codeArea.getText()));
+        saveButton.setOnMouseClicked(event -> MarkdownArea.saveText(selectedItem));
 
         HBox hBoxTitleBar = new HBox(noteName, saveButton);
         hBoxTitleBar.setSpacing(10);

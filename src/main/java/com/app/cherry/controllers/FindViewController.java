@@ -46,74 +46,74 @@ public class FindViewController {
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() {
-            LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs =
-                    codeArea.getParagraphs();
-            LinkedList<UniqueElementCodeArea> uniqueLinkedList = new LinkedList<>();
-            for (int i = 0; i < listParagraphs.size(); i++) {
-                uniqueLinkedList.add(new UniqueElementCodeArea(false, listParagraphs.get(i).getText(), i));
-            }
-            Platform.runLater(() -> stackPane.setVisible(true));
-
-            int length = uniqueLinkedList.size();
-            HashMap<String, Set<Integer>> uniqueMap = new HashMap<>();
-            for (int i = 0; i < length; i++) {
-                UniqueElementCodeArea uniqueI = uniqueLinkedList.get(i);
-                if (uniqueI.isMarked()) {
-                    continue;
+                LiveList<Paragraph<Collection<String>, String, Collection<String>>> listParagraphs =
+                        codeArea.getParagraphs();
+                LinkedList<UniqueElementCodeArea> uniqueLinkedList = new LinkedList<>();
+                for (int i = 0; i < listParagraphs.size(); i++) {
+                    uniqueLinkedList.add(new UniqueElementCodeArea(false, listParagraphs.get(i).getText(), i));
                 }
-                String uniqueTextI = uniqueI.getText();
-                for (int j = 0; j < uniqueLinkedList.size(); j++) {
-                    if (i == j) {
+                Platform.runLater(() -> stackPane.setVisible(true));
+
+                int length = uniqueLinkedList.size();
+                HashMap<String, Set<Integer>> uniqueMap = new HashMap<>();
+                for (int i = 0; i < length; i++) {
+                    UniqueElementCodeArea uniqueI = uniqueLinkedList.get(i);
+                    if (uniqueI.isMarked()) {
                         continue;
                     }
-                    UniqueElementCodeArea uniqueJ = uniqueLinkedList.get(j);
-                    String uniqueTextJ = uniqueJ.getText();
-                    if (uniqueTextI.equals(uniqueTextJ) && !uniqueTextJ.isEmpty()) {
-                        if (uniqueMap.containsKey(uniqueTextI)) {
-                            uniqueMap.get(uniqueTextI).add(uniqueJ.getLineNumber());
-                            uniqueJ.setMarked(true);
-                        } else {
-                            LinkedHashSet<Integer> uniqueSet = new LinkedHashSet<>();
-                            uniqueSet.add(uniqueI.getLineNumber());
-                            uniqueSet.add(uniqueJ.getLineNumber());
-                            uniqueMap.put(uniqueTextI, uniqueSet);
-                            uniqueJ.setMarked(true);
+                    String uniqueTextI = uniqueI.getText();
+                    for (int j = 0; j < uniqueLinkedList.size(); j++) {
+                        if (i == j) {
+                            continue;
+                        }
+                        UniqueElementCodeArea uniqueJ = uniqueLinkedList.get(j);
+                        String uniqueTextJ = uniqueJ.getText();
+                        if (uniqueTextI.equals(uniqueTextJ) && !uniqueTextJ.isEmpty()) {
+                            if (uniqueMap.containsKey(uniqueTextI)) {
+                                uniqueMap.get(uniqueTextI).add(uniqueJ.getLineNumber());
+                                uniqueJ.setMarked(true);
+                            } else {
+                                LinkedHashSet<Integer> uniqueSet = new LinkedHashSet<>();
+                                uniqueSet.add(uniqueI.getLineNumber());
+                                uniqueSet.add(uniqueJ.getLineNumber());
+                                uniqueMap.put(uniqueTextI, uniqueSet);
+                                uniqueJ.setMarked(true);
+                            }
                         }
                     }
+                    double progressPercent = ((double) (i + 1) / (double) length) * 100;
+
+                    double percentOut = new BigDecimal(progressPercent).setScale(2, RoundingMode.HALF_UP).
+                            doubleValue();
+
+                    updateProgress(percentOut, 100);
+                    updateMessage(percentOut + "%");
                 }
-                double progressPercent = ((double) (i + 1) / (double) length) * 100;
 
-                double percentOut = new BigDecimal(progressPercent).setScale(2, RoundingMode.HALF_UP).
-                        doubleValue();
+                Platform.runLater(() -> {
+                    ResourceBundle resourceBundle = RunApplication.resourceBundle;
+                    if (uniqueMap.isEmpty()) {
+                        Alerts.createAndShowWarning(resourceBundle.getString("DuplicatesNotFound"));
+                    }
+                    for (String uniqueText : uniqueMap.keySet()) {
+                        String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[\\[\\]]",
+                                "");
+                        String findingString = resourceBundle.getString("FindingStringP1") + " " + uniqueText
+                                + " " + resourceBundle.getString("FindingStringP2") + " ";
+                        TextFlow textFlow = new TextFlow(new Text(findingString + replacedString));
+                        textFlow.setTextAlignment(TextAlignment.JUSTIFY);
+                        textFlow.setMinHeight(70);
+                        ScrollPane scrollPane = new ScrollPane(textFlow);
+                        scrollPane.setFitToWidth(true);
 
-                updateProgress(percentOut, 100);
-                updateMessage(percentOut + "%");
-            }
-
-            Platform.runLater(() -> {
-                ResourceBundle resourceBundle = RunApplication.resourceBundle;
-                if (uniqueMap.isEmpty()) {
-                    Alerts.createAndShowWarning(resourceBundle.getString("DuplicatesNotFound"));
-                }
-                for (String uniqueText : uniqueMap.keySet()) {
-                    String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[\\[\\]]",
-                            "");
-                    String findingString = resourceBundle.getString("FindingStringP1") + " " + uniqueText
-                            + " " + resourceBundle.getString("FindingStringP2") + " ";
-                    TextFlow textFlow = new TextFlow(new Text(findingString + replacedString));
-                    textFlow.setTextAlignment(TextAlignment.JUSTIFY);
-                    textFlow.setMinHeight(70);
-                    ScrollPane scrollPane = new ScrollPane(textFlow);
-                    scrollPane.setFitToWidth(true);
-
-                    TitledPane titledPane = new TitledPane(
-                            resourceBundle.getString("DuplicateStringFound"), scrollPane);
-                    titledPane.animatedProperty().bind(new SimpleBooleanProperty(true));
-                    titledPane.getStyleClass().add(Tweaks.ALT_ICON);
-                    accordion.getPanes().add(titledPane);
-                }
-            });
-            return null;
+                        TitledPane titledPane = new TitledPane(
+                                resourceBundle.getString("DuplicateStringFound"), scrollPane);
+                        titledPane.animatedProperty().bind(new SimpleBooleanProperty(true));
+                        titledPane.getStyleClass().add(Tweaks.ALT_ICON);
+                        accordion.getPanes().add(titledPane);
+                    }
+                });
+                return null;
             }
         };
 
@@ -136,20 +136,32 @@ public class FindViewController {
 
     @FXML
     private void find() {
-        codeArea.selectWord();
-        accordion.getPanes().clear();
         String stringSearchText = searchText.getText();
-
         if (stringSearchText == null || stringSearchText.isEmpty()) {
             return;
         }
-        LiveList<Paragraph<Collection<String>, String, Collection<String>>> textCodeArea = codeArea.getParagraphs();
-        textCodeArea.forEach(paragraph -> {
-            if (paragraph.getText().contains(stringSearchText)) {
-                
-            }
-        });
 
+        accordion.getPanes().clear();
+
+        LiveList<Paragraph<Collection<String>, String, Collection<String>>> textCodeArea = codeArea.getParagraphs();
+        for (int i = 0; i < textCodeArea.size(); i++) {
+            Paragraph<Collection<String>, String, Collection<String>> paragraph = textCodeArea.get(i);
+            String paragraphText = paragraph.getText();
+            if (paragraphText.contains(stringSearchText)) {
+                int ind = paragraphText.indexOf(stringSearchText);
+                int absolutePosition = codeArea.getAbsolutePosition(i,0) + ind;
+                String selectedText = codeArea.getSelectedText();
+                IndexRange selection = codeArea.getSelection();
+
+                if (selectedText == null || selectedText.isEmpty()) {
+                    codeArea.selectRange(absolutePosition, absolutePosition + stringSearchText.length());
+                    break;
+                } else if (selectedText.equals(stringSearchText) && selection.getStart() != absolutePosition) {
+                    codeArea.selectRange(absolutePosition, absolutePosition + stringSearchText.length());
+                    break;
+                }
+            }
+        }
     }
 
     @FXML

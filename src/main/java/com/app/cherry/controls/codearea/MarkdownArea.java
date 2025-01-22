@@ -3,9 +3,11 @@ package com.app.cherry.controls.codearea;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
 import com.app.cherry.util.configuration.ApplyConfiguration;
+import com.app.cherry.util.io.FileService;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -43,11 +45,15 @@ public class MarkdownArea {
             + "|(?<WORDS>" + WORDS_PATTERN + ")"
     );
 
-    public static StackPane createMarkdownArea() {
+    public static StackPane createMarkdownArea(TreeItem<String> selectedItem) {
         MarkdownArea.codeArea = new CodeArea();
         codeArea.setStyle("-fx-font-size: "+ fontSize +"px;");
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);
+
+        codeArea.setOnInputMethodTextChanged(event -> {
+            System.out.println("onInputMethodTextChanged");
+        });
 
         codeArea.setParagraphGraphicFactory(graphicFactory);
 
@@ -73,7 +79,7 @@ public class MarkdownArea {
             }
             KeyCombination saveCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
             if (saveCombination.match(event)) {
-
+                MarkdownArea.saveText(selectedItem);
             }
         });
 
@@ -97,6 +103,10 @@ public class MarkdownArea {
         MainController.codeArea = codeArea;
 
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
+    }
+
+    public static void saveText(TreeItem<String> selectedItem) {
+        FileService.writeFile(selectedItem, codeArea.getText());
     }
 
     public static void applyStylesPage(int pageLength) {
