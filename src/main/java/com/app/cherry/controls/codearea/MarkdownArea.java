@@ -51,10 +51,6 @@ public class MarkdownArea {
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);
 
-        codeArea.setOnInputMethodTextChanged(event -> {
-            System.out.println("onInputMethodTextChanged");
-        });
-
         codeArea.setParagraphGraphicFactory(graphicFactory);
 
         codeArea.setOnMouseClicked(event -> {

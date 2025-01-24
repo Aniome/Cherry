@@ -4,6 +4,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.*?>
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="640.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cherry.controllers.MainController">
@@ -150,6 +151,9 @@
                         </Label>
                     </center>
                 </BorderPane>
+            <graphic>
+               <Circle fill="#bcbaba" opacity="0.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+            </graphic>
             </Tab>
             <Tab closable="false" onSelectionChanged="#addTab" text="+">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

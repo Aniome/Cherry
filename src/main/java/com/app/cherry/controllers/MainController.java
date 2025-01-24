@@ -26,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
@@ -102,8 +103,7 @@ public class MainController {
     }
 
     private void loadFilesInTreeview() {
-        List<Path> pathList = FileService.getListFiles();
-        loadItemsInTree(pathList);
+        loadItemsInTree(FileService.getListFiles());
     }
 
     private TreeItemCustom creatingTreeItem(String str) {
@@ -166,12 +166,21 @@ public class MainController {
         } else {
             MarkdownArea.applyStyles(0, codeAreaLength);
         }
+
+        Circle circleUnsavedChanges = (Circle) tab.getGraphic();
+        final boolean[] isUnsavedChanges = {false};
+        codeArea.textProperty().addListener((observableValue, s, t1) -> {
+            if (isUnsavedChanges[0]) return;
+            circleUnsavedChanges.setOpacity(1);
+            isUnsavedChanges[0] = true;
+        });
     }
 
     //Creates a tab and gives focus to it
     @FXML
     private Tab addTab() {
         Tab tab = new Tab(RunApplication.resourceBundle.getString("EmptyTab"));
+        tab.setGraphic(TabManager.createCircleUnsavedChanges());
         tab.setContent(TabManager.createEmptyTab());
         TabManager.selectTab(tab, tabPane);
         return tab;

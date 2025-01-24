@@ -10,6 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import org.jetbrains.annotations.NotNull;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -34,7 +36,9 @@ public class TabManager {
     }
 
     public static void addTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
-        Tab tab = new Tab(fileName);
+        Circle circleUnsavedChanges = new Circle(10, Color.web("#bcbaba"));
+        circleUnsavedChanges.setStroke(Color.BLACK);
+        Tab tab = new Tab(fileName, circleUnsavedChanges);
         TabManager tabManager = new TabManager();
         tab.setContent(tabManager.createTab(tab, selectedItem));
         TabManager.selectTab(tab, tabPane);
@@ -96,5 +100,12 @@ public class TabManager {
         hBoxTitleBar.setSpacing(10);
         hBoxTitleBar.setPadding(new Insets(5));
         return hBoxTitleBar;
+    }
+
+    public static Circle createCircleUnsavedChanges() {
+        Circle circleUnsavedChanges = new Circle(5, Color.web("#bcbaba"));
+        circleUnsavedChanges.setStroke(Color.BLACK);
+        circleUnsavedChanges.setOpacity(0);
+        return circleUnsavedChanges;
     }
 }
