@@ -12,11 +12,13 @@ import com.app.cherry.controls.listViewItems.ListCellItemsSettingsModal;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.SavingConfiguration;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import java.util.Locale;
@@ -24,9 +26,12 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SettingsModal {
-    public void build(ModalPane modalPane, SplitPane splitPane) {
+    private static ObservableList<Tab> tabs;
+
+    public void build(ModalPane modalPane, SplitPane splitPane, ObservableList<Tab> tabs) {
         VBox settingsVbox = new VBox();
         createMainSettings(settingsVbox);
+        SettingsModal.tabs = tabs;
         HBox tabsVbox = createTabsVbox(settingsVbox);
 
         SplitPane modalSplitPane = new SplitPane(tabsVbox, settingsVbox);
@@ -162,17 +167,27 @@ public class SettingsModal {
 
     private static HBox changeFontSize(ResourceBundle resourceBundle) {
         Label changeFontLabel = new Label(resourceBundle.getString("SettingsLabelFontSize"));
-        Spinner<Integer> fontSize = new Spinner<>(1, 50, MarkdownArea.fontSize);
-        IntegerStringConverter.createFor(fontSize);
-        fontSize.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-        fontSize.setEditable(true);
+        Spinner<Integer> fontSizeSpinner = new Spinner<>(1, 50, MarkdownArea.fontSize);
+        IntegerStringConverter.createFor(fontSizeSpinner);
+        fontSizeSpinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+        fontSizeSpinner.setEditable(true);
 
-        fontSize.valueProperty().addListener((observable, oldValue, newValue) -> {
-            MarkdownArea.fontSize = newValue;
-            CodeArea codeArea = MarkdownArea.getCodeArea();
-            codeArea.setStyle("-fx-font-size: "+ newValue +"px;");
+        fontSizeSpinner.valueProperty().addListener(
+                (observable, oldValue, newValue) -> {
+            for (Tab tab: tabs) {
+                Node tabContent = tab.getContent();
+                if (tabContent instanceof AnchorPane) return;
+
+                BorderPane borderPaneContent = (BorderPane) tabContent;
+                StackPane stackPaneContent = (StackPane) borderPaneContent.getCenter();
+                var virtualizedScrollPane = (VirtualizedScrollPane<?>) stackPaneContent.getChildren().getFirst();
+                CodeArea codeArea = (CodeArea) virtualizedScrollPane.getContent();
+
+                MarkdownArea.fontSize = newValue;
+                codeArea.setStyle("-fx-font-size: "+ newValue +"px;");
+            }
         });
 
-        return new HBox(changeFontLabel, new Spacer(), fontSize);
+        return new HBox(changeFontLabel, new Spacer(), fontSizeSpinner);
     }
 }

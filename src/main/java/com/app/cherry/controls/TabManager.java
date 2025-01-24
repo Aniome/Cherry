@@ -28,17 +28,17 @@ public class TabManager {
 
     public static BorderPane createEmptyTab() {
         BorderPane borderPane = new BorderPane();
-        Label label = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
-        label.setFont(new Font(29));
-        borderPane.setCenter(label);
+        Label emptyTab = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
+        emptyTab.setFont(new Font(29));
+        borderPane.setCenter(emptyTab);
         borderPane.setStyle("-fx-background-color: #282a36");
         return borderPane;
     }
 
+    //adding tab when create new file
     public static void addTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
-        Circle circleUnsavedChanges = new Circle(10, Color.web("#bcbaba"));
-        circleUnsavedChanges.setStroke(Color.BLACK);
-        Tab tab = new Tab(fileName, circleUnsavedChanges);
+        Tab tab = new Tab(fileName);
+        tab.setGraphic(TabManager.createCircleUnsavedChanges());
         TabManager tabManager = new TabManager();
         tab.setContent(tabManager.createTab(tab, selectedItem));
         TabManager.selectTab(tab, tabPane);

@@ -330,7 +330,8 @@ public class MainController {
     @FXML
     private void settings() {
         SettingsModal settingsModal = new SettingsModal();
-        settingsModal.build(modalPane, splitPane);
+        ObservableList<Tab> tabs = tabPane.getTabs();
+        settingsModal.build(modalPane, splitPane, tabs);
     }
 
     private void loadItemsInTree(List<Path> pathList) {
