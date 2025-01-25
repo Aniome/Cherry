@@ -7,6 +7,7 @@ import com.app.cherry.util.Alerts;
 import com.app.cherry.util.structures.UniqueElementCodeArea;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -24,7 +25,7 @@ import java.util.*;
 
 public class FindViewController {
     @FXML
-    Accordion accordion;
+    Accordion accordionResult;
     @FXML
     ProgressBar progressBar;
     @FXML
@@ -95,6 +96,7 @@ public class FindViewController {
                     if (uniqueMap.isEmpty()) {
                         Alerts.createAndShowWarning(resourceBundle.getString("DuplicatesNotFound"));
                     }
+                    ObservableList<TitledPane> accordionResultPanes = accordionResult.getPanes();
                     for (String uniqueText : uniqueMap.keySet()) {
                         String replacedString = uniqueMap.get(uniqueText).toString().replaceAll("[\\[\\]]",
                                 "");
@@ -110,7 +112,7 @@ public class FindViewController {
                                 resourceBundle.getString("DuplicateStringFound"), scrollPane);
                         titledPane.animatedProperty().bind(new SimpleBooleanProperty(true));
                         titledPane.getStyleClass().add(Tweaks.ALT_ICON);
-                        accordion.getPanes().add(titledPane);
+                        accordionResultPanes.add(titledPane);
                     }
                 });
                 return null;
@@ -136,36 +138,53 @@ public class FindViewController {
 
     @FXML
     private void find() {
-        String stringSearchText = searchText.getText();
-        if (stringSearchText == null || stringSearchText.isEmpty()) {
-            return;
-        }
+        Optional<String> stringSearchText = Optional.ofNullable(checkingSearchText());
+        stringSearchText.ifPresent(searchText -> {
+            LiveList<Paragraph<Collection<String>, String, Collection<String>>> textCodeArea = codeArea.getParagraphs();
+            for (int i = 0; i < textCodeArea.size(); i++) {
+                String paragraphText = textCodeArea.get(i).getText();
+                if (paragraphText.contains(searchText)) {
+                    int ind = paragraphText.indexOf(searchText);
+                    int absolutePosition = codeArea.getAbsolutePosition(i, 0) + ind;
+                    String selectedText = codeArea.getSelectedText();
+                    IndexRange selection = codeArea.getSelection();
 
-        accordion.getPanes().clear();
-
-        LiveList<Paragraph<Collection<String>, String, Collection<String>>> textCodeArea = codeArea.getParagraphs();
-        for (int i = 0; i < textCodeArea.size(); i++) {
-            Paragraph<Collection<String>, String, Collection<String>> paragraph = textCodeArea.get(i);
-            String paragraphText = paragraph.getText();
-            if (paragraphText.contains(stringSearchText)) {
-                int ind = paragraphText.indexOf(stringSearchText);
-                int absolutePosition = codeArea.getAbsolutePosition(i,0) + ind;
-                String selectedText = codeArea.getSelectedText();
-                IndexRange selection = codeArea.getSelection();
-
-                if (selectedText == null || selectedText.isEmpty()) {
-                    codeArea.selectRange(absolutePosition, absolutePosition + stringSearchText.length());
-                    break;
-                } else if (selectedText.equals(stringSearchText) && selection.getStart() != absolutePosition) {
-                    codeArea.selectRange(absolutePosition, absolutePosition + stringSearchText.length());
-                    break;
+                    if (selectedText == null || selectedText.isEmpty()) {
+                        codeArea.selectRange(absolutePosition, absolutePosition + searchText.length());
+                        break;
+                    } else if (selectedText.equals(searchText) && selection.getStart() != absolutePosition) {
+                        codeArea.selectRange(absolutePosition, absolutePosition + searchText.length());
+                        break;
+                    }
                 }
             }
-        }
+        });
     }
 
     @FXML
     private void findCount() {
+        Optional<String> stringSearchText = Optional.ofNullable(checkingSearchText());
+        stringSearchText.ifPresent(searchText -> {
+            LiveList<Paragraph<Collection<String>, String, Collection<String>>> textCodeArea = codeArea.getParagraphs();
+            int count = 0;
+            for (var collectionStringCollectionParagraph : textCodeArea) {
+                String paragraphText = collectionStringCollectionParagraph.getText();
+                if (paragraphText.contains(searchText)) {
+                    count++;
+                }
+            }
+            ResourceBundle resourceBundle = RunApplication.resourceBundle;
+            accordionResult.getPanes().add(new TitledPane(resourceBundle.getString("FindCount") + count,
+                    null));
+        });
+    }
 
+    private String checkingSearchText() {
+        String stringSearchText = searchText.getText();
+        if (stringSearchText == null || stringSearchText.isEmpty()) {
+            return null;
+        }
+        accordionResult.getPanes().clear();
+        return stringSearchText;
     }
 }

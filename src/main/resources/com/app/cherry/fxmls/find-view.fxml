@@ -36,7 +36,7 @@
             <TextField fx:id="searchText" alignment="TOP_LEFT" />
          </HBox>
          <ScrollPane fitToHeight="true" fitToWidth="true">
-            <Accordion fx:id="accordion" />
+            <Accordion fx:id="accordionResult" />
          </ScrollPane>
       </VBox>
    </center>
