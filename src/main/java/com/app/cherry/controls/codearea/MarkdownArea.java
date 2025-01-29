@@ -2,6 +2,7 @@ package com.app.cherry.controls.codearea;
 
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.controls.ApplicationContextMenu;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.io.FileService;
 import javafx.application.Platform;
@@ -78,6 +79,8 @@ public class MarkdownArea {
                 MarkdownArea.saveText(selectedItem);
             }
         });
+
+        codeArea.setContextMenu(ApplicationContextMenu.buildCodeAreaContextMenu(codeArea));
 
         codeArea.getVisibleParagraphs().addModificationObserver
                 (new VisibleParagraphStyler<>(codeArea, MarkdownArea::computeHighlighting));

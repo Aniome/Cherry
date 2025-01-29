@@ -78,7 +78,7 @@ public class MainController {
         treeView.setShowRoot(false);
         loadFilesInTreeview();
         sortTreeView();
-        ApplicationContextMenu.createContextMenu(treeView, this, renameStage, tabPane);
+        ApplicationContextMenu.buildTreeViewContextMenu(treeView, this, renameStage, tabPane);
 
         filesManagerButton.getStyleClass().remove("radio-button");
         searchButton.getStyleClass().remove("radio-button");
