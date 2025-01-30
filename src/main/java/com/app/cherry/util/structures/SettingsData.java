@@ -1,4 +1,4 @@
-package com.app.cherry.util.configuration;
+package com.app.cherry.util.structures;
 
 public class SettingsData {
     String lastPath;

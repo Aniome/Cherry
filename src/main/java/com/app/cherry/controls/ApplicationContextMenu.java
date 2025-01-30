@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ApplicationContextMenu {
@@ -88,17 +89,22 @@ public class ApplicationContextMenu {
         MenuItem deleteMenuItem = new MenuItem(
                 RunApplication.resourceBundle.getString("ContextMenuCodeAreaDelete"));
         deleteMenuItem.setOnAction(actionEvent -> codeArea.deleteText(codeArea.getSelection()));
+
+        List.of(cutMenuItem, copyMenuItem, pasteMenuItem, deleteMenuItem)
+                .forEach(menuItem -> menuItem.setStyle("-fx-font-size: 16px;"));
         MenuItem[] menuItems = {cutMenuItem, copyMenuItem, deleteMenuItem};
         for (MenuItem menuItem : menuItems) {
             menuItem.setDisable(true);
         }
         codeArea.selectedTextProperty().addListener((observable, oldValue,
-                                                     newValue) -> {
-            if (newValue.isEmpty()) return;
-            cutMenuItem.setDisable(false);
-            copyMenuItem.setDisable(false);
-            deleteMenuItem.setDisable(false);
-        });
+                                                     newValue) ->
+                changeStateMenuItems(menuItems, newValue.isEmpty()));
         return new ContextMenu(cutMenuItem, copyMenuItem, pasteMenuItem, deleteMenuItem);
+    }
+
+    private static void changeStateMenuItems(MenuItem[] menuItems, boolean state) {
+        for (MenuItem menuItem : menuItems) {
+            menuItem.setDisable(state);
+        }
     }
 }

@@ -200,9 +200,5 @@ public class MarkdownArea {
             }
         }
     }
-
-    public static CodeArea getCodeArea() {
-        return codeArea;
-    }
 }
 

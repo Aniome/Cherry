@@ -6,6 +6,7 @@ import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.dao.RecentPathsDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.HibernateUtil;
+import com.app.cherry.util.structures.SettingsData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -57,7 +58,7 @@ public class SavingConfiguration {
 
         SettingsData settingsData = generateSettingsData(stage, mainController, path);
         ObjectMapper objectMapper = new ObjectMapper();
-        String settings = RunApplication.appPath + "/settings.json";
+        String settings = RunApplication.appPath + RunApplication.separator + "settings.json";
         try {
             objectMapper.writeValue(new File(settings), settingsData);
         } catch (IOException e) {

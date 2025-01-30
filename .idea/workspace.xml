@@ -12,13 +12,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add unit test">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add context menu in code area">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingTabs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/PathNote.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/local/text_ru.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SettingsData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/SettingsData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,6 +138,7 @@
       <recent name="D:\Programming\Java\Cherry\src\main\resources\com\app\cherry\fxmls" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.app.cherry.util.structures" />
       <recent name="com.app.cherry" />
     </key>
   </component>
@@ -586,15 +589,8 @@
       <workItem from="1737998568710" duration="725000" />
       <workItem from="1737999369462" duration="7921000" />
       <workItem from="1738081647204" duration="4089000" />
-      <workItem from="1738171118602" duration="5696000" />
-    </task>
-    <task id="LOCAL-00080" summary="add translate for init view">
-      <option name="closed" value="true" />
-      <created>1727801923255</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1727801923255</updated>
+      <workItem from="1738171118602" duration="8405000" />
+      <workItem from="1738256345956" duration="6953000" />
     </task>
     <task id="LOCAL-00081" summary="some changes">
       <option name="closed" value="true" />
@@ -980,7 +976,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738090462258</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="add context menu in code area">
+      <option name="closed" value="true" />
+      <created>1738176974909</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1738176974909</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1011,7 +1015,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="finalization changing theme" />
     <MESSAGE value="fixing bug with changing color background in line number" />
     <MESSAGE value="refactoring and add settings on change font size" />
     <MESSAGE value="finalizing font size settings" />
@@ -1036,7 +1039,8 @@
     <MESSAGE value="applying font settings on all tabs" />
     <MESSAGE value="add finding count option" />
     <MESSAGE value="add unit test" />
-    <option name="LAST_COMMIT_MESSAGE" value="add unit test" />
+    <MESSAGE value="add context menu in code area" />
+    <option name="LAST_COMMIT_MESSAGE" value="add context menu in code area" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

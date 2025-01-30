@@ -5,6 +5,7 @@ import atlantafx.base.theme.Dracula;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.util.Alerts;
+import com.app.cherry.util.structures.SettingsData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -52,7 +53,7 @@ public class ApplyConfiguration {
                 RunApplication.folderPath = null;
             }
 
-            if (settingsData.language.equals("en")) {
+            if (settingsData.getLanguage().equals("en")) {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
                 SavingConfiguration.language = "en";
             } else {
@@ -61,7 +62,7 @@ public class ApplyConfiguration {
                 SavingConfiguration.language = "ru";
             }
 
-            if (settingsData.theme.equals(dark)) {
+            if (settingsData.getTheme().equals(dark)) {
                 theme = dark;
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
             } else {
@@ -69,19 +70,17 @@ public class ApplyConfiguration {
                 Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
             }
 
-            mainStage.setHeight(settingsData.height);
-            mainStage.setWidth(settingsData.width);
+            mainStage.setHeight(settingsData.getHeight());
+            mainStage.setWidth(settingsData.getWidth());
 
-            mainStage.setMaximized(settingsData.maximized);
+            mainStage.setMaximized(settingsData.isMaximized());
 
-            dividerPosition = settingsData.dividerPosition;
+            dividerPosition = settingsData.getDividerPosition();
 
             MarkdownArea.fontSize = settingsData.getFontSize();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             applyDefaultSettings(mainStage);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Alerts.createAndShowWarning(e.getMessage());
         }
     }
