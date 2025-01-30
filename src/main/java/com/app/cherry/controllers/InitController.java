@@ -15,7 +15,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
@@ -99,9 +98,8 @@ public class InitController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(initialStage));
         selectedDirectory.ifPresent(file -> {
-            Path path = Paths.get(file.toURI());
-            RunApplication.folderPath = path;
-            RunApplication.setSeparator(path);
+            RunApplication.folderPath = Paths.get(file.toURI());
+            RunApplication.setSeparator();
             ResourceBundle resourceBundle = RunApplication.resourceBundle;
             if (openButton.getText().equals(resourceBundle.getString("InitBrowse"))) {
                 downLabel.setFont(new Font(12));
@@ -141,7 +139,7 @@ public class InitController {
             Alerts.createAndShowWarning(resourceBundle.getString("InitLabelPathStorage"));
             return;
         }
-        RunApplication.setSeparator(RunApplication.folderPath);
+        RunApplication.setSeparator();
         String path = RunApplication.folderPath.toString() + RunApplication.separator + folderName;
         RunApplication.folderPath = Paths.get(path);
         File folder = new File(path);

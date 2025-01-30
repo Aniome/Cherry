@@ -8,15 +8,15 @@ import com.app.cherry.util.io.FileService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -24,8 +24,6 @@ import java.util.ResourceBundle;
 
 
 public class RunApplication extends Application {
-    private static Stage mainStage;
-    public static Path folderPath;
     public static final String title = "Cherry";
     private static final double InitialHeight = 600;
     private static final double InitialWidth = 800;
@@ -36,10 +34,13 @@ public class RunApplication extends Application {
     public static ResourceBundle resourceBundle;
     public static String separator;
     public static String appPath;
+    private static Stage mainStage;
+    public static Path folderPath;
 
     @Override
     public void start(Stage stage) {
         HibernateUtil.setUp();
+        setSeparator();
         ApplyConfiguration.build(stage);
 
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -48,13 +49,13 @@ public class RunApplication extends Application {
         if (folderPath == null) {
             showInitialWindow();
         } else {
-            setSeparator(folderPath);
             showMainWindow();
         }
     }
 
-    public static void setSeparator(Path folderPath) {
-        if (folderPath.toString().contains("/")) {
+    public static void setSeparator() {
+        String path = new File("").getAbsolutePath();
+        if (path.contains("/")) {
             separator = "/";
         } else {
             separator = "\\";
@@ -132,13 +133,21 @@ public class RunApplication extends Application {
                 if (newFileName == null) {
                     return;
                 }
-                TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-                boolean conditions = FileService.renameFile(newFileName, selectedItem.getValue(),
+                TreeItem<String> selectedTreeItem = treeView.getSelectionModel().getSelectedItem();
+                boolean successfulRename = FileService.renameFile(newFileName, selectedTreeItem.getValue(),
                         RunApplication.folderPath.toString());
-                if (conditions) {
-                    selectedItem.setValue(newFileName);
+                if (successfulRename) {
+                    selectedTreeItem.setValue(newFileName);
                     Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
                     selectedTab.setText(newFileName);
+
+                    BorderPane borderPaneContent = (BorderPane) selectedTab.getContent();
+                    HBox titleHbox = (HBox) borderPaneContent.getTop();
+                    if (titleHbox == null) {
+                        return;
+                    }
+                    TextField textField = (TextField) titleHbox.getChildren().getFirst();
+                    textField.setText(newFileName);
                 }
             });
             RenameViewController renameViewController = fxmlLoader.getController();

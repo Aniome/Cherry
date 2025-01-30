@@ -129,22 +129,21 @@ public class FileService {
     }
 
     public static boolean renameFile(String newName, String oldName, String path) {
-        File oldFile = new File(path + "/" + oldName + ".md");
-        File newFile = new File(path + "/" + newName + ".md");
-
+        File oldFile = new File(path + RunApplication.separator + oldName + ".md");
+        File newFile = new File(path + RunApplication.separator + newName + ".md");
         return oldFile.renameTo(newFile);
     }
 
     public static String getPath(TreeItem<String> treeItem) {
         StringBuilder pathName = new StringBuilder(RunApplication.folderPath.toString() + RunApplication.separator);
-        List<String> list = new LinkedList<>();
+        List<String> listPath = new LinkedList<>();
         TreeItem<String> loadingItem = treeItem;
         while (treeItem.getParent() != null) {
-            list.add(treeItem.getValue());
+            listPath.add(treeItem.getValue());
             treeItem = treeItem.getParent();
         }
-        list = list.reversed();
-        list.forEach(item -> pathName.append(item).append("\\"));
+        listPath = listPath.reversed();
+        listPath.forEach(item -> pathName.append(item).append(RunApplication.separator));
         pathName.deleteCharAt(pathName.length() - 1);
         if (loadingItem.isLeaf()) {
             pathName.append(".md");

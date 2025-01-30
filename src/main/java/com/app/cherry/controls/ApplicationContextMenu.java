@@ -96,15 +96,15 @@ public class ApplicationContextMenu {
         for (MenuItem menuItem : menuItems) {
             menuItem.setDisable(true);
         }
-        codeArea.selectedTextProperty().addListener((observable, oldValue,
-                                                     newValue) ->
-                changeStateMenuItems(menuItems, newValue.isEmpty()));
-        return new ContextMenu(cutMenuItem, copyMenuItem, pasteMenuItem, deleteMenuItem);
-    }
 
-    private static void changeStateMenuItems(MenuItem[] menuItems, boolean state) {
-        for (MenuItem menuItem : menuItems) {
-            menuItem.setDisable(state);
-        }
+        codeArea.selectedTextProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    boolean state = newValue.isEmpty();
+                    for (MenuItem menuItem : menuItems) {
+                        menuItem.setDisable(state);
+                    }
+                }
+        );
+        return new ContextMenu(cutMenuItem, copyMenuItem, pasteMenuItem, deleteMenuItem);
     }
 }

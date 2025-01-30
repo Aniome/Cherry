@@ -42,7 +42,7 @@ public class ApplyConfiguration {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             SettingsData settingsData = objectMapper.readValue(new File(RunApplication.appPath +
-                    "/settings.json"), SettingsData.class);
+                    RunApplication.separator + "settings.json"), SettingsData.class);
 
             Path folderPath = Paths.get(settingsData.getLastPath());
             boolean condition = Files.exists(folderPath) && Files.isExecutable(folderPath)
