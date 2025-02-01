@@ -12,6 +12,7 @@ import com.app.cherry.controls.listViewItems.ListCellItemSearch;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.configuration.ApplyConfiguration;
+import com.app.cherry.util.configuration.SavingTabs;
 import com.app.cherry.util.io.FileService;
 import com.app.cherry.util.structures.SearchListViewItem;
 import javafx.application.Platform;
@@ -91,6 +92,7 @@ public class MainController {
         modalPane.hide();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         setTheme();
+        SavingTabs.loadSavingTabs(tabPane.getTabs());
     }
 
     private void setTheme() {
