@@ -133,6 +133,7 @@ public class RunApplication extends Application {
                 if (newFileName == null) {
                     return;
                 }
+                //fixing that
                 TreeItem<String> selectedTreeItem = treeView.getSelectionModel().getSelectedItem();
                 boolean successfulRename = FileService.renameFile(newFileName, selectedTreeItem.getValue(),
                         RunApplication.folderPath.toString());
@@ -146,8 +147,8 @@ public class RunApplication extends Application {
                     if (titleHbox == null) {
                         return;
                     }
-                    TextField textField = (TextField) titleHbox.getChildren().getFirst();
-                    textField.setText(newFileName);
+                    TextField noteName = (TextField) titleHbox.getChildren().getFirst();
+                    noteName.setText(newFileName);
                 }
             });
             RenameViewController renameViewController = fxmlLoader.getController();

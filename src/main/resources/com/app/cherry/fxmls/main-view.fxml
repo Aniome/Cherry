@@ -108,40 +108,40 @@
                     <padding>
                         <Insets bottom="15.0" top="10.0" />
                     </padding>
-               <children>
-                  <RadioButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch" styleClass="toggle-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <graphic>
-                               <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
-                     </graphic>
-                     <tooltip>
-                               <Tooltip text="%ToolTipSearch" />
-                     </tooltip>
-                     <toggleGroup>
-                               <ToggleGroup fx:id="maingroup" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="favoriteNotesButton" mnemonicParsing="false" onMouseClicked="#showFavorites" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <graphic>
-                               <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
-                     </graphic>
-                     <tooltip>
-                               <Tooltip text="%ToolTipFavorites" />
-                     </tooltip>
-                  </RadioButton>
-                  <RadioButton fx:id="filesManagerButton" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#showFiles" selected="true" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <graphic>
-                               <FontIcon iconLiteral="mdal-folder" scaleX="1.5" scaleY="1.5" />
-                     </graphic>
-                     <tooltip>
-                               <Tooltip text="%ToolTipFileManager" />
-                     </tooltip>
-                  </RadioButton>
-               </children>
+                    <children>
+                        <RadioButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch" styleClass="toggle-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <graphic>
+                                <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
+                            </graphic>
+                            <tooltip>
+                                <Tooltip text="%ToolTipSearch" />
+                            </tooltip>
+                            <toggleGroup>
+                                <ToggleGroup fx:id="maingroup" />
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="favoriteNotesButton" mnemonicParsing="false" onMouseClicked="#showFavorites" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <graphic>
+                                <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
+                            </graphic>
+                            <tooltip>
+                                <Tooltip text="%ToolTipFavorites" />
+                            </tooltip>
+                        </RadioButton>
+                        <RadioButton fx:id="filesManagerButton" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#showFiles" selected="true" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <graphic>
+                                <FontIcon iconLiteral="mdal-folder" scaleX="1.5" scaleY="1.5" />
+                            </graphic>
+                            <tooltip>
+                                <Tooltip text="%ToolTipFileManager" />
+                            </tooltip>
+                        </RadioButton>
+                    </children>
                 </GridPane>
             </top>
         </BorderPane>
         <TabPane fx:id="tabPane" minWidth="150.0" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS">
-            <Tab closable="false" text="%EmptyTab">
+            <Tab text="%EmptyTab">
                 <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: -color-bg-default;">
                     <center>
                         <Label text="%EmptyPage" BorderPane.alignment="CENTER">
@@ -151,17 +151,18 @@
                         </Label>
                     </center>
                 </BorderPane>
-            <graphic>
-               <Circle fill="#bcbaba" opacity="0.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
-            </graphic>
+                <graphic>
+                    <Circle fill="#bcbaba" opacity="0.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                </graphic>
             </Tab>
             <Tab closable="false" onSelectionChanged="#addTab" text="+">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </Tab>
         </TabPane>
     </SplitPane>
-   <ModalPane fx:id="modalPane">
-      <StackPane.margin>
-         <Insets />
-      </StackPane.margin></ModalPane>
+    <ModalPane fx:id="modalPane">
+        <StackPane.margin>
+            <Insets />
+        </StackPane.margin>
+    </ModalPane>
 </StackPane>

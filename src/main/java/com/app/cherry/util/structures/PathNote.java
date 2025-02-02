@@ -1,15 +1,15 @@
 package com.app.cherry.util.structures;
 
-import java.nio.file.Path;
-
 public class PathNote {
-    Path[] pathNote;
+    String[] pathNote;
 
-    public Path[] getPathNote() {
-        return pathNote;
+    public PathNote() {}
+
+    public PathNote(String[] pathNote) {
+        this.pathNote = pathNote;
     }
 
-    public void setPathNote(Path pathNote) {
-        this.pathNote = new Path[]{pathNote};
+    public String[] getPathNote() {
+        return pathNote;
     }
 }

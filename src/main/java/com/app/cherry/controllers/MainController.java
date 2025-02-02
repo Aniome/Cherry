@@ -397,4 +397,8 @@ public class MainController {
                 .sorted(Comparator.comparing(TreeItem::getValue));
         treeView.getRoot().getChildren().setAll(content);
     }
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
 }

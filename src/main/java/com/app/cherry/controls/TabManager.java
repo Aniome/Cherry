@@ -59,21 +59,26 @@ public class TabManager {
         noteName.focusedProperty().addListener((arg0,
                                                  oldPropertyValue, newPropertyValue) -> {
             //newPropertyValue - on focus
-            //oldPropertyValue - out focus
+            //oldPropertyValue - lose focus
             String noteNameText = noteName.getText();
+            //when clicked again on text field
             if (newPropertyValue) {
                 oldTextFieldValue = noteNameText;
             }
-            if (oldPropertyValue && noteNameText.isEmpty()) {
-                noteName.setText(oldTextFieldValue);
-            } else {
-                tab.setText(noteNameText);
-
-                boolean conditions = FileService.renameFile(noteNameText, selectedItem.getValue(),
-                        RunApplication.folderPath.toString());
-                if (conditions) {
-                    selectedItem.setValue(noteNameText);
-                    tab.setText(noteNameText);
+            if (oldPropertyValue) {
+                if (noteNameText.isEmpty()) {
+                    noteName.setText(oldTextFieldValue);
+                } else {
+                    //when lose focus and renaming note
+                    String pathTreeItem = FileService.getPath(selectedItem);
+                    int lastIndexOfSeparator = pathTreeItem.lastIndexOf(RunApplication.separator);
+                    pathTreeItem = pathTreeItem.substring(0, lastIndexOfSeparator);
+                    //renameFile - newName, oldFile, path
+                    boolean isSuccessRename = FileService.renameFile(noteNameText, selectedItem.getValue(), pathTreeItem);
+                    if (isSuccessRename) {
+                        selectedItem.setValue(noteNameText);
+                        tab.setText(noteNameText);
+                    }
                 }
             }
         });
