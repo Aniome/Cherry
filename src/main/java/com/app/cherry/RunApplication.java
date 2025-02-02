@@ -4,14 +4,12 @@ import com.app.cherry.controllers.*;
 import com.app.cherry.util.HibernateUtil;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.SavingConfiguration;
-import com.app.cherry.util.io.FileService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
@@ -117,7 +115,7 @@ public class RunApplication extends Application {
         }
     }
 
-    public static void showRenameWindow(TreeView<String> treeView, TabPane tabPane) {
+    public static void showRenameWindow(TreeItem<String> selectedTreeItem, Tab selectedTab) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"),
                     resourceBundle);
@@ -128,31 +126,8 @@ public class RunApplication extends Application {
             renameStage.initModality(Modality.WINDOW_MODAL);
             renameStage.initOwner(mainStage);
             SavingConfiguration.renameStage = renameStage;
-            renameStage.setOnHiding((event) -> {
-                String newFileName = MainController.newFileName;
-                if (newFileName == null) {
-                    return;
-                }
-                //fixing that
-                TreeItem<String> selectedTreeItem = treeView.getSelectionModel().getSelectedItem();
-                boolean successfulRename = FileService.renameFile(newFileName, selectedTreeItem.getValue(),
-                        RunApplication.folderPath.toString());
-                if (successfulRename) {
-                    selectedTreeItem.setValue(newFileName);
-                    Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-                    selectedTab.setText(newFileName);
-
-                    BorderPane borderPaneContent = (BorderPane) selectedTab.getContent();
-                    HBox titleHbox = (HBox) borderPaneContent.getTop();
-                    if (titleHbox == null) {
-                        return;
-                    }
-                    TextField noteName = (TextField) titleHbox.getChildren().getFirst();
-                    noteName.setText(newFileName);
-                }
-            });
             RenameViewController renameViewController = fxmlLoader.getController();
-            renameViewController.init(renameStage);
+            renameViewController.init(renameStage, selectedTreeItem, selectedTab);
             String renameWindowTitle = RunApplication.resourceBundle.getString("RenameWindowTitle");
             RunApplication.prepareStage(renameHeight, renameWidth, scene, renameWindowTitle, renameStage);
         } catch (IOException e) {

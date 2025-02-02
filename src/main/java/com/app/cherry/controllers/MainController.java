@@ -59,7 +59,6 @@ public class MainController {
     BorderPane leftPanelBorderPane;
 
     Stage renameStage;
-    public static String newFileName;
     TreeItem<String> filesManagerRoot;
     final String fileIconName = "mdal-insert_drive_file";
     final String folderIconName = "mdal-folder_open";
@@ -118,7 +117,8 @@ public class MainController {
     }
 
     public void openRenameWindow() {
-        RunApplication.showRenameWindow(treeView, tabPane);
+        RunApplication.showRenameWindow(treeView.getSelectionModel().getSelectedItem(),
+                tabPane.getSelectionModel().getSelectedItem());
     }
 
     public void loadDataOnFormOnClick(TreeItem<String> selectedItem) {

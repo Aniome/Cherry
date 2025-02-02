@@ -59,7 +59,7 @@ public class TabManager {
         noteName.focusedProperty().addListener((arg0,
                                                  oldPropertyValue, newPropertyValue) -> {
             //newPropertyValue - on focus
-            //oldPropertyValue - lose focus
+            //oldPropertyValue - lost focus
             String noteNameText = noteName.getText();
             //when clicked again on text field
             if (newPropertyValue) {
