@@ -121,11 +121,13 @@ public class MainController {
                 tabPane.getSelectionModel().getSelectedItem());
     }
 
+    //Loading on click treeItem
     public void loadDataOnFormOnClick(TreeItem<String> selectedItem) {
         String filename = selectedItem.getValue();
         loadDataOnFormOnClick(filename, null, selectedItem);
     }
 
+    //Loading data in listView
     public void loadDataOnFormOnClick(Path path, String filename) {
         loadDataOnFormOnClick(filename, path, null);
     }

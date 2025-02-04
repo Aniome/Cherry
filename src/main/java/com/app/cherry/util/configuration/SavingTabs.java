@@ -5,10 +5,12 @@ import com.app.cherry.util.Alerts;
 import com.app.cherry.util.structures.PathNote;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,17 +50,24 @@ public class SavingTabs {
         for (int i = 0; i < size; i++) {
             Tab tab = tabs.get(i);
             BorderPane borderPaneContent = (BorderPane) tab.getContent();
-            HBox titleHbox = (HBox) borderPaneContent.getTop();
-            if (titleHbox == null) {
+            VBox vBoxTopContainer = (VBox) borderPaneContent.getTop();
+            if (vBoxTopContainer == null) {
                 continue;
             }
 
-            TextField noteName = (TextField) titleHbox.getChildren().getFirst();
+            HBox hBoxTitleBar = (HBox) vBoxTopContainer.getChildren().get(1);
+
+            ObservableList<Node> hBoxTitleBarChildren = hBoxTitleBar.getChildren();
+            if (hBoxTitleBarChildren.isEmpty())
+                continue;
+
+            TextField noteName = (TextField) hBoxTitleBarChildren.getFirst();
 
             String noteNameString = noteName.getText();
 
             openedTabs[i] = noteNameString;
         }
+        //empty tab
         if (openedTabs.length == 1 && openedTabs[0] == null) {
             return;
         }
