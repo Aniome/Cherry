@@ -160,7 +160,7 @@ public class SettingsModal {
             ApplyConfiguration.applyThemeOnMarkdownArea();
             ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
             ApplyConfiguration.applyThemeOnMainPage();
-            ApplyConfiguration.applyThemeOnStackPaneBackgroundLineNumber();
+            ApplyConfiguration.updateThemeOnStackPaneBackgroundLineNumber();
         });
         return themeSettings;
     }

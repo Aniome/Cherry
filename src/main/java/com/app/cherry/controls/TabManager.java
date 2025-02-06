@@ -23,6 +23,8 @@ import java.util.List;
 
 public class TabManager {
     private String oldTextFieldValue;
+    private final String fileIcon = "mdal-insert_drive_file";
+    private final String folderIcon = "mdal-folder_open";
 
     public static void selectTab(Tab tab, TabPane tabPane) {
         int count = tabPane.getTabs().size() - 1;
@@ -57,7 +59,6 @@ public class TabManager {
         TextField noteName = new TextField(tab.getText()) {{
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
-            setStyle("-fx-border-width: 0; -fx-border-style: none;");
         }};
 
         //when note rename
@@ -88,7 +89,7 @@ public class TabManager {
             }
         });
 
-        HBox hBoxTitleBar = getHBoxTitleBar(selectedItem, noteName);
+        HBox hBoxTitleBar = buildHBoxTitleBar(selectedItem, noteName);
         HBox.setHgrow(noteName, Priority.ALWAYS);
 
         TreeItem<String> currentTreeItem = selectedItem;
@@ -104,16 +105,33 @@ public class TabManager {
         BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(items);
 
         Breadcrumbs<String> crumbs = buildStringBreadcrumbs(root);
+        ToggleButton toggleButtonCrumbs = new ToggleButton();
+        toggleButtonCrumbs.selectedProperty().addListener((arg0, oldValue,
+                                                           newValue) -> toggleButtonCrumbs.setSelected(false));
+        toggleButtonCrumbs.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        toggleButtonCrumbs.setPadding(new Insets(-5));
 
-        VBox vBoxTopContainer = new VBox(crumbs, hBoxTitleBar);
+        toggleButtonCrumbs.setGraphic(crumbs);
+
+        VBox vBoxCrumbs = new VBox(toggleButtonCrumbs);
+        vBoxCrumbs.setPadding(new Insets(5));
+
+        VBox vBoxTopContainer = new VBox(vBoxCrumbs, hBoxTitleBar);
         HBox.setHgrow(vBoxTopContainer, Priority.ALWAYS);
+        vBoxTopContainer.setBackground(new Background(new BackgroundFill(Color.web("#181920"), CornerRadii.EMPTY, Insets.EMPTY)));
 
         //center top right bottom left
-        BorderPane page = new BorderPane(markdownArea, vBoxTopContainer, null, null, null);
+        BorderPane borderPanePage = new BorderPane(markdownArea, vBoxTopContainer, null, null, null);
+        setSelectedCrumbListener(crumbs, hBoxTitleBar, borderPanePage);
 
+        return borderPanePage;
+    }
+
+    private void setSelectedCrumbListener(Breadcrumbs<String> crumbs, HBox hBoxTitleBar, BorderPane borderPanePage) {
         crumbs.selectedCrumbProperty().addListener((obs,
                                                     oldVal, newVal) -> {
             hBoxTitleBar.getChildren().clear();
+            //get full path to the directory
             StringBuilder pathTreeItem = new StringBuilder();
             BreadCrumbItem<String> currentBreadCrumb = newVal;
             while (currentBreadCrumb.getParent() != null) {
@@ -124,61 +142,82 @@ public class TabManager {
             File folder = new File(RunApplication.folderPath + File.separator + pathTreeItem);
             File[] files = folder.listFiles();
 
-            List<Button> buttons = new ArrayList<>();
+            List<VBox> itemsFolderList = new ArrayList<>();
             if (files != null) {
-                Arrays.stream(files).forEach(file -> {
-                    String fileName = file.getName();
-                    if (fileName.endsWith(".md"))
-                        fileName = fileName.substring(0, fileName.length() - 3);
-                    Button button = new Button(fileName);
-                    button.setFont(new Font(16));
-                    FontIcon fontIcon;
-                    if (file.isDirectory()) {
-                        fontIcon = new FontIcon("mdal-folder_open");
-                    } else {
-                        fontIcon = new FontIcon("mdal-insert_drive_file");
+                Arrays.stream(files).forEach(folderItem -> {
+                    String fileName = folderItem.getName();
+                    FontIcon fontIcon = new FontIcon(folderIcon);
+
+                    if (!folderItem.isDirectory()) {
+//                        fileName = fileName.substring(0, fileName.length() - 3);
+//                        fontIcon = new FontIcon(fileIcon);
+                        return;
                     }
-                    button.setGraphic(fontIcon);
-                    buttons.add(button);
+
+                    double scale = 4.5;
+                    fontIcon.setScaleX(scale);
+                    fontIcon.setScaleY(scale);
+
+                    Label labelFileName = new Label(fileName);
+                    labelFileName.setWrapText(true);
+
+                    VBox vBoxContentButtonItem = new VBox(fontIcon, labelFileName);
+                    vBoxContentButtonItem.prefWidth(105);
+                    vBoxContentButtonItem.prefHeight(145);
+                    vBoxContentButtonItem.setAlignment(Pos.CENTER);
+
+                    vBoxContentButtonItem.setStyle("-fx-border-radius: 5; -fx-background-radius: 5");
+                    //top right bottom left
+                    VBox.setMargin(labelFileName, new Insets(20, 5, -20, 5));
+
+                    vBoxContentButtonItem.setOnMouseEntered(event -> {
+                        vBoxContentButtonItem.setBackground(new Background(new BackgroundFill
+                                (Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+                        vBoxContentButtonItem.setBorder(Border.stroke(Color.WHITE));
+                    });
+                    vBoxContentButtonItem.setOnMouseExited(event -> {
+                        vBoxContentButtonItem.setBackground(null);
+                        vBoxContentButtonItem.setBorder(null);
+                    });
+
+                    itemsFolderList.add(vBoxContentButtonItem);
                 });
             }
 
+            //creating container for folder
             FlowPane folderContent = new FlowPane() {{
-                setVgap(5);
-                setHgap(5);
-                setPadding(new Insets(10));
+                setVgap(25);
+                setHgap(25);
+                setPadding(new Insets(15, 0, 0, 15));
             }};
+            //folderContent.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
+            folderContent.getChildren().addAll(itemsFolderList);
 
-            for (Button button : buttons) {
-                folderContent.getChildren().add(button);
-            }
-
-            page.setCenter(folderContent);
+            borderPanePage.setCenter(folderContent);
         });
 
-        return page;
     }
 
     @NotNull
-    private static Breadcrumbs<String> buildStringBreadcrumbs(BreadCrumbItem<String> root) {
+    private Breadcrumbs<String> buildStringBreadcrumbs(BreadCrumbItem<String> root) {
         Breadcrumbs<String> crumbs = new Breadcrumbs<>(root);
         crumbs.setCrumbFactory(crumb -> {
             String fontIcon;
             if (crumb.isLeaf()) {
-                fontIcon = "mdal-insert_drive_file";
+                fontIcon = fileIcon;
             } else {
-                fontIcon = "mdal-folder_open";
+                fontIcon = folderIcon;
             }
-            Button btn = new Button(crumb.getValue(), new FontIcon(fontIcon));
-            btn.getStyleClass().add(Styles.FLAT);
-            btn.setFocusTraversable(false);
-            return btn;
+            Button button = new Button(crumb.getValue(), new FontIcon(fontIcon));
+            button.getStyleClass().add(Styles.FLAT);
+            button.setFocusTraversable(false);
+            return button;
         });
         return crumbs;
     }
 
     @NotNull
-    private static HBox getHBoxTitleBar(TreeItem<String> selectedItem, TextField noteName) {
+    private static HBox buildHBoxTitleBar(TreeItem<String> selectedItem, TextField noteName) {
         FontIcon saveIcon = new FontIcon("bx-save") {{
             setScaleX(1.5);
             setScaleY(1.5);
@@ -186,14 +225,13 @@ public class TabManager {
 
         Button saveButton = new Button("", saveIcon) {{
             setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            setStyle("-fx-border-width: 0; -fx-border-style: none;");
         }};
         saveButton.setOnMouseClicked(event -> MarkdownArea.saveText(selectedItem));
 
-        HBox hBoxTitleBar = new HBox(noteName, saveButton);
-        hBoxTitleBar.setSpacing(10);
-        hBoxTitleBar.setPadding(new Insets(5));
-        return hBoxTitleBar;
+        return new HBox(noteName, saveButton) {{
+            setSpacing(10);
+            setPadding(new Insets(5));
+        }};
     }
 
     public static Circle createCircleUnsavedChanges() {

@@ -131,27 +131,27 @@ public class MarkdownArea {
     }
 
     private static @NotNull IntFunction<Node> createGraphicFactory(IntFunction<Node> numberFactory, CodeArea codeArea) {
-        CopyNumberFactory copyNumberFactory = new CopyNumberFactory();
-        copyNumberFactory.setCodeArea(codeArea);
+        CopyPasteFactory copyPasteFactory = new CopyPasteFactory();
+        copyPasteFactory.setCodeArea(codeArea);
         return line -> {
-            HBox hbox = new HBox(numberFactory.apply(line), copyNumberFactory.apply(line));
-            hbox.setSpacing(1);
-            hbox.setAlignment(Pos.CENTER);
+            HBox hBoxCopyPasteNumber = new HBox(numberFactory.apply(line), copyPasteFactory.apply(line));
+            hBoxCopyPasteNumber.setSpacing(1);
+            hBoxCopyPasteNumber.setAlignment(Pos.CENTER);
 
-            Rectangle rectangle = new Rectangle();
-            ApplyConfiguration.applyThemeOnRectangleBackgroundLineNumber(rectangle);
+            Rectangle rectangleBackground = new Rectangle();
+            ApplyConfiguration.applyThemeOnRectangleBackgroundLineNumber(rectangleBackground);
             if (line == 0) {
-                rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
-                rectangle.heightProperty().bind(codeArea.heightProperty());
+                rectangleBackground.widthProperty().bind(hBoxCopyPasteNumber.widthProperty().subtract(2));
+                rectangleBackground.heightProperty().bind(codeArea.heightProperty());
             } else {
-                rectangle.widthProperty().bind(hbox.widthProperty().subtract(2));
-                rectangle.heightProperty().bind(hbox.heightProperty());
+                rectangleBackground.widthProperty().bind(hBoxCopyPasteNumber.widthProperty().subtract(2));
+                rectangleBackground.heightProperty().bind(hBoxCopyPasteNumber.heightProperty());
             }
-            StackPane.setAlignment(rectangle, Pos.TOP_LEFT);
-            StackPane stackPane = new StackPane(rectangle, hbox);
-            stackPane.toFront();
-            ApplyConfiguration.listStackPaneLineNumber.add(stackPane);
-            return stackPane;
+            StackPane.setAlignment(rectangleBackground, Pos.TOP_LEFT);
+            StackPane stackPaneGraphicFactory = new StackPane(rectangleBackground, hBoxCopyPasteNumber);
+            stackPaneGraphicFactory.toFront();
+            ApplyConfiguration.listStackPaneLineNumber.add(stackPaneGraphicFactory);
+            return stackPaneGraphicFactory;
         };
     }
 

@@ -126,7 +126,7 @@ public class ApplyConfiguration {
         vBox.setStyle(vBoxStyle);
     }
 
-    private static String buildBorderStyle() {
+    public static String buildBorderStyle() {
         String borderColor = "-fx-border-color: ";
         if (theme.equals(dark)) {
             borderColor = borderColor + "#685ab3;";
@@ -158,25 +158,27 @@ public class ApplyConfiguration {
     }
 
     public static void applyThemeOnRectangleBackgroundLineNumber(Rectangle rectangle) {
-        if (theme.equals(dark))
-            rectangle.setFill(Color.web("#282a36"));
-        else
-            rectangle.setFill(Color.WHITE);
+        rectangle.setFill(getColorOnBackgroundLineNumber());
     }
 
-    public static void applyThemeOnStackPaneBackgroundLineNumber() {
+    public static void updateThemeOnStackPaneBackgroundLineNumber() {
+        Color rectangelColor = getColorOnBackgroundLineNumber();
         for (Node listLineChildren : listStackPaneLineNumber) {
             if (listLineChildren instanceof StackPane lineNumberStackPane) {
-                var stackPaneChildren = lineNumberStackPane.getChildren();
+                ObservableList<Node> stackPaneChildren = lineNumberStackPane.getChildren();
                 for (Node stackPaneChild : stackPaneChildren) {
                     if (stackPaneChild instanceof Rectangle rectangle) {
-                        if (theme.equals(dark))
-                            rectangle.setFill(Color.web("#282a36"));
-                        else
-                            rectangle.setFill(Color.WHITE);
+                        rectangle.setFill(rectangelColor);
                     }
                 }
             }
         }
+    }
+
+    private static Color getColorOnBackgroundLineNumber() {
+        if (theme.equals(dark))
+            return Color.web("#282a36");
+        else
+            return Color.WHITE;
     }
 }

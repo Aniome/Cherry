@@ -14,7 +14,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.util.Collection;
 import java.util.function.IntFunction;
 
-public class CopyNumberFactory implements IntFunction<Node> {
+public class CopyPasteFactory implements IntFunction<Node> {
     private CodeArea codeArea;
 
     public void setCodeArea(CodeArea codeArea) {
