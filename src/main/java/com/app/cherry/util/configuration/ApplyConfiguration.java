@@ -127,13 +127,14 @@ public class ApplyConfiguration {
     }
 
     public static String buildBorderStyle() {
-        String borderColor = "-fx-border-color: ";
-        if (theme.equals(dark)) {
-            borderColor = borderColor + "#685ab3;";
-        } else {
-            borderColor = borderColor + "#d1d1d6;";
-        }
-        return borderColor;
+        return "-fx-border-color: " + getBorderColor() + ";";
+    }
+
+    public static String getBorderColor() {
+        if (theme.equals(dark))
+            return "#685ab3";
+        else
+            return "#d1d1d6";
     }
 
     public static void setMainScene(Scene scene) {

@@ -5,6 +5,7 @@ import atlantafx.base.controls.Breadcrumbs.BreadCrumbItem;
 import atlantafx.base.theme.Styles;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.codearea.MarkdownArea;
+import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.io.FileService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +16,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import org.jetbrains.annotations.NotNull;
 import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material2.Material2AL;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,44 +56,12 @@ public class TabManager {
     //Creates a form and fills it with content
     @NotNull
     public BorderPane createTab(Tab tab, TreeItem<String> selectedItem) {
+        String borderColor = ApplyConfiguration.getBorderColor();
+
         StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem);
+        HBox hBoxTitleBar = buildHBoxTitleBar(selectedItem, tab);
 
-        TextField noteName = new TextField(tab.getText()) {{
-            setFont(new Font(16));
-            setAlignment(Pos.CENTER);
-        }};
-
-        //when note rename
-        noteName.focusedProperty().addListener((arg0,
-                                                 oldPropertyValue, newPropertyValue) -> {
-            //newPropertyValue - on focus
-            //oldPropertyValue - lost focus
-            String noteNameText = noteName.getText();
-            //when clicked again on text field
-            if (newPropertyValue) {
-                oldTextFieldValue = noteNameText;
-            }
-            if (oldPropertyValue) {
-                if (noteNameText.isEmpty()) {
-                    noteName.setText(oldTextFieldValue);
-                } else {
-                    //when lose focus and renaming note
-                    String pathTreeItem = FileService.getPath(selectedItem);
-                    int lastIndexOfSeparator = pathTreeItem.lastIndexOf(RunApplication.separator);
-                    pathTreeItem = pathTreeItem.substring(0, lastIndexOfSeparator);
-                    //renameFile - newName, oldFile, path
-                    boolean isSuccessRename = FileService.renameFile(noteNameText, selectedItem.getValue(), pathTreeItem);
-                    if (isSuccessRename) {
-                        selectedItem.setValue(noteNameText);
-                        tab.setText(noteNameText);
-                    }
-                }
-            }
-        });
-
-        HBox hBoxTitleBar = buildHBoxTitleBar(selectedItem, noteName);
-        HBox.setHgrow(noteName, Priority.ALWAYS);
-
+        //creating path to the note
         TreeItem<String> currentTreeItem = selectedItem;
         List<String> breadCrumbItems = new ArrayList<>();
         while (currentTreeItem.getParent() != null) {
@@ -101,24 +71,20 @@ public class TabManager {
             currentTreeItem = currentTreeItem.getParent();
         }
 
-        String[] items = breadCrumbItems.toArray(new String[0]);
-        BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(items);
+        BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(breadCrumbItems.toArray(new String[0]));
 
         Breadcrumbs<String> crumbs = buildStringBreadcrumbs(root);
-        ToggleButton toggleButtonCrumbs = new ToggleButton();
-        toggleButtonCrumbs.selectedProperty().addListener((arg0, oldValue,
-                                                           newValue) -> toggleButtonCrumbs.setSelected(false));
-        toggleButtonCrumbs.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        toggleButtonCrumbs.setPadding(new Insets(-5));
+        crumbs.setStyle("-fx-border-radius: 5; -fx-border-color: " + borderColor);
+        crumbs.setPadding(new Insets(-2, 0, 0, 0));
 
-        toggleButtonCrumbs.setGraphic(crumbs);
+        VBox vBoxCrumbs = new VBox(crumbs);
+        vBoxCrumbs.setAlignment(Pos.CENTER);
 
-        VBox vBoxCrumbs = new VBox(toggleButtonCrumbs);
-        vBoxCrumbs.setPadding(new Insets(5));
+        VBox vBoxTopContainer = new VBox(vBoxCrumbs , hBoxTitleBar);
+        vBoxTopContainer.setPadding(new Insets(5));
 
-        VBox vBoxTopContainer = new VBox(vBoxCrumbs, hBoxTitleBar);
-        HBox.setHgrow(vBoxTopContainer, Priority.ALWAYS);
-        vBoxTopContainer.setBackground(new Background(new BackgroundFill(Color.web("#181920"), CornerRadii.EMPTY, Insets.EMPTY)));
+        //top right bottom left
+        vBoxTopContainer.setStyle("-fx-border-color: transparent " + borderColor + borderColor + " transparent;");
 
         //center top right bottom left
         BorderPane borderPanePage = new BorderPane(markdownArea, vBoxTopContainer, null, null, null);
@@ -144,6 +110,7 @@ public class TabManager {
 
             List<VBox> itemsFolderList = new ArrayList<>();
             if (files != null) {
+                //creating containers for elements
                 Arrays.stream(files).forEach(folderItem -> {
                     String fileName = folderItem.getName();
                     FontIcon fontIcon = new FontIcon(folderIcon);
@@ -213,11 +180,51 @@ public class TabManager {
             button.setFocusTraversable(false);
             return button;
         });
+        crumbs.setDividerFactory(stringBreadCrumbItem -> {
+            if (stringBreadCrumbItem == null) {
+                return new Label("");
+            }
+            return !stringBreadCrumbItem.isLast() ? new Label("", new FontIcon(Material2AL.CHEVRON_RIGHT)) : null;
+        });
         return crumbs;
     }
 
     @NotNull
-    private static HBox buildHBoxTitleBar(TreeItem<String> selectedItem, TextField noteName) {
+    private HBox buildHBoxTitleBar(TreeItem<String> selectedItem, Tab tab) {
+        TextField noteName = new TextField(tab.getText()) {{
+            setFont(new Font(16));
+            setAlignment(Pos.CENTER);
+        }};
+
+        //when note rename
+        noteName.focusedProperty().addListener((arg0,
+                                                oldPropertyValue, newPropertyValue) -> {
+            //newPropertyValue - on focus
+            //oldPropertyValue - lost focus
+            String noteNameText = noteName.getText();
+            //when clicked again on text field
+            if (newPropertyValue) {
+                oldTextFieldValue = noteNameText;
+            }
+            if (oldPropertyValue) {
+                if (noteNameText.isEmpty()) {
+                    noteName.setText(oldTextFieldValue);
+                } else {
+                    //when lose focus and renaming note
+                    String pathTreeItem = FileService.getPath(selectedItem);
+                    int lastIndexOfSeparator = pathTreeItem.lastIndexOf(RunApplication.separator);
+                    pathTreeItem = pathTreeItem.substring(0, lastIndexOfSeparator);
+                    //renameFile - newName, oldFile, path
+                    boolean isSuccessRename = FileService.renameFile(noteNameText, selectedItem.getValue(),
+                            pathTreeItem);
+                    if (isSuccessRename) {
+                        selectedItem.setValue(noteNameText);
+                        tab.setText(noteNameText);
+                    }
+                }
+            }
+        });
+
         FontIcon saveIcon = new FontIcon("bx-save") {{
             setScaleX(1.5);
             setScaleY(1.5);
@@ -227,6 +234,8 @@ public class TabManager {
             setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }};
         saveButton.setOnMouseClicked(event -> MarkdownArea.saveText(selectedItem));
+
+        HBox.setHgrow(noteName, Priority.ALWAYS);
 
         return new HBox(noteName, saveButton) {{
             setSpacing(10);

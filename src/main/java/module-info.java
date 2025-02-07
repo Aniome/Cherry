@@ -10,12 +10,12 @@ module com.app.cherry {
     requires reactfx;
     requires org.fxmisc.flowless;
     requires atlantafx.base;
-    requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome;
     requires org.scenicview.scenicview;
     requires com.fasterxml.jackson.databind;
     requires com.sun.jna.platform;
+    requires org.kordamp.ikonli.material2;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

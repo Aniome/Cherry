@@ -1,5 +1,7 @@
 package com.app.cherry.util.configuration;
 
+import atlantafx.base.controls.Breadcrumbs;
+import atlantafx.base.controls.Breadcrumbs.BreadCrumbItem;
 import com.app.cherry.RunApplication;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.structures.PathNote;
@@ -7,13 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class SavingTabs {
@@ -49,23 +51,43 @@ public class SavingTabs {
         String[] openedTabs = new String[size];
         for (int i = 0; i < size; i++) {
             Tab tab = tabs.get(i);
+
             BorderPane borderPaneContent = (BorderPane) tab.getContent();
             VBox vBoxTopContainer = (VBox) borderPaneContent.getTop();
             if (vBoxTopContainer == null) {
                 continue;
             }
 
-            HBox hBoxTitleBar = (HBox) vBoxTopContainer.getChildren().get(1);
-
-            ObservableList<Node> hBoxTitleBarChildren = hBoxTitleBar.getChildren();
-            if (hBoxTitleBarChildren.isEmpty())
+            ObservableList<Node> topContainerChildren = vBoxTopContainer.getChildren();
+            if (topContainerChildren.isEmpty()) {
                 continue;
+            }
 
-            TextField noteName = (TextField) hBoxTitleBarChildren.getFirst();
+            ObservableList<Node> vBoxCrumbsChildren = ((VBox) topContainerChildren.getFirst()).getChildren();
+            @SuppressWarnings("unchecked")
+            Breadcrumbs<String> crumbs = (Breadcrumbs<String>) vBoxCrumbsChildren.getFirst();
+            BreadCrumbItem<String> currentCrumb = crumbs.getSelectedCrumb();
 
-            String noteNameString = noteName.getText();
+            List<String> pathNoteList = new ArrayList<>();
+            while (currentCrumb != null) {
+                pathNoteList.add(currentCrumb.getValue());
+                currentCrumb = (BreadCrumbItem<String>) currentCrumb.getParent();
+            }
+            pathNoteList = pathNoteList.reversed();
+            StringBuilder stringBuilder = new StringBuilder(RunApplication.folderPath.toString());
+            pathNoteList.forEach(item -> stringBuilder.append(RunApplication.separator).append(item));
 
-            openedTabs[i] = noteNameString;
+            //saving tab name
+//            HBox hBoxTitleBar = (HBox) topContainerChildren.get(1);
+//
+//            ObservableList<Node> hBoxTitleBarChildren = hBoxTitleBar.getChildren();
+//            if (hBoxTitleBarChildren.isEmpty())
+//                continue;
+//
+//            TextField noteName = (TextField) hBoxTitleBarChildren.getFirst();
+//            String noteNameString = noteName.getText();
+
+            openedTabs[i] = stringBuilder.toString();
         }
         //empty tab
         if (openedTabs.length == 1 && openedTabs[0] == null) {
