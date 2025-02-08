@@ -24,14 +24,12 @@ public class FileService {
     public static List<Path> pathList;
 
     public static String readFile(TreeItem<String> treeItem) {
-        StringBuilder result = new StringBuilder();
         Path path = Paths.get(getPath(treeItem));
-        return readFile(path, result);
+        return readFile(path, new StringBuilder());
     }
 
     public static String readFile(Path path) {
-        StringBuilder result = new StringBuilder();
-        return readFile(path, result);
+        return readFile(path, new StringBuilder());
     }
 
     @NotNull

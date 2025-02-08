@@ -14,11 +14,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add saving path tab to json file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingTabs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingTabs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingTabs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +52,9 @@
   }
 }</component>
   <component name="GradleModuleStateConfig" initialized="true" />
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -80,8 +82,10 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Main.executor": "Run",
     "Application.RunApplication.executor": "Run",
+    "JUnit.SearchListViewItemTest.executor": "Coverage",
     "JUnit.SearchListViewItemTest.testToString.executor": "Run",
-    "JUnit.UniqueElementCodeAreaTest.testingClass.executor": "Run",
+    "JUnit.UniqueElementCodeAreaTest.testingClass.executor": "Coverage",
+    "JUnit.structures in Cherry.executor": "Debug",
     "Maven.Cherry [clean,javafx:run].executor": "Run",
     "Maven.Cherry [deploy].executor": "Run",
     "Maven.Cherry [io.github.fvarrui:javapackager:1.7.6:package].executor": "Run",
@@ -153,15 +157,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RunApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.app.cherry.RunApplication" />
+    <configuration name="SearchListViewItemTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Cherry" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.app.cherry.*" />
+          <option name="PATTERN" value="com.app.cherry.util.structures.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="com.app.cherry.util.structures" />
+      <option name="MAIN_CLASS_NAME" value="com.app.cherry.util.structures.SearchListViewItemTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -198,6 +204,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="structures in Cherry" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Cherry" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java/com/app/cherry/util/structures" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Cherry [jar:jar]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -230,17 +244,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.RunApplication" />
+      <item itemvalue="JUnit.SearchListViewItemTest" />
+      <item itemvalue="JUnit.structures in Cherry" />
       <item itemvalue="JUnit.UniqueElementCodeAreaTest.testingClass" />
       <item itemvalue="JUnit.SearchListViewItemTest.testToString" />
       <item itemvalue="Maven.Cherry [jar:jar]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.structures in Cherry" />
         <item itemvalue="JUnit.UniqueElementCodeAreaTest.testingClass" />
+        <item itemvalue="JUnit.SearchListViewItemTest" />
         <item itemvalue="JUnit.SearchListViewItemTest.testToString" />
         <item itemvalue="Maven.Cherry [jar:jar]" />
-        <item itemvalue="Application.RunApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -602,15 +618,9 @@
       <workItem from="1738648965116" duration="5396000" />
       <workItem from="1738785492839" duration="33322000" />
       <workItem from="1738880053649" duration="3039000" />
-      <workItem from="1738884631408" duration="11844000" />
-    </task>
-    <task id="LOCAL-00088" summary="simple modal pane">
-      <option name="closed" value="true" />
-      <created>1728671112667</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1728671112668</updated>
+      <workItem from="1738884631408" duration="12054000" />
+      <workItem from="1738943306626" duration="943000" />
+      <workItem from="1738987528130" duration="25152000" />
     </task>
     <task id="LOCAL-00089" summary="add changes for modalPane">
       <option name="closed" value="true" />
@@ -996,7 +1006,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738861299228</updated>
     </task>
-    <option name="localTasksCounter" value="137" />
+    <task id="LOCAL-00137" summary="add saving path tab to json file">
+      <option name="closed" value="true" />
+      <created>1738899488965</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1738899488966</updated>
+    </task>
+    <option name="localTasksCounter" value="138" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1056,6 +1074,15 @@
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java</url>
+          <line>153</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="root.children.get(8)" />
@@ -1066,5 +1093,14 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Cherry$UniqueElementCodeAreaTest_testingClass.ic" NAME="UniqueElementCodeAreaTest.testingClass Coverage Results" MODIFIED="1738943582242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.app.cherry.util.structures.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Cherry$structures_in_Cherry.ic" NAME="structures in Cherry Coverage Results" MODIFIED="1738943635285" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/Cherry$SearchListViewItemTest.ic" NAME="SearchListViewItemTest Coverage Results" MODIFIED="1738943532501" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.app.cherry.util.structures.*</FILTER>
+    </SUITE>
   </component>
 </project>

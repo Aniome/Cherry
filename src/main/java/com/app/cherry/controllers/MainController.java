@@ -12,7 +12,7 @@ import com.app.cherry.controls.listViewItems.ListCellItemSearch;
 import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.configuration.ApplyConfiguration;
-import com.app.cherry.util.configuration.SavingTabs;
+import com.app.cherry.util.configuration.TabStorageUtility;
 import com.app.cherry.util.io.FileService;
 import com.app.cherry.util.structures.SearchListViewItem;
 import javafx.application.Platform;
@@ -91,7 +91,7 @@ public class MainController {
         modalPane.hide();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         setTheme();
-        SavingTabs.loadSavingTabs(tabPane.getTabs());
+        TabStorageUtility.loadSavingTabs(tabPane.getTabs(), treeView.getRoot(), this);
     }
 
     private void setTheme() {
@@ -132,9 +132,13 @@ public class MainController {
         loadDataOnFormOnClick(filename, path, null);
     }
 
-    private void loadDataOnFormOnClick(String filename, Path path, TreeItem<String> selectedItem) {
+    public void loadDataOnFormOnClick(String filename, Path path, TreeItem<String> selectedItem) {
         ApplyConfiguration.listStackPaneLineNumber.clear();
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
+        loadDataOnTab(filename, path, selectedItem, tab);
+    }
+
+    public void loadDataOnTab(String filename, Path path, TreeItem<String> selectedItem, Tab tab) {
         tab.setContent(null);
         tab.setText(filename);
 
@@ -160,6 +164,7 @@ public class MainController {
             } else {
                 codeArea.replaceText(0, 0, text);
             }
+
         }
 
         int codeAreaLength = codeArea.getParagraphs().size();
@@ -347,15 +352,19 @@ public class MainController {
             }
             String[] path = item.toString().split(separator);
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
+
             //check tree contains file
             TreeItem<String> containedItem = null;
             for (TreeItem<String> i : rootList) {
                 if (path[0].equals(i.getValue()))
                     containedItem = i;
             }
-            //if tree contains file
+
             TreeItemCustom addedItem;
-            //added path in root tree
+            //3 options:
+            //1. If tree root already contains first part path
+            //2. If tree root don't contain first part path and path long
+            //3. If tree root don't contain path
             if (containedItem != null) {
                 TreeItem<String> treeItem = containedItem;
                 boolean isContained = false;

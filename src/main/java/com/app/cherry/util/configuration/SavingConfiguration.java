@@ -31,7 +31,7 @@ public class SavingConfiguration {
             closeWindow(findStage);
 
             saveConfiguration(stage, mainController);
-            SavingTabs.saveTabs(mainController.getTabPane().getTabs());
+            TabStorageUtility.saveTabs(mainController.getTabPane().getTabs());
 
             if (initStage == null) {
                 HibernateUtil.tearDown();
