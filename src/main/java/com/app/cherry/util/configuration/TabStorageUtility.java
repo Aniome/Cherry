@@ -24,14 +24,19 @@ import java.util.Optional;
 
 public class TabStorageUtility {
     public static void loadSavingTabs(ObservableList<Tab> tabs, TreeItem<String> root, MainController mainController) {
+        //getting array saving tabs
         Optional<String[]> optionalSavingTabs = Optional.ofNullable(getSavingTabs());
+        //if array is empty exit
         if (optionalSavingTabs.isEmpty()) {
             return;
         }
 
+        boolean firstTab = true;
+
         String[] openedSavingTabs = optionalSavingTabs.get();
         String separator = RunApplication.separator.equals("/") ? "/" : "\\\\";
 
+        //loading tabs
         for (String path : openedSavingTabs) {
             //checking if file exist
             File item = new File(path);
@@ -72,8 +77,16 @@ public class TabStorageUtility {
             }
 
             String fileName = splitPath[lastInd];
-            Tab tab = new Tab(fileName);
-            tabs.addFirst(tab);
+            Tab tab;
+            if (firstTab) {
+                tab = tabs.getFirst();
+                tab.setText(fileName);
+                firstTab = false;
+            } else {
+                tab = new Tab(fileName);
+                tabs.addFirst(tab);
+            }
+
             if (item.isDirectory()) {
 
             } else {

@@ -12,12 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add saving path tab to json file">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fixing loading tab on start">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingTabs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -620,15 +620,8 @@
       <workItem from="1738880053649" duration="3039000" />
       <workItem from="1738884631408" duration="12054000" />
       <workItem from="1738943306626" duration="943000" />
-      <workItem from="1738987528130" duration="25152000" />
-    </task>
-    <task id="LOCAL-00089" summary="add changes for modalPane">
-      <option name="closed" value="true" />
-      <created>1728719069297</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1728719069298</updated>
+      <workItem from="1738987528130" duration="25210000" />
+      <workItem from="1739046660871" duration="3905000" />
     </task>
     <task id="LOCAL-00090" summary="some fixing db">
       <option name="closed" value="true" />
@@ -1014,7 +1007,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738899488966</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="add loading tab on start and refactoring">
+      <option name="closed" value="true" />
+      <created>1739038510988</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1739038510988</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1045,8 +1046,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="finalization search and refactoring" />
-    <MESSAGE value="working with searching" />
     <MESSAGE value="working with cell factory" />
     <MESSAGE value="finalization search" />
     <MESSAGE value="working with saving configuration" />
@@ -1070,16 +1069,18 @@
     <MESSAGE value="add BreadCrumb and list files" />
     <MESSAGE value="refactoring code" />
     <MESSAGE value="add saving path tab to json file" />
-    <option name="LAST_COMMIT_MESSAGE" value="add saving path tab to json file" />
+    <MESSAGE value="add loading tab on start and refactoring" />
+    <MESSAGE value="fixing loading tab on start" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing loading tab on start" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java</url>
-          <line>153</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

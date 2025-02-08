@@ -1,8 +1,8 @@
 package com.app.cherry.controls.codearea;
 
 import com.app.cherry.RunApplication;
-import com.app.cherry.controllers.MainController;
 import com.app.cherry.controls.ApplicationContextMenu;
+import com.app.cherry.controls.TabManager;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.io.FileService;
 import javafx.application.Platform;
@@ -38,7 +38,6 @@ import java.util.regex.Pattern;
 public class MarkdownArea {
     private static final String LINK_PATTERN = "(http|https)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]+";
     private static final String WORDS_PATTERN = ".*";
-    private static CodeArea codeArea;
     public static int fontSize;
 
     private static final Pattern PATTERN = Pattern.compile(
@@ -46,8 +45,9 @@ public class MarkdownArea {
             + "|(?<WORDS>" + WORDS_PATTERN + ")"
     );
 
-    public static StackPane createMarkdownArea(TreeItem<String> selectedItem) {
-        MarkdownArea.codeArea = new CodeArea();
+    public static StackPane createMarkdownArea(TreeItem<String> selectedItem, TabManager tabManager) {
+        CodeArea codeArea = new CodeArea();
+        tabManager.setCodeArea(codeArea);
         codeArea.setStyle("-fx-font-size: "+ fontSize +"px;");
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);
@@ -76,7 +76,7 @@ public class MarkdownArea {
             }
             KeyCombination saveCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
             if (saveCombination.match(event)) {
-                MarkdownArea.saveText(selectedItem);
+                MarkdownArea.saveText(codeArea, selectedItem);
             }
         });
 
@@ -99,16 +99,14 @@ public class MarkdownArea {
             }
         });
 
-        MainController.codeArea = codeArea;
-
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
     }
 
-    public static void saveText(TreeItem<String> selectedItem) {
+    public static void saveText(CodeArea codeArea, TreeItem<String> selectedItem) {
         FileService.writeFile(selectedItem, codeArea.getText());
     }
 
-    public static void applyStylesPage(int pageLength) {
+    public static void applyStylesPage(CodeArea codeArea, int pageLength) {
         for (int i = 0; i < pageLength; i++) {
             String textCodeArea = codeArea.getText(i, 0, i, codeArea.getParagraphLength(i));
             int startPos = codeArea.getAbsolutePosition(i, 0);
@@ -116,7 +114,7 @@ public class MarkdownArea {
         }
     }
 
-    public static void applyStyles(int from, int to) {
+    public static void applyStyles(int from, int to, CodeArea codeArea) {
         Thread thread = new Thread(() -> {
             //add styling for the text
             Platform.runLater(() -> {

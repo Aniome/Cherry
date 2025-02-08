@@ -64,7 +64,6 @@ public class MainController {
     final String folderIconName = "mdal-folder_open";
     ArrayList<Node> fileManagerVbox;
     ArrayList<SearchListViewItem> searchListViewItems;
-    public static CodeArea codeArea;
 
     @FXML
     private void CloseWindow(MouseEvent event) {
@@ -144,6 +143,7 @@ public class MainController {
 
         TabManager tabManager = new TabManager();
         tab.setContent(tabManager.createTab(tab, selectedItem));
+        CodeArea codeArea = tabManager.getCodeArea();
 
         String text;
         if (path == null)
@@ -170,10 +170,10 @@ public class MainController {
         int codeAreaLength = codeArea.getParagraphs().size();
         int pageLength = 80;
         if (codeAreaLength > pageLength) {
-            MarkdownArea.applyStylesPage(pageLength);
-            MarkdownArea.applyStyles(pageLength, codeAreaLength);
+            MarkdownArea.applyStylesPage(codeArea, pageLength);
+            MarkdownArea.applyStyles(pageLength, codeAreaLength, codeArea);
         } else {
-            MarkdownArea.applyStyles(0, codeAreaLength);
+            MarkdownArea.applyStyles(0, codeAreaLength, codeArea);
         }
 
         Circle circleUnsavedChanges = (Circle) tab.getGraphic();

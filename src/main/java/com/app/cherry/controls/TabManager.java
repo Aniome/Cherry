@@ -14,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material2.Material2AL;
@@ -27,6 +28,7 @@ public class TabManager {
     private String oldTextFieldValue;
     private final String fileIcon = "mdal-insert_drive_file";
     private final String folderIcon = "mdal-folder_open";
+    private CodeArea codeArea;
 
     public static void selectTab(Tab tab, TabPane tabPane) {
         int count = tabPane.getTabs().size() - 1;
@@ -58,7 +60,7 @@ public class TabManager {
     public BorderPane createTab(Tab tab, TreeItem<String> selectedItem) {
         String borderColor = ApplyConfiguration.getBorderColor();
 
-        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem);
+        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, this);
         HBox hBoxTitleBar = buildHBoxTitleBar(selectedItem, tab);
 
         //creating path to the note
@@ -233,7 +235,7 @@ public class TabManager {
         Button saveButton = new Button("", saveIcon) {{
             setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }};
-        saveButton.setOnMouseClicked(event -> MarkdownArea.saveText(selectedItem));
+        saveButton.setOnMouseClicked(event -> MarkdownArea.saveText(codeArea, selectedItem));
 
         HBox.setHgrow(noteName, Priority.ALWAYS);
 
@@ -248,5 +250,13 @@ public class TabManager {
         circleUnsavedChanges.setStroke(Color.BLACK);
         circleUnsavedChanges.setOpacity(0);
         return circleUnsavedChanges;
+    }
+
+    public CodeArea getCodeArea() {
+        return codeArea;
+    }
+
+    public void setCodeArea(CodeArea codeArea) {
+        this.codeArea = codeArea;
     }
 }
