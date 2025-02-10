@@ -88,7 +88,7 @@ public class SettingsModal {
         settingsVbox.getChildren().clear();
 
         settingsVbox.setSpacing(10);
-        settingsVbox.setPadding(new Insets(10, 10, 10, 10));
+        settingsVbox.setPadding(new Insets(10));
         String settingsVboxStyle = "-fx-background-radius: 10; -fx-border-radius: 20;";
         ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
 
@@ -149,7 +149,8 @@ public class SettingsModal {
         } else {
             themeChoiceBoxSelectionModel.select(cupertinoLight);
         }
-        themeChoiceBoxSelectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        themeChoiceBoxSelectionModel.selectedItemProperty().addListener((
+                observable, oldValue, newValue) -> {
             if (newValue.equals(dracula)) {
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
                 ApplyConfiguration.theme = dracula;
@@ -157,12 +158,17 @@ public class SettingsModal {
                 Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
                 ApplyConfiguration.theme = cupertinoLight;
             }
-            ApplyConfiguration.applyThemeOnMarkdownArea();
-            ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
-            ApplyConfiguration.applyThemeOnMainPage();
-            ApplyConfiguration.updateThemeOnStackPaneBackgroundLineNumber();
+            updateTheme(settingsVbox, settingsVboxStyle);
         });
         return themeSettings;
+    }
+
+    private static void updateTheme(VBox settingsVbox, String settingsVboxStyle) {
+        ApplyConfiguration.updateThemeOnMarkdownArea();
+        ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
+        ApplyConfiguration.applyThemeOnMainPageLeftPanel();
+        ApplyConfiguration.updateThemeOnStackPaneBackgroundLineNumber(tabs);
+        ApplyConfiguration.updateThemeOnTopContainer(tabs);
     }
 
     private static HBox changeFontSize(ResourceBundle resourceBundle) {

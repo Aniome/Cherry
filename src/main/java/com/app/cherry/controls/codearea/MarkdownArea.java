@@ -48,7 +48,7 @@ public class MarkdownArea {
     public static StackPane createMarkdownArea(TreeItem<String> selectedItem, TabManager tabManager) {
         CodeArea codeArea = new CodeArea();
         tabManager.setCodeArea(codeArea);
-        codeArea.setStyle("-fx-font-size: "+ fontSize +"px;");
+        codeArea.setStyle("-fx-font-size: " + fontSize + "px;");
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);
 
@@ -89,7 +89,7 @@ public class MarkdownArea {
         final Pattern whiteSpace = Pattern.compile( "^\\s+" );
 
         codeArea.addEventHandler(KeyEvent.KEY_PRESSED, KE -> {
-            if ( KE.getCode() == KeyCode.ENTER ) {
+            if (KE.getCode() == KeyCode.ENTER) {
                 int caretPosition = codeArea.getCaretPosition();
                 int currentParagraph = codeArea.getCurrentParagraph();
                 Matcher m0 = whiteSpace.matcher(codeArea.getParagraph(currentParagraph - 1).getSegments()
@@ -148,7 +148,7 @@ public class MarkdownArea {
             StackPane.setAlignment(rectangleBackground, Pos.TOP_LEFT);
             StackPane stackPaneGraphicFactory = new StackPane(rectangleBackground, hBoxCopyPasteNumber);
             stackPaneGraphicFactory.toFront();
-            ApplyConfiguration.listStackPaneLineNumber.add(stackPaneGraphicFactory);
+            stackPaneGraphicFactory.getStyleClass().add("stackPaneGraphicFactory");
             return stackPaneGraphicFactory;
         };
     }

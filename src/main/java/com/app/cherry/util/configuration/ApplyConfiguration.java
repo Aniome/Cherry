@@ -1,5 +1,6 @@
 package com.app.cherry.util.configuration;
 
+import atlantafx.base.controls.Breadcrumbs;
 import atlantafx.base.theme.CupertinoLight;
 import atlantafx.base.theme.Dracula;
 import com.app.cherry.RunApplication;
@@ -11,6 +12,7 @@ import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -18,6 +20,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,10 +29,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class ApplyConfiguration {
     private static double dividerPosition;
@@ -36,7 +40,6 @@ public class ApplyConfiguration {
     private static BorderPane leftPanelBorderPane;
     private static final String dark = "Dark";
     private static Scene mainScene;
-    public static LinkedList<StackPane> listStackPaneLineNumber = new LinkedList<>();
 
     public static void build(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -110,7 +113,7 @@ public class ApplyConfiguration {
         ApplyConfiguration.leftPanelBorderPane = borderPane;
     }
 
-    public static void applyThemeOnMainPage() {
+    public static void applyThemeOnMainPageLeftPanel() {
         String borderColor = buildBorderStyle();
         leftPanelBorderPane.setStyle(borderColor);
         ObservableList<Node> borderPaneChildren = leftPanelBorderPane.getChildren();
@@ -122,8 +125,7 @@ public class ApplyConfiguration {
     }
 
     public static void applyThemeOnSettingsPage(VBox vBox, String style) {
-        String vBoxStyle = style + buildBorderStyle();
-        vBox.setStyle(vBoxStyle);
+        vBox.setStyle(style + buildBorderStyle());
     }
 
     public static String buildBorderStyle() {
@@ -143,7 +145,7 @@ public class ApplyConfiguration {
     }
 
     /* use after set main scene */
-    public static void applyThemeOnMarkdownArea() {
+    public static void updateThemeOnMarkdownArea() {
         setThemeOnScene();
     }
 
@@ -162,17 +164,56 @@ public class ApplyConfiguration {
         rectangle.setFill(getColorOnBackgroundLineNumber());
     }
 
-    public static void updateThemeOnStackPaneBackgroundLineNumber() {
+    public static void updateThemeOnStackPaneBackgroundLineNumber(ObservableList<Tab> tabs) {
         Color rectangelColor = getColorOnBackgroundLineNumber();
-        for (Node listLineChildren : listStackPaneLineNumber) {
-            if (listLineChildren instanceof StackPane lineNumberStackPane) {
-                ObservableList<Node> stackPaneChildren = lineNumberStackPane.getChildren();
-                for (Node stackPaneChild : stackPaneChildren) {
-                    if (stackPaneChild instanceof Rectangle rectangle) {
-                        rectangle.setFill(rectangelColor);
-                    }
-                }
+        for (Tab tab : tabs) {
+            if (tab.getText().equals("+"))
+                return;
+            BorderPane borderPaneContent = (BorderPane) tab.getContent();
+            if (borderPaneContent == null)
+                return;
+            StackPane stackPane = (StackPane) borderPaneContent.getCenter();
+            ObservableList<Node> virtualizedScrolledObservableList = stackPane.getChildren();
+            virtualizedScrolledObservableList.forEach(virtualizedScrolledObservable -> {
+                var virtualizedScrollPane = (VirtualizedScrollPane<?>) virtualizedScrolledObservable;
+                CodeArea codeArea = (CodeArea) virtualizedScrollPane.getContent();
+                //VirtualFlow -> Navigator -> ParagraphBox
+                ObservableList<Node> virtualFlowList = codeArea.getChildrenUnmodifiable();
+                virtualFlowList.forEach(virtualFlow -> {
+                    Set<Node> lineNumberStackPaneSet = virtualFlow.lookupAll(".stackPaneGraphicFactory");
+                    lineNumberStackPaneSet.forEach(lineNumberStackPaneNode -> {
+                        StackPane lineNumberStackPane = (StackPane) lineNumberStackPaneNode;
+                        ObservableList<Node> stackPaneChildren = lineNumberStackPane.getChildren();
+                        for (Node stackPaneChild : stackPaneChildren) {
+                            if (stackPaneChild instanceof Rectangle rectangle) {
+                                rectangle.setFill(rectangelColor);
+                            }
+                        }
+                    });
+                });
+            });
+        }
+    }
+
+    public static void updateThemeOnTopContainer(ObservableList<Tab> tabs) {
+        String borderColor = ApplyConfiguration.getBorderColor();
+        for (Tab tab : tabs) {
+            if (tab.getText().equals("+"))
+                return;
+            BorderPane borderPaneContent = (BorderPane) tab.getContent();
+            if (borderPaneContent == null)
+                return;
+            VBox vBoxTopContainer = (VBox) borderPaneContent.getTop();
+            if (vBoxTopContainer == null) {
+                continue;
             }
+            //top right bottom left
+            vBoxTopContainer.setStyle("-fx-border-color: transparent " + borderColor + borderColor + " transparent;");
+
+            VBox vBoxCrumbs = (VBox) vBoxTopContainer.getChildren().getFirst();
+
+            Breadcrumbs<?> crumbs = (Breadcrumbs<?>) vBoxCrumbs.getChildren().getFirst();
+            crumbs.setStyle("-fx-border-radius: 5; -fx-border-color: " + borderColor);
         }
     }
 

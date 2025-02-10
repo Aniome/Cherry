@@ -14,6 +14,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -130,35 +131,11 @@ public class TabStorageUtility {
             }
 
             //saving tab name
-            HBox hBoxTitleBar = (HBox) topContainerChildren.get(1);
+            StringBuilder path = getPathFromTitle(topContainerChildren);
 
-            boolean isFile = true;
-            ObservableList<Node> hBoxTitleBarChildren = hBoxTitleBar.getChildren();
-            if (hBoxTitleBarChildren.isEmpty())
-                isFile = false;
-
-//            TextField noteName = (TextField) hBoxTitleBarChildren.getFirst();
-//            noteNameString = noteName.getText();
-
-
-            ObservableList<Node> vBoxCrumbsChildren = ((VBox) topContainerChildren.getFirst()).getChildren();
-            @SuppressWarnings("unchecked")
-            Breadcrumbs<String> crumbs = (Breadcrumbs<String>) vBoxCrumbsChildren.getFirst();
-
-            BreadCrumbItem<String> currentCrumb = crumbs.getSelectedCrumb();
-            List<String> pathNoteList = new ArrayList<>();
-            while (currentCrumb != null) {
-                pathNoteList.add(currentCrumb.getValue());
-                currentCrumb = (BreadCrumbItem<String>) currentCrumb.getParent();
-            }
-            StringBuilder stringBuilder = new StringBuilder(RunApplication.folderPath.toString());
-            pathNoteList.forEach(item -> stringBuilder.append(RunApplication.separator).append(item));
-            if (isFile) {
-                stringBuilder.append(".md");
-            }
-
-            openedTabs[i] = stringBuilder.toString();
+            openedTabs[i] = path.toString();
         }
+
         //empty tab
         if (openedTabs.length == 1 && openedTabs[0] == null) {
             return;
@@ -172,6 +149,37 @@ public class TabStorageUtility {
         } catch (IOException e) {
             Alerts.createAndShowError(e.getMessage());
         }
+    }
+
+    @NotNull
+    private static StringBuilder getPathFromTitle(ObservableList<Node> topContainerChildren) {
+        HBox hBoxTitleBar = (HBox) topContainerChildren.get(1);
+
+        boolean isFile = true;
+        ObservableList<Node> hBoxTitleBarChildren = hBoxTitleBar.getChildren();
+        if (hBoxTitleBarChildren.isEmpty())
+            isFile = false;
+
+        ObservableList<Node> vBoxCrumbsChildren = ((VBox) topContainerChildren.getFirst()).getChildren();
+        Breadcrumbs<?> crumbs = (Breadcrumbs<?>) vBoxCrumbsChildren.getFirst();
+
+        return getPathFromCrumbs(crumbs, isFile);
+    }
+
+    @NotNull
+    private static StringBuilder getPathFromCrumbs(Breadcrumbs<?> crumbs, boolean isFile) {
+        BreadCrumbItem<?> currentCrumb = crumbs.getSelectedCrumb();
+        List<String> pathNoteList = new ArrayList<>();
+        while (currentCrumb != null) {
+            pathNoteList.add((String) currentCrumb.getValue());
+            currentCrumb = (BreadCrumbItem<?>) currentCrumb.getParent();
+        }
+        StringBuilder path = new StringBuilder(RunApplication.folderPath.toString());
+        pathNoteList.forEach(item -> path.append(RunApplication.separator).append(item));
+        if (isFile) {
+            path.append(".md");
+        }
+        return path;
     }
 
     private static File checkExistingSavingOpenedTabs() {

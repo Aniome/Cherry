@@ -95,7 +95,7 @@ public class MainController {
 
     private void setTheme() {
         ApplyConfiguration.setLeftPanelBorderPane(leftPanelBorderPane);
-        ApplyConfiguration.applyThemeOnMainPage();
+        ApplyConfiguration.applyThemeOnMainPageLeftPanel();
     }
 
     public void afterShowing() {
@@ -132,7 +132,6 @@ public class MainController {
     }
 
     public void loadDataOnFormOnClick(String filename, Path path, TreeItem<String> selectedItem) {
-        ApplyConfiguration.listStackPaneLineNumber.clear();
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
         loadDataOnTab(filename, path, selectedItem, tab);
     }
