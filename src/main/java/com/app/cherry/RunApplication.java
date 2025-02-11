@@ -67,11 +67,12 @@ public class RunApplication extends Application {
             Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
             scene.getStylesheets().add(Objects.requireNonNull
                     (RunApplication.class.getResource("css/keywords.css")).toExternalForm());
-            ApplyConfiguration.setMainScene(scene);
+            ApplyConfiguration.setMainSceneAndSetTheme(scene);
+            ApplyConfiguration.changeThemeCssOnMainScene();
             MainController mainController = fxmlLoader.getController();
             setIcon(mainStage);
             prepareStage(MainHeight, MainWidth, scene, title, mainStage);
-            mainController.afterShowing();
+            mainController.setDividerPositionAfterShowing();
             SavingConfiguration.observableMainStage(mainStage, mainController);
         } catch (IOException e){
             System.out.println(e.getMessage());

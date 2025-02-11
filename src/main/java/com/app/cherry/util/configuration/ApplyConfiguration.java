@@ -48,9 +48,9 @@ public class ApplyConfiguration {
                     RunApplication.separator + "settings.json"), SettingsData.class);
 
             Path folderPath = Paths.get(settingsData.getLastPath());
-            boolean condition = Files.exists(folderPath) && Files.isExecutable(folderPath)
+            boolean isValidFolder = Files.exists(folderPath) && Files.isExecutable(folderPath)
                     && Files.isDirectory(folderPath);
-            if (condition){
+            if (isValidFolder) {
                 RunApplication.folderPath = folderPath;
             } else {
                 RunApplication.folderPath = null;
@@ -105,15 +105,7 @@ public class ApplyConfiguration {
         MarkdownArea.fontSize = 22;
     }
 
-    public static double getDividerPosition() {
-        return dividerPosition;
-    }
-
-    public static void setLeftPanelBorderPane(BorderPane borderPane) {
-        ApplyConfiguration.leftPanelBorderPane = borderPane;
-    }
-
-    public static void applyThemeOnMainPageLeftPanel() {
+    public static void applyThemeOnLeftPanelInMainPage() {
         String borderColor = buildBorderStyle();
         leftPanelBorderPane.setStyle(borderColor);
         ObservableList<Node> borderPaneChildren = leftPanelBorderPane.getChildren();
@@ -139,17 +131,7 @@ public class ApplyConfiguration {
             return "#d1d1d6";
     }
 
-    public static void setMainScene(Scene scene) {
-        ApplyConfiguration.mainScene = scene;
-        setThemeOnScene();
-    }
-
-    /* use after set main scene */
-    public static void updateThemeOnMarkdownArea() {
-        setThemeOnScene();
-    }
-
-    private static void setThemeOnScene() {
+    public static void changeThemeCssOnMainScene() {
         ObservableList<String> mainSceneStylesheets = mainScene.getStylesheets();
         String darkTheme = Objects.requireNonNull
                 (RunApplication.class.getResource("css/themes/dark.css")).toExternalForm();
@@ -222,5 +204,20 @@ public class ApplyConfiguration {
             return Color.web("#282a36");
         else
             return Color.WHITE;
+    }
+
+    ////////////////////////////////////////////////////////////////
+    //Under only getters and setters
+
+    public static void setLeftPanelBorderPane(BorderPane borderPane) {
+        ApplyConfiguration.leftPanelBorderPane = borderPane;
+    }
+
+    public static void setMainSceneAndSetTheme(Scene scene) {
+        ApplyConfiguration.mainScene = scene;
+    }
+
+    public static double getDividerPosition() {
+        return dividerPosition;
     }
 }

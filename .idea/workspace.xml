@@ -12,15 +12,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fixing loading tab on start">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add updating theme on all tabs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/ModalPane/SettingsModal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/SavingConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/PathNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/structures/PathNote.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +121,8 @@
     &quot;project.structure.proportion&quot;: &quot;0.15136719&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.26728112&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenRunHelper&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.15931533&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -630,15 +632,12 @@
       <workItem from="1739162176614" duration="378000" />
       <workItem from="1739162572412" duration="1427000" />
       <workItem from="1739164024155" duration="15793000" />
-      <workItem from="1739187047312" duration="1341000" />
-    </task>
-    <task id="LOCAL-00091" summary="add localization and fix bug with rectangle code area">
-      <option name="closed" value="true" />
-      <created>1729537064887</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1729537064887</updated>
+      <workItem from="1739187047312" duration="1671000" />
+      <workItem from="1739218185266" duration="183000" />
+      <workItem from="1739218380074" duration="356000" />
+      <workItem from="1739228109688" duration="1617000" />
+      <workItem from="1739229749051" duration="1549000" />
+      <workItem from="1739231324888" duration="4541000" />
     </task>
     <task id="LOCAL-00092" summary="fix bug and customization settings">
       <option name="closed" value="true" />
@@ -1024,7 +1023,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739050624170</updated>
     </task>
-    <option name="localTasksCounter" value="140" />
+    <task id="LOCAL-00140" summary="add updating theme on all tabs">
+      <option name="closed" value="true" />
+      <created>1739188715321</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1739188715321</updated>
+    </task>
+    <option name="localTasksCounter" value="141" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1055,7 +1062,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="working with cell factory" />
     <MESSAGE value="finalization search" />
     <MESSAGE value="working with saving configuration" />
     <MESSAGE value="refactoring and add work create table" />
@@ -1080,7 +1086,8 @@
     <MESSAGE value="add saving path tab to json file" />
     <MESSAGE value="add loading tab on start and refactoring" />
     <MESSAGE value="fixing loading tab on start" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing loading tab on start" />
+    <MESSAGE value="add updating theme on all tabs" />
+    <option name="LAST_COMMIT_MESSAGE" value="add updating theme on all tabs" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

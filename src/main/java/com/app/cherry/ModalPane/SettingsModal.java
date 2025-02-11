@@ -29,12 +29,12 @@ public class SettingsModal {
     private static ObservableList<Tab> tabs;
 
     public void build(ModalPane modalPane, SplitPane splitPane, ObservableList<Tab> tabs) {
-        VBox settingsVbox = new VBox();
-        createMainSettings(settingsVbox);
+        VBox listSettings = new VBox();
+        createMainSettings(listSettings);
         SettingsModal.tabs = tabs;
-        HBox tabsVbox = createTabsVbox(settingsVbox);
+        HBox leftPanelWithTabs = createTabsVbox(listSettings);
 
-        SplitPane modalSplitPane = new SplitPane(tabsVbox, settingsVbox);
+        SplitPane modalSplitPane = new SplitPane(leftPanelWithTabs, listSettings);
         modalSplitPane.setDividerPositions(0.2);
 
         VBox content = new VBox(modalSplitPane);
@@ -56,7 +56,7 @@ public class SettingsModal {
         modalPane.show(modalBox);
     }
 
-    private HBox createTabsVbox(VBox settingsVbox) {
+    private HBox createTabsVbox(VBox listSettings) {
         ListView<String> listView = new ListView<>();
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
         String tabGeneral = resourceBundle.getString("SettingsTabGeneral");
@@ -70,7 +70,7 @@ public class SettingsModal {
                 if (listViewItem == null)
                     return;
                 if (listViewItem.equals(tabGeneral)) {
-                    createMainSettings(settingsVbox);
+                    createMainSettings(listSettings);
                 }
             });
             return listCellSettingsModal;
@@ -164,9 +164,9 @@ public class SettingsModal {
     }
 
     private static void updateTheme(VBox settingsVbox, String settingsVboxStyle) {
-        ApplyConfiguration.updateThemeOnMarkdownArea();
+        ApplyConfiguration.changeThemeCssOnMainScene();
         ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
-        ApplyConfiguration.applyThemeOnMainPageLeftPanel();
+        ApplyConfiguration.applyThemeOnLeftPanelInMainPage();
         ApplyConfiguration.updateThemeOnStackPaneBackgroundLineNumber(tabs);
         ApplyConfiguration.updateThemeOnTopContainer(tabs);
     }

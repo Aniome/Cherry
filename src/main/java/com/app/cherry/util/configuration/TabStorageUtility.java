@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -24,29 +25,33 @@ import java.util.List;
 import java.util.Optional;
 
 public class TabStorageUtility {
-    public static void loadSavingTabs(ObservableList<Tab> tabs, TreeItem<String> root, MainController mainController) {
+    public static void loadSavingTabs(TabPane tabPane, TreeItem<String> root, MainController mainController) {
         //getting array saving tabs
-        Optional<String[]> optionalSavingTabs = Optional.ofNullable(getSavingTabs());
-        //if array is empty exit
+        Optional<PathNote> optionalSavingTabs = Optional.ofNullable(getSavingTabs());
+        //if array is empty then exit
         if (optionalSavingTabs.isEmpty()) {
             return;
         }
 
-        boolean firstTab = true;
+        PathNote savingTabs = optionalSavingTabs.get();
+        String[] openedSavingTabs = savingTabs.getPathNote();
+        int openedSavingTabsLength = openedSavingTabs.length - 1;
+        int selectedTabIndex = savingTabs.getSelectedIndex();
+        ObservableList<Tab> tabs = tabPane.getTabs();
 
-        String[] openedSavingTabs = optionalSavingTabs.get();
+        boolean firstTab = true;
         String separator = RunApplication.separator.equals("/") ? "/" : "\\\\";
 
         //loading tabs
-        for (String path : openedSavingTabs) {
+        for (int i = openedSavingTabsLength; i >= 0; i--) {
             //checking if file exist
-            File item = new File(path);
+            File item = new File(openedSavingTabs[i]);
             if (!item.exists()) {
                 continue;
             }
 
             //creating paths
-            Path absolutePath = Path.of(path);
+            Path absolutePath = Path.of(openedSavingTabs[i]);
             String relativePath = RunApplication.folderPath.relativize(absolutePath).toString();
             String[] splitPath = relativePath.split(separator);
 
@@ -61,15 +66,15 @@ public class TabStorageUtility {
             TreeItem<String> findingTreeItem = null;
             boolean isContains;
             //getting treeItem going on the path
-            for (int i = 0; i < lastInd + 1; i++) {
-                String treeItemString = splitPath[i];
+            for (int j = 0; j < lastInd + 1; j++) {
+                String treeItemString = splitPath[j];
                 ObservableList<TreeItem<String>> treeItemObservableList = treeItem.getChildren();
                 isContains = false;
                 for (TreeItem<String> childTreeItem : treeItemObservableList) {
                     if (childTreeItem.getValue().equals(treeItemString)) {
                         isContains = true;
                         treeItem = childTreeItem;
-                        findingTreeItem = i == lastInd ? childTreeItem : null;
+                        findingTreeItem = j == lastInd ? childTreeItem : null;
                     }
                 }
                 if (!isContains) {
@@ -94,9 +99,11 @@ public class TabStorageUtility {
                 mainController.loadDataOnTab(fileName, absolutePath, findingTreeItem, tab);
             }
         }
+
+        tabPane.getSelectionModel().select(selectedTabIndex);
     }
 
-    private static String[] getSavingTabs() {
+    private static PathNote getSavingTabs() {
         File openedTabsFile = checkExistingSavingOpenedTabs();
         if (openedTabsFile == null) {
             return null;
@@ -104,15 +111,15 @@ public class TabStorageUtility {
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            PathNote openedTabs = objectMapper.readValue(openedTabsFile, PathNote.class);
-            return openedTabs.getPathNote();
+            return objectMapper.readValue(openedTabsFile, PathNote.class);
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
 
-    public static void saveTabs(ObservableList<Tab> tabs) {
+    public static void saveTabs(TabPane tabPane) {
+        ObservableList<Tab> tabs = tabPane.getTabs();
         //+ is not counting
         int size = tabs.size() - 1;
         String[] openedTabs = new String[size];
@@ -140,8 +147,11 @@ public class TabStorageUtility {
         if (openedTabs.length == 1 && openedTabs[0] == null) {
             return;
         }
+
+        int selectedIndex = tabPane.getSelectionModel().getSelectedIndex();
+
         ObjectMapper objectMapper = new ObjectMapper();
-        PathNote openedTabsPathNote = new PathNote(openedTabs);
+        PathNote openedTabsPathNote = new PathNote(openedTabs, selectedIndex);
         try {
             String savingPath = RunApplication.folderPath.toString() + RunApplication.separator + ".cherry"
                     + RunApplication.separator + "openedTabs.json";

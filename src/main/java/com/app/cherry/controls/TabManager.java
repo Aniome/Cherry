@@ -164,7 +164,6 @@ public class TabManager {
 
             borderPanePage.setCenter(folderContent);
         });
-
     }
 
     @NotNull

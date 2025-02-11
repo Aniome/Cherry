@@ -89,16 +89,16 @@ public class MainController {
 
         modalPane.hide();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        setTheme();
-        TabStorageUtility.loadSavingTabs(tabPane.getTabs(), treeView.getRoot(), this);
+        applyThemeOnLeftPanel();
+        TabStorageUtility.loadSavingTabs(tabPane, treeView.getRoot(), this);
     }
 
-    private void setTheme() {
+    private void applyThemeOnLeftPanel() {
         ApplyConfiguration.setLeftPanelBorderPane(leftPanelBorderPane);
-        ApplyConfiguration.applyThemeOnMainPageLeftPanel();
+        ApplyConfiguration.applyThemeOnLeftPanelInMainPage();
     }
 
-    public void afterShowing() {
+    public void setDividerPositionAfterShowing() {
         splitPane.setDividerPositions(ApplyConfiguration.getDividerPosition());
     }
 
