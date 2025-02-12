@@ -72,17 +72,18 @@ public class TabManager {
             breadCrumbItems.add(currentTreeItem.getValue());
             currentTreeItem = currentTreeItem.getParent();
         }
+        breadCrumbItems = breadCrumbItems.reversed();
 
         BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(breadCrumbItems.toArray(new String[0]));
 
         Breadcrumbs<String> crumbs = buildStringBreadcrumbs(root);
-        crumbs.setStyle("-fx-border-radius: 5; -fx-border-color: " + borderColor);
+        crumbs.setStyle("-fx-border-radius: 5; -fx-border-color: " + borderColor + ";-fx-border-insets: 0");
         crumbs.setPadding(new Insets(-2, 0, 0, 0));
 
         VBox vBoxCrumbs = new VBox(crumbs);
         vBoxCrumbs.setAlignment(Pos.CENTER);
 
-        VBox vBoxTopContainer = new VBox(vBoxCrumbs , hBoxTitleBar);
+        VBox vBoxTopContainer = new VBox(vBoxCrumbs, hBoxTitleBar);
         vBoxTopContainer.setPadding(new Insets(5));
 
         //top right bottom left
@@ -102,65 +103,76 @@ public class TabManager {
             //get full path to the directory
             StringBuilder pathTreeItem = new StringBuilder();
             BreadCrumbItem<String> currentBreadCrumb = newVal;
-            while (currentBreadCrumb.getParent() != null) {
+            while (currentBreadCrumb != null) {
                 pathTreeItem.append(RunApplication.separator).append(currentBreadCrumb.getValue());
                 currentBreadCrumb = (BreadCrumbItem<String>) currentBreadCrumb.getParent();
             }
 
-            File folder = new File(RunApplication.folderPath + File.separator + pathTreeItem);
+            File folder = new File(RunApplication.folderPath + File.separator + pathTreeItem + File.separator);
             File[] files = folder.listFiles();
 
             List<VBox> itemsFolderList = new ArrayList<>();
-            if (files != null) {
-                //creating containers for elements
-                Arrays.stream(files).forEach(folderItem -> {
-                    String fileName = folderItem.getName();
-                    FontIcon fontIcon = new FontIcon(folderIcon);
+            if (files == null) return;
 
-                    if (!folderItem.isDirectory()) {
-//                        fileName = fileName.substring(0, fileName.length() - 3);
-//                        fontIcon = new FontIcon(fileIcon);
-                        return;
-                    }
+            //creating containers for elements
+            Arrays.stream(files).forEach(folderItem -> {
+                FontIcon fontIcon = new FontIcon(folderIcon);
+                String fileName = folderItem.getName();
+                if (!folderItem.isDirectory()) {
+                    fileName = fileName.substring(0, fileName.length() - 3);
+                    fontIcon = new FontIcon(fileIcon);
+                }
 
-                    double scale = 4.5;
-                    fontIcon.setScaleX(scale);
-                    fontIcon.setScaleY(scale);
+                double scale = 4.5;
+                fontIcon.setScaleX(scale);
+                fontIcon.setScaleY(scale);
 
-                    Label labelFileName = new Label(fileName);
-                    labelFileName.setWrapText(true);
+                Label labelFileName = new Label(fileName);
+                labelFileName.setMaxHeight(50);
+                labelFileName.setMaxWidth(100);
+                labelFileName.setWrapText(true);
 
-                    VBox vBoxContentButtonItem = new VBox(fontIcon, labelFileName);
-                    vBoxContentButtonItem.prefWidth(105);
-                    vBoxContentButtonItem.prefHeight(145);
-                    vBoxContentButtonItem.setAlignment(Pos.CENTER);
+                labelFileName.setTextOverrun(OverrunStyle.ELLIPSIS);
 
-                    vBoxContentButtonItem.setStyle("-fx-border-radius: 5; -fx-background-radius: 5");
+                final Border emptyBorder = new Border(new BorderStroke(Color.TRANSPARENT, BorderStrokeStyle.SOLID,
+                        new CornerRadii(5), BorderWidths.DEFAULT));
+                final Background emptyBackground = new Background(new BackgroundFill(Color.TRANSPARENT,
+                        new CornerRadii(5), Insets.EMPTY));
+
+                VBox vBoxContentItem = new VBox(fontIcon, labelFileName) {{
+                    prefWidth(105);
+                    prefHeight(145);
+                    setAlignment(Pos.CENTER);
+                    setBorder(emptyBorder);
+                    setBackground(emptyBackground);
                     //top right bottom left
-                    VBox.setMargin(labelFileName, new Insets(20, 5, -20, 5));
+                    setPadding(new Insets(20, 20, 0, 20));
+                }};
 
-                    vBoxContentButtonItem.setOnMouseEntered(event -> {
-                        vBoxContentButtonItem.setBackground(new Background(new BackgroundFill
-                                (Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-                        vBoxContentButtonItem.setBorder(Border.stroke(Color.WHITE));
-                    });
-                    vBoxContentButtonItem.setOnMouseExited(event -> {
-                        vBoxContentButtonItem.setBackground(null);
-                        vBoxContentButtonItem.setBorder(null);
-                    });
+                VBox.setMargin(labelFileName, new Insets(20, 0, 0, 0));
 
-                    itemsFolderList.add(vBoxContentButtonItem);
+                vBoxContentItem.setOnMouseEntered(event -> {
+                    vBoxContentItem.setBackground(new Background(new BackgroundFill(Color.GRAY,
+                            new CornerRadii(5), Insets.EMPTY)));
+                    vBoxContentItem.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID,
+                            new CornerRadii(5), BorderWidths.DEFAULT)));
                 });
-            }
+                vBoxContentItem.setOnMouseExited(event -> {
+                    vBoxContentItem.setBackground(emptyBackground);
+                    vBoxContentItem.setBorder(emptyBorder);
+                });
+
+                itemsFolderList.add(vBoxContentItem);
+            });
+
 
             //creating container for folder
             FlowPane folderContent = new FlowPane() {{
                 setVgap(25);
                 setHgap(25);
                 setPadding(new Insets(15, 0, 0, 15));
+                getChildren().addAll(itemsFolderList);
             }};
-            //folderContent.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
-            folderContent.getChildren().addAll(itemsFolderList);
 
             borderPanePage.setCenter(folderContent);
         });
