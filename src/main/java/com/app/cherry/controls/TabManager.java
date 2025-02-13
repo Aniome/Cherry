@@ -38,12 +38,13 @@ public class TabManager {
     }
 
     public static BorderPane createEmptyTab() {
-        BorderPane borderPane = new BorderPane();
         Label emptyTab = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
         emptyTab.setFont(new Font(29));
-        borderPane.setCenter(emptyTab);
-        borderPane.setStyle("-fx-background-color: #282a36");
-        return borderPane;
+        //center top right bottom left
+        return new BorderPane(emptyTab) {{
+            setBackground(new Background(new BackgroundFill(ApplyConfiguration.getColorBackground(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+        }};
     }
 
     //adding tab when create new file
@@ -58,8 +59,6 @@ public class TabManager {
     //Creates a form and fills it with content
     @NotNull
     public BorderPane createTab(Tab tab, TreeItem<String> selectedItem) {
-        String borderColor = ApplyConfiguration.getBorderColor();
-
         StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, this);
         HBox hBoxTitleBar = buildHBoxTitleBar(selectedItem, tab);
 
@@ -77,8 +76,7 @@ public class TabManager {
         BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(breadCrumbItems.toArray(new String[0]));
 
         Breadcrumbs<String> crumbs = buildStringBreadcrumbs(root);
-        crumbs.setStyle("-fx-border-radius: 5; -fx-border-color: " + borderColor + ";-fx-border-insets: 0");
-        crumbs.setPadding(new Insets(-2, 0, 0, 0));
+        String borderColor = ApplyConfiguration.getBorderColor();
 
         VBox vBoxCrumbs = new VBox(crumbs);
         vBoxCrumbs.setAlignment(Pos.CENTER);
@@ -131,7 +129,6 @@ public class TabManager {
                 labelFileName.setMaxHeight(50);
                 labelFileName.setMaxWidth(100);
                 labelFileName.setWrapText(true);
-
                 labelFileName.setTextOverrun(OverrunStyle.ELLIPSIS);
 
                 final Border emptyBorder = new Border(new BorderStroke(Color.TRANSPARENT, BorderStrokeStyle.SOLID,
@@ -165,11 +162,11 @@ public class TabManager {
                 itemsFolderList.add(vBoxContentItem);
             });
 
-
             //creating container for folder
             FlowPane folderContent = new FlowPane() {{
                 setVgap(25);
                 setHgap(25);
+                //top right bottom left
                 setPadding(new Insets(15, 0, 0, 15));
                 getChildren().addAll(itemsFolderList);
             }};
@@ -189,14 +186,13 @@ public class TabManager {
                 fontIcon = folderIcon;
             }
             Button button = new Button(crumb.getValue(), new FontIcon(fontIcon));
+            button.toBack();
             button.getStyleClass().add(Styles.FLAT);
             button.setFocusTraversable(false);
             return button;
         });
         crumbs.setDividerFactory(stringBreadCrumbItem -> {
-            if (stringBreadCrumbItem == null) {
-                return new Label("");
-            }
+            if (stringBreadCrumbItem == null) return null;
             return !stringBreadCrumbItem.isLast() ? new Label("", new FontIcon(Material2AL.CHEVRON_RIGHT)) : null;
         });
         return crumbs;

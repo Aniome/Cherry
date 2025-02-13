@@ -143,17 +143,18 @@ public class ApplyConfiguration {
     }
 
     public static void applyThemeOnRectangleBackgroundLineNumber(Rectangle rectangle) {
-        rectangle.setFill(getColorOnBackgroundLineNumber());
+        rectangle.setFill(getColorBackground());
     }
 
     public static void updateThemeOnStackPaneBackgroundLineNumber(ObservableList<Tab> tabs) {
-        Color rectangelColor = getColorOnBackgroundLineNumber();
+        Color rectangelColor = getColorBackground();
         for (Tab tab : tabs) {
             if (tab.getText().equals("+"))
                 return;
             BorderPane borderPaneContent = (BorderPane) tab.getContent();
             if (borderPaneContent == null)
                 return;
+            //
             StackPane stackPane = (StackPane) borderPaneContent.getCenter();
             ObservableList<Node> virtualizedScrolledObservableList = stackPane.getChildren();
             virtualizedScrolledObservableList.forEach(virtualizedScrolledObservable -> {
@@ -199,7 +200,7 @@ public class ApplyConfiguration {
         }
     }
 
-    private static Color getColorOnBackgroundLineNumber() {
+    public static Color getColorBackground() {
         if (theme.equals(dark))
             return Color.web("#282a36");
         else
