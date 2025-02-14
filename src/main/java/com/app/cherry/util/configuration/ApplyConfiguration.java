@@ -10,13 +10,12 @@ import com.app.cherry.util.structures.SettingsData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -154,27 +153,33 @@ public class ApplyConfiguration {
             BorderPane borderPaneContent = (BorderPane) tab.getContent();
             if (borderPaneContent == null)
                 return;
-            //
-            StackPane stackPane = (StackPane) borderPaneContent.getCenter();
-            ObservableList<Node> virtualizedScrolledObservableList = stackPane.getChildren();
-            virtualizedScrolledObservableList.forEach(virtualizedScrolledObservable -> {
-                var virtualizedScrollPane = (VirtualizedScrollPane<?>) virtualizedScrolledObservable;
-                CodeArea codeArea = (CodeArea) virtualizedScrollPane.getContent();
-                //VirtualFlow -> Navigator -> ParagraphBox
-                ObservableList<Node> virtualFlowList = codeArea.getChildrenUnmodifiable();
-                virtualFlowList.forEach(virtualFlow -> {
-                    Set<Node> lineNumberStackPaneSet = virtualFlow.lookupAll(".stackPaneGraphicFactory");
-                    lineNumberStackPaneSet.forEach(lineNumberStackPaneNode -> {
-                        StackPane lineNumberStackPane = (StackPane) lineNumberStackPaneNode;
-                        ObservableList<Node> stackPaneChildren = lineNumberStackPane.getChildren();
-                        for (Node stackPaneChild : stackPaneChildren) {
-                            if (stackPaneChild instanceof Rectangle rectangle) {
-                                rectangle.setFill(rectangelColor);
+
+            Node borderPaneCenter = borderPaneContent.getCenter();
+            if (borderPaneCenter instanceof Label) {
+                borderPaneContent.setBackground(new Background(new BackgroundFill(rectangelColor, CornerRadii.EMPTY,
+                        Insets.EMPTY)));
+            }
+            if (borderPaneCenter instanceof StackPane stackPane) {
+                ObservableList<Node> virtualizedScrolledObservableList = stackPane.getChildren();
+                virtualizedScrolledObservableList.forEach(virtualizedScrolledObservable -> {
+                    var virtualizedScrollPane = (VirtualizedScrollPane<?>) virtualizedScrolledObservable;
+                    CodeArea codeArea = (CodeArea) virtualizedScrollPane.getContent();
+                    //VirtualFlow -> Navigator -> ParagraphBox
+                    ObservableList<Node> virtualFlowList = codeArea.getChildrenUnmodifiable();
+                    virtualFlowList.forEach(virtualFlow -> {
+                        Set<Node> lineNumberStackPaneSet = virtualFlow.lookupAll(".stackPaneGraphicFactory");
+                        lineNumberStackPaneSet.forEach(lineNumberStackPaneNode -> {
+                            StackPane lineNumberStackPane = (StackPane) lineNumberStackPaneNode;
+                            ObservableList<Node> stackPaneChildren = lineNumberStackPane.getChildren();
+                            for (Node stackPaneChild : stackPaneChildren) {
+                                if (stackPaneChild instanceof Rectangle rectangle) {
+                                    rectangle.setFill(rectangelColor);
+                                }
                             }
-                        }
+                        });
                     });
                 });
-            });
+            }
         }
     }
 
@@ -182,10 +187,11 @@ public class ApplyConfiguration {
         String borderColor = ApplyConfiguration.getBorderColor();
         for (Tab tab : tabs) {
             if (tab.getText().equals("+"))
-                return;
+                continue;
             BorderPane borderPaneContent = (BorderPane) tab.getContent();
             if (borderPaneContent == null)
                 return;
+
             VBox vBoxTopContainer = (VBox) borderPaneContent.getTop();
             if (vBoxTopContainer == null) {
                 continue;

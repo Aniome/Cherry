@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
+import org.scenicview.ScenicView;
 
 import java.io.File;
 import java.io.IOException;
@@ -182,7 +183,7 @@ public class RunApplication extends Application {
         stage.setMinWidth(width);
         stage.setMinHeight(height);
         stage.show();
-        //ScenicView.show(scene);
+        ScenicView.show(scene);
     }
 
     public static void main(String[] args) {

@@ -12,11 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fixing loading files and folders in window">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="finalize design title bar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +116,7 @@
     "project.structure.proportion": "0.15136719",
     "project.structure.side.proportion": "0.26728112",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "file.status.colors",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "settings.editor.splitter.proportion": "0.15931533",
     "vue.rearranger.settings.migration": "true"
   },
@@ -643,15 +642,11 @@
       <workItem from="1739420050666" duration="262000" />
       <workItem from="1739420323480" duration="143000" />
       <workItem from="1739420476452" duration="349000" />
-      <workItem from="1739420837106" duration="106000" />
-    </task>
-    <task id="LOCAL-00094" summary="add localization and settings configure">
-      <option name="closed" value="true" />
-      <created>1729795815515</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1729795815516</updated>
+      <workItem from="1739420837106" duration="442000" />
+      <workItem from="1739421292895" duration="10000" />
+      <workItem from="1739436005310" duration="21000" />
+      <workItem from="1739551835100" duration="1434000" />
+      <workItem from="1739557654894" duration="1364000" />
     </task>
     <task id="LOCAL-00095" summary="add localization and work with settings">
       <option name="closed" value="true" />
@@ -1037,7 +1032,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739356359022</updated>
     </task>
-    <option name="localTasksCounter" value="143" />
+    <task id="LOCAL-00143" summary="finalize design title bar">
+      <option name="closed" value="true" />
+      <created>1739421253592</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1739421253592</updated>
+    </task>
+    <option name="localTasksCounter" value="144" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1068,7 +1071,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="refactoring and add work create table" />
     <MESSAGE value="optimization writing text in file" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="add save button" />
@@ -1093,7 +1095,8 @@
     <MESSAGE value="add updating theme on all tabs" />
     <MESSAGE value="refactoring and add remember selected tab" />
     <MESSAGE value="fixing loading files and folders in window" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing loading files and folders in window" />
+    <MESSAGE value="finalize design title bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="finalize design title bar" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
