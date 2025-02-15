@@ -61,7 +61,7 @@ public class MainController {
     Stage renameStage;
     TreeItem<String> filesManagerRoot;
     final String fileIconName = "mdal-insert_drive_file";
-    final String folderIconName = "mdal-folder_open";
+    final String folderIconName = "mdal-folder";
     ArrayList<Node> fileManagerVbox;
     ArrayList<SearchListViewItem> searchListViewItems;
 

@@ -27,7 +27,7 @@ import java.util.List;
 public class TabManager {
     private String oldTextFieldValue;
     private final String fileIcon = "mdal-insert_drive_file";
-    private final String folderIcon = "mdal-folder_open";
+    private final String folderIcon = "mdal-folder";
     private CodeArea codeArea;
 
     public static void selectTab(Tab tab, TabPane tabPane) {
@@ -80,6 +80,7 @@ public class TabManager {
 
         VBox vBoxCrumbs = new VBox(crumbs);
         vBoxCrumbs.setAlignment(Pos.CENTER);
+        vBoxCrumbs.setPadding(new Insets(-10));
 
         VBox vBoxTopContainer = new VBox(vBoxCrumbs, hBoxTitleBar);
         vBoxTopContainer.setPadding(new Insets(5));
