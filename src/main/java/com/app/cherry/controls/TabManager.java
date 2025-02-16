@@ -6,6 +6,7 @@ import atlantafx.base.theme.Styles;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.util.configuration.ApplyConfiguration;
+import com.app.cherry.util.icons.Icons;
 import com.app.cherry.util.io.FileService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,8 +27,6 @@ import java.util.List;
 
 public class TabManager {
     private String oldTextFieldValue;
-    private final String fileIcon = "mdal-insert_drive_file";
-    private final String folderIcon = "mdal-folder";
     private CodeArea codeArea;
 
     public static void selectTab(Tab tab, TabPane tabPane) {
@@ -100,14 +99,16 @@ public class TabManager {
                                                     oldVal, newVal) -> {
             hBoxTitleBar.getChildren().clear();
             //get full path to the directory
-            StringBuilder pathTreeItem = new StringBuilder();
+            List<String> listPath = new ArrayList<>();
             BreadCrumbItem<String> currentBreadCrumb = newVal;
             while (currentBreadCrumb != null) {
-                pathTreeItem.append(RunApplication.separator).append(currentBreadCrumb.getValue());
+                listPath.add(currentBreadCrumb.getValue());
                 currentBreadCrumb = (BreadCrumbItem<String>) currentBreadCrumb.getParent();
             }
+            listPath = listPath.reversed();
+            String pathTreeItem = String.join(RunApplication.separator, listPath);
 
-            File folder = new File(RunApplication.folderPath + File.separator + pathTreeItem + File.separator);
+            File folder = new File(RunApplication.folderPath + File.separator + pathTreeItem);
             File[] files = folder.listFiles();
 
             List<VBox> itemsFolderList = new ArrayList<>();
@@ -115,11 +116,11 @@ public class TabManager {
 
             //creating containers for elements
             Arrays.stream(files).forEach(folderItem -> {
-                FontIcon fontIcon = new FontIcon(folderIcon);
+                FontIcon fontIcon = new FontIcon(Icons.FOLDER_ICON.getIconName());
                 String fileName = folderItem.getName();
                 if (!folderItem.isDirectory()) {
                     fileName = fileName.substring(0, fileName.length() - 3);
-                    fontIcon = new FontIcon(fileIcon);
+                    fontIcon = new FontIcon(Icons.FILE_ICON.getIconName());
                 }
 
                 double scale = 4.5;
@@ -182,9 +183,9 @@ public class TabManager {
         crumbs.setCrumbFactory(crumb -> {
             String fontIcon;
             if (crumb.isLeaf()) {
-                fontIcon = fileIcon;
+                fontIcon = Icons.FILE_ICON.getIconName();
             } else {
-                fontIcon = folderIcon;
+                fontIcon = Icons.FOLDER_ICON.getIconName();
             }
             Button button = new Button(crumb.getValue(), new FontIcon(fontIcon));
             button.toBack();

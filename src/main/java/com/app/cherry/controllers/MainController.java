@@ -13,6 +13,7 @@ import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.TabStorageUtility;
+import com.app.cherry.util.icons.Icons;
 import com.app.cherry.util.io.FileService;
 import com.app.cherry.util.structures.SearchListViewItem;
 import javafx.application.Platform;
@@ -60,8 +61,6 @@ public class MainController {
 
     Stage renameStage;
     TreeItem<String> filesManagerRoot;
-    final String fileIconName = "mdal-insert_drive_file";
-    final String folderIconName = "mdal-folder";
     ArrayList<Node> fileManagerVbox;
     ArrayList<SearchListViewItem> searchListViewItems;
 
@@ -109,9 +108,9 @@ public class MainController {
     private TreeItemCustom creatingTreeItem(String str) {
         if (str.contains(".md")) {
             str = str.replace(".md", "");
-            return new TreeItemCustom(str, true, fileIconName);
+            return new TreeItemCustom(str, true, Icons.FILE_ICON.getIconName());
         } else {
-            return new TreeItemCustom(str, false, folderIconName);
+            return new TreeItemCustom(str, false, Icons.FOLDER_ICON.getIconName());
         }
     }
 
@@ -206,7 +205,7 @@ public class MainController {
             return;
         }
         String name = newNote.getName().replace(".md", "");
-        TreeItemCustom newTreeItem = new TreeItemCustom(name, true, fileIconName);
+        TreeItemCustom newTreeItem = new TreeItemCustom(name, true, Icons.FILE_ICON.getIconName());
         TabManager.addTab(name, tabPane, newTreeItem);
         parent.getChildren().add(newTreeItem);
         sortTreeView();
@@ -223,7 +222,7 @@ public class MainController {
             return;
         }
         TreeItemCustom folderTreeItem =
-                new TreeItemCustom(folder.getName(), false, folderIconName);
+                new TreeItemCustom(folder.getName(), false, Icons.FOLDER_ICON.getIconName());
         treeItem.getChildren().add(folderTreeItem);
         sortTreeView();
     }

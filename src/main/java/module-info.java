@@ -16,6 +16,7 @@ module com.app.cherry {
     requires com.fasterxml.jackson.databind;
     requires com.sun.jna.platform;
     requires org.kordamp.ikonli.material2;
+    requires org.kordamp.ikonli.core;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;
@@ -38,4 +39,6 @@ module com.app.cherry {
     opens com.app.cherry.util.configuration;
     exports com.app.cherry.util.structures;
     opens com.app.cherry.util.structures;
+    exports com.app.cherry.util.icons;
+    opens com.app.cherry.util.icons;
 }
