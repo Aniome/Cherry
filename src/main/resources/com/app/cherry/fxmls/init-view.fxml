@@ -21,7 +21,7 @@
          <VBox.margin>
             <Insets top="75.0" />
          </VBox.margin>
-         <Image url="@../Image/cherry_icon.png" />
+         <Image url="@../icons/cherry_icon.png" />
       </ImageView>
       <Button fx:id="back" mnemonicParsing="false" onMouseClicked="#backToMainMenu" text="%InitBack" visible="false">
          <VBox.margin>

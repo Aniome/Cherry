@@ -3,13 +3,18 @@ package com.app.cherry.controllers;
 import com.app.cherry.RunApplication;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.io.FileService;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class RenameViewController {
     @FXML
@@ -26,7 +31,7 @@ public class RenameViewController {
     }
 
     @FXML
-    private void confirm(){
+    private void confirm() {
         String newFileName = txtField.getText();
         if (newFileName.isEmpty()) {
             Alerts.createAndShowWarning(RunApplication.resourceBundle.getString("RenameEmptyTextField"));
@@ -42,21 +47,30 @@ public class RenameViewController {
             selectedTreeItem.setValue(newFileName);
 
             BorderPane borderPaneContent = (BorderPane) selectedTab.getContent();
-            HBox titleHbox = (HBox) borderPaneContent.getTop();
-            if (titleHbox == null) {
+
+            VBox vBoxTopContainer = (VBox) borderPaneContent.getTop();
+            if (vBoxTopContainer == null) {
                 //if tab is empty, exit
+                closeStage();
                 return;
             }
+            ObservableList<Node> topContainerChildren = Objects.requireNonNull(vBoxTopContainer).getChildren();
+            HBox titleHbox = (HBox) topContainerChildren.getLast();
+
             selectedTab.setText(newFileName);
             TextField noteName = (TextField) titleHbox.getChildren().getFirst();
             noteName.setText(newFileName);
         }
 
-        stage.close();
+        closeStage();
     }
 
     @FXML
-    private void cancel(){
+    private void cancel() {
+        closeStage();
+    }
+
+    private void closeStage() {
         stage.close();
     }
 }

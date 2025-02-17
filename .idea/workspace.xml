@@ -12,15 +12,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="change folder icon">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/icons/Icons.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/folder_icon48.png" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="add icon and fix bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/RenameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/RenameViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/TreeItemCustom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/TreeItemCustom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/icons/Icons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/icons/Icons.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/basic_folder.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/bookmark_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/cherry_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/icons/cherry_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/folder_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/folder_icon48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/icons/folder_icon48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/help_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/locker_safe_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/notes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/search_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/Image/settings_outline_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/init-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +95,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Application.RunApplication.executor": "Run",
     "JUnit.SearchListViewItemTest.executor": "Coverage",
     "JUnit.SearchListViewItemTest.testToString.executor": "Run",
@@ -140,6 +151,7 @@
       <recent name="D:\Programming\Java\Projects\Cherry\src\main\resources\com\app\cherry\controllers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programming\Java\Projects\Cherry\src\main\resources\com\app\cherry\icons" />
       <recent name="D:\Programming\Java\Projects\Cherry" />
       <recent name="D:\Programming\Java\Projects\Cherry\src\main\resources\local" />
       <recent name="D:\Programming\Java\Cherry\src\main\resources\com\app\cherry\fxmls" />
@@ -659,15 +671,7 @@
       <workItem from="1739560145164" duration="142000" />
       <workItem from="1739560492937" duration="70000" />
       <workItem from="1739637849916" duration="9598000" />
-      <workItem from="1739696466686" duration="11985000" />
-    </task>
-    <task id="LOCAL-00097" summary="add localization and refactoring">
-      <option name="closed" value="true" />
-      <created>1729976449838</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1729976449839</updated>
+      <workItem from="1739696466686" duration="40610000" />
     </task>
     <task id="LOCAL-00098" summary="refactoring and add reading setting from file">
       <option name="closed" value="true" />
@@ -1053,7 +1057,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739645797577</updated>
     </task>
-    <option name="localTasksCounter" value="146" />
+    <task id="LOCAL-00146" summary="add icon and fix bug">
+      <option name="closed" value="true" />
+      <created>1739727384563</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1739727384563</updated>
+    </task>
+    <option name="localTasksCounter" value="147" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1084,7 +1096,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add save button" />
     <MESSAGE value="add saving logic" />
     <MESSAGE value="work with finding text" />
     <MESSAGE value="add option finding text" />
@@ -1109,21 +1120,22 @@
     <MESSAGE value="finalize design title bar" />
     <MESSAGE value="add update theme in empty tab" />
     <MESSAGE value="change folder icon" />
-    <option name="LAST_COMMIT_MESSAGE" value="change folder icon" />
+    <MESSAGE value="add icon and fix bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="add icon and fix bug" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java</url>
+          <line>111</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java</url>
-          <line>110</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/TreeItemCustom.java</url>
+          <line>9</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1131,6 +1143,7 @@
       <configuration name="Application">
         <watch expression="root.children.get(8)" />
         <watch expression="this" />
+        <watch expression="topContainerChildren.get(1)" />
       </configuration>
     </watches-manager>
   </component>

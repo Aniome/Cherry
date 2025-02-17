@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -32,6 +33,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.IOException;
@@ -108,9 +110,9 @@ public class MainController {
     private TreeItemCustom creatingTreeItem(String str) {
         if (str.contains(".md")) {
             str = str.replace(".md", "");
-            return new TreeItemCustom(str, true, Icons.FILE_ICON.getIconName());
+            return new TreeItemCustom(str, true, (FontIcon) Icons.FILE_ICON.getIcon());
         } else {
-            return new TreeItemCustom(str, false, Icons.FOLDER_ICON.getIconName());
+            return new TreeItemCustom(str, false, (ImageView) Icons.FOLDER_ICON.getIcon());
         }
     }
 
@@ -205,7 +207,7 @@ public class MainController {
             return;
         }
         String name = newNote.getName().replace(".md", "");
-        TreeItemCustom newTreeItem = new TreeItemCustom(name, true, Icons.FILE_ICON.getIconName());
+        TreeItemCustom newTreeItem = new TreeItemCustom(name, true, (FontIcon) Icons.FILE_ICON.getIcon());
         TabManager.addTab(name, tabPane, newTreeItem);
         parent.getChildren().add(newTreeItem);
         sortTreeView();
@@ -222,7 +224,7 @@ public class MainController {
             return;
         }
         TreeItemCustom folderTreeItem =
-                new TreeItemCustom(folder.getName(), false, Icons.FOLDER_ICON.getIconName());
+                new TreeItemCustom(folder.getName(), false, (ImageView) Icons.FOLDER_ICON.getIcon());
         treeItem.getChildren().add(folderTreeItem);
         sortTreeView();
     }

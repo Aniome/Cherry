@@ -4,6 +4,7 @@ import com.app.cherry.controllers.*;
 import com.app.cherry.util.HibernateUtil;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.SavingConfiguration;
+import com.app.cherry.util.icons.Icons;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -172,7 +173,7 @@ public class RunApplication extends Application {
     }
 
     public static void setIcon(Stage stage) {
-        stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("Image/cherry_icon.png"))));
+        stage.getIcons().add((Image) Icons.TITLE_ICON.getIcon());
     }
 
     public static void prepareStage(double height, double width, Scene scene, String title, Stage stage) {
