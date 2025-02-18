@@ -69,9 +69,10 @@ public class ApplicationContextMenu {
             if (isDelete) {
                 TreeItem<String> parentSelectedItem = selectedItem.getParent();
                 parentSelectedItem.getChildren().remove(selectedItem);
+
                 Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-                selectedTab.setContent(TabManager.createEmptyTab());
                 selectedTab.setText(resourceBundle.getString("EmptyTab"));
+                TabManager.buildEmptyTab(selectedTab);
             } else {
                 Alerts.createAndShowWarning(resourceBundle.getString("ContextMenuDeleteFailed"));
             }

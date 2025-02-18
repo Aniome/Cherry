@@ -13,7 +13,7 @@ import com.app.cherry.dao.FavoriteNotesDAO;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.TabStorageUtility;
-import com.app.cherry.util.icons.Icons;
+import com.app.cherry.util.icons.IconConfigurer;
 import com.app.cherry.util.io.FileService;
 import com.app.cherry.util.structures.SearchListViewItem;
 import javafx.application.Platform;
@@ -23,7 +23,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -33,7 +32,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.IOException;
@@ -107,12 +105,12 @@ public class MainController {
         loadItemsInTree(FileService.getListFiles());
     }
 
-    private TreeItemCustom creatingTreeItem(String str) {
-        if (str.contains(".md")) {
-            str = str.replace(".md", "");
-            return new TreeItemCustom(str, true, (FontIcon) Icons.FILE_ICON.getIcon());
+    private TreeItemCustom creatingTreeItem(String folderItem) {
+        if (folderItem.contains(".md")) {
+            folderItem = folderItem.replace(".md", "");
+            return new TreeItemCustom(folderItem, true, IconConfigurer.getFileIcon());
         } else {
-            return new TreeItemCustom(str, false, (ImageView) Icons.FOLDER_ICON.getIcon());
+            return new TreeItemCustom(folderItem, false, IconConfigurer.getFolderIcon(16));
         }
     }
 
@@ -189,8 +187,7 @@ public class MainController {
     @FXML
     private Tab addTab() {
         Tab tab = new Tab(RunApplication.resourceBundle.getString("EmptyTab"));
-        tab.setGraphic(TabManager.createCircleUnsavedChanges());
-        tab.setContent(TabManager.createEmptyTab());
+        TabManager.buildEmptyTab(tab);
         TabManager.selectTab(tab, tabPane);
         return tab;
     }
@@ -207,7 +204,7 @@ public class MainController {
             return;
         }
         String name = newNote.getName().replace(".md", "");
-        TreeItemCustom newTreeItem = new TreeItemCustom(name, true, (FontIcon) Icons.FILE_ICON.getIcon());
+        TreeItemCustom newTreeItem = new TreeItemCustom(name, true, IconConfigurer.getFileIcon());
         TabManager.addTab(name, tabPane, newTreeItem);
         parent.getChildren().add(newTreeItem);
         sortTreeView();
@@ -224,7 +221,7 @@ public class MainController {
             return;
         }
         TreeItemCustom folderTreeItem =
-                new TreeItemCustom(folder.getName(), false, (ImageView) Icons.FOLDER_ICON.getIcon());
+                new TreeItemCustom(folder.getName(), false, IconConfigurer.getFolderIcon(16));
         treeItem.getChildren().add(folderTreeItem);
         sortTreeView();
     }

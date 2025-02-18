@@ -6,14 +6,13 @@ import atlantafx.base.theme.Styles;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.util.configuration.ApplyConfiguration;
-import com.app.cherry.util.icons.Icons;
+import com.app.cherry.util.icons.IconConfigurer;
 import com.app.cherry.util.io.FileService;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -34,13 +33,18 @@ public class TabManager {
     private List<Button> breadCrumbsButtons;
 
     public static void selectTab(Tab tab, TabPane tabPane) {
-        int count = tabPane.getTabs().size() - 1;
-        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-        tabPane.getTabs().add(count, tab);
-        selectionModel.select(tab);
+        //index tab, before tab '+'
+        int indexTab = tabPane.getTabs().size() - 1;
+        tabPane.getTabs().add(indexTab, tab);
+        tabPane.getSelectionModel().select(tab);
     }
 
-    public static BorderPane createEmptyTab() {
+    public static void buildEmptyTab(Tab tab) {
+        tab.setGraphic(TabManager.createCircleUnsavedChanges());
+        tab.setContent(TabManager.createEmptyTabBorderPane());
+    }
+
+    public static BorderPane createEmptyTabBorderPane() {
         Label emptyTab = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
         emptyTab.setFont(new Font(29));
         //center top right bottom left
@@ -115,7 +119,7 @@ public class TabManager {
                 double scale = 3;
                 boolean isFile = false;
 
-                FontIcon fileIcon = (FontIcon) Icons.FILE_ICON.getIcon();
+                FontIcon fileIcon = IconConfigurer.getFileIcon();
                 //when folderItem file
                 if (!folderItem.isDirectory()) {
                     folderItemName = folderItemName.substring(0, folderItemName.length() - 3);
@@ -149,7 +153,7 @@ public class TabManager {
                 if (isFile) {
                     listVboxContent.addFirst(fileIcon);
                 } else {
-                    listVboxContent.addFirst((ImageView) Icons.FOLDER_ICON.getIcon());
+                    listVboxContent.addFirst(IconConfigurer.getFolderIcon(50));
                 }
 
                 VBox.setMargin(labelFileName, new Insets(20, 0, 0, 0));
@@ -186,13 +190,12 @@ public class TabManager {
         Breadcrumbs<String> crumbs = new Breadcrumbs<>(root);
         breadCrumbsButtons = new ArrayList<>();
         crumbs.setCrumbFactory(crumb -> {
-            FontIcon fontIcon;
+            Button button;
             if (crumb.isLeaf()) {
-                fontIcon = (FontIcon) Icons.FILE_ICON.getIcon();
+                button = new Button(crumb.getValue(), IconConfigurer.getFileIcon());
             } else {
-                fontIcon = (FontIcon) Icons.FOLDER_ICON.getIcon();
+                button = new Button(crumb.getValue(), IconConfigurer.getFolderIcon(16));
             }
-            Button button = new Button(crumb.getValue(), fontIcon);
             button.toBack();
             button.getStyleClass().add(Styles.FLAT);
             button.setFocusTraversable(false);
@@ -295,7 +298,7 @@ public class TabManager {
         }};
     }
 
-    /// ////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
     //getters and setters
     public CodeArea getCodeArea() {
         return codeArea;

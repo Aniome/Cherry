@@ -23,13 +23,13 @@ import java.util.ResourceBundle;
 
 
 public class RunApplication extends Application {
-    public static final String title = "Cherry";
     private static final double InitialHeight = 600;
     private static final double InitialWidth = 800;
     public static final double MainHeight = 480;
     public static final double MainWidth = 640;
     public static final double renameWidth = 600;
     public static final double renameHeight = 250;
+    public static final String title = "Cherry";
     public static ResourceBundle resourceBundle;
     public static String separator;
     public static String appPath;
@@ -75,6 +75,7 @@ public class RunApplication extends Application {
             mainController.setDividerPositionAfterShowing();
             SavingConfiguration.observableMainStage(mainStage, mainController);
         } catch (IOException e){
+            //e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }
@@ -173,7 +174,7 @@ public class RunApplication extends Application {
     }
 
     public static void setIcon(Stage stage) {
-        stage.getIcons().add((Image) Icons.TITLE_ICON.getIcon());
+        stage.getIcons().add(new Image(Icons.TITLE_ICON.getIcon()));
     }
 
     public static void prepareStage(double height, double width, Scene scene, String title, Stage stage) {

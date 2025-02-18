@@ -4,6 +4,7 @@ import atlantafx.base.controls.Breadcrumbs;
 import atlantafx.base.controls.Breadcrumbs.BreadCrumbItem;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.controls.TabManager;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.structures.PathNote;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -32,48 +34,60 @@ public class TabStorageUtility {
         if (optionalSavingTabs.isEmpty()) {
             return;
         }
-
         PathNote savingTabs = optionalSavingTabs.get();
-        String[] openedSavingTabs = savingTabs.getPathNote();
-        int openedSavingTabsLength = openedSavingTabs.length - 1;
-        int selectedTabIndex = savingTabs.getSelectedIndex();
-        ObservableList<Tab> tabs = tabPane.getTabs();
 
-        boolean firstTab = true;
+        //getting variables from object
+        String[] openedSavingTabs = savingTabs.getPathNote();
+        int selectedTabIndex = savingTabs.getSelectedIndex();
+
+        //setting initialize variables
+        int openedSavingTabsLength = openedSavingTabs.length - 1;
+        ObservableList<Tab> tabs = tabPane.getTabs();
+        boolean isFirstTab = true;
         String separator = RunApplication.separator.equals("/") ? "/" : "\\\\";
 
         //loading tabs
         for (int i = openedSavingTabsLength; i >= 0; i--) {
-            //checking if file exist
-            File item = new File(openedSavingTabs[i]);
-            if (!item.exists()) {
+            if (openedSavingTabs[i] == null) {
+                Tab emptyTab;
+                String tabName = RunApplication.resourceBundle.getString("EmptyTab");
+                if (isFirstTab) {
+                    emptyTab = tabs.getFirst();
+                    emptyTab.setText(tabName);
+                    isFirstTab = false;
+                } else {
+                    emptyTab = new Tab(tabName);
+                    tabs.addFirst(emptyTab);
+                }
+                TabManager.buildEmptyTab(emptyTab);
                 continue;
             }
+
+            //checking if file exist
+            File item = new File(openedSavingTabs[i]);
+            if (!item.exists()) continue;
 
             //creating paths
             Path absolutePath = Path.of(openedSavingTabs[i]);
             String relativePath = RunApplication.folderPath.relativize(absolutePath).toString();
             String[] splitPath = relativePath.split(separator);
 
-            //removing .md if path contains
+            //removing .md if file is markdown
             int lastInd = splitPath.length - 1;
             String lastElement = splitPath[lastInd];
-            if (lastElement.endsWith(".md")) {
-                splitPath[lastInd] = lastElement.replace(".md", "");
-            }
+            if (lastElement.endsWith(".md")) splitPath[lastInd] = lastElement.replace(".md", "");
 
-            TreeItem<String> treeItem = root;
+            TreeItem<String> currentTreeItem = root;
             TreeItem<String> findingTreeItem = null;
-            boolean isContains;
-            //getting treeItem going on the path
+            //searching treeItem in the treeview
             for (int j = 0; j < lastInd + 1; j++) {
                 String treeItemString = splitPath[j];
-                ObservableList<TreeItem<String>> treeItemObservableList = treeItem.getChildren();
-                isContains = false;
+                ObservableList<TreeItem<String>> treeItemObservableList = currentTreeItem.getChildren();
+                boolean isContains = false;
                 for (TreeItem<String> childTreeItem : treeItemObservableList) {
                     if (childTreeItem.getValue().equals(treeItemString)) {
                         isContains = true;
-                        treeItem = childTreeItem;
+                        currentTreeItem = childTreeItem;
                         findingTreeItem = j == lastInd ? childTreeItem : null;
                     }
                 }
@@ -84,10 +98,10 @@ public class TabStorageUtility {
 
             String fileName = splitPath[lastInd];
             Tab tab;
-            if (firstTab) {
+            if (isFirstTab) {
                 tab = tabs.getFirst();
                 tab.setText(fileName);
-                firstTab = false;
+                isFirstTab = false;
             } else {
                 tab = new Tab(fileName);
                 tabs.addFirst(tab);
@@ -126,7 +140,13 @@ public class TabStorageUtility {
         for (int i = 0; i < size; i++) {
             Tab tab = tabs.get(i);
 
-            BorderPane borderPaneContent = (BorderPane) tab.getContent();
+            Node tabContent = tab.getContent();
+            if (tabContent instanceof AnchorPane) {
+                openedTabs[i] = null;
+                continue;
+            }
+
+            BorderPane borderPaneContent = (BorderPane) tabContent;
             VBox vBoxTopContainer = (VBox) borderPaneContent.getTop();
             if (vBoxTopContainer == null) {
                 continue;

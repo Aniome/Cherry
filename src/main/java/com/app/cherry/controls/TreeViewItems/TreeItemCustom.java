@@ -6,8 +6,8 @@ import javafx.scene.control.TreeItem;
 public class TreeItemCustom extends TreeItem<String> {
     public boolean childrenLoaded;
 
-    public TreeItemCustom(String s, boolean childrenLoaded, Node icon) {
-        super(s, icon);
+    public TreeItemCustom(String folderItem, boolean childrenLoaded, Node icon) {
+        super(folderItem, icon);
         //mdal-folder, mdal-insert_drive_file
         //true is leaf, false is empty expanded
         //the flag does not need to be changed
