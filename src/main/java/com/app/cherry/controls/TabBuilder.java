@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TabManager {
+public class TabBuilder {
     private String oldTextFieldString;
     private CodeArea codeArea;
     private List<Button> breadCrumbsButtons;
@@ -40,11 +40,11 @@ public class TabManager {
     }
 
     public static void buildEmptyTab(Tab tab) {
-        tab.setGraphic(TabManager.createCircleUnsavedChanges());
-        tab.setContent(TabManager.createEmptyTabBorderPane());
+        tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
+        tab.setContent(TabBuilder.createEmptyTabBorderPane());
     }
 
-    public static BorderPane createEmptyTabBorderPane() {
+    private static BorderPane createEmptyTabBorderPane() {
         Label emptyTab = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
         emptyTab.setFont(new Font(29));
         //center top right bottom left
@@ -57,17 +57,16 @@ public class TabManager {
     //adding tab when create new file
     public static void addTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
         Tab tab = new Tab(fileName);
-        tab.setGraphic(TabManager.createCircleUnsavedChanges());
-        TabManager tabManager = new TabManager();
-        tab.setContent(tabManager.createTab(tab, selectedItem));
-        TabManager.selectTab(tab, tabPane);
+        tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
+        TabBuilder tabBuilder = new TabBuilder();
+        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, tabBuilder);
+        tab.setContent(tabBuilder.createTab(tab, selectedItem, markdownArea));
+        TabBuilder.selectTab(tab, tabPane);
     }
 
     //Creates a form and fills it with content
     @NotNull
-    public BorderPane createTab(Tab tab, TreeItem<String> selectedItem) {
-        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, this);
-
+    public BorderPane createTab(Tab tab, TreeItem<String> selectedItem, Node centerContent) {
         BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(getPathToTheNote(selectedItem));
         Breadcrumbs<String> crumbs = buildStringBreadcrumbs(root);
 
@@ -86,10 +85,17 @@ public class TabManager {
         vBoxTopContainer.setStyle("-fx-border-color: transparent " + borderColor + borderColor + " transparent;");
 
         //center top right bottom left
-        BorderPane borderPanePage = new BorderPane(markdownArea, vBoxTopContainer, null, null, null);
+        BorderPane borderPanePage = new BorderPane(centerContent, vBoxTopContainer, null, null, null);
         setSelectedCrumbListener(crumbs, hBoxTitleBar, borderPanePage);
 
         return borderPanePage;
+    }
+
+    public static void createFolderTab(Tab tab, TreeItem<String> selectedItem, String path)  {
+        tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
+        TabBuilder tabBuilder = new TabBuilder();
+        FlowPane containerOfFiles = tabBuilder.buildContainerOfFiles(path);
+        tab.setContent(tabBuilder.createTab(tab, selectedItem, containerOfFiles));
     }
 
     private void setSelectedCrumbListener(Breadcrumbs<String> crumbs, HBox hBoxTitleBar, BorderPane borderPanePage) {
@@ -106,83 +112,87 @@ public class TabManager {
             listPath = listPath.reversed();
             String pathTreeItem = String.join(RunApplication.separator, listPath);
 
-            File folder = new File(RunApplication.folderPath + File.separator + pathTreeItem);
-            File[] files = folder.listFiles();
-
-            List<VBox> itemsFolderList = new ArrayList<>();
-            if (files == null) return;
-
-            //creating containers for elements
-            Arrays.stream(files).forEach(folderItem -> {
-                String folderItemName = folderItem.getName();
-                //double scale = 4.5;
-                double scale = 3;
-                boolean isFile = false;
-
-                FontIcon fileIcon = IconConfigurer.getFileIcon();
-                //when folderItem file
-                if (!folderItem.isDirectory()) {
-                    folderItemName = folderItemName.substring(0, folderItemName.length() - 3);
-                    fileIcon.setScaleX(scale);
-                    fileIcon.setScaleY(scale);
-                    isFile = true;
-                }
-
-                Label labelFileName = new Label(folderItemName) {{
-                    setMaxHeight(50);
-                    setMaxWidth(100);
-                    setWrapText(true);
-                    setTextOverrun(OverrunStyle.ELLIPSIS);
-                }};
-
-                final Border emptyBorder = new Border(new BorderStroke(Color.TRANSPARENT, BorderStrokeStyle.SOLID,
-                        new CornerRadii(5), BorderWidths.DEFAULT));
-                final Background emptyBackground = new Background(new BackgroundFill(Color.TRANSPARENT,
-                        new CornerRadii(5), Insets.EMPTY));
-
-                VBox vBoxContentItem = new VBox(labelFileName) {{
-                    prefWidth(105);
-                    prefHeight(145);
-                    setAlignment(Pos.CENTER);
-                    setBorder(emptyBorder);
-                    setBackground(emptyBackground);
-                    //top right bottom left
-                    setPadding(new Insets(20, 20, 0, 20));
-                }};
-                ObservableList<Node> listVboxContent = vBoxContentItem.getChildren();
-                if (isFile) {
-                    listVboxContent.addFirst(fileIcon);
-                } else {
-                    listVboxContent.addFirst(IconConfigurer.getFolderIcon(50));
-                }
-
-                VBox.setMargin(labelFileName, new Insets(20, 0, 0, 0));
-
-                vBoxContentItem.setOnMouseEntered(event -> {
-                    vBoxContentItem.setBackground(new Background(new BackgroundFill(Color.GRAY,
-                            new CornerRadii(5), Insets.EMPTY)));
-                    vBoxContentItem.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID,
-                            new CornerRadii(5), BorderWidths.DEFAULT)));
-                });
-                vBoxContentItem.setOnMouseExited(event -> {
-                    vBoxContentItem.setBackground(emptyBackground);
-                    vBoxContentItem.setBorder(emptyBorder);
-                });
-
-                itemsFolderList.add(vBoxContentItem);
-            });
-
-            //creating container for folder
-            FlowPane folderContent = new FlowPane() {{
-                setVgap(25);
-                setHgap(25);
-                //top right bottom left
-                setPadding(new Insets(15, 0, 0, 15));
-                getChildren().addAll(itemsFolderList);
-            }};
-
+            FlowPane folderContent = buildContainerOfFiles(pathTreeItem);
             borderPanePage.setCenter(folderContent);
         });
+    }
+
+    private FlowPane buildContainerOfFiles(String path) {
+        File folder = new File(RunApplication.folderPath + File.separator + path);
+        File[] files = folder.listFiles();
+
+        List<VBox> itemsFolderList = new ArrayList<>();
+        if (files == null) return null;
+
+        //creating containers for elements
+        Arrays.stream(files).forEach(folderItem -> {
+            String folderItemName = folderItem.getName();
+            //double scale = 4.5;
+            double scale = 3;
+            boolean isFile = false;
+
+            FontIcon fileIcon = IconConfigurer.getFileIcon();
+            //when folderItem file
+            if (!folderItem.isDirectory()) {
+                folderItemName = folderItemName.substring(0, folderItemName.length() - 3);
+                fileIcon.setScaleX(scale);
+                fileIcon.setScaleY(scale);
+                isFile = true;
+            }
+
+            Label labelFileName = new Label(folderItemName) {{
+                setMaxHeight(50);
+                setMaxWidth(100);
+                setWrapText(true);
+                setTextOverrun(OverrunStyle.ELLIPSIS);
+            }};
+
+            final Border emptyBorder = new Border(new BorderStroke(Color.TRANSPARENT, BorderStrokeStyle.SOLID,
+                    new CornerRadii(5), BorderWidths.DEFAULT));
+            final Background emptyBackground = new Background(new BackgroundFill(Color.TRANSPARENT,
+                    new CornerRadii(5), Insets.EMPTY));
+
+            VBox vBoxContentItem = new VBox(labelFileName) {{
+                prefWidth(105);
+                prefHeight(145);
+                setAlignment(Pos.CENTER);
+                setBorder(emptyBorder);
+                setBackground(emptyBackground);
+                //top right bottom left
+                setPadding(new Insets(20, 20, 0, 20));
+            }};
+            ObservableList<Node> listVboxContent = vBoxContentItem.getChildren();
+            if (isFile) {
+                listVboxContent.addFirst(fileIcon);
+            } else {
+                listVboxContent.addFirst(IconConfigurer.getFolderIcon(50));
+            }
+
+            VBox.setMargin(labelFileName, new Insets(20, 0, 0, 0));
+
+            vBoxContentItem.setOnMouseEntered(event -> {
+                vBoxContentItem.setBackground(new Background(new BackgroundFill(Color.GRAY,
+                        new CornerRadii(5), Insets.EMPTY)));
+                vBoxContentItem.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID,
+                        new CornerRadii(5), BorderWidths.DEFAULT)));
+            });
+            vBoxContentItem.setOnMouseExited(event -> {
+                vBoxContentItem.setBackground(emptyBackground);
+                vBoxContentItem.setBorder(emptyBorder);
+            });
+
+            itemsFolderList.add(vBoxContentItem);
+        });
+
+        //creating container for folder
+        //top right bottom left
+        return new FlowPane() {{
+            setVgap(25);
+            setHgap(25);
+            //top right bottom left
+            setPadding(new Insets(15, 0, 0, 15));
+            getChildren().addAll(itemsFolderList);
+        }};
     }
 
     @NotNull

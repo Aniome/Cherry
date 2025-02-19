@@ -24,7 +24,7 @@ public class ApplicationContextMenu {
         MenuItem newNoteMenuItem = new MenuItem(resourceBundle.getString("ContextMenuNewNote"));
         newNoteMenuItem.setOnAction(actionEvent -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
-            mainController.createFile(selectedItem);
+            mainController.createNote(selectedItem);
         });
 
         MenuItem newFolderMenuItem = new MenuItem(resourceBundle.getString("ContextMenuNewFolder"));
@@ -72,7 +72,7 @@ public class ApplicationContextMenu {
 
                 Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
                 selectedTab.setText(resourceBundle.getString("EmptyTab"));
-                TabManager.buildEmptyTab(selectedTab);
+                TabBuilder.buildEmptyTab(selectedTab);
             } else {
                 Alerts.createAndShowWarning(resourceBundle.getString("ContextMenuDeleteFailed"));
             }

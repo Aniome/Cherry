@@ -1,6 +1,5 @@
 package com.app.cherry.util.configuration;
 
-import atlantafx.base.controls.Breadcrumbs;
 import atlantafx.base.theme.CupertinoLight;
 import atlantafx.base.theme.Dracula;
 import com.app.cherry.RunApplication;
@@ -198,11 +197,6 @@ public class ApplyConfiguration {
             }
             //top right bottom left
             vBoxTopContainer.setStyle("-fx-border-color: transparent " + borderColor + borderColor + " transparent;");
-
-            VBox vBoxCrumbs = (VBox) vBoxTopContainer.getChildren().getFirst();
-
-            Breadcrumbs<?> crumbs = (Breadcrumbs<?>) vBoxCrumbs.getChildren().getFirst();
-            crumbs.setStyle("-fx-border-radius: 5; -fx-border-color: " + borderColor);
         }
     }
 

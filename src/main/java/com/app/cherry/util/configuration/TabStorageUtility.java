@@ -4,7 +4,7 @@ import atlantafx.base.controls.Breadcrumbs;
 import atlantafx.base.controls.Breadcrumbs.BreadCrumbItem;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
-import com.app.cherry.controls.TabManager;
+import com.app.cherry.controls.TabBuilder;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.structures.PathNote;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,7 +59,7 @@ public class TabStorageUtility {
                     emptyTab = new Tab(tabName);
                     tabs.addFirst(emptyTab);
                 }
-                TabManager.buildEmptyTab(emptyTab);
+                TabBuilder.buildEmptyTab(emptyTab);
                 continue;
             }
 
@@ -108,7 +108,7 @@ public class TabStorageUtility {
             }
 
             if (item.isDirectory()) {
-
+                TabBuilder.createFolderTab(tab, findingTreeItem, relativePath);
             } else {
                 mainController.loadDataOnTab(fileName, absolutePath, findingTreeItem, tab);
             }

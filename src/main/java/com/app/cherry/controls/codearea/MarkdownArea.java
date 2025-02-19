@@ -2,7 +2,7 @@ package com.app.cherry.controls.codearea;
 
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.ApplicationContextMenu;
-import com.app.cherry.controls.TabManager;
+import com.app.cherry.controls.TabBuilder;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.io.FileService;
 import javafx.application.Platform;
@@ -45,9 +45,9 @@ public class MarkdownArea {
             + "|(?<WORDS>" + WORDS_PATTERN + ")"
     );
 
-    public static StackPane createMarkdownArea(TreeItem<String> selectedItem, TabManager tabManager) {
+    public static StackPane createMarkdownArea(TreeItem<String> selectedItem, TabBuilder tabBuilder) {
         CodeArea codeArea = new CodeArea();
-        tabManager.setCodeArea(codeArea);
+        tabBuilder.setCodeArea(codeArea);
         codeArea.setStyle("-fx-font-size: " + fontSize + "px;");
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory = createGraphicFactory(numberFactory, codeArea);

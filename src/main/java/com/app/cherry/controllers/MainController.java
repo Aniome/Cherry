@@ -4,7 +4,7 @@ import atlantafx.base.controls.ModalPane;
 import com.app.cherry.ModalPane.SettingsModal;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controls.ApplicationContextMenu;
-import com.app.cherry.controls.TabManager;
+import com.app.cherry.controls.TabBuilder;
 import com.app.cherry.controls.TreeViewItems.TreeCellFactory;
 import com.app.cherry.controls.TreeViewItems.TreeItemCustom;
 import com.app.cherry.controls.codearea.MarkdownArea;
@@ -24,10 +24,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
@@ -139,9 +136,10 @@ public class MainController {
         tab.setContent(null);
         tab.setText(filename);
 
-        TabManager tabManager = new TabManager();
-        tab.setContent(tabManager.createTab(tab, selectedItem));
-        CodeArea codeArea = tabManager.getCodeArea();
+        TabBuilder tabBuilder = new TabBuilder();
+        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, tabBuilder);
+        tab.setContent(tabBuilder.createTab(tab, selectedItem, markdownArea));
+        CodeArea codeArea = tabBuilder.getCodeArea();
 
         String text;
         if (path == null)
@@ -162,7 +160,6 @@ public class MainController {
             } else {
                 codeArea.replaceText(0, 0, text);
             }
-
         }
 
         int codeAreaLength = codeArea.getParagraphs().size();
@@ -187,26 +184,26 @@ public class MainController {
     @FXML
     private Tab addTab() {
         Tab tab = new Tab(RunApplication.resourceBundle.getString("EmptyTab"));
-        TabManager.buildEmptyTab(tab);
-        TabManager.selectTab(tab, tabPane);
+        TabBuilder.buildEmptyTab(tab);
+        TabBuilder.selectTab(tab, tabPane);
         return tab;
     }
 
     //Event on the note creation button
     @FXML
     private void createNote() {
-        createFile(treeView.getRoot());
+        createNote(treeView.getRoot());
     }
 
-    public void createFile(TreeItem<String> parent) {
+    public void createNote(TreeItem<String> parent) {
         File newNote = FileService.createFileMarkdown(parent);
         if (newNote == null) {
             return;
         }
-        String name = newNote.getName().replace(".md", "");
-        TreeItemCustom newTreeItem = new TreeItemCustom(name, true, IconConfigurer.getFileIcon());
-        TabManager.addTab(name, tabPane, newTreeItem);
+        String fileName = newNote.getName().replace(".md", "");
+        TreeItemCustom newTreeItem = new TreeItemCustom(fileName, true, IconConfigurer.getFileIcon());
         parent.getChildren().add(newTreeItem);
+        TabBuilder.addTab(fileName, tabPane, newTreeItem);
         sortTreeView();
     }
 
