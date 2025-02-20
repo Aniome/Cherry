@@ -138,7 +138,7 @@ public class MainController {
 
         TabBuilder tabBuilder = new TabBuilder();
         StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, tabBuilder);
-        tab.setContent(tabBuilder.createTab(tab, selectedItem, markdownArea));
+        tab.setContent(tabBuilder.buildTabContent(tab, selectedItem, markdownArea));
         CodeArea codeArea = tabBuilder.getCodeArea();
 
         String text;
@@ -203,7 +203,7 @@ public class MainController {
         String fileName = newNote.getName().replace(".md", "");
         TreeItemCustom newTreeItem = new TreeItemCustom(fileName, true, IconConfigurer.getFileIcon());
         parent.getChildren().add(newTreeItem);
-        TabBuilder.addTab(fileName, tabPane, newTreeItem);
+        new TabBuilder().addTab(fileName, tabPane, newTreeItem);
         sortTreeView();
     }
 

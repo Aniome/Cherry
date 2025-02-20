@@ -12,15 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="refactoring and fix folder size">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="refactoring and add loading folder items">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/icons/IconConfigurer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/icons/IconConfigurer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -667,15 +663,8 @@
       <workItem from="1739844180782" duration="18403000" />
       <workItem from="1739897485660" duration="13205000" />
       <workItem from="1739956783263" duration="6747000" />
-      <workItem from="1739975891457" duration="6653000" />
-    </task>
-    <task id="LOCAL-00100" summary="fixing separator">
-      <option name="closed" value="true" />
-      <created>1730521073996</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1730521073996</updated>
+      <workItem from="1739975891457" duration="6823000" />
+      <workItem from="1740072638004" duration="3066000" />
     </task>
     <task id="LOCAL-00101" summary="optimization for creating runnable app">
       <option name="closed" value="true" />
@@ -1061,7 +1050,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739871477049</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="refactoring and add loading folder items">
+      <option name="closed" value="true" />
+      <created>1739987664633</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1739987664634</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1092,7 +1089,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add option finding text" />
     <MESSAGE value="create unsaved icon on tab" />
     <MESSAGE value="applying font settings on all tabs" />
     <MESSAGE value="add finding count option" />
@@ -1117,7 +1113,8 @@
     <MESSAGE value="add icon and fix bug" />
     <MESSAGE value="remove unused icons, add special class for icon" />
     <MESSAGE value="refactoring and fix folder size" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring and fix folder size" />
+    <MESSAGE value="refactoring and add loading folder items" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring and add loading folder items" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

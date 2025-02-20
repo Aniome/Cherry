@@ -32,41 +32,18 @@ public class TabBuilder {
     private CodeArea codeArea;
     private List<Button> breadCrumbsButtons;
 
-    public static void selectTab(Tab tab, TabPane tabPane) {
-        //index tab, before tab '+'
-        int indexTab = tabPane.getTabs().size() - 1;
-        tabPane.getTabs().add(indexTab, tab);
-        tabPane.getSelectionModel().select(tab);
-    }
-
-    public static void buildEmptyTab(Tab tab) {
-        tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
-        tab.setContent(TabBuilder.createEmptyTabBorderPane());
-    }
-
-    private static BorderPane createEmptyTabBorderPane() {
-        Label emptyTab = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
-        emptyTab.setFont(new Font(29));
-        //center top right bottom left
-        return new BorderPane(emptyTab) {{
-            setBackground(new Background(new BackgroundFill(ApplyConfiguration.getColorBackground(),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
-        }};
-    }
-
     //adding tab when create new file
-    public static void addTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
+    public void addTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
         Tab tab = new Tab(fileName);
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
-        TabBuilder tabBuilder = new TabBuilder();
-        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, tabBuilder);
-        tab.setContent(tabBuilder.createTab(tab, selectedItem, markdownArea));
+        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, this);
+        tab.setContent(buildTabContent(tab, selectedItem, markdownArea));
         TabBuilder.selectTab(tab, tabPane);
     }
 
     //Creates a form and fills it with content
     @NotNull
-    public BorderPane createTab(Tab tab, TreeItem<String> selectedItem, Node centerContent) {
+    public BorderPane buildTabContent(Tab tab, TreeItem<String> selectedItem, Node centerContent) {
         BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(getPathToTheNote(selectedItem));
         Breadcrumbs<String> crumbs = buildStringBreadcrumbs(root);
 
@@ -91,11 +68,25 @@ public class TabBuilder {
         return borderPanePage;
     }
 
-    public static void createFolderTab(Tab tab, TreeItem<String> selectedItem, String path)  {
+    public void buildFolderTab(Tab tab, TreeItem<String> selectedItem, String path)  {
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
-        TabBuilder tabBuilder = new TabBuilder();
-        FlowPane containerOfFiles = tabBuilder.buildContainerOfFiles(path);
-        tab.setContent(tabBuilder.createTab(tab, selectedItem, containerOfFiles));
+        FlowPane containerOfFiles = buildContainerOfFiles(path);
+        tab.setContent(buildTabContent(tab, selectedItem, containerOfFiles));
+    }
+
+    public static void buildEmptyTab(Tab tab) {
+        tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
+        tab.setContent(TabBuilder.createEmptyTabBorderPane());
+    }
+
+    private static BorderPane createEmptyTabBorderPane() {
+        Label emptyTab = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
+        emptyTab.setFont(new Font(29));
+        //center top right bottom left
+        return new BorderPane(emptyTab) {{
+            setBackground(new Background(new BackgroundFill(ApplyConfiguration.getColorBackground(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+        }};
     }
 
     private void setSelectedCrumbListener(Breadcrumbs<String> crumbs, HBox hBoxTitleBar, BorderPane borderPanePage) {
@@ -306,6 +297,13 @@ public class TabBuilder {
             setStroke(Color.BLACK);
             setOpacity(0);
         }};
+    }
+
+    public static void selectTab(Tab tab, TabPane tabPane) {
+        //index tab, before tab '+'
+        int indexTab = tabPane.getTabs().size() - 1;
+        tabPane.getTabs().add(indexTab, tab);
+        tabPane.getSelectionModel().select(tab);
     }
 
     ///////////////////////////////////////////////////////////////

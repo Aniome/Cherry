@@ -108,7 +108,7 @@ public class TabStorageUtility {
             }
 
             if (item.isDirectory()) {
-                TabBuilder.createFolderTab(tab, findingTreeItem, relativePath);
+                new TabBuilder().buildFolderTab(tab, findingTreeItem, relativePath);
             } else {
                 mainController.loadDataOnTab(fileName, absolutePath, findingTreeItem, tab);
             }
