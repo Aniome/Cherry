@@ -15,7 +15,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
@@ -135,9 +135,9 @@ public class TabStorageUtility {
     public static void saveTabs(TabPane tabPane) {
         ObservableList<Tab> tabs = tabPane.getTabs();
         //+ is not counting
-        int size = tabs.size() - 1;
-        String[] openedTabs = new String[size];
-        for (int i = 0; i < size; i++) {
+        int tabsSize = tabs.size() - 1;
+        String[] openedTabs = new String[tabsSize];
+        for (int i = 0; i < tabsSize; i++) {
             Tab tab = tabs.get(i);
 
             Node tabContent = tab.getContent();
@@ -148,17 +148,13 @@ public class TabStorageUtility {
 
             BorderPane borderPaneContent = (BorderPane) tabContent;
             VBox vBoxTopContainer = (VBox) borderPaneContent.getTop();
-            if (vBoxTopContainer == null) {
-                continue;
-            }
+            Node center = borderPaneContent.getCenter();
+            boolean isFile = !(center instanceof FlowPane);
 
             ObservableList<Node> topContainerChildren = vBoxTopContainer.getChildren();
-            if (topContainerChildren.isEmpty()) {
-                continue;
-            }
 
-            //saving tab name
-            StringBuilder path = getPathFromTitle(topContainerChildren);
+            //getting path to the tab
+            StringBuilder path = getPathFromTitle(topContainerChildren, isFile);
 
             openedTabs[i] = path.toString();
         }
@@ -182,14 +178,7 @@ public class TabStorageUtility {
     }
 
     @NotNull
-    private static StringBuilder getPathFromTitle(ObservableList<Node> topContainerChildren) {
-        HBox hBoxTitleBar = (HBox) topContainerChildren.get(1);
-
-        boolean isFile = true;
-        ObservableList<Node> hBoxTitleBarChildren = hBoxTitleBar.getChildren();
-        if (hBoxTitleBarChildren.isEmpty())
-            isFile = false;
-
+    private static StringBuilder getPathFromTitle(ObservableList<Node> topContainerChildren, boolean isFile) {
         ObservableList<Node> vBoxCrumbsChildren = ((VBox) topContainerChildren.getFirst()).getChildren();
         Breadcrumbs<?> crumbs = (Breadcrumbs<?>) vBoxCrumbsChildren.getFirst();
 

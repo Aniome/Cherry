@@ -39,7 +39,7 @@ public class ApplyConfiguration {
     private static final String dark = "Dark";
     private static Scene mainScene;
 
-    public static void build(Stage mainStage) {
+    public static void loadAndApplySettings(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             SettingsData settingsData = objectMapper.readValue(new File(RunApplication.appPath +

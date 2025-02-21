@@ -40,7 +40,7 @@ public class RunApplication extends Application {
     public void start(Stage stage) {
         HibernateUtil.setUp();
         setSeparator();
-        ApplyConfiguration.build(stage);
+        ApplyConfiguration.loadAndApplySettings(stage);
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
         mainStage = stage;
@@ -75,8 +75,8 @@ public class RunApplication extends Application {
             mainController.setDividerPositionAfterShowing();
             SavingConfiguration.observableMainStage(mainStage, mainController);
         } catch (IOException e){
-            //e.printStackTrace();
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            //System.out.println(e.getMessage());
         }
     }
 

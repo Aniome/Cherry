@@ -33,17 +33,24 @@ public class TabBuilder {
     private List<Button> breadCrumbsButtons;
 
     //adding tab when create new file
-    public void addTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
+    public void buildTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
         Tab tab = new Tab(fileName);
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
         StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, this);
-        tab.setContent(buildTabContent(tab, selectedItem, markdownArea));
+        tab.setContent(buildTabContent(tab, selectedItem, markdownArea, true));
         TabBuilder.selectTab(tab, tabPane);
+    }
+
+    public void buildFolderTab(Tab tab, TreeItem<String> selectedItem, String path)  {
+        tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
+        FlowPane containerOfFiles = buildContainerOfFiles(path);
+        tab.setContent(buildTabContent(tab, selectedItem, containerOfFiles, false));
     }
 
     //Creates a form and fills it with content
     @NotNull
-    public BorderPane buildTabContent(Tab tab, TreeItem<String> selectedItem, Node centerContent) {
+    public BorderPane buildTabContent(Tab tab, TreeItem<String> selectedItem, Node centerContent,
+                                      boolean createTitleBar) {
         BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(getPathToTheNote(selectedItem));
         Breadcrumbs<String> crumbs = buildStringBreadcrumbs(root);
 
@@ -55,7 +62,13 @@ public class TabBuilder {
 
         HBox hBoxTitleBar = buildHBoxTitleBar(selectedItem, tab, crumbs);
 
-        VBox vBoxTopContainer = new VBox(vBoxCrumbs, hBoxTitleBar);
+        VBox vBoxTopContainer;
+
+        if (createTitleBar)
+            vBoxTopContainer = new VBox(vBoxCrumbs, hBoxTitleBar);
+        else
+            vBoxTopContainer = new VBox(vBoxCrumbs);
+
         vBoxTopContainer.setPadding(new Insets(5));
 
         //top right bottom left
@@ -63,33 +76,24 @@ public class TabBuilder {
 
         //center top right bottom left
         BorderPane borderPanePage = new BorderPane(centerContent, vBoxTopContainer, null, null, null);
-        setSelectedCrumbListener(crumbs, hBoxTitleBar, borderPanePage);
+        setSelectedCrumbListener(crumbs, hBoxTitleBar, borderPanePage, tab);
 
         return borderPanePage;
     }
 
-    public void buildFolderTab(Tab tab, TreeItem<String> selectedItem, String path)  {
-        tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
-        FlowPane containerOfFiles = buildContainerOfFiles(path);
-        tab.setContent(buildTabContent(tab, selectedItem, containerOfFiles));
-    }
-
     public static void buildEmptyTab(Tab tab) {
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
-        tab.setContent(TabBuilder.createEmptyTabBorderPane());
-    }
-
-    private static BorderPane createEmptyTabBorderPane() {
         Label emptyTab = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
         emptyTab.setFont(new Font(29));
         //center top right bottom left
-        return new BorderPane(emptyTab) {{
-            setBackground(new Background(new BackgroundFill(ApplyConfiguration.getColorBackground(),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
-        }};
+        BorderPane tabContent = new BorderPane(emptyTab);
+        tabContent.setBackground(new Background(new BackgroundFill(ApplyConfiguration.getColorBackground(),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        tab.setContent(tabContent);
     }
 
-    private void setSelectedCrumbListener(Breadcrumbs<String> crumbs, HBox hBoxTitleBar, BorderPane borderPanePage) {
+    private void setSelectedCrumbListener(Breadcrumbs<String> crumbs, HBox hBoxTitleBar, BorderPane borderPanePage,
+                                          Tab tab) {
         crumbs.selectedCrumbProperty().addListener((obs,
                                                     oldVal, newVal) -> {
             hBoxTitleBar.getChildren().clear();
@@ -101,6 +105,8 @@ public class TabBuilder {
                 currentBreadCrumb = (BreadCrumbItem<String>) currentBreadCrumb.getParent();
             }
             listPath = listPath.reversed();
+            String tabNoteName = listPath.getLast();
+            tab.setText(tabNoteName);
             String pathTreeItem = String.join(RunApplication.separator, listPath);
 
             FlowPane folderContent = buildContainerOfFiles(pathTreeItem);
