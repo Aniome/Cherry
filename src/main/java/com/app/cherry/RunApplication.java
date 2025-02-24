@@ -23,13 +23,13 @@ import java.util.ResourceBundle;
 
 
 public class RunApplication extends Application {
-    private static final double InitialHeight = 600;
-    private static final double InitialWidth = 800;
-    public static final double MainHeight = 480;
-    public static final double MainWidth = 640;
-    public static final double renameWidth = 600;
-    public static final double renameHeight = 250;
-    public static final String title = "Cherry";
+    private static final double INITIAL_HEIGHT = 600;
+    private static final double INITIAL_WIDTH = 800;
+    public static final double MAIN_HEIGHT = 480;
+    public static final double MAIN_WIDTH = 640;
+    public static final double RENAME_WIDTH = 600;
+    public static final double RENAME_HEIGHT = 250;
+    public static final String TITLE = "Cherry";
     public static ResourceBundle resourceBundle;
     public static String separator;
     public static String appPath;
@@ -64,14 +64,14 @@ public class RunApplication extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
                     RunApplication.class.getResource("fxmls/main-view.fxml"), resourceBundle);
-            Scene scene = new Scene(fxmlLoader.load(), MainWidth, MainHeight);
+            Scene scene = new Scene(fxmlLoader.load(), MAIN_WIDTH, MAIN_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull
                     (RunApplication.class.getResource("css/keywords.css")).toExternalForm());
             ApplyConfiguration.setMainSceneAndSetTheme(scene);
             ApplyConfiguration.changeThemeCssOnMainScene();
             MainController mainController = fxmlLoader.getController();
             setIcon(mainStage);
-            prepareStage(MainHeight, MainWidth, scene, title, mainStage);
+            prepareStage(MAIN_HEIGHT, MAIN_WIDTH, scene, TITLE, mainStage);
             mainController.setDividerPositionAfterShowing();
             SavingConfiguration.observableMainStage(mainStage, mainController);
         } catch (IOException e){
@@ -84,13 +84,13 @@ public class RunApplication extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/init-view.fxml"),
                     resourceBundle);
-            Scene secondScene = new Scene(fxmlLoader.load(), InitialWidth, InitialHeight);
+            Scene secondScene = new Scene(fxmlLoader.load(), INITIAL_WIDTH, INITIAL_HEIGHT);
             Stage initialStage = new Stage();
             setIcon(initialStage);
             SavingConfiguration.observableInitStage(initialStage);
             InitController initController = fxmlLoader.getController();
             initController.initialStage = initialStage;
-            prepareStage(InitialHeight, InitialWidth, secondScene,"", initialStage);
+            prepareStage(INITIAL_HEIGHT, INITIAL_WIDTH, secondScene,"", initialStage);
             initialStage.setResizable(false);
             initController.loadPaths();
         } catch (IOException e) {
@@ -121,7 +121,7 @@ public class RunApplication extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/rename-view.fxml"),
                     resourceBundle);
-            Scene scene = new Scene(fxmlLoader.load(), renameWidth, renameHeight);
+            Scene scene = new Scene(fxmlLoader.load(), RENAME_WIDTH, RENAME_HEIGHT);
             Stage renameStage = new Stage();
             RunApplication.setIcon(renameStage);
             renameStage.setResizable(false);
@@ -131,7 +131,7 @@ public class RunApplication extends Application {
             RenameViewController renameViewController = fxmlLoader.getController();
             renameViewController.init(renameStage, selectedTreeItem, selectedTab);
             String renameWindowTitle = RunApplication.resourceBundle.getString("RenameWindowTitle");
-            RunApplication.prepareStage(renameHeight, renameWidth, scene, renameWindowTitle, renameStage);
+            RunApplication.prepareStage(RENAME_HEIGHT, RENAME_WIDTH, scene, renameWindowTitle, renameStage);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -167,7 +167,7 @@ public class RunApplication extends Application {
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(mainStage);
-            RunApplication.prepareStage(renameHeight, renameWidth, scene, "", stage);
+            RunApplication.prepareStage(RENAME_HEIGHT, RENAME_WIDTH, scene, "", stage);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

@@ -151,17 +151,15 @@ public class TabStorageUtility {
             Node center = borderPaneContent.getCenter();
             boolean isFile = !(center instanceof FlowPane);
 
+            //if empty tab
+            if (vBoxTopContainer == null) continue;
+
             ObservableList<Node> topContainerChildren = vBoxTopContainer.getChildren();
 
             //getting path to the tab
             StringBuilder path = getPathFromTitle(topContainerChildren, isFile);
 
             openedTabs[i] = path.toString();
-        }
-
-        //empty tab
-        if (openedTabs.length == 1 && openedTabs[0] == null) {
-            return;
         }
 
         int selectedIndex = tabPane.getSelectionModel().getSelectedIndex();

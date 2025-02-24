@@ -33,10 +33,10 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class ApplyConfiguration {
+    private static final String DARK = "Dark";
     private static double dividerPosition;
     public static String theme;
     private static BorderPane leftPanelBorderPane;
-    private static final String dark = "Dark";
     private static Scene mainScene;
 
     public static void loadAndApplySettings(Stage mainStage) {
@@ -63,8 +63,8 @@ public class ApplyConfiguration {
                 SavingConfiguration.language = "ru";
             }
 
-            if (settingsData.getTheme().equals(dark)) {
-                theme = dark;
+            if (settingsData.getTheme().equals(DARK)) {
+                theme = DARK;
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
             } else {
                 theme = "Light";
@@ -92,7 +92,7 @@ public class ApplyConfiguration {
         RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
         SavingConfiguration.language = "en";
 
-        theme = dark;
+        theme = DARK;
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
 
         mainStage.setWidth(1280);
@@ -123,7 +123,7 @@ public class ApplyConfiguration {
     }
 
     public static String getBorderColor() {
-        if (theme.equals(dark))
+        if (theme.equals(DARK))
             return "#685ab3";
         else
             return "#d1d1d6";
@@ -133,7 +133,7 @@ public class ApplyConfiguration {
         ObservableList<String> mainSceneStylesheets = mainScene.getStylesheets();
         String darkTheme = Objects.requireNonNull
                 (RunApplication.class.getResource("css/themes/dark.css")).toExternalForm();
-        if (theme.equals(dark)) {
+        if (theme.equals(DARK)) {
             mainSceneStylesheets.add(darkTheme);
         } else {
             mainSceneStylesheets.remove(darkTheme);
@@ -201,7 +201,7 @@ public class ApplyConfiguration {
     }
 
     public static Color getColorBackground() {
-        if (theme.equals(dark))
+        if (theme.equals(DARK))
             return Color.web("#282a36");
         else
             return Color.WHITE;

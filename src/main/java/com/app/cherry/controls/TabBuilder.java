@@ -158,6 +158,7 @@ public class TabBuilder {
                 //top right bottom left
                 setPadding(new Insets(20, 20, 0, 20));
             }};
+
             ObservableList<Node> listVboxContent = vBoxContentItem.getChildren();
             if (isFile) {
                 listVboxContent.addFirst(fileIcon);
