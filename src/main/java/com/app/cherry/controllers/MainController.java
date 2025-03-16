@@ -55,6 +55,8 @@ public class MainController {
     ModalPane modalPane;
     @FXML
     BorderPane leftPanelBorderPane;
+    @FXML
+    HBox titleBar;
 
     Stage renameStage;
     TreeItem<String> filesManagerRoot;
@@ -67,6 +69,7 @@ public class MainController {
     }
 
     public void initialize() {
+        //configure treeview
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         filesManagerRoot = new TreeItem<>("");
         treeView.setRoot(filesManagerRoot);
@@ -75,6 +78,7 @@ public class MainController {
         sortTreeView();
         ApplicationContextMenu.buildTreeViewContextMenu(treeView, this, renameStage, tabPane);
 
+        //add style class button
         filesManagerButton.getStyleClass().remove("radio-button");
         searchButton.getStyleClass().remove("radio-button");
         favoriteNotesButton.getStyleClass().remove("radio-button");
@@ -89,6 +93,18 @@ public class MainController {
         TabStorageUtility.loadSavingTabs(tabPane, treeView.getRoot(), this);
     }
 
+    private void limitTabHeaderArea() {
+        tabPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                var headerArea = tabPane.lookup(".tab-header-area");
+                if (headerArea != null) {
+                    headerArea.setStyle(headerArea.getStyle() + "; -fx-max-width: 300px;");
+                    //headerArea.setMaxWidth(300); // Ограничение ширины
+                }
+            }
+        });
+    }
+
     private void applyThemeOnLeftPanel() {
         ApplyConfiguration.setLeftPanelBorderPane(leftPanelBorderPane);
         ApplyConfiguration.applyThemeOnLeftPanelInMainPage();
@@ -96,6 +112,7 @@ public class MainController {
 
     public void setDividerPositionAfterShowing() {
         splitPane.setDividerPositions(ApplyConfiguration.getDividerPosition());
+        limitTabHeaderArea();
     }
 
     private void loadFilesInTreeview() {
@@ -171,17 +188,15 @@ public class MainController {
             MarkdownArea.applyStyles(0, codeAreaLength, codeArea);
         }
 
-        Thread threadAddUnsavedChanges = new Thread(() -> {
-            Platform.runLater(() -> {
-                Circle circleUnsavedChanges = (Circle) tab.getGraphic();
-                final boolean[] isUnsavedChanges = {false};
-                codeArea.textProperty().addListener((observableValue, s, t1) -> {
-                    if (isUnsavedChanges[0]) return;
-                    circleUnsavedChanges.setOpacity(1);
-                    isUnsavedChanges[0] = true;
-                });
+        Thread threadAddUnsavedChanges = new Thread(() -> Platform.runLater(() -> {
+            Circle circleUnsavedChanges = (Circle) tab.getGraphic();
+            final boolean[] isUnsavedChanges = {false};
+            codeArea.textProperty().addListener((observableValue, s, t1) -> {
+                if (isUnsavedChanges[0]) return;
+                circleUnsavedChanges.setOpacity(1);
+                isUnsavedChanges[0] = true;
             });
-        });
+        }));
         threadAddUnsavedChanges.start();
     }
 

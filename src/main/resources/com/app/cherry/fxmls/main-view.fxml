@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import atlantafx.base.controls.ModalPane?>
+<?import atlantafx.base.controls.Spacer?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -96,74 +97,82 @@
                 </VBox>
             </center>
             <top>
-                <GridPane alignment="CENTER" minWidth="165.0" style="-fx-background-color: -color-bg-default;"
-                          BorderPane.alignment="CENTER">
+                <GridPane alignment="CENTER" minWidth="165.0" style="-fx-background-color: -color-bg-default;" BorderPane.alignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <padding>
-                        <Insets bottom="15.0" top="10.0"/>
+                        <Insets bottom="15.0" top="10.0" />
                     </padding>
-                    <RadioButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch"
-                                 styleClass="toggle-button" GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                 GridPane.valignment="CENTER">
+                    <RadioButton fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#showSearch" styleClass="toggle-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                         <graphic>
-                            <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0"/>
+                            <FontIcon iconLiteral="mdmz-search" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
                         </graphic>
                         <tooltip>
-                            <Tooltip text="%ToolTipSearch"/>
+                            <Tooltip text="%ToolTipSearch" />
                         </tooltip>
                         <toggleGroup>
-                            <ToggleGroup fx:id="maingroup"/>
+                            <ToggleGroup fx:id="maingroup" />
                         </toggleGroup>
                     </RadioButton>
-                    <RadioButton fx:id="favoriteNotesButton" mnemonicParsing="false" onMouseClicked="#showFavorites"
-                                 styleClass="toggle-button" toggleGroup="$maingroup" GridPane.columnIndex="2"
-                                 GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <RadioButton fx:id="favoriteNotesButton" mnemonicParsing="false" onMouseClicked="#showFavorites" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                         <graphic>
-                            <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0"/>
+                            <FontIcon iconLiteral="mdral-bookmark" scaleX="1.25" scaleY="1.25" selectionEnd="0" />
                         </graphic>
                         <tooltip>
-                            <Tooltip text="%ToolTipFavorites"/>
+                            <Tooltip text="%ToolTipFavorites" />
                         </tooltip>
                     </RadioButton>
-                    <RadioButton fx:id="filesManagerButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                 onMouseClicked="#showFiles" selected="true" styleClass="toggle-button"
-                                 toggleGroup="$maingroup" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <RadioButton fx:id="filesManagerButton" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#showFiles" selected="true" styleClass="toggle-button" toggleGroup="$maingroup" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                         <graphic>
-                            <FontIcon iconLiteral="mdal-folder" scaleX="1.5" scaleY="1.5"/>
+                            <FontIcon iconLiteral="mdal-folder" scaleX="1.5" scaleY="1.5" />
                         </graphic>
                         <tooltip>
-                            <Tooltip text="%ToolTipFileManager"/>
+                            <Tooltip text="%ToolTipFileManager" />
                         </tooltip>
                     </RadioButton>
                 </GridPane>
             </top>
         </BorderPane>
-        <TabPane fx:id="tabPane" minWidth="150.0" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS">
-            <Tab text="%EmptyTab">
-                <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: -color-bg-default;">
-                    <center>
-                        <Label text="%EmptyPage" BorderPane.alignment="CENTER">
-                            <font>
-                                <Font size="29.0" />
-                            </font>
-                        </Label>
-                    </center>
-                </BorderPane>
-                <graphic>
-                    <Circle fill="#bcbaba" opacity="0.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
-                </graphic>
-            </Tab>
-            <Tab closable="false" onSelectionChanged="#addTab" text="+">
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </Tab>
-        </TabPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+              <TabPane fx:id="tabPane" minWidth="150.0" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Tab text="%EmptyTab">
+                      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: -color-bg-default;">
+                          <center>
+                              <Label text="%EmptyPage" BorderPane.alignment="CENTER">
+                                  <font>
+                                      <Font size="29.0" />
+                                  </font>
+                              </Label>
+                          </center>
+                      </BorderPane>
+                      <graphic>
+                          <Circle fill="#bcbaba" opacity="0.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                      </graphic>
+                  </Tab>
+                  <Tab closable="false" onSelectionChanged="#addTab" text="+">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </Tab>
+              </TabPane>
+            <HBox fx:id="titleBar" alignment="TOP_RIGHT" spacing="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Spacer />
+                  <Button mnemonicParsing="false" scaleY="0.8" text="-" HBox.hgrow="ALWAYS" />
+                  <Button layoutX="1057.0" layoutY="10.0" mnemonicParsing="false" scaleY="0.8" text="□" HBox.hgrow="ALWAYS" />
+                  <Button layoutX="1057.0" layoutY="10.0" mnemonicParsing="false" scaleY="0.8" text="x" HBox.hgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets right="5.0" top="1.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
     </SplitPane>
     <ModalPane fx:id="modalPane">
         <StackPane.margin>

@@ -24,8 +24,7 @@ public class HibernateUtil {
                 .build();
         try {
             sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
             // so destroy it manually.
             Alerts.createAndShowWarning(e.getMessage());

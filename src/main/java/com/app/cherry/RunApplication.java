@@ -14,11 +14,15 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 
@@ -35,9 +39,11 @@ public class RunApplication extends Application {
     public static String appPath;
     private static Stage mainStage;
     public static Path folderPath;
+    private static Logger logger = null;
 
     @Override
     public void start(Stage stage) {
+        logger = buildLogger(RunApplication.class);
         HibernateUtil.setUp();
         setSeparator();
         ApplyConfiguration.loadAndApplySettings(stage);
@@ -49,6 +55,26 @@ public class RunApplication extends Application {
         } else {
             showMainWindow();
         }
+    }
+
+    public static Logger buildLogger(Class<?> clazz) {
+        try (InputStream input = RunApplication.class.getClassLoader().getResourceAsStream
+                ("logging.properties")) {
+            Properties props = new Properties();
+            props.load(input);
+
+            //Setting system properties
+            props.forEach((key, value) -> System.setProperty(key.toString(), value.toString()));
+        } catch (Exception e) {
+            System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "debug");
+            System.setProperty("org.slf4j.simpleLogger.showDateTime", "true");
+            System.setProperty("org.slf4j.simpleLogger.dateTimeFormat", "yyyy-MM-dd HH:mm:ss");
+            System.setProperty("org.slf4j.simpleLogger.showThreadName", "true");
+            System.setProperty("org.slf4j.simpleLogger.showLogName", "true");
+            System.setProperty("org.slf4j.simpleLogger.logFile", "app.log");
+        }
+
+        return LoggerFactory.getLogger(clazz);
     }
 
     public static void setSeparator() {
