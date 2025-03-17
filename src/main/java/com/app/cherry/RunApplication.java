@@ -1,6 +1,7 @@
 package com.app.cherry;
 
 import com.app.cherry.controllers.*;
+import com.app.cherry.util.Alerts;
 import com.app.cherry.util.HibernateUtil;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.configuration.SavingConfiguration;
@@ -35,8 +36,8 @@ public class RunApplication extends Application {
     public static final double RENAME_HEIGHT = 250;
     public static final String TITLE = "Cherry";
     public static ResourceBundle resourceBundle;
-    public static String separator;
-    public static String appPath;
+    private static String separator;
+    private static String appPath;
     private static Stage mainStage;
     public static Path folderPath;
     private static Logger logger = null;
@@ -44,9 +45,10 @@ public class RunApplication extends Application {
     @Override
     public void start(Stage stage) {
         logger = buildLogger(RunApplication.class);
-        HibernateUtil.setUp();
-        setSeparator();
+        buildSeparatorAndAppPath();
         ApplyConfiguration.loadAndApplySettings(stage);
+        HibernateUtil.setUp(RunApplication.appPath);
+
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
         mainStage = stage;
@@ -77,8 +79,9 @@ public class RunApplication extends Application {
         return LoggerFactory.getLogger(clazz);
     }
 
-    public static void setSeparator() {
+    public static void buildSeparatorAndAppPath() {
         String path = new File("").getAbsolutePath();
+        RunApplication.appPath = path.replace("\\", "/");
         if (path.contains("/")) {
             separator = "/";
         } else {
@@ -100,9 +103,9 @@ public class RunApplication extends Application {
             prepareStage(MAIN_HEIGHT, MAIN_WIDTH, scene, TITLE, mainStage);
             mainController.setDividerPositionAfterShowing();
             SavingConfiguration.observableMainStage(mainStage, mainController);
-        } catch (IOException e){
-            e.printStackTrace();
-            //System.out.println(e.getMessage());
+        } catch (IOException e) {
+            Alerts.createAndShowError(String.valueOf(e));
+            logger.error("Exception when starting main window: ", e);
         }
     }
 
@@ -120,7 +123,8 @@ public class RunApplication extends Application {
             initialStage.setResizable(false);
             initController.loadPaths();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alerts.createAndShowError(String.valueOf(e));
+            logger.error("Error when starting initial window: ", e);
         }
     }
 
@@ -139,7 +143,8 @@ public class RunApplication extends Application {
             webViewController.init(clickedText);
             prepareStage(webViewHeight, webViewWidth, secondScene,"Browser", webViewStage);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alerts.createAndShowError(String.valueOf(e));
+            logger.error("Exception when starting browser window: ", e);
         }
     }
 
@@ -159,7 +164,8 @@ public class RunApplication extends Application {
             String renameWindowTitle = RunApplication.resourceBundle.getString("RenameWindowTitle");
             RunApplication.prepareStage(RENAME_HEIGHT, RENAME_WIDTH, scene, renameWindowTitle, renameStage);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alerts.createAndShowError(String.valueOf(e));
+            logger.error("Exception when starting rename window: ", e);
         }
     }
 
@@ -178,7 +184,8 @@ public class RunApplication extends Application {
             findViewController.init(codeArea);
             RunApplication.prepareStage(findViewHeight, findViewWidth, secondScene,"", findViewStage);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alerts.createAndShowError(String.valueOf(e));
+            logger.error("Exception when starting find window: ", e);
         }
     }
 
@@ -195,7 +202,8 @@ public class RunApplication extends Application {
             stage.initOwner(mainStage);
             RunApplication.prepareStage(RENAME_HEIGHT, RENAME_WIDTH, scene, "", stage);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alerts.createAndShowError(String.valueOf(e));
+            logger.error("Exception when starting help window: ", e);
         }
     }
 
@@ -214,5 +222,13 @@ public class RunApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static String getAppPath() {
+        return appPath;
+    }
+
+    public static String getSeparator() {
+        return separator;
     }
 }

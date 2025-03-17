@@ -107,7 +107,7 @@ public class TabBuilder {
             listPath = listPath.reversed();
             String tabNoteName = listPath.getLast();
             tab.setText(tabNoteName);
-            String pathTreeItem = String.join(RunApplication.separator, listPath);
+            String pathTreeItem = String.join(RunApplication.getSeparator(), listPath);
 
             FlowPane folderContent = buildContainerOfFiles(pathTreeItem);
             borderPanePage.setCenter(folderContent);
@@ -244,7 +244,7 @@ public class TabBuilder {
 
                     //getting path to the file
                     String pathTreeItem = FileService.getPath(selectedItem);
-                    int lastIndexOfSeparator = pathTreeItem.lastIndexOf(RunApplication.separator);
+                    int lastIndexOfSeparator = pathTreeItem.lastIndexOf(RunApplication.getSeparator());
                     pathTreeItem = pathTreeItem.substring(0, lastIndexOfSeparator);
 
                     //renameFile - newName, oldFile, path

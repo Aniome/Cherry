@@ -20,7 +20,6 @@ module com.app.cherry {
     requires javafx.fxml;
     requires javafx.web;
     requires org.slf4j;
-    //requires org.slf4j;
 
     opens com.app.cherry.entity;
     exports com.app.cherry;

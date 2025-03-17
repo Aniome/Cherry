@@ -99,7 +99,7 @@ public class InitController {
         Optional<File> selectedDirectory = Optional.ofNullable(directoryChooser.showDialog(initialStage));
         selectedDirectory.ifPresent(file -> {
             RunApplication.folderPath = Paths.get(file.toURI());
-            RunApplication.setSeparator();
+            RunApplication.buildSeparatorAndAppPath();
             ResourceBundle resourceBundle = RunApplication.resourceBundle;
             if (openButton.getText().equals(resourceBundle.getString("InitBrowse"))) {
                 downLabel.setFont(new Font(12));
@@ -139,8 +139,8 @@ public class InitController {
             Alerts.createAndShowWarning(resourceBundle.getString("InitLabelPathStorage"));
             return;
         }
-        RunApplication.setSeparator();
-        String path = RunApplication.folderPath.toString() + RunApplication.separator + folderName;
+        RunApplication.buildSeparatorAndAppPath();
+        String path = RunApplication.folderPath.toString() + RunApplication.getSeparator() + folderName;
         RunApplication.folderPath = Paths.get(path);
         File folder = new File(path);
         if (folder.mkdir()) {

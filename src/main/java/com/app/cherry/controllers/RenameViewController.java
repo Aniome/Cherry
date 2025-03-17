@@ -39,7 +39,7 @@ public class RenameViewController {
         }
 
         String pathTreeItem = FileService.getPath(selectedTreeItem);
-        int lastIndexOfSeparator = pathTreeItem.lastIndexOf(RunApplication.separator);
+        int lastIndexOfSeparator = pathTreeItem.lastIndexOf(RunApplication.getSeparator());
         pathTreeItem = pathTreeItem.substring(0, lastIndexOfSeparator);
         //renameFile - newName, oldFile, path
         boolean successfulRename = FileService.renameFile(newFileName, selectedTreeItem.getValue(), pathTreeItem);

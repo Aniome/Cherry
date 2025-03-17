@@ -42,8 +42,8 @@ public class ApplyConfiguration {
     public static void loadAndApplySettings(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            SettingsData settingsData = objectMapper.readValue(new File(RunApplication.appPath +
-                    RunApplication.separator + "settings.json"), SettingsData.class);
+            SettingsData settingsData = objectMapper.readValue(new File(RunApplication.getAppPath() +
+                    RunApplication.getSeparator() + "settings.json"), SettingsData.class);
 
             Path folderPath = Paths.get(settingsData.getLastPath());
             boolean isValidFolder = Files.exists(folderPath) && Files.isExecutable(folderPath)

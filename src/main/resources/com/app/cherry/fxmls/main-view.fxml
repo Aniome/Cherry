@@ -139,40 +139,41 @@
                 </GridPane>
             </top>
         </BorderPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-              <TabPane fx:id="tabPane" minWidth="150.0" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                  <Tab text="%EmptyTab">
-                      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: -color-bg-default;">
-                          <center>
-                              <Label text="%EmptyPage" BorderPane.alignment="CENTER">
-                                  <font>
-                                      <Font size="29.0" />
-                                  </font>
-                              </Label>
-                          </center>
-                      </BorderPane>
-                      <graphic>
-                          <Circle fill="#bcbaba" opacity="0.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
-                      </graphic>
-                  </Tab>
-                  <Tab closable="false" onSelectionChanged="#addTab" text="+">
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </Tab>
-              </TabPane>
-            <HBox fx:id="titleBar" alignment="TOP_RIGHT" spacing="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Spacer />
-                  <Button mnemonicParsing="false" scaleY="0.8" text="-" HBox.hgrow="ALWAYS" />
-                  <Button layoutX="1057.0" layoutY="10.0" mnemonicParsing="false" scaleY="0.8" text="□" HBox.hgrow="ALWAYS" />
-                  <Button layoutX="1057.0" layoutY="10.0" mnemonicParsing="false" scaleY="0.8" text="x" HBox.hgrow="ALWAYS" />
-               </children>
-               <padding>
-                  <Insets right="5.0" top="1.0" />
-               </padding>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <TabPane fx:id="tabPane" minWidth="150.0" stylesheets="@../css/tabPane.css" tabClosingPolicy="ALL_TABS"
+                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                     AnchorPane.topAnchor="0.0">
+                <Tab text="%EmptyTab">
+                    <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: -color-bg-default;">
+                        <center>
+                            <Label text="%EmptyPage" BorderPane.alignment="CENTER">
+                                <font>
+                                    <Font size="29.0"/>
+                                </font>
+                            </Label>
+                        </center>
+                    </BorderPane>
+                    <graphic>
+                        <Circle fill="#bcbaba" opacity="0.0" radius="5.0" stroke="BLACK" strokeType="INSIDE"/>
+                    </graphic>
+                </Tab>
+                <Tab closable="false" onSelectionChanged="#addTab" text="+">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                </Tab>
+            </TabPane>
+            <HBox fx:id="titleBar" alignment="TOP_RIGHT" spacing="5.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+                <padding>
+                    <Insets right="5.0" top="1.0"/>
+                </padding>
+                <Spacer/>
+                <Button mnemonicParsing="false" scaleY="0.8" text="-" HBox.hgrow="ALWAYS"/>
+                <Button layoutX="1057.0" layoutY="10.0" mnemonicParsing="false" scaleY="0.8" text="□"
+                        HBox.hgrow="ALWAYS"/>
+                <Button layoutX="1057.0" layoutY="10.0" mnemonicParsing="false" scaleY="0.8" text="x"
+                        HBox.hgrow="ALWAYS"/>
             </HBox>
-         </children>
-      </AnchorPane>
+        </AnchorPane>
     </SplitPane>
     <ModalPane fx:id="modalPane">
         <StackPane.margin>

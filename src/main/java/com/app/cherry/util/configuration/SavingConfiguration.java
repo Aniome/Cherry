@@ -59,7 +59,7 @@ public class SavingConfiguration {
 
         SettingsData settingsData = generateSettingsData(stage, mainController, path);
         ObjectMapper objectMapper = new ObjectMapper();
-        String settings = RunApplication.appPath + RunApplication.separator + "settings.json";
+        String settings = RunApplication.getAppPath() + RunApplication.getSeparator() + "settings.json";
         try {
             objectMapper.writeValue(new File(settings), settingsData);
         } catch (IOException e) {

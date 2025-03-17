@@ -12,20 +12,24 @@ import java.util.List;
 public class FavoriteNotesDAO {
 
     public static void setPathNote(String pathNote) {
-        HibernateUtil.sessionFactory.inTransaction(session -> {
-            List<FavoriteNotes> favoriteNotesList
-                    = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
-            if (containsPathNote(pathNote, favoriteNotesList)) {
-                Alerts.createAndShowWarning(RunApplication.resourceBundle.getString("FavoriteNotesContains"));
-                return;
-            }
-            FavoriteNotes favoriteNotes = new FavoriteNotes();
-            List<Integer> listId = favoriteNotesList.stream().map(FavoriteNotes::getId).toList();
-            int id = HibernateUtil.getId(listId);
-            favoriteNotes.setId(id);
-            favoriteNotes.setPathNote(pathNote);
-            session.persist(favoriteNotes);
-        });
+        try {
+            HibernateUtil.getSessionFactory().inTransaction(session -> {
+                List<FavoriteNotes> favoriteNotesList
+                        = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
+                if (containsPathNote(pathNote, favoriteNotesList)) {
+                    Alerts.createAndShowWarning(RunApplication.resourceBundle.getString("FavoriteNotesContains"));
+                    return;
+                }
+                FavoriteNotes favoriteNotes = new FavoriteNotes();
+                List<Integer> listId = favoriteNotesList.stream().map(FavoriteNotes::getId).toList();
+                int id = HibernateUtil.getId(listId);
+                favoriteNotes.setId(id);
+                favoriteNotes.setPathNote(pathNote);
+                session.persist(favoriteNotes);
+            });
+        } catch (Exception e) {
+            Alerts.createAndShowError(String.valueOf(e));
+        }
     }
 
     private static boolean containsPathNote(String pathNote, List<FavoriteNotes> favoriteNotesList) {
@@ -38,7 +42,7 @@ public class FavoriteNotesDAO {
     }
 
     public static List<FavoriteNotes> getFavoriteNotes() {
-        Session session = HibernateUtil.sessionFactory.openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             List<FavoriteNotes> favoriteNotes
                     = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
@@ -61,11 +65,15 @@ public class FavoriteNotesDAO {
     }
 
     public static void deleteFavoriteNote(int id) {
-        HibernateUtil.sessionFactory.inTransaction(session -> {
-            FavoriteNotes deletingNote = session.find(FavoriteNotes.class, id);
-            if (deletingNote != null) {
-                session.remove(deletingNote);
-            }
-        });
+        try {
+            HibernateUtil.getSessionFactory().inTransaction(session -> {
+                FavoriteNotes deletingNote = session.find(FavoriteNotes.class, id);
+                if (deletingNote != null) {
+                    session.remove(deletingNote);
+                }
+            });
+        } catch (Exception e) {
+            Alerts.createAndShowError(String.valueOf(e));
+        }
     }
 }

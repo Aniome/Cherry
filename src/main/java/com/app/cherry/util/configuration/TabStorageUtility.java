@@ -44,7 +44,7 @@ public class TabStorageUtility {
         int openedSavingTabsLength = openedSavingTabs.length - 1;
         ObservableList<Tab> tabs = tabPane.getTabs();
         boolean isFirstTab = true;
-        String separator = RunApplication.separator.equals("/") ? "/" : "\\\\";
+        String separator = RunApplication.getSeparator().equals("/") ? "/" : "\\\\";
 
         //loading tabs
         for (int i = openedSavingTabsLength; i >= 0; i--) {
@@ -167,8 +167,8 @@ public class TabStorageUtility {
         ObjectMapper objectMapper = new ObjectMapper();
         PathNote openedTabsPathNote = new PathNote(openedTabs, selectedIndex);
         try {
-            String savingPath = RunApplication.folderPath.toString() + RunApplication.separator + ".cherry"
-                    + RunApplication.separator + "openedTabs.json";
+            String savingPath = RunApplication.folderPath.toString() + RunApplication.getSeparator() + ".cherry"
+                    + RunApplication.getSeparator() + "openedTabs.json";
             objectMapper.writeValue(new File(savingPath), openedTabsPathNote);
         } catch (IOException e) {
             Alerts.createAndShowError(e.getMessage());
@@ -192,7 +192,7 @@ public class TabStorageUtility {
             currentCrumb = (BreadCrumbItem<?>) currentCrumb.getParent();
         }
         StringBuilder path = new StringBuilder(RunApplication.folderPath.toString());
-        pathNoteList.forEach(item -> path.append(RunApplication.separator).append(item));
+        pathNoteList.forEach(item -> path.append(RunApplication.getSeparator()).append(item));
         if (isFile) {
             path.append(".md");
         }
@@ -200,14 +200,14 @@ public class TabStorageUtility {
     }
 
     private static File checkExistingSavingOpenedTabs() {
-        String settingsFolderPath = RunApplication.folderPath.toString() + RunApplication.separator + ".cherry";
+        String settingsFolderPath = RunApplication.folderPath.toString() + RunApplication.getSeparator() + ".cherry";
         File settingsFolder = new File(settingsFolderPath);
         if (!settingsFolder.exists()) {
             if (!settingsFolder.mkdir())
                 return null;
         }
 
-        File openedTabsFile = new File(settingsFolderPath + RunApplication.separator + "openedTabs.json");
+        File openedTabsFile = new File(settingsFolderPath + RunApplication.getSeparator() + "openedTabs.json");
         if (!openedTabsFile.exists()) {
             return null;
         }

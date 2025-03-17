@@ -110,7 +110,7 @@ public class FileService {
 
     public static File checkExists(String path, String extension) {
         ResourceBundle resourceBundle = RunApplication.resourceBundle;
-        String untitled = RunApplication.separator + resourceBundle.getString("FileNameUntitled");
+        String untitled = RunApplication.getSeparator() + resourceBundle.getString("FileNameUntitled");
         File file = new File(path + untitled + extension);
         if (file.exists()) {
             int i = 1;
@@ -127,13 +127,13 @@ public class FileService {
     }
 
     public static boolean renameFile(String newName, String oldName, String path) {
-        File oldFile = new File(path + RunApplication.separator + oldName + ".md");
-        File newFile = new File(path + RunApplication.separator + newName + ".md");
+        File oldFile = new File(path + RunApplication.getSeparator() + oldName + ".md");
+        File newFile = new File(path + RunApplication.getSeparator() + newName + ".md");
         return oldFile.renameTo(newFile);
     }
 
     public static String getPath(TreeItem<String> treeItem) {
-        StringBuilder pathName = new StringBuilder(RunApplication.folderPath.toString() + RunApplication.separator);
+        StringBuilder pathName = new StringBuilder(RunApplication.folderPath.toString() + RunApplication.getSeparator());
         List<String> listPath = new LinkedList<>();
         TreeItem<String> loadingItem = treeItem;
         while (treeItem.getParent() != null) {
@@ -141,7 +141,7 @@ public class FileService {
             treeItem = treeItem.getParent();
         }
         listPath = listPath.reversed();
-        listPath.forEach(item -> pathName.append(item).append(RunApplication.separator));
+        listPath.forEach(item -> pathName.append(item).append(RunApplication.getSeparator()));
         pathName.deleteCharAt(pathName.length() - 1);
         if (loadingItem.isLeaf()) {
             pathName.append(".md");

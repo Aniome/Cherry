@@ -93,18 +93,6 @@ public class MainController {
         TabStorageUtility.loadSavingTabs(tabPane, treeView.getRoot(), this);
     }
 
-    private void limitTabHeaderArea() {
-        tabPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
-                var headerArea = tabPane.lookup(".tab-header-area");
-                if (headerArea != null) {
-                    headerArea.setStyle(headerArea.getStyle() + "; -fx-max-width: 300px;");
-                    //headerArea.setMaxWidth(300); // Ограничение ширины
-                }
-            }
-        });
-    }
-
     private void applyThemeOnLeftPanel() {
         ApplyConfiguration.setLeftPanelBorderPane(leftPanelBorderPane);
         ApplyConfiguration.applyThemeOnLeftPanelInMainPage();
@@ -112,7 +100,6 @@ public class MainController {
 
     public void setDividerPositionAfterShowing() {
         splitPane.setDividerPositions(ApplyConfiguration.getDividerPosition());
-        limitTabHeaderArea();
     }
 
     private void loadFilesInTreeview() {
@@ -287,7 +274,7 @@ public class MainController {
                     @Override
                     public FileVisitResult visitFile(Path file, @NotNull BasicFileAttributes attrs) {
                         String pathString = file.toString();
-                        int ind = pathString.lastIndexOf(RunApplication.separator);
+                        int ind = pathString.lastIndexOf(RunApplication.getSeparator());
                         pathString = pathString.substring(ind + 1);
                         if (pathString.contains(newValue)) {
                             if (pathString.contains(".md")) {
