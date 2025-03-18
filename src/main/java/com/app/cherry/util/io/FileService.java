@@ -8,10 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,12 +44,12 @@ public class FileService {
     }
 
     public static void writeFile(TreeItem<String> treeItem, String content) {
-        try (RandomAccessFile file = new RandomAccessFile(getPath(treeItem), "rw");
-             FileChannel channel = file.getChannel()) {
-            ByteBuffer buffer = ByteBuffer.wrap(content.getBytes());
-            channel.write(buffer);
+        //I forgot why I made the previous decision
+        //I had a problem writing multiple line breaks to a file
+        try (FileWriter fileWriter = new FileWriter(getPath(treeItem))) {
+            fileWriter.write(content);
         } catch (IOException e) {
-            Alerts.createAndShowError(e.getMessage());
+            Alerts.createAndShowWarning(e.getMessage());
         }
     }
 

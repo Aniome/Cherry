@@ -177,11 +177,8 @@ public class MainController {
 
         Thread threadAddUnsavedChanges = new Thread(() -> Platform.runLater(() -> {
             Circle circleUnsavedChanges = (Circle) tab.getGraphic();
-            final boolean[] isUnsavedChanges = {false};
             codeArea.textProperty().addListener((observableValue, s, t1) -> {
-                if (isUnsavedChanges[0]) return;
                 circleUnsavedChanges.setOpacity(1);
-                isUnsavedChanges[0] = true;
             });
         }));
         threadAddUnsavedChanges.start();

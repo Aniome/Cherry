@@ -189,16 +189,19 @@ public class MarkdownArea {
         @Override
         public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
             if (lm.getAddedSize() > 0) {
-                int paragraphSize = area.getParagraphs().size();
-                if (index < paragraphSize) {
-                    index++;
-                } else {
-                    int currentParagraph = area.getCurrentParagraph();
-                    String text = area.getText(currentParagraph, 0,
-                            currentParagraph, area.getParagraphLength(currentParagraph));
-                    int startPos = area.getAbsolutePosition(currentParagraph, 0);
-                    area.setStyleSpans(startPos, computeStyles.apply(text));
-                }
+                //don't remove it
+                Platform.runLater( () -> {
+                    int paragraphSize = area.getParagraphs().size();
+                    if (index < paragraphSize) {
+                        index++;
+                    } else {
+                        int currentParagraph = area.getCurrentParagraph();
+                        String text = area.getText(currentParagraph, 0,
+                                currentParagraph, area.getParagraphLength(currentParagraph));
+                        int startPos = area.getAbsolutePosition(currentParagraph, 0);
+                        area.setStyleSpans(startPos, computeStyles.apply(text));
+                    }
+                });
             }
         }
     }

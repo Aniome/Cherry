@@ -51,8 +51,8 @@ public class TabBuilder {
     @NotNull
     public BorderPane buildTabContent(Tab tab, TreeItem<String> selectedItem, Node centerContent,
                                       boolean createTitleBar) {
-        BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(getPathToTheNote(selectedItem));
-        Breadcrumbs<String> crumbs = buildStringBreadcrumbs(root);
+        BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(getPathToTheTreeViewNote(selectedItem));
+        Breadcrumbs<String> crumbs = buildBreadcrumbs(root);
 
         String borderColor = ApplyConfiguration.getBorderColor();
 
@@ -194,7 +194,7 @@ public class TabBuilder {
     }
 
     @NotNull
-    private Breadcrumbs<String> buildStringBreadcrumbs(BreadCrumbItem<String> root) {
+    private Breadcrumbs<String> buildBreadcrumbs(BreadCrumbItem<String> root) {
         Breadcrumbs<String> crumbs = new Breadcrumbs<>(root);
         breadCrumbsButtons = new ArrayList<>();
         crumbs.setCrumbFactory(crumb -> {
@@ -286,7 +286,7 @@ public class TabBuilder {
         }};
     }
 
-    private static String[] getPathToTheNote(TreeItem<String> selectedItem) {
+    private static String[] getPathToTheTreeViewNote(TreeItem<String> selectedItem) {
         TreeItem<String> currentTreeItem = selectedItem;
         List<String> breadCrumbItems = new ArrayList<>();
         while (currentTreeItem.getParent() != null) {
