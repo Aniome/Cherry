@@ -50,7 +50,7 @@ public class TabStorageUtility {
         for (int i = openedSavingTabsLength; i >= 0; i--) {
             if (openedSavingTabs[i] == null) {
                 Tab emptyTab;
-                String tabName = RunApplication.resourceBundle.getString("EmptyTab");
+                String tabName = RunApplication.getResourceBundle().getString("EmptyTab");
                 if (isFirstTab) {
                     emptyTab = tabs.getFirst();
                     emptyTab.setText(tabName);
@@ -127,7 +127,6 @@ public class TabStorageUtility {
         try {
             return objectMapper.readValue(openedTabsFile, PathNote.class);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             return null;
         }
     }

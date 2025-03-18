@@ -1,5 +1,6 @@
 package com.app.cherry.controllers;
 
+import com.app.cherry.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 
@@ -11,7 +12,7 @@ public class WebViewController {
         try {
             engine.getEngine().load(link);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Alerts.createAndShowError(e.getMessage());
         }
     }
 }

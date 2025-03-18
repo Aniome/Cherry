@@ -45,7 +45,7 @@ public class InitController {
 
     @FXML
     private void templateStorage() {
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        ResourceBundle resourceBundle = RunApplication.getResourceBundle();
         //change buttons
         changeControls(upHBox, new String[]{resourceBundle.getString("InitNameStorage")});
         changeControls(downHBox, new String[]{resourceBundle.getString("InitLocation"),
@@ -100,7 +100,7 @@ public class InitController {
         selectedDirectory.ifPresent(file -> {
             RunApplication.folderPath = Paths.get(file.toURI());
             RunApplication.buildSeparatorAndAppPath();
-            ResourceBundle resourceBundle = RunApplication.resourceBundle;
+            ResourceBundle resourceBundle = RunApplication.getResourceBundle();
             if (openButton.getText().equals(resourceBundle.getString("InitBrowse"))) {
                 downLabel.setFont(new Font(12));
                 downLabel.setText(resourceBundle.getString("InitStoragePath") + " "
@@ -113,7 +113,7 @@ public class InitController {
 
     @FXML
     private void backToMainMenu() {
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        ResourceBundle resourceBundle = RunApplication.getResourceBundle();
         changeControls(upHBox, new String[]{resourceBundle.getString("NewStorage")});
         changeControls(downHBox, new String[]{resourceBundle.getString("OpenStorage"),
                 resourceBundle.getString("OpenButton")});
@@ -129,7 +129,7 @@ public class InitController {
 
     @FXML
     private void createStorage() {
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        ResourceBundle resourceBundle = RunApplication.getResourceBundle();
         String folderName = textField.getText();
         if (folderName.isEmpty()){
             Alerts.createAndShowWarning(resourceBundle.getString("InitLabelNameStorage"));

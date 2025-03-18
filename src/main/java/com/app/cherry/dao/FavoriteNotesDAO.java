@@ -17,7 +17,8 @@ public class FavoriteNotesDAO {
                 List<FavoriteNotes> favoriteNotesList
                         = session.createQuery("from FavoriteNotes", FavoriteNotes.class).getResultList();
                 if (containsPathNote(pathNote, favoriteNotesList)) {
-                    Alerts.createAndShowWarning(RunApplication.resourceBundle.getString("FavoriteNotesContains"));
+                    Alerts.createAndShowWarning(RunApplication.getResourceBundle()
+                            .getString("FavoriteNotesContains"));
                     return;
                 }
                 FavoriteNotes favoriteNotes = new FavoriteNotes();

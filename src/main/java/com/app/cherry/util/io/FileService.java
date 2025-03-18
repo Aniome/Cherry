@@ -17,7 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class FileService {
     //List for FileVisitor
@@ -52,22 +51,24 @@ public class FileService {
             ByteBuffer buffer = ByteBuffer.wrap(content.getBytes());
             channel.write(buffer);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alerts.createAndShowError(e.getMessage());
         }
     }
 
     public static boolean deleteFile(TreeItem<String> treeItem) {
         String filePath = getPath(treeItem);
         FileUtils fileUtils = FileUtils.getInstance();
+        //Checks if the current file system supports the Recycle Bin.
         if (fileUtils.hasTrash()) {
             try {
                 fileUtils.moveToTrash(new File(filePath));
-            } catch (IOException ioe) {
-                System.out.println(ioe.getMessage());
+            } catch (IOException e) {
+                Alerts.createAndShowError(e.getMessage());
                 return false;
             }
         } else {
-            System.out.println("No Trash available");
+            Alerts.createAndShowError(RunApplication.getResourceBundle()
+                    .getString("ContextMenuCodeAreaDeleteError"));
         }
         return true;
     }
@@ -109,8 +110,8 @@ public class FileService {
     }
 
     public static File checkExists(String path, String extension) {
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
-        String untitled = RunApplication.getSeparator() + resourceBundle.getString("FileNameUntitled");
+        String untitled = RunApplication.getSeparator() + RunApplication.getResourceBundle().
+                getString("FileNameUntitled");
         File file = new File(path + untitled + extension);
         if (file.exists()) {
             int i = 1;

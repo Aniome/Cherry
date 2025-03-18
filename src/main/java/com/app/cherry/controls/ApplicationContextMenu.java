@@ -19,7 +19,7 @@ public class ApplicationContextMenu {
 
     public static void buildTreeViewContextMenu(TreeView<String> treeView, MainController mainController,
                                                 Stage renameStage, TabPane tabPane) {
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        ResourceBundle resourceBundle = RunApplication.getResourceBundle();
 
         MenuItem newNoteMenuItem = new MenuItem(resourceBundle.getString("ContextMenuNewNote"));
         newNoteMenuItem.setOnAction(actionEvent -> {
@@ -41,7 +41,7 @@ public class ApplicationContextMenu {
     }
 
     private static MenuItem getRenameMenuItem(Stage renameStage, MainController mainController) {
-        MenuItem renameMenuItem = new MenuItem(RunApplication.resourceBundle.getString("ContextMenuRename"));
+        MenuItem renameMenuItem = new MenuItem(RunApplication.getResourceBundle().getString("ContextMenuRename"));
         renameMenuItem.setOnAction(actionEvent -> {
             if (renameStage == null)
                 mainController.openRenameWindow();
@@ -52,7 +52,8 @@ public class ApplicationContextMenu {
     }
 
     private static MenuItem getFavoriteMenuItem(TreeView<String> treeView) {
-        MenuItem favoriteMenuItem = new MenuItem(RunApplication.resourceBundle.getString("ContextMenuFavorite"));
+        MenuItem favoriteMenuItem = new MenuItem(RunApplication.getResourceBundle()
+                .getString("ContextMenuFavorite"));
         favoriteMenuItem.setOnAction(actionEvent -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
             FavoriteNotesDAO.setPathNote(FileService.getPath(selectedItem));
@@ -61,7 +62,7 @@ public class ApplicationContextMenu {
     }
 
     private static MenuItem getDeleteMenuItem(TreeView<String> treeView, TabPane tabPane) {
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        ResourceBundle resourceBundle = RunApplication.getResourceBundle();
         MenuItem deleteMenuItem = new MenuItem(resourceBundle.getString("ContextMenuDelete"));
         deleteMenuItem.setOnAction(actionEvent -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
@@ -81,14 +82,17 @@ public class ApplicationContextMenu {
     }
 
     public static ContextMenu buildCodeAreaContextMenu(CodeArea codeArea) {
-        MenuItem cutMenuItem = new MenuItem(RunApplication.resourceBundle.getString("ContextMenuCodeAreaCut"));
+        MenuItem cutMenuItem = new MenuItem(RunApplication.getResourceBundle()
+                .getString("ContextMenuCodeAreaCut"));
         cutMenuItem.setOnAction(actionEvent -> codeArea.cut());
-        MenuItem copyMenuItem = new MenuItem(RunApplication.resourceBundle.getString("ContextMenuCodeAreaCopy"));
+        MenuItem copyMenuItem = new MenuItem(RunApplication.getResourceBundle()
+                .getString("ContextMenuCodeAreaCopy"));
         copyMenuItem.setOnAction(actionEvent -> codeArea.copy());
-        MenuItem pasteMenuItem = new MenuItem(RunApplication.resourceBundle.getString("ContextMenuCodeAreaPaste"));
+        MenuItem pasteMenuItem = new MenuItem(RunApplication.getResourceBundle()
+                .getString("ContextMenuCodeAreaPaste"));
         pasteMenuItem.setOnAction(actionEvent -> codeArea.paste());
         MenuItem deleteMenuItem = new MenuItem(
-                RunApplication.resourceBundle.getString("ContextMenuCodeAreaDelete"));
+                RunApplication.getResourceBundle().getString("ContextMenuCodeAreaDelete"));
         deleteMenuItem.setOnAction(actionEvent -> codeArea.deleteText(codeArea.getSelection()));
 
         List.of(cutMenuItem, copyMenuItem, pasteMenuItem, deleteMenuItem)

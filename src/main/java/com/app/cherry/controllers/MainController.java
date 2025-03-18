@@ -141,7 +141,7 @@ public class MainController {
         tab.setText(filename);
 
         TabBuilder tabBuilder = new TabBuilder();
-        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, tabBuilder);
+        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, tabBuilder, tab);
         tab.setContent(tabBuilder.buildTabContent(tab, selectedItem, markdownArea, true));
         CodeArea codeArea = tabBuilder.getCodeArea();
 
@@ -190,7 +190,7 @@ public class MainController {
     //Creates a tab and gives focus to it
     @FXML
     private Tab addTab() {
-        Tab tab = new Tab(RunApplication.resourceBundle.getString("EmptyTab"));
+        Tab tab = new Tab(RunApplication.getResourceBundle().getString("EmptyTab"));
         TabBuilder.buildEmptyTab(tab);
         TabBuilder.selectTab(tab, tabPane);
         return tab;
@@ -261,7 +261,7 @@ public class MainController {
         vboxChildren.addAll(hBox, listView);
         VBox.setVgrow(listView, Priority.ALWAYS);
 
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        ResourceBundle resourceBundle = RunApplication.getResourceBundle();
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty())
                 return;

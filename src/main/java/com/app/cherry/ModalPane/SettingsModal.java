@@ -58,8 +58,7 @@ public class SettingsModal {
 
     private HBox createTabsVbox(VBox listSettings) {
         ListView<String> listView = new ListView<>();
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
-        String tabGeneral = resourceBundle.getString("SettingsTabGeneral");
+        String tabGeneral = RunApplication.getResourceBundle().getString("SettingsTabGeneral");
         listView.getItems().addAll(tabGeneral);
         listView.setPadding(new Insets(10, 10, 10, 10));
         listView.setStyle("-fx-border-radius: 20;");
@@ -92,7 +91,7 @@ public class SettingsModal {
         String settingsVboxStyle = "-fx-background-radius: 10; -fx-border-radius: 20;";
         ApplyConfiguration.applyThemeOnSettingsPage(settingsVbox, settingsVboxStyle);
 
-        ResourceBundle resourceBundle = RunApplication.resourceBundle;
+        ResourceBundle resourceBundle = RunApplication.getResourceBundle();
         String languageEng = resourceBundle.getString("LanguageEng");
         String languageRus = resourceBundle.getString("LanguageRus");
 
@@ -125,11 +124,11 @@ public class SettingsModal {
 
         languageChoiceBoxSelectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals(languageRus)) {
-                RunApplication.resourceBundle = ResourceBundle.getBundle("local/text",
-                        Locale.of("ru"));
+                RunApplication.setResourceBundle(ResourceBundle.getBundle("local/text",
+                        Locale.of("ru")));
                 SavingConfiguration.language = "ru";
             } else {
-                RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+                RunApplication.setResourceBundle(ResourceBundle.getBundle("local/text", Locale.ENGLISH));
                 SavingConfiguration.language = "en";
             }
         });

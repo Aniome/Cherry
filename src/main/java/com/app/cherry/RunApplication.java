@@ -35,7 +35,7 @@ public class RunApplication extends Application {
     public static final double RENAME_WIDTH = 600;
     public static final double RENAME_HEIGHT = 250;
     public static final String TITLE = "Cherry";
-    public static ResourceBundle resourceBundle;
+    private static ResourceBundle resourceBundle;
     private static String separator;
     private static String appPath;
     private static Stage mainStage;
@@ -48,7 +48,6 @@ public class RunApplication extends Application {
         buildSeparatorAndAppPath();
         ApplyConfiguration.loadAndApplySettings(stage);
         HibernateUtil.setUp(RunApplication.appPath);
-
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //width height
         mainStage = stage;
@@ -230,5 +229,13 @@ public class RunApplication extends Application {
 
     public static String getSeparator() {
         return separator;
+    }
+
+    public static ResourceBundle getResourceBundle() {
+        return resourceBundle;
+    }
+
+    public static void setResourceBundle(ResourceBundle resourceBundle) {
+        RunApplication.resourceBundle = resourceBundle;
     }
 }

@@ -36,7 +36,7 @@ public class TabBuilder {
     public void buildTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
         Tab tab = new Tab(fileName);
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
-        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, this);
+        StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, this, tab);
         tab.setContent(buildTabContent(tab, selectedItem, markdownArea, true));
         TabBuilder.selectTab(tab, tabPane);
     }
@@ -83,7 +83,7 @@ public class TabBuilder {
 
     public static void buildEmptyTab(Tab tab) {
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
-        Label emptyTab = new Label(RunApplication.resourceBundle.getString("LabelEmptyTab"));
+        Label emptyTab = new Label(RunApplication.getResourceBundle().getString("LabelEmptyTab"));
         emptyTab.setFont(new Font(29));
         //center top right bottom left
         BorderPane tabContent = new BorderPane(emptyTab);
@@ -276,7 +276,7 @@ public class TabBuilder {
         Button saveButton = new Button("", saveIcon) {{
             setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         }};
-        saveButton.setOnMouseClicked(event -> MarkdownArea.saveText(codeArea, selectedItem));
+        saveButton.setOnMouseClicked(event -> MarkdownArea.saveText(codeArea, selectedItem, tab));
 
         HBox.setHgrow(noteName, Priority.ALWAYS);
 

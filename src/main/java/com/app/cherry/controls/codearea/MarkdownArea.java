@@ -8,6 +8,7 @@ import com.app.cherry.util.io.FileService;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -45,7 +47,7 @@ public class MarkdownArea {
             + "|(?<WORDS>" + WORDS_PATTERN + ")"
     );
 
-    public static StackPane createMarkdownArea(TreeItem<String> selectedItem, TabBuilder tabBuilder) {
+    public static StackPane createMarkdownArea(TreeItem<String> selectedItem, TabBuilder tabBuilder, Tab tab) {
         CodeArea codeArea = new CodeArea();
         tabBuilder.setCodeArea(codeArea);
         codeArea.setStyle("-fx-font-size: " + fontSize + "px;");
@@ -76,7 +78,7 @@ public class MarkdownArea {
             }
             KeyCombination saveCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
             if (saveCombination.match(event)) {
-                MarkdownArea.saveText(codeArea, selectedItem);
+                MarkdownArea.saveText(codeArea, selectedItem, tab);
             }
         });
 
@@ -102,7 +104,9 @@ public class MarkdownArea {
         return new StackPane(new VirtualizedScrollPane<>(codeArea));
     }
 
-    public static void saveText(CodeArea codeArea, TreeItem<String> selectedItem) {
+    public static void saveText(CodeArea codeArea, TreeItem<String> selectedItem, Tab tab) {
+        Circle circle = (Circle) tab.getGraphic();
+        circle.setOpacity(0);
         FileService.writeFile(selectedItem, codeArea.getText());
     }
 

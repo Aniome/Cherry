@@ -18,7 +18,6 @@ import javafx.scene.text.Font;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.nio.file.Paths;
-import java.util.ResourceBundle;
 
 public class ListCellItemInitPage extends ListCell<String> {
 
@@ -27,7 +26,6 @@ public class ListCellItemInitPage extends ListCell<String> {
     private final HBox root;
 
     public ListCellItemInitPage(ListView<String> listView, InitController initController) {
-
         titleLabel = new Label();
 
         folderLabel = new Label();
@@ -61,8 +59,7 @@ public class ListCellItemInitPage extends ListCell<String> {
                 RunApplication.folderPath = Paths.get(path);
                 initController.showMainStage();
             } else {
-                ResourceBundle resourceBundle = RunApplication.resourceBundle;
-                Alerts.createAndShowWarning(resourceBundle.getString("InitFolderNotFound"));
+                Alerts.createAndShowWarning(RunApplication.getResourceBundle().getString("InitFolderNotFound"));
             }
         });
     }

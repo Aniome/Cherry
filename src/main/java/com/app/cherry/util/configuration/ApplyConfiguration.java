@@ -55,11 +55,11 @@ public class ApplyConfiguration {
             }
 
             if (settingsData.getLanguage().equals("en")) {
-                RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+                RunApplication.setResourceBundle(ResourceBundle.getBundle("local/text", Locale.ENGLISH));
                 SavingConfiguration.language = "en";
             } else {
-                RunApplication.resourceBundle = ResourceBundle.getBundle("local/text",
-                        Locale.of("ru"));
+                RunApplication.setResourceBundle(ResourceBundle.getBundle("local/text",
+                        Locale.of("ru")));
                 SavingConfiguration.language = "ru";
             }
 
@@ -89,7 +89,7 @@ public class ApplyConfiguration {
     private static void applyDefaultSettings(Stage mainStage) {
         RunApplication.folderPath = null;
 
-        RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+        RunApplication.setResourceBundle(ResourceBundle.getBundle("local/text", Locale.ENGLISH));
         SavingConfiguration.language = "en";
 
         theme = DARK;

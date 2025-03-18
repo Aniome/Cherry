@@ -34,7 +34,7 @@ public class RenameViewController {
     private void confirm() {
         String newFileName = txtField.getText();
         if (newFileName.isEmpty()) {
-            Alerts.createAndShowWarning(RunApplication.resourceBundle.getString("RenameEmptyTextField"));
+            Alerts.createAndShowWarning(RunApplication.getResourceBundle().getString("RenameEmptyTextField"));
             return;
         }
 

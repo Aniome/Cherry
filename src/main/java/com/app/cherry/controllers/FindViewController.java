@@ -92,7 +92,7 @@ public class FindViewController {
                 }
 
                 Platform.runLater(() -> {
-                    ResourceBundle resourceBundle = RunApplication.resourceBundle;
+                    ResourceBundle resourceBundle = RunApplication.getResourceBundle();
                     if (uniqueMap.isEmpty()) {
                         Alerts.createAndShowWarning(resourceBundle.getString("DuplicatesNotFound"));
                     }
@@ -173,9 +173,8 @@ public class FindViewController {
                     count++;
                 }
             }
-            ResourceBundle resourceBundle = RunApplication.resourceBundle;
-            accordionResult.getPanes().add(new TitledPane(resourceBundle.getString("FindCount") + count,
-                    null));
+            accordionResult.getPanes().add(new TitledPane(RunApplication.getResourceBundle().getString(
+                    "FindCount") + count, null));
         });
     }
 
