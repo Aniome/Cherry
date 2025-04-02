@@ -6,6 +6,7 @@ import com.app.cherry.util.io.FileService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
@@ -50,7 +51,7 @@ public class RenameViewController {
 
             VBox vBoxTopContainer = (VBox) borderPaneContent.getTop();
             if (vBoxTopContainer == null) {
-                //if tab is empty, exit
+                //if the tab is empty, exit
                 closeStage();
                 return;
             }
@@ -60,6 +61,12 @@ public class RenameViewController {
             selectedTab.setText(newFileName);
             TextField noteName = (TextField) titleHbox.getChildren().getFirst();
             noteName.setText(newFileName);
+
+            HBox crumbs = (HBox) topContainerChildren.getFirst();
+            Node lastButton = crumbs.getChildren().getLast();
+            if (lastButton instanceof Button button) {
+                button.setText(newFileName);
+            }
         }
 
         closeStage();

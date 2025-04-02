@@ -8,6 +8,7 @@ import com.app.cherry.controls.codearea.MarkdownArea;
 import com.app.cherry.util.configuration.ApplyConfiguration;
 import com.app.cherry.util.icons.IconConfigurer;
 import com.app.cherry.util.io.FileService;
+import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -30,44 +32,35 @@ import java.util.List;
 public class TabBuilder {
     private String oldTextFieldString;
     private CodeArea codeArea;
-    private List<Button> breadCrumbsButtons;
 
-    //adding tab when create new file
-    public void buildTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem) {
+    //adding tab when create a new file
+    public void buildTab(String fileName, TabPane tabPane, TreeItem<String> selectedItem, TreeView<String> treeView) {
         Tab tab = new Tab(fileName);
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
         StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, this, tab);
-        tab.setContent(buildTabContent(tab, selectedItem, markdownArea, true));
+        tab.setContent(buildTabContent(tab, selectedItem, markdownArea, true, treeView));
         TabBuilder.selectTab(tab, tabPane);
     }
 
-    public void buildFolderTab(Tab tab, TreeItem<String> selectedItem, String path)  {
+    public void buildFolderTab(Tab tab, TreeItem<String> selectedItem, String path, TreeView<String> treeView) {
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
         FlowPane containerOfFiles = buildContainerOfFiles(path);
-        tab.setContent(buildTabContent(tab, selectedItem, containerOfFiles, false));
+        tab.setContent(buildTabContent(tab, selectedItem, containerOfFiles, false, treeView));
     }
 
     //Creates a form and fills it with content
     @NotNull
     public BorderPane buildTabContent(Tab tab, TreeItem<String> selectedItem, Node centerContent,
-                                      boolean createTitleBar) {
-        BreadCrumbItem<String> root = Breadcrumbs.buildTreeModel(getPathToTheTreeViewNote(selectedItem));
-        Breadcrumbs<String> crumbs = buildBreadcrumbs(root);
-
+                                      boolean createTitleBar, TreeView<String> treeView) {
+        HBox crumbs = buildCrumbs(getPathToTheTreeViewNote(selectedItem), treeView);
         String borderColor = ApplyConfiguration.getBorderColor();
-
-        VBox vBoxCrumbs = new VBox(crumbs);
-        vBoxCrumbs.setAlignment(Pos.CENTER);
-        vBoxCrumbs.setPadding(new Insets(-10));
-
         HBox hBoxTitleBar = buildHBoxTitleBar(selectedItem, tab, crumbs);
 
         VBox vBoxTopContainer;
-
         if (createTitleBar)
-            vBoxTopContainer = new VBox(vBoxCrumbs, hBoxTitleBar);
+            vBoxTopContainer = new VBox(crumbs, hBoxTitleBar);
         else
-            vBoxTopContainer = new VBox(vBoxCrumbs);
+            vBoxTopContainer = new VBox(crumbs);
 
         vBoxTopContainer.setPadding(new Insets(5));
 
@@ -75,10 +68,7 @@ public class TabBuilder {
         vBoxTopContainer.setStyle("-fx-border-color: transparent " + borderColor + borderColor + " transparent;");
 
         //center top right bottom left
-        BorderPane borderPanePage = new BorderPane(centerContent, vBoxTopContainer, null, null, null);
-        setSelectedCrumbListener(crumbs, hBoxTitleBar, borderPanePage, tab);
-
-        return borderPanePage;
+        return new BorderPane(centerContent, vBoxTopContainer, null, null, null);
     }
 
     public static void buildEmptyTab(Tab tab) {
@@ -92,25 +82,64 @@ public class TabBuilder {
         tab.setContent(tabContent);
     }
 
+    private HBox buildCrumbs(List<TreeItem<String>> pathToTheNote, TreeView<String> treeView) {
+        HBox crumbs = new HBox();
+        crumbs.setAlignment(Pos.CENTER);
+
+        ObservableList<Node> crumbsChildren = crumbs.getChildren();
+        int length = pathToTheNote.size();
+        for (int i = 0; i < length; i++) {
+            Button button;
+            TreeItem<String> treeItem = pathToTheNote.get(i);
+            String treeItemValue = treeItem.getValue();
+            if (i + 1 != length) {
+                button = new Button(treeItemValue, IconConfigurer.getFolderIcon(16));
+                setStyleAndAddToCrumbs(button, crumbsChildren, treeItem, treeView);
+                crumbsChildren.add(new FontIcon("mdal-chevron_right"));
+            } else {
+                button = new Button(treeItemValue, IconConfigurer.getFileIcon());
+                setStyleAndAddToCrumbs(button, crumbsChildren, treeItem, treeView);
+            }
+        }
+        return crumbs;
+    }
+
+    private void setStyleAndAddToCrumbs(Button button, ObservableList<Node> crumbsChildren,
+                                        TreeItem<String> treeItem, TreeView<String> treeView) {
+        crumbsChildren.add(button);
+        button.getStyleClass().add(Styles.FLAT);
+        button.setFocusTraversable(false);
+        button.setOnMouseClicked(event -> {
+            MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
+            selectionModel.select(treeItem);
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(e -> {
+                selectionModel.clearSelection();
+            });
+            pause.play();
+        });
+    }
+
     private void setSelectedCrumbListener(Breadcrumbs<String> crumbs, HBox hBoxTitleBar, BorderPane borderPanePage,
                                           Tab tab) {
         crumbs.selectedCrumbProperty().addListener((obs,
                                                     oldVal, newVal) -> {
-            hBoxTitleBar.getChildren().clear();
-            //get full path to the directory
-            List<String> listPath = new ArrayList<>();
-            BreadCrumbItem<String> currentBreadCrumb = newVal;
-            while (currentBreadCrumb != null) {
-                listPath.add(currentBreadCrumb.getValue());
-                currentBreadCrumb = (BreadCrumbItem<String>) currentBreadCrumb.getParent();
-            }
-            listPath = listPath.reversed();
-            String tabNoteName = listPath.getLast();
-            tab.setText(tabNoteName);
-            String pathTreeItem = String.join(RunApplication.getSeparator(), listPath);
-
-            FlowPane folderContent = buildContainerOfFiles(pathTreeItem);
-            borderPanePage.setCenter(folderContent);
+//            hBoxTitleBar.getChildren().clear();
+//            //get full path to the directory
+//            List<String> listPath = new ArrayList<>();
+//            BreadCrumbItem<String> currentBreadCrumb = newVal;
+//            while (currentBreadCrumb != null) {
+//                listPath.add(currentBreadCrumb.getValue());
+//                currentBreadCrumb = (BreadCrumbItem<String>) currentBreadCrumb.getParent();
+//            }
+//            listPath = listPath.reversed();
+//            String tabNoteName = listPath.getLast();
+//            tab.setText(tabNoteName);
+//            String pathTreeItem = String.join(RunApplication.getSeparator(), listPath);
+//
+//            FlowPane folderContent = buildContainerOfFiles(pathTreeItem);
+//            borderPanePage.setCenter(folderContent);
         });
     }
 
@@ -182,7 +211,7 @@ public class TabBuilder {
             itemsFolderList.add(vBoxContentItem);
         });
 
-        //creating container for folder
+        //creating container for a folder
         //top right bottom left
         return new FlowPane() {{
             setVgap(25);
@@ -196,7 +225,6 @@ public class TabBuilder {
     @NotNull
     private Breadcrumbs<String> buildBreadcrumbs(BreadCrumbItem<String> root) {
         Breadcrumbs<String> crumbs = new Breadcrumbs<>(root);
-        breadCrumbsButtons = new ArrayList<>();
         crumbs.setCrumbFactory(crumb -> {
             Button button;
             if (crumb.isLeaf()) {
@@ -207,7 +235,6 @@ public class TabBuilder {
             button.toBack();
             button.getStyleClass().add(Styles.FLAT);
             button.setFocusTraversable(false);
-            breadCrumbsButtons.add(button);
             return button;
         });
         crumbs.setDividerFactory(stringBreadCrumbItem -> {
@@ -218,12 +245,12 @@ public class TabBuilder {
     }
 
     @NotNull
-    private HBox buildHBoxTitleBar(TreeItem<String> selectedItem, Tab tab, Breadcrumbs<String> crumbs) {
+    private HBox buildHBoxTitleBar(TreeItem<String> selectedItem, Tab tab, HBox crumbs) {
         TextField noteName = new TextField(tab.getText()) {{
             setFont(new Font(16));
             setAlignment(Pos.CENTER);
         }};
-
+        //Breadcrumbs<String> crumbs
         //when note rename
         noteName.focusedProperty().addListener((arg0,
                                                 oldPropertyValue, newPropertyValue) -> {
@@ -242,7 +269,7 @@ public class TabBuilder {
                     //if text with no changes, return
                     if (noteNameText.equals(oldTextFieldString)) return;
 
-                    //getting path to the file
+                    //getting a path to the file
                     String pathTreeItem = FileService.getPath(selectedItem);
                     int lastIndexOfSeparator = pathTreeItem.lastIndexOf(RunApplication.getSeparator());
                     pathTreeItem = pathTreeItem.substring(0, lastIndexOfSeparator);
@@ -255,13 +282,9 @@ public class TabBuilder {
                         selectedItem.setValue(noteNameText);
                         tab.setText(noteNameText);
 
-                        BreadCrumbItem<String> selectedCrumb = crumbs.getSelectedCrumb();
-                        for (int i = breadCrumbsButtons.size() - 1; i > 0; i--) {
-                            Button button = breadCrumbsButtons.get(i);
-                            if (selectedCrumb.getValue().equals(button.getText())) {
-                                button.setText(noteNameText);
-                                break;
-                            }
+                        Node lastButton = crumbs.getChildren().getLast();
+                        if (lastButton instanceof Button button) {
+                            button.setText(noteNameText);
                         }
                     }
                 }
@@ -286,17 +309,17 @@ public class TabBuilder {
         }};
     }
 
-    private static String[] getPathToTheTreeViewNote(TreeItem<String> selectedItem) {
+    private static List<TreeItem<String>> getPathToTheTreeViewNote(TreeItem<String> selectedItem) {
         TreeItem<String> currentTreeItem = selectedItem;
-        List<String> breadCrumbItems = new ArrayList<>();
+        List<TreeItem<String>> breadCrumbItems = new ArrayList<>();
         while (currentTreeItem.getParent() != null) {
             if (currentTreeItem.getValue().isEmpty())
                 break;
-            breadCrumbItems.add(currentTreeItem.getValue());
+            breadCrumbItems.add(currentTreeItem);
             currentTreeItem = currentTreeItem.getParent();
         }
         breadCrumbItems = breadCrumbItems.reversed();
-        return breadCrumbItems.toArray(new String[0]);
+        return breadCrumbItems;
     }
 
     public static Circle createCircleUnsavedChanges() {
@@ -313,7 +336,7 @@ public class TabBuilder {
         tabPane.getSelectionModel().select(tab);
     }
 
-    ///////////////////////////////////////////////////////////////
+    /// ////////////////////////////////////////////////////////////
     //getters and setters
     public CodeArea getCodeArea() {
         return codeArea;

@@ -55,8 +55,6 @@ public class MainController {
     ModalPane modalPane;
     @FXML
     BorderPane leftPanelBorderPane;
-    @FXML
-    HBox titleBar;
 
     Stage renameStage;
     TreeItem<String> filesManagerRoot;
@@ -90,7 +88,7 @@ public class MainController {
         modalPane.hide();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         applyThemeOnLeftPanel();
-        TabStorageUtility.loadSavingTabs(tabPane, treeView.getRoot(), this);
+        TabStorageUtility.loadSavingTabs(tabPane, treeView, this);
     }
 
     private void applyThemeOnLeftPanel() {
@@ -142,7 +140,7 @@ public class MainController {
 
         TabBuilder tabBuilder = new TabBuilder();
         StackPane markdownArea = MarkdownArea.createMarkdownArea(selectedItem, tabBuilder, tab);
-        tab.setContent(tabBuilder.buildTabContent(tab, selectedItem, markdownArea, true));
+        tab.setContent(tabBuilder.buildTabContent(tab, selectedItem, markdownArea, true, treeView));
         CodeArea codeArea = tabBuilder.getCodeArea();
 
         String text;
@@ -177,9 +175,8 @@ public class MainController {
 
         Thread threadAddUnsavedChanges = new Thread(() -> Platform.runLater(() -> {
             Circle circleUnsavedChanges = (Circle) tab.getGraphic();
-            codeArea.textProperty().addListener((observableValue, s, t1) -> {
-                circleUnsavedChanges.setOpacity(1);
-            });
+            codeArea.textProperty().addListener((observableValue, s, t1) ->
+                    circleUnsavedChanges.setOpacity(1));
         }));
         threadAddUnsavedChanges.start();
     }
@@ -207,7 +204,7 @@ public class MainController {
         String fileName = newNote.getName().replace(".md", "");
         TreeItemCustom newTreeItem = new TreeItemCustom(fileName, true, IconConfigurer.getFileIcon());
         parent.getChildren().add(newTreeItem);
-        new TabBuilder().buildTab(fileName, tabPane, newTreeItem);
+        new TabBuilder().buildTab(fileName, tabPane, newTreeItem, treeView);
         sortTreeView();
     }
 
@@ -351,7 +348,7 @@ public class MainController {
             String[] path = item.toString().split(separator);
             ObservableList<TreeItem<String>> rootList = treeView.getRoot().getChildren();
 
-            //check tree contains file
+            //check a tree contains file
             TreeItem<String> containedItem = null;
             for (TreeItem<String> i : rootList) {
                 if (path[0].equals(i.getValue()))

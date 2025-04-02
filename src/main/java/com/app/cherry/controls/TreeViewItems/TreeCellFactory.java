@@ -13,7 +13,7 @@ public class TreeCellFactory {
     static TreeItem<String> draggedItem;
     static TreeItem<String> parent;
 
-    public static void build(TreeView<String> treeView, MainController mainController){
+    public static void build(TreeView<String> treeView, MainController mainController) {
         treeView.setCellFactory(tree -> {
             TreeCell<String> treeCell = new EditableTreeCell();
 

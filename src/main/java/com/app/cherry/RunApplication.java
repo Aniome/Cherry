@@ -95,7 +95,7 @@ public class RunApplication extends Application {
             Scene scene = new Scene(fxmlLoader.load(), MAIN_WIDTH, MAIN_HEIGHT);
             scene.getStylesheets().add(Objects.requireNonNull
                     (RunApplication.class.getResource("css/keywords.css")).toExternalForm());
-            ApplyConfiguration.setMainSceneAndSetTheme(scene);
+            ApplyConfiguration.setMainScene(scene);
             ApplyConfiguration.changeThemeCssOnMainScene();
             MainController mainController = fxmlLoader.getController();
             setIcon(mainStage);

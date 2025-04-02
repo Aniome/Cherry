@@ -214,7 +214,7 @@ public class ApplyConfiguration {
         ApplyConfiguration.leftPanelBorderPane = borderPane;
     }
 
-    public static void setMainSceneAndSetTheme(Scene scene) {
+    public static void setMainScene(Scene scene) {
         ApplyConfiguration.mainScene = scene;
     }
 

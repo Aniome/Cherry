@@ -1,7 +1,5 @@
 package com.app.cherry.util.configuration;
 
-import atlantafx.base.controls.Breadcrumbs;
-import atlantafx.base.controls.Breadcrumbs.BreadCrumbItem;
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
 import com.app.cherry.controls.TabBuilder;
@@ -10,33 +8,26 @@ import com.app.cherry.util.structures.PathNote;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TreeItem;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class TabStorageUtility {
-    public static void loadSavingTabs(TabPane tabPane, TreeItem<String> root, MainController mainController) {
+    public static void loadSavingTabs(TabPane tabPane, TreeView<String> treeView, MainController mainController) {
         //getting array saving tabs
         Optional<PathNote> optionalSavingTabs = Optional.ofNullable(getSavingTabs());
-        //if array is empty then exit
+        //if an array is empty, then exit
         if (optionalSavingTabs.isEmpty()) {
             return;
         }
         PathNote savingTabs = optionalSavingTabs.get();
 
-        //getting variables from object
+        //getting variables from an object
         String[] openedSavingTabs = savingTabs.getPathNote();
         int selectedTabIndex = savingTabs.getSelectedIndex();
 
@@ -63,7 +54,7 @@ public class TabStorageUtility {
                 continue;
             }
 
-            //checking if file exist
+            //checking if file exists
             File item = new File(openedSavingTabs[i]);
             if (!item.exists()) continue;
 
@@ -72,12 +63,12 @@ public class TabStorageUtility {
             String relativePath = RunApplication.folderPath.relativize(absolutePath).toString();
             String[] splitPath = relativePath.split(separator);
 
-            //removing .md if file is markdown
+            //removing .md if a file is Markdown
             int lastInd = splitPath.length - 1;
             String lastElement = splitPath[lastInd];
             if (lastElement.endsWith(".md")) splitPath[lastInd] = lastElement.replace(".md", "");
 
-            TreeItem<String> currentTreeItem = root;
+            TreeItem<String> currentTreeItem = treeView.getRoot();
             TreeItem<String> findingTreeItem = null;
             //searching treeItem in the treeview
             for (int j = 0; j < lastInd + 1; j++) {
@@ -108,7 +99,7 @@ public class TabStorageUtility {
             }
 
             if (item.isDirectory()) {
-                new TabBuilder().buildFolderTab(tab, findingTreeItem, relativePath);
+                new TabBuilder().buildFolderTab(tab, findingTreeItem, relativePath, treeView);
             } else {
                 mainController.loadDataOnTab(fileName, absolutePath, findingTreeItem, tab);
             }
@@ -155,7 +146,7 @@ public class TabStorageUtility {
 
             ObservableList<Node> topContainerChildren = vBoxTopContainer.getChildren();
 
-            //getting path to the tab
+            //getting a path to the tab
             StringBuilder path = getPathFromTitle(topContainerChildren, isFile);
 
             openedTabs[i] = path.toString();
@@ -176,22 +167,13 @@ public class TabStorageUtility {
 
     @NotNull
     private static StringBuilder getPathFromTitle(ObservableList<Node> topContainerChildren, boolean isFile) {
-        ObservableList<Node> vBoxCrumbsChildren = ((VBox) topContainerChildren.getFirst()).getChildren();
-        Breadcrumbs<?> crumbs = (Breadcrumbs<?>) vBoxCrumbsChildren.getFirst();
-
-        return getPathFromCrumbs(crumbs, isFile);
-    }
-
-    @NotNull
-    private static StringBuilder getPathFromCrumbs(Breadcrumbs<?> crumbs, boolean isFile) {
-        BreadCrumbItem<?> currentCrumb = crumbs.getSelectedCrumb();
-        List<String> pathNoteList = new ArrayList<>();
-        while (currentCrumb != null) {
-            pathNoteList.add((String) currentCrumb.getValue());
-            currentCrumb = (BreadCrumbItem<?>) currentCrumb.getParent();
-        }
+        ObservableList<Node> vBoxCrumbsChildren = ((HBox) topContainerChildren.getFirst()).getChildren();
         StringBuilder path = new StringBuilder(RunApplication.folderPath.toString());
-        pathNoteList.forEach(item -> path.append(RunApplication.getSeparator()).append(item));
+        for (Node node : vBoxCrumbsChildren) {
+            if (node instanceof Button button) {
+                path.append(RunApplication.getSeparator()).append(button.getText());
+            }
+        }
         if (isFile) {
             path.append(".md");
         }

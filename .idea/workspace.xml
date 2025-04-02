@@ -12,13 +12,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="refactoring and add hide circle after changes">
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="fix bug with copy, paste buttons and fix bug with write to file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/RenameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/RenameViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/codearea/MarkdownArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/TreeCellFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TreeViewItems/TreeCellFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/ApplyConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/cherry/fxmls/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +86,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.RunApplication.executor": "Run",
     "JUnit.SearchListViewItemTest.executor": "Coverage",
     "JUnit.SearchListViewItemTest.testToString.executor": "Run",
@@ -109,7 +113,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Programming/Java/Hibernates/ExampleOffHibernates",
+    "last_opened_file_path": "C:/Users/user/AppData/Local/SceneBuilder/SceneBuilder.exe",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -156,6 +160,8 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="graalvm-ce-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.app.cherry.Launcher" />
       <module name="Cherry" />
       <method v="2">
@@ -268,8 +274,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -696,15 +702,24 @@
       <workItem from="1742063211587" duration="34663000" />
       <workItem from="1742238979537" duration="13356000" />
       <workItem from="1742330523981" duration="679000" />
-      <workItem from="1742337313134" duration="1819000" />
-    </task>
-    <task id="LOCAL-00107" summary="adding help page">
-      <option name="closed" value="true" />
-      <created>1731351457000</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1731351457001</updated>
+      <workItem from="1742337313134" duration="2338000" />
+      <workItem from="1742371969354" duration="135000" />
+      <workItem from="1742372486981" duration="9322000" />
+      <workItem from="1742770596578" duration="1352000" />
+      <workItem from="1742806146947" duration="422000" />
+      <workItem from="1742808264008" duration="2816000" />
+      <workItem from="1742811833126" duration="867000" />
+      <workItem from="1742814555447" duration="1402000" />
+      <workItem from="1742818812180" duration="2091000" />
+      <workItem from="1742821701188" duration="245000" />
+      <workItem from="1742828417446" duration="1612000" />
+      <workItem from="1742844245580" duration="15000" />
+      <workItem from="1743364986518" duration="7227000" />
+      <workItem from="1743392260671" duration="46000" />
+      <workItem from="1743392382293" duration="3509000" />
+      <workItem from="1743521818931" duration="5458000" />
+      <workItem from="1743532490840" duration="2207000" />
+      <workItem from="1743548969662" duration="15051000" />
     </task>
     <task id="LOCAL-00108" summary="finalizing help page">
       <option name="closed" value="true" />
@@ -1090,7 +1105,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742324124220</updated>
     </task>
-    <option name="localTasksCounter" value="156" />
+    <task id="LOCAL-00156" summary="fix bug with copy, paste buttons and fix bug with write to file">
+      <option name="closed" value="true" />
+      <created>1742339292141</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1742339292141</updated>
+    </task>
+    <option name="localTasksCounter" value="157" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1121,7 +1144,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="refactoring and work with saving tabs" />
     <MESSAGE value="fix bug with updating title note and add get tabs method" />
     <MESSAGE value="work with loading tabs" />
     <MESSAGE value="fixing bugs and work with saving tabs" />
@@ -1146,10 +1168,20 @@
     <MESSAGE value="add logger in project" />
     <MESSAGE value="replace xml to properties, and refactoring code" />
     <MESSAGE value="refactoring and add hide circle after changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring and add hide circle after changes" />
+    <MESSAGE value="fix bug with copy, paste buttons and fix bug with write to file" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug with copy, paste buttons and fix bug with write to file" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/RenameViewController.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="root.children.get(8)" />
