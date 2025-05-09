@@ -2,6 +2,7 @@ package com.app.cherry.util.configuration;
 
 import com.app.cherry.RunApplication;
 import com.app.cherry.controllers.MainController;
+import com.app.cherry.controls.FolderOfFiles;
 import com.app.cherry.controls.TabBuilder;
 import com.app.cherry.util.Alerts;
 import com.app.cherry.util.structures.PathNote;
@@ -99,7 +100,7 @@ public class TabStorageUtility {
             }
 
             if (item.isDirectory()) {
-                new TabBuilder().buildFolderTab(tab, findingTreeItem, relativePath, treeView);
+                FolderOfFiles.buildFolderTab(tab, findingTreeItem, relativePath, treeView);
             } else {
                 mainController.loadDataOnTab(fileName, absolutePath, findingTreeItem, tab);
             }

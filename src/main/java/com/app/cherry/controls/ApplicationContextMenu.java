@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.fxmisc.richtext.CodeArea;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -21,23 +22,39 @@ public class ApplicationContextMenu {
                                                 Stage renameStage, TabPane tabPane) {
         ResourceBundle resourceBundle = RunApplication.getResourceBundle();
 
+        //menu item for creating new note
         MenuItem newNoteMenuItem = new MenuItem(resourceBundle.getString("ContextMenuNewNote"));
         newNoteMenuItem.setOnAction(actionEvent -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
             mainController.createNote(selectedItem);
         });
 
+        //menu item for creating new folder
         MenuItem newFolderMenuItem = new MenuItem(resourceBundle.getString("ContextMenuNewFolder"));
         newFolderMenuItem.setOnAction(actionEvent -> {
             TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
             mainController.createFolder(selectedItem);
         });
 
+        //context menu for folder
         folderContextMenu = new ContextMenu(newNoteMenuItem, newFolderMenuItem,
                 getRenameMenuItem(renameStage, mainController), getFavoriteMenuItem(treeView),
-                getDeleteMenuItem(treeView, tabPane));
+                getDeleteMenuItem(treeView, tabPane),
+                getFolderOfFilesMenuItem(tabPane.getSelectionModel().getSelectedItem(), treeView));
+        //context menu for note item
         noteContextMenu = new ContextMenu(getRenameMenuItem(renameStage, mainController),
                 getFavoriteMenuItem(treeView), getDeleteMenuItem(treeView, tabPane));
+    }
+
+    private static MenuItem getFolderOfFilesMenuItem(Tab tab, TreeView<String> treeView) {
+        MenuItem folderOfFiles = new MenuItem("test");
+        folderOfFiles.setOnAction(actionEvent -> {
+            MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
+            Path absolutePath = Path.of(FileService.getPath(selectionModel.getSelectedItem()));
+            String relativePath = RunApplication.folderPath.relativize(absolutePath).toString();
+            FolderOfFiles.buildFolderTab(tab, selectionModel.getSelectedItem(), relativePath, treeView);
+        });
+        return folderOfFiles;
     }
 
     private static MenuItem getRenameMenuItem(Stage renameStage, MainController mainController) {

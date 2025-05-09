@@ -131,6 +131,7 @@ public class FileService {
         return oldFile.renameTo(newFile);
     }
 
+    //getting full path to the treeItem
     public static String getPath(TreeItem<String> treeItem) {
         StringBuilder pathName = new StringBuilder(RunApplication.folderPath.toString() + RunApplication.getSeparator());
         List<String> listPath = new LinkedList<>();
@@ -141,6 +142,7 @@ public class FileService {
         }
         listPath = listPath.reversed();
         listPath.forEach(item -> pathName.append(item).append(RunApplication.getSeparator()));
+        //deleting last slash
         pathName.deleteCharAt(pathName.length() - 1);
         if (loadingItem.isLeaf()) {
             pathName.append(".md");

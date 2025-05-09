@@ -357,9 +357,9 @@ public class MainController {
 
             TreeItemCustom addedItem;
             //3 options:
-            //1. If tree root already contains first part path
-            //2. If tree root don't contain first part path and path long
-            //3. If tree root don't contain path
+            //1. If tree root already contains the first part, path
+            //2. If tree root doesn't contain first part path and path long
+            //3. If a tree root doesn't contain path
             if (containedItem != null) {
                 TreeItem<String> treeItem = containedItem;
                 boolean isContained = false;
