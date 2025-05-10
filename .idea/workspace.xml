@@ -12,14 +12,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="Refactoring, fix bug. Add select tree item on click.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/FolderOfFiles.java" afterDir="false" />
+    <list default="true" id="4c3b8255-09e7-4418-aa7e-c65924445571" name="Changes" comment="refactoring code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenicView.properties" beforeDir="false" afterPath="$PROJECT_DIR$/scenicView.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/RunApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/ApplicationContextMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/TabBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/configuration/TabStorageUtility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/util/io/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/FolderOfFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/cherry/controls/FolderOfFiles.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,10 +63,10 @@
       <autoReloadConfigurations>true</autoReloadConfigurations>
     </scriptDefinition>
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -729,15 +728,9 @@
       <workItem from="1743548969662" duration="15639000" />
       <workItem from="1744292143963" duration="1194000" />
       <workItem from="1744744782686" duration="15000" />
-      <workItem from="1746779152319" duration="20419000" />
-    </task>
-    <task id="LOCAL-00109" summary="add search tab">
-      <option name="closed" value="true" />
-      <created>1731523416254</created>
-      <option name="number" value="00109" />
-      <option name="presentableId" value="LOCAL-00109" />
-      <option name="project" value="LOCAL" />
-      <updated>1731523416254</updated>
+      <workItem from="1746779152319" duration="25844000" />
+      <workItem from="1746822407367" duration="374000" />
+      <workItem from="1746863354589" duration="12592000" />
     </task>
     <task id="LOCAL-00110" summary="trying search">
       <option name="closed" value="true" />
@@ -1123,7 +1116,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743567141213</updated>
     </task>
-    <option name="localTasksCounter" value="158" />
+    <task id="LOCAL-00158" summary="refactoring code">
+      <option name="closed" value="true" />
+      <created>1746815702696</created>
+      <option name="number" value="00158" />
+      <option name="presentableId" value="LOCAL-00158" />
+      <option name="project" value="LOCAL" />
+      <updated>1746815702697</updated>
+    </task>
+    <option name="localTasksCounter" value="159" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1173,13 +1174,13 @@
     <MESSAGE value="refactoring and add loading folder items" />
     <MESSAGE value="refactoring tab builder" />
     <MESSAGE value="refactoring and fix bugs with saving and loading tab folder" />
-    <MESSAGE value="refactoring code" />
     <MESSAGE value="add logger in project" />
     <MESSAGE value="replace xml to properties, and refactoring code" />
     <MESSAGE value="refactoring and add hide circle after changes" />
     <MESSAGE value="fix bug with copy, paste buttons and fix bug with write to file" />
     <MESSAGE value="Refactoring, fix bug. Add select tree item on click." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring, fix bug. Add select tree item on click." />
+    <MESSAGE value="refactoring code" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring code" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

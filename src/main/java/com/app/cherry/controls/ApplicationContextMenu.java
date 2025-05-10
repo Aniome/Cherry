@@ -47,7 +47,7 @@ public class ApplicationContextMenu {
     }
 
     private static MenuItem getFolderOfFilesMenuItem(Tab tab, TreeView<String> treeView) {
-        MenuItem folderOfFiles = new MenuItem("test");
+        MenuItem folderOfFiles = new MenuItem("Show view of files");
         folderOfFiles.setOnAction(actionEvent -> {
             MultipleSelectionModel<TreeItem<String>> selectionModel = treeView.getSelectionModel();
             Path absolutePath = Path.of(FileService.getPath(selectionModel.getSelectedItem()));
