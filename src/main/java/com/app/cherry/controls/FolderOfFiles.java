@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.jetbrains.annotations.NotNull;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
@@ -33,8 +34,11 @@ public class FolderOfFiles {
 
         tab.setGraphic(TabBuilder.createCircleUnsavedChanges());
         FlowPane containerOfFiles = buildContainerOfFiles(relativePath);
+        ScrollPane scrollPane = new ScrollPane(containerOfFiles);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
         BorderPane buildTabContent =
-                new TabBuilder().buildTabContent(tab, selectedItem, containerOfFiles, false, treeView);
+                new TabBuilder().buildTabContent(tab, selectedItem, scrollPane, false, treeView);
         tab.setContent(buildTabContent);
     }
 
@@ -53,8 +57,8 @@ public class FolderOfFiles {
         //creating containers for elements
         Arrays.stream(files).forEach(folderItem -> {
             String folderItemName = folderItem.getName();
-            //double scale = 4.5;
-            double scale = 3;
+            double scale = 5.5;
+            //double scale = 3;
             boolean isFile;
 
             FontIcon fileIcon = IconConfigurer.getFileIcon();
@@ -81,24 +85,11 @@ public class FolderOfFiles {
             final Background emptyBackground = new Background(new BackgroundFill(Color.TRANSPARENT,
                     new CornerRadii(5), Insets.EMPTY));
 
-            VBox vBoxContentItem = new VBox(labelFileName) {{
-                prefWidth(105);
-                prefHeight(125);
-                setMinHeight(125);
-                setMinWidth(105);
-                setMaxHeight(125);
-                setMaxWidth(105);
-                setAlignment(Pos.CENTER);
-                setBorder(emptyBorder);
-                setBackground(emptyBackground);
-                //top right bottom left
-                //setPadding(new Insets(20, 20, 0, 20));
-                setPadding(new Insets(5));
-            }};
+            VBox vBoxContentItem = buildContentItem(labelFileName, emptyBorder, emptyBackground);
 
             setIcons(vBoxContentItem, iconsIsExist, folderItemName, iconsFolder, isFile, fileIcon);
 
-            VBox.setMargin(labelFileName, new Insets(20, 0, 0, 0));
+            //VBox.setMargin(labelFileName, new Insets(20, 0, 0, 0));
 
             vBoxContentItem.setOnMouseEntered(event -> {
                 vBoxContentItem.setBackground(new Background(new BackgroundFill(Color.GRAY,
@@ -132,12 +123,28 @@ public class FolderOfFiles {
         //creating container for a folder
         //top right bottom left
         return new FlowPane() {{
-            setVgap(25);
-            setHgap(25);
             //top right bottom left
-            //setPadding(new Insets(15, 0, 0, 15));
-            setPadding(new Insets(10));
+            //setPadding(new Insets(10));
             getChildren().addAll(itemsFolderList);
+        }};
+    }
+
+    @NotNull
+    private static VBox buildContentItem(Label labelFileName, Border emptyBorder, Background emptyBackground) {
+        final double heightContentItem = 239;
+        final double widthContentItem = 170;
+        return new VBox(labelFileName) {{
+            prefWidth(widthContentItem);
+            prefHeight(heightContentItem);
+            setMinHeight(heightContentItem);
+            setMinWidth(widthContentItem);
+            setMaxHeight(heightContentItem);
+            setMaxWidth(widthContentItem);
+            setAlignment(Pos.CENTER);
+            setBorder(emptyBorder);
+            setBackground(emptyBackground);
+            //top right bottom left
+            //setPadding(new Insets(20, 20, 0, 20));
         }};
     }
 
@@ -149,11 +156,12 @@ public class FolderOfFiles {
                     name.split("\\.")[0].equals(folderItemName));
 
             if (filesOfIcons != null && filesOfIcons.length > 0) {
-                final int iconSize = 80;
+                final int iconSizeHeight = 167;
+                final int iconSizeWidth = 167;
                 try {
                     ImageView imageView = new ImageView("file:/" + filesOfIcons[0]);
-                    imageView.setFitHeight(iconSize);
-                    imageView.setFitWidth(iconSize);
+                    imageView.setFitHeight(iconSizeHeight);
+                    imageView.setFitWidth(iconSizeWidth);
                     listVboxContent.addFirst(imageView);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -165,7 +173,7 @@ public class FolderOfFiles {
         if (isFile) {
             listVboxContent.addFirst(fileIcon);
         } else {
-            listVboxContent.addFirst(IconConfigurer.getFolderIcon(50));
+            listVboxContent.addFirst(IconConfigurer.getFolderIcon(70));
         }
     }
 }
